@@ -1,0 +1,106 @@
+#include "D3D12Device.h"
+#include "Engine/Source/Utility/D3D12Common.h"
+#include "Engine/Source/Factory/Factory.h"
+
+#include <string>
+
+
+//対応フィーチャーレベル
+const D3D_FEATURE_LEVEL FeatureLevels[] =
+{
+	D3D_FEATURE_LEVEL_12_1,
+	D3D_FEATURE_LEVEL_12_0,
+	D3D_FEATURE_LEVEL_11_1,
+	D3D_FEATURE_LEVEL_11_0
+};
+const std::wstring GPU_CARD_SPEC_LIST[] = {
+	L"NVIDIA GeForce GTX 1080",
+	L"NVIDIA GeForce GTX 1060",
+	L"INTEL"
+
+};
+
+
+K3D::D3D12Device::D3D12Device() :
+	_device(), _featureLevel(), _useWarpDevice(false)
+{
+}
+
+
+K3D::D3D12Device::~D3D12Device()
+{
+	Discard();
+}
+
+
+HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
+{
+	_useWarpDevice = useWarpDevice;
+	if (_useWarpDevice) {
+		Microsoft::WRL::ComPtr<IDXGIAdapter>	warpAdapter;
+
+		if (FAILED(factory->GetFactory()->EnumWarpAdapter(IID_PPV_ARGS(&warpAdapter)))) {
+			return E_FAIL;
+		}
+		for (auto i : FeatureLevels) {
+			if (SUCCEEDED(D3D12CreateDevice(warpAdapter.Get(), i, IID_PPV_ARGS(&_device)))) {
+				_featureLevel = i;
+				break;
+			}
+		}
+
+	}
+	else {
+		Microsoft::WRL::ComPtr<IDXGIAdapter1>	hardwareAdapter;
+		Microsoft::WRL::ComPtr<IDXGIAdapter1>	adapter;
+		hardwareAdapter = nullptr;
+
+		for (UINT i = 0; DXGI_ERROR_NOT_FOUND != factory->GetFactory()->EnumAdapters1(i, &adapter); i++) {
+			DXGI_ADAPTER_DESC1 desc;
+			adapter->GetDesc1(&desc);
+			if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE)
+				continue;
+
+			for (auto i : FeatureLevels) {
+				if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), i, _uuidof(ID3D12Device3), nullptr))) {
+					_featureLevel = i;
+					hardwareAdapter = adapter;
+					for (auto& spec : GPU_CARD_SPEC_LIST) {
+						if (spec == std::wstring(&desc.Description[0])) {
+							break;
+						}
+					}
+					break;
+				}
+			}
+
+		}
+		adapter.Reset();
+
+		auto hr = D3D12CreateDevice(hardwareAdapter.Get(), _featureLevel, IID_PPV_ARGS(&_device));
+		if (FAILED(hr)) {
+			return hr;
+		};
+	}
+	auto hr = _device->GetDeviceRemovedReason();
+	_device->SetName(L"Device");
+
+
+	return hr;
+}
+
+Microsoft::WRL::ComPtr<ID3D12Device3> K3D::D3D12Device::GetDevice()const
+{
+	return _device;
+}
+
+const D3D_FEATURE_LEVEL& K3D::D3D12Device::GetFeatureLevel()const
+{
+	return this->_featureLevel;
+}
+
+void K3D::D3D12Device::Discard()
+{
+	_device.Reset();
+}
+

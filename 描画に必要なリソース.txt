@@ -1,0 +1,14 @@
+VertexBuffer,
+IndexBuffer,
+ShaderBinary,
+ShaderResourceView,
+UnorderedAccessView,
+Sampler,
+DepthStencil,
+RenderTargetView,
+PipelineState,
+RootSignature,
+DescriptorHeap,
+ConstantBufferView
+
+リソースの中身は変更されるかもしれないが、ハンドルは固定値
