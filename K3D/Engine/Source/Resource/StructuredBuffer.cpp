@@ -163,7 +163,7 @@ D3D12_GPU_DESCRIPTOR_HANDLE K3D::StructuredBuffer::GetUAVGPUHandle()
 HRESULT K3D::StructuredBuffer::CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC * uavDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle, Resource * counterResource)
 {
 	
-	Framework::GetDevice().GetDevice()->CreateUnorderedAccessView(_resource.Get(), counterResource == nullptr ?  nullptr: counterResource->GetResource(), uavDesc, cpuDescriptorHandle);
+	Framework::GetDevice().GetDevice()->CreateUnorderedAccessView(_resource.Get(), counterResource == nullptr ?  nullptr: counterResource->GetResource().Get(), uavDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 

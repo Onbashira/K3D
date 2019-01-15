@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <xaudio2.h>
+#include <mmiscapi.h>
 
 namespace K3D {
 	class AudioWaveSource
@@ -17,6 +18,7 @@ namespace K3D {
 		std::vector<float>	_wave;	//32bit wave
 
 	private:
+
 		struct AudioLoadingInfo {
 
 			//Ç«ÇÍÇ≠ÇÁÇ¢ì«Ç›çûÇÒÇæÇ©

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <comdef.h>
-#include "NonCopyable.h"
+#include "Engine/Source/Utility/NonCopyable.h"
 
 namespace K3D {
 	enum class LogLevel {

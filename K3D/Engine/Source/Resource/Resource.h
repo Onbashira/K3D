@@ -62,7 +62,7 @@ namespace K3D {
 		
 		void																Alignment256ByteUpdate(const void* pSrc, unsigned int elementSize, unsigned int elementCount = 1);
 		
-		Microsoft::WRL::ComPtr<ID3D12Resource>								GetResource();
+		Microsoft::WRL::ComPtr<ID3D12Resource>&								GetResource();
 				
 		const std::tuple<D3D12_HEAP_PROPERTIES, D3D12_HEAP_FLAGS>			GetHeapPropaties();
 		

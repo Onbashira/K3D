@@ -3,7 +3,6 @@
 //DirectX
 #include "Engine/Source/Utility/d3dx12.h"
 #include "Engine/Source/Utility/D3D12Common.h"
-#include "Engine/Source/Utility/WICTextureLoader12.h"
 #include "Engine/Source/Device/D3D12Device.h"
 #include "Engine/Source/Factory/Factory.h"
 #include "Engine/Source/CommandQueue/CommandQueue.h"
@@ -29,8 +28,6 @@
 #include "Engine/Source/Window/Window.h"
 
 //States
-#include "Engine/Source/State/GeometryState.h"
-#include "Engine/Source/State/TargetState.h"
 
 
 //Framework
@@ -61,9 +58,6 @@
 
 
 //InternalCommand
-#include "Engine/Source/Command/CommandManager.h"
-#include "Engine/Source/Command/InternalCommand.h"
-#include "Engine/Source/Command/InternalCommandCreater.h"
 
 //GameObject
 #include "Engine/Source/GameObject/GameObject.h"
@@ -79,6 +73,6 @@
 
 //Utility
 
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 #include "Engine/Source/Utility/NonCopyable.h"
 #include "Engine/Source/Utility/Utility.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Source/State/GeometryState.h"
+#include "Engine/Source/Command/State/GeometryState.h"
 
 
 namespace K3D {

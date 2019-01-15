@@ -1,6 +1,6 @@
 #include "CommandList.h"
 #include "Engine/Source/CommandList/CommandListManager.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 
 
 K3D::CommandListManager::CommandListManager()

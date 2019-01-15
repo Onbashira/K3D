@@ -1,3 +1,0 @@
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\k3d\engine\source\resource\resource.cpp, LINE : 114] { Resource : RenderTargetResource  is  Reset }
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\k3d\engine\source\resource\resource.cpp, LINE : 114] { Resource : RenderTargetResource  is  Reset }
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\k3d\engine\source\descriptorheap\descriptorheap.cpp, LINE : 134] { DescriptorHeap : RendertargetsHeap  is Reset }

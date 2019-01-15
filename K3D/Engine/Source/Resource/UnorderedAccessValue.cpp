@@ -163,13 +163,13 @@ D3D12_GPU_DESCRIPTOR_HANDLE K3D::UnorderedAccessValue::GetUAVGPUHandle()
 
 HRESULT K3D::UnorderedAccessValue::CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC* uavDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
-	Framework::GetDevice().GetDevice()->CreateUnorderedAccessView(_stagingResource.GetResource(), nullptr, uavDesc, cpuDescriptorHandle);
+	Framework::GetDevice().GetDevice()->CreateUnorderedAccessView(_stagingResource.GetResource().Get(), nullptr, uavDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 
 HRESULT K3D::UnorderedAccessValue::CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC * srvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
-	Framework::GetDevice().GetDevice()->CreateShaderResourceView(_stagingResource.GetResource(), srvDesc, cpuDescriptorHandle);
+	Framework::GetDevice().GetDevice()->CreateShaderResourceView(_stagingResource.GetResource().Get(), srvDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 
@@ -206,7 +206,7 @@ void K3D::UnorderedAccessValue::AsyncWriteToBuffer(std::weak_ptr<K3D::CommandLis
 	//ステージングのためのリソース遷移
 	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
 	//リソース送信
-	UpdateSubresources<1>(list.lock()->GetCommandList().Get(), _stagingResource.GetResource(), _uploadResource.GetResource(), 0, 0, 1, &subresourceData);
+	UpdateSubresources<1>(list.lock()->GetCommandList().Get(), _stagingResource.GetResource().Get(), _uploadResource.GetResource().Get(), 0, 0, 1, &subresourceData);
 	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 }
 
@@ -214,7 +214,7 @@ void K3D::UnorderedAccessValue::AsyncReadBack(std::weak_ptr<K3D::CommandList> li
 {
 	assert(!list.expired());
 	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_SOURCE);
-	list.lock()->GetCommandList()->CopyResource(this->_resource.Get(), _stagingResource.GetResource());
+	list.lock()->GetCommandList()->CopyResource(this->_resource.Get(), _stagingResource.GetResource().Get());
 	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 }
 

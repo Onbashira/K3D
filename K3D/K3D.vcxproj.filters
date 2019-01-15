@@ -69,13 +69,7 @@
     <ClCompile Include="Engine\Source\Time\Timer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Utility\Logger.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Utility\WICTextureLoader12.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Main.cpp">
@@ -267,9 +261,6 @@
     <ClCompile Include="Engine\Source\Command\Core\InternalCommandCreater.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\DynamicHeap\DynamicHeap.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\MemoryAllocator\DefaultRawMemoryAllocator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -289,6 +280,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\Texture\DDSTextureLoader12.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Camera\Camera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Debug\Logger.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -353,16 +350,10 @@
     <ClInclude Include="Engine\Source\Time\Timer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Utility\WICTextureLoader12.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\Utility\D3D12Common.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Utility\d3dx12.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Utility\Logger.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Utility\ManagerComponentBase.h">
@@ -575,9 +566,6 @@
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\DynamicHeap\DynamicHeap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\DynamicHeap\MemoryAllocator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -606,6 +594,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Texture\DDSTextureLoader12.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Camera\Camera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Debug\Logger.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

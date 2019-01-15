@@ -332,10 +332,11 @@ HRESULT K3D::TextureLoader::LoadWriteToSubResource(std::shared_ptr<CommandList> 
 	box.front = 0;
 	box.back = 1;
 
-	destRes.GetResource()->WriteToSubresource(0, &box, subResoruce.pData, box.right * 4, box.bottom * 4);
+	auto ret = destRes.GetResource()->WriteToSubresource(0, &box, subResoruce.pData, box.right * 4, box.bottom * 4);
+	CHECK_RESULT(ret);
 	destRes.ResourceTransition(list, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 	resource.lock()->Discard();
-	resource.lock()->GetResource = destRes;
+	resource.lock()->GetResource() = destRes.GetResource();
 	list->CloseCommandList();
 	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
 
@@ -345,6 +346,8 @@ HRESULT K3D::TextureLoader::LoadWriteToSubResource(std::shared_ptr<CommandList> 
 	commandQueue->Wait();
 	list->ResetAllocator();
 	list->ResetCommandList();
+	destRes.Discard();
+	return ret;
 }
 
 HRESULT K3D::TextureLoader::LoadWICFile(DirectX::TexMetadata & metaData, DirectX::ScratchImage & scratchImage, std::string & path)

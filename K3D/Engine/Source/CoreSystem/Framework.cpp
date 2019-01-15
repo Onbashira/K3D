@@ -192,8 +192,6 @@ HRESULT K3D::Framework::InitCommandList()
 {
 	auto ret = GraphicsContextManager::GetInstance().CreateCommandList("DefaultDataUpdata", 0, D3D12_COMMAND_LIST_TYPE_BUNDLE);
 
-	assert(ret);
-
 	this->_defaultCommandList = GraphicsContextManager::GetInstance().GetCommandList("DefaultDataUpdata");
 
 	return 	ret;

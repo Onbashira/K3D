@@ -1,7 +1,7 @@
 #include "Resource.h"
 #include "Engine/Source/Utility/D3D12Common.h"
 #include "Engine/Source/Utility/Utility.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CoreSystem/Framework.h"
 
@@ -144,7 +144,7 @@ void K3D::Resource::Alignment256ByteUpdate(const void * pSrc, unsigned int eleme
 	}
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> K3D::Resource::GetResource()
+Microsoft::WRL::ComPtr<ID3D12Resource>& K3D::Resource::GetResource()
 {
 	return _resource;
 }

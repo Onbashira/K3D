@@ -4,7 +4,7 @@
 #include "AudioWaveSource.h"
 #include "Audio.h"
 #include "Engine/Source/Utility/Utility.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 
 K3D::AudioManager::AudioManager()
 {

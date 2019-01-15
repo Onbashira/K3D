@@ -1,6 +1,6 @@
 
 #include "GamePad.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 #include <iostream>
 #include <string>
 
