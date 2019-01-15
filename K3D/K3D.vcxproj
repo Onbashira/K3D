@@ -75,8 +75,10 @@
     <ClCompile Include="Engine\Source\ShaderObject\ShaderObjectManager.cpp" />
     <ClCompile Include="Engine\Source\Signature\CommandSignature.cpp" />
     <ClCompile Include="Engine\Source\Signature\RootSignature.cpp" />
+    <ClCompile Include="Engine\Source\Texture\DDSTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureLoader.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureManager.cpp" />
+    <ClCompile Include="Engine\Source\Texture\WICTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Time\Timer.cpp" />
     <ClCompile Include="Engine\Source\Utility\Logger.cpp" />
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp" />
@@ -107,6 +109,11 @@
     <ClCompile Include="Engine\Source\Resource\Sampler.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineResourceTable.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Debug\DebugWindow.h" />
@@ -114,6 +121,8 @@
     <ClInclude Include="Engine\Source\MemoryAllocator\DefaultRawMemoryAllocator.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\STDAllocator.h" />
+    <ClInclude Include="Engine\Source\Texture\DDSTextureLoader12.h" />
+    <ClInclude Include="Engine\Source\Texture\WICTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Utility\BasicTypes.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\DynamicHeap.h" />
@@ -210,6 +219,8 @@
     <ClInclude Include="Engine\Source\Resource\Sampler.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineState.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineResourceTable.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\includes\ShaderMath.hlsl">
@@ -292,10 +303,16 @@
       <ConformanceMode>false</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/include;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/lib/Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -320,14 +337,18 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/include;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/lib/Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
