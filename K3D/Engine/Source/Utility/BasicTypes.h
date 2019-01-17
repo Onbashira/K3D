@@ -25,4 +25,7 @@ namespace K3D
 	typedef bool Bool;          ///< Boolean
 	static constexpr Bool False = false;
 	static constexpr Bool True = true;
+
+	typedef std::basic_string<char> String; ///< String variable
+
 }

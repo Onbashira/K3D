@@ -38,7 +38,10 @@ K3D::DynamicPage::DynamicPage(ID3D12Device * dev, UINT64 size)
 }
 
 
-K3D::DynamicMemoryManager::DynamicMemoryManager(IMemoryAllocator & allocator, ID3D12Device & device, Uint32 numPagesToReserve, UINT64 pageSize) :
+K3D::DynamicMemoryManager::DynamicMemoryManager(IMemoryAllocator & allocator, 
+	ID3D12Device & device, 
+	Uint32 numPagesToReserve, 
+	UINT64 pageSize) :
 	_dev(&device),
 	_availablePages(STD_ALLOCATOR_RAW_MEM(AvailablePagesMapElemType, allocator, "Allocator for multimap<AvailablePagesMapElemType>"))
 {

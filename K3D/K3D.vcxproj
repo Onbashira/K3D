@@ -103,7 +103,6 @@
     <ClCompile Include="Engine\ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Source\Mesh\Mesh.cpp" />
     <ClCompile Include="Engine\Source\Instancing\InstancingManager.cpp" />
-    <ClCompile Include="Engine\Source\State\PipelineState.cpp" />
     <ClCompile Include="Engine\Source\Resource\Sampler.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineResourceTable.cpp" />

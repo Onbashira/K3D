@@ -116,7 +116,6 @@ namespace K3D
 	}
 
 	template<class T> using STDAllocatorRawMem = STDAllocator<T, IMemoryAllocator>;
-
 #define STD_ALLOCATOR_RAW_MEM(Type, Allocator, Description) STDAllocatorRawMem<Type>(Allocator, Description, __FILE__, __LINE__)
 
 	template< class T, typename AllocatorType >

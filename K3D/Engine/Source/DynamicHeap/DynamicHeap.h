@@ -101,6 +101,8 @@ namespace K3D {
 		std::multimap<Uint64, DynamicPage, std::less<Uint64>, STDAllocatorRawMem<std::pair<Uint64, DynamicPage>>> _availablePages;
 
 
+
+
 	public:
 
 		DynamicMemoryManager(IMemoryAllocator& allocator, ID3D12Device& device, Uint32 numPagesToReserve, UINT64 pageSize);
