@@ -19,6 +19,7 @@ namespace K3D {
 	class VertexBuffer;
 	class IndexBuffer;
 	class RootSignature;
+	class D3D12Device;
 
 
 	class CommandList
@@ -48,15 +49,15 @@ namespace K3D {
 
 		HRESULT Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
-		HRESULT Create(std::weak_ptr<D3D12Device> device, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		HRESULT SetResourceBarrie(ID3D12Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
 
 		HRESULT SetResourceBarrie(Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
 
-		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>	GetCommandList()const;
+		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>&	GetCommandList();
 
-		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>		GetAllocator()const;
+		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>&		GetAllocator();
 
 		HRESULT	ResetCommandList(ID3D12PipelineState* pInitialState = nullptr);
 
@@ -168,13 +169,13 @@ namespace K3D {
 		void SetGraphicsRoot32BitConstant(unsigned int RootParameterIndex, unsigned int SrcData, unsigned int DestOffsetIn32BitValues);
 
 		void SetGraphicsRoot32BitConstants(unsigned int RootParameterIndex, unsigned int Num32BitValuesToSet,
-			const void *pSrcData,unsigned int DestOffsetIn32BitValues);
+			const void *pSrcData, unsigned int DestOffsetIn32BitValues);
 
 		void SetGraphicsRootConstantBufferView(unsigned int RootParameterIndex, D3D12_GPU_VIRTUAL_ADDRESS BufferLocation);
 
 		void SetGraphicsRootDescriptorTable(unsigned int RootParameterIndex, D3D12_GPU_DESCRIPTOR_HANDLE BaseDescriptor);
 
-		void SetGraphicsRootShaderResourceView(unsigned int RootParameterIndex,D3D12_GPU_VIRTUAL_ADDRESS BufferLocation);
+		void SetGraphicsRootShaderResourceView(unsigned int RootParameterIndex, D3D12_GPU_VIRTUAL_ADDRESS BufferLocation);
 
 		void SetGraphicsRootSignature(std::shared_ptr<RootSignature> pRootSignature);
 
@@ -184,9 +185,9 @@ namespace K3D {
 
 		void SetPipelineState(std::shared_ptr<PipelineStateObject> pRootSignature);
 
-		void SetPredication(Resource *pBuffer,UINT64 AlignedBufferOffset,D3D12_PREDICATION_OP Operation);
+		void SetPredication(Resource *pBuffer, UINT64 AlignedBufferOffset, D3D12_PREDICATION_OP Operation);
 
-		void SOSetTargets(unsigned int StartSlot, unsigned int NumViews,const D3D12_STREAM_OUTPUT_BUFFER_VIEW *pViews);
+		void SOSetTargets(unsigned int StartSlot, unsigned int NumViews, const D3D12_STREAM_OUTPUT_BUFFER_VIEW *pViews);
 
 
 	private:

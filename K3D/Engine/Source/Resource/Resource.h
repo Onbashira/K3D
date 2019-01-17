@@ -1,5 +1,6 @@
 #pragma once
-#include "Engine/Source/Utility/D3D12Common.h"z
+#include "Engine/Source/Utility/D3D12Common.h"
+#include "Engine/Source/LifetimedMemory/LifetimedMemory.h"
 #include <tuple>
 #include <string>
 
@@ -8,8 +9,9 @@ namespace K3D {
 
 	class CommandList;
 
-	class Resource
+	class Resource : public enable_lifetimed_shared_from_this<Resource>
 	{
+
 	private:
 
 	protected:
@@ -25,8 +27,6 @@ namespace K3D {
 		Microsoft::WRL::ComPtr<ID3D12Resource>	_resource;
 	
 		std::string								_name;
-		
-	public:
 
 	private:
 
@@ -43,6 +43,8 @@ namespace K3D {
 		Resource& operator= (Resource&& value);
 		
 		virtual ~Resource();
+
+		static LifetimedShared_Ptr<Resource>								Create();
 		
 		virtual HRESULT														Create(const D3D12_HEAP_PROPERTIES& heapProps,const D3D12_HEAP_FLAGS& flags,const D3D12_RESOURCE_DESC& resourceDesc,const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
 		
@@ -81,6 +83,10 @@ namespace K3D {
 		void																SetName(std::string name);
 		
 		void																RegisterShaderSlot(unsigned int number);
-		
+
+	private:
+
+	private:	
+
 	};
 }

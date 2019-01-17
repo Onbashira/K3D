@@ -11,3 +11,4 @@
 #include <algorithm>
 #include <comdef.h>
 #include <wrl.h>
+#include "Engine/Source/LifetimedMemory/LifetimedMemory.h"

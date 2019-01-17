@@ -8,6 +8,7 @@
 #include "Engine/Source/Signature/RootSignature.h"
 #include "Engine/Source/Signature/CommandSignature.h"
 #include "Engine/Source/Math/Math.h"
+#include "Engine/Source/Device/D3D12Device.h"
 
 K3D::CommandList::CommandList() :
 	_commandList(), _commandAllocator(),
@@ -42,6 +43,24 @@ HRESULT K3D::CommandList::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE 
 	return S_OK;
 }
 
+HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device,unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+{
+	_listType = listType;
+	HRESULT result;
+	result = device.lock()->GetDevice()->CreateCommandAllocator(_listType, IID_PPV_ARGS(&_commandAllocator));
+	if (result != S_OK) {
+		return E_FAIL;
+	}
+
+	result = device.lock()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator.Get(), nullptr, IID_PPV_ARGS(&_commandList));
+	if (result != S_OK) {
+		return E_FAIL;
+	}
+
+
+	return S_OK;
+}
+
 HRESULT K3D::CommandList::SetResourceBarrie(ID3D12Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState)
 {
 	D3D12_RESOURCE_BARRIER resource_barrier{};
@@ -57,12 +76,27 @@ HRESULT K3D::CommandList::SetResourceBarrie(ID3D12Resource * resource, D3D12_RES
 	return S_OK;
 }
 
-Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2> K3D::CommandList::GetCommandList()const
+HRESULT K3D::CommandList::SetResourceBarrie(Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState)
+{
+	D3D12_RESOURCE_BARRIER resource_barrier{};
+
+	resource_barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	resource_barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	resource_barrier.Transition.pResource = resource->GetResource().Get();
+	resource_barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	resource_barrier.Transition.StateBefore = beforeState;
+	resource_barrier.Transition.StateAfter = afterState;
+
+	_commandList->ResourceBarrier(1, &resource_barrier);
+	return S_OK;
+}
+
+Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>& K3D::CommandList::GetCommandList()
 {
 	return this->_commandList;
 }
 
-Microsoft::WRL::ComPtr<ID3D12CommandAllocator> K3D::CommandList::GetAllocator()const
+Microsoft::WRL::ComPtr<ID3D12CommandAllocator>& K3D::CommandList::GetAllocator()
 {
 	return this->_commandAllocator;
 }

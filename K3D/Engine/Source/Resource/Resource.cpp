@@ -54,6 +54,11 @@ K3D::Resource::~Resource()
 	Discard();
 }
 
+LifetimedShared_Ptr<K3D::Resource> K3D::Resource::Create()
+{
+	return LifetimedShared_Ptr<Resource>();
+}
+
 
 HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
 {
