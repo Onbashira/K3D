@@ -4,7 +4,7 @@
 #include "AudioSourceManager.h"
 #include "Engine/Source/Math/Math.h"
 #include "Engine/Source/Utility/Utility.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 
 //ロード時間測定用
 #include <Windows.h>
@@ -14,6 +14,8 @@
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <mmiscapi.h>
+
 
 //このクラスで使うthreadの数
 constexpr unsigned int AUDIO_LOADER_THREAD_NUM = 12;

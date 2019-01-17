@@ -11,6 +11,7 @@ namespace K3D {
 	private:
 
 		unsigned int _elementByteSize;
+		unsigned int _sizeInBytes;
 		bool isConstantBuffer;
 
 	public:
@@ -30,7 +31,7 @@ namespace K3D {
 			Unmap(0, nullptr);
 		};
 
-		void Create(unsigned int elementCount = 1, bool isCB = false, D3D12_RESOURCE_FLAGS flags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE)
+		HRESULT Create(unsigned int elementCount = 1, bool isCB = false, D3D12_RESOURCE_FLAGS flags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE)
 		{
 			isConstantBuffer = isCB;
 
@@ -50,7 +51,7 @@ namespace K3D {
 
 			desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 			desc.Alignment = 0;
-			desc.Width = _elementByteSize * elementCount;
+			desc.Width = _sizeInBytes = _elementByteSize * elementCount;
 			desc.Height = 1;
 			desc.DepthOrArraySize = 1;
 			desc.MipLevels = 1;
@@ -60,19 +61,19 @@ namespace K3D {
 			desc.Layout = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 			desc.Flags = flags;
 
-			Resource::Create(prop, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+			auto hr = Resource::Create(prop, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 			Map(0, nullptr);
-
+			return hr;
 		};
 
 		void CopyData(unsigned int elementIndex, const T& data)
 		{
-			Resource::Update(&data, sizeof(T), sizeof(T) * elementIndex);
+			Resource::Update(&data, _elementByteSize, _elementByteSize * elementIndex);
 		};
 
 		void CopyArray(int arraySiz, const T* data)
 		{
-			Resource::Update(&data, sizeof(T)*arraySiz, 0);
+			Resource::Update(&data, _elementByteSize*arraySiz, 0);
 		};
 
 		void CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cbvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
@@ -98,7 +99,7 @@ namespace K3D {
 
 		unsigned int ElementNum()
 		{
-			return _elementByteSize / sizeof(T);
+			return  _sizeInBytes / _elementByteSize;
 		};
 
 		T* Data() {

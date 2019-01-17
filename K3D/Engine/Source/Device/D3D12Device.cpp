@@ -35,6 +35,7 @@ K3D::D3D12Device::~D3D12Device()
 
 HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
 {
+	HRESULT result = {};
 	_useWarpDevice = useWarpDevice;
 	if (_useWarpDevice) {
 		Microsoft::WRL::ComPtr<IDXGIAdapter>	warpAdapter;
@@ -56,9 +57,8 @@ HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
 		hardwareAdapter = nullptr;
 
 		for (UINT i = 0; DXGI_ERROR_NOT_FOUND != factory->GetFactory()->EnumAdapters1(i, &adapter); i++) {
-			DXGI_ADAPTER_DESC1 desc;
-			adapter->GetDesc1(&desc);
-			if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE)
+			adapter->GetDesc1(&_adapterDesc);
+			if (_adapterDesc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE)
 				continue;
 
 			for (auto i : FeatureLevels) {
@@ -66,27 +66,27 @@ HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
 					_featureLevel = i;
 					hardwareAdapter = adapter;
 					for (auto& spec : GPU_CARD_SPEC_LIST) {
-						if (spec == std::wstring(&desc.Description[0])) {
-							break;
+						if (spec == std::wstring(&_adapterDesc.Description[0])) {
+							result = D3D12CreateDevice(hardwareAdapter.Get(), _featureLevel, IID_PPV_ARGS(&_device));
+							if (FAILED(result)) {
+								return result;
+							};
+							_device->SetName(L"Device");
+							return result;
 						}
 					}
-					break;
 				}
 			}
 
 		}
 		adapter.Reset();
 
-		auto hr = D3D12CreateDevice(hardwareAdapter.Get(), _featureLevel, IID_PPV_ARGS(&_device));
-		if (FAILED(hr)) {
-			return hr;
-		};
+
 	}
-	auto hr = _device->GetDeviceRemovedReason();
-	_device->SetName(L"Device");
 
 
-	return hr;
+
+	return result;
 }
 
 Microsoft::WRL::ComPtr<ID3D12Device3> K3D::D3D12Device::GetDevice()const

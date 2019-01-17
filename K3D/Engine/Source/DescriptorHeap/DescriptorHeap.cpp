@@ -1,5 +1,5 @@
 #include "DescriptorHeap.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 #include "Engine/Source/Utility/Utility.h"
 #include "Engine/Source/CoreSystem/Framework.h"
 #include <string>

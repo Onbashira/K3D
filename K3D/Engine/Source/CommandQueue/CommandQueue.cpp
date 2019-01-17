@@ -1,7 +1,7 @@
 #include "CommandQueue.h"
 #include "Engine/Source/CoreSystem/Framework.h"
 #include "Engine/Source/Utility/Utility.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 
 K3D::CommandQueue::CommandQueue()  : _commandQueue()
 {

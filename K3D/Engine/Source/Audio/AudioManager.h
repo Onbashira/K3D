@@ -1,11 +1,10 @@
 #pragma once
-
+#include <xaudio2.h>
 #pragma comment(lib, "xaudio2.lib")
 #pragma comment(lib, "winmm.lib")
 
 #include "Engine/Source/Utility/NonCopyable.h"
 #include "AudioCallBack.h"
-#include <xaudio2.h>
 #include <mmsystem.h>
 #include <string>
 #include <wrl.h>

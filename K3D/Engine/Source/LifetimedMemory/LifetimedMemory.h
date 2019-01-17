@@ -9,6 +9,7 @@
 #include <yvals.h>
 #include <atomic>
 
+
 /**
  * @file LifetimedMemory
  * @brief shared_ptrÇ…ê∂ë∂éûä‘Çïtó^ÇµÇΩâ¸ë¢ÉNÉâÉX
@@ -46,7 +47,7 @@ struct _Can_enable_shared<_Yty, std::void_t<typename _Yty::_Esft_type>>
 };
 template<class _Other,
 	class _Yty>
-	void _Enable_shared_from_this1(const LifetimedShared_Ptr<_Other>& _This, _Yty * _Ptr, std::true_type)
+	void _Enable_lifetimed_shared_from_this1(const LifetimedShared_Ptr<_Other>& _This, _Yty * _Ptr, std::true_type)
 {	// enable shared_from_this
 	if (_Ptr && _Ptr->_Wptr.expired())
 	{
@@ -56,14 +57,14 @@ template<class _Other,
 
 template<class _Other,
 	class _Yty>
-	void _Enable_shared_from_this1(const LifetimedShared_Ptr<_Other>&, _Yty *, std::false_type)
+	void _Enable_lifetimed_shared_from_this1(const LifetimedShared_Ptr<_Other>&, _Yty *, std::false_type)
 {	
 	// don't enable shared_from_this
 }
 
 template<class _Other,
 	class _Yty>
-	void _Enable_shared_from_this(const LifetimedShared_Ptr<_Other>& _This, _Yty * _Ptr)
+	void _Enable_lifetimed_shared_from_this(const LifetimedShared_Ptr<_Other>& _This, _Yty * _Ptr)
 {	// possibly enable shared_from_this
 	_Enable_shared_from_this1(_This, _Ptr, std::bool_constant<std::conjunction_v<
 		std::negation<std::is_array<_Other>>,
@@ -872,7 +873,7 @@ private:
 	void _Set_ptr_rep_and_enable_shared(_Ux * _Px, LifetimedRefCountBase * _Rx)
 	{	// take ownership of _Px
 		this->_Set_ptr_rep(_Px, _Rx);
-		_Enable_shared_from_this(*this, _Px);
+		_Enable_lifetimed_shared_from_this(*this, _Px);
 	}
 
 	void _Set_ptr_rep_and_enable_shared(nullptr_t, LifetimedRefCountBase * _Rx)
@@ -936,6 +937,70 @@ template<class _Dx,
 	class _Ty>
 	_Dx * get_deleter(const LifetimedShared_Ptr<_Ty>&) noexcept = delete;	// requires static RTTI
 #endif /* _HAS_STATIC_RTTI */
+
+#if _HAS_CXX17
+template<class _Ty>
+LifetimedWeak_Ptr(LifetimedShared_Ptr<_Ty>)->LifetimedWeak_Ptr<_Ty>;
+#endif /* _HAS_CXX17 */
+
+template<class _Ty>
+void swap(LifetimedWeak_Ptr<_Ty>& _Left, LifetimedWeak_Ptr<_Ty>& _Right) noexcept
+{	// swap contents of _Left and _Right
+	_Left.swap(_Right);
+}
+
+// CLASS TEMPLATE enable_shared_from_this
+template<class _Ty>
+class enable_lifetimed_shared_from_this
+{	// provide member functions that create shared_ptr to this
+public:
+	using _Esft_type = enable_lifetimed_shared_from_this;
+
+	_NODISCARD LifetimedShared_Ptr<_Ty> shared_from_this()
+	{	// return shared_ptr
+		return (LifetimedShared_Ptr<_Ty>(_Wptr));
+	}
+
+	_NODISCARD LifetimedShared_Ptr<const _Ty> shared_from_this() const
+	{	// return shared_ptr
+		return (LifetimedShared_Ptr<const _Ty>(_Wptr));
+	}
+
+	_NODISCARD LifetimedWeak_Ptr<_Ty> weak_from_this() noexcept
+	{	// return weak_ptr
+		return (_Wptr);
+	}
+
+	_NODISCARD LifetimedWeak_Ptr<const _Ty> weak_from_this() const noexcept
+	{	// return weak_ptr
+		return (_Wptr);
+	}
+
+protected:
+	constexpr enable_lifetimed_shared_from_this() noexcept
+		: _Wptr()
+	{	// construct
+	}
+
+	enable_lifetimed_shared_from_this(const enable_lifetimed_shared_from_this&) noexcept
+		: _Wptr()
+	{	// construct (must value-initialize _Wptr)
+	}
+
+	enable_lifetimed_shared_from_this& operator=(const enable_lifetimed_shared_from_this&) noexcept
+	{	// assign (must not change _Wptr)
+		return (*this);
+	}
+
+	~enable_lifetimed_shared_from_this() = default;
+
+private:
+	template<class _Other,
+		class _Yty>
+		friend void _Enable_lifetimed_shared_from_this1(const LifetimedShared_Ptr<_Other>& _This, _Yty * _Ptr, std::true_type);
+
+	mutable LifetimedWeak_Ptr<_Ty> _Wptr;
+};
 
 #pragma pop_macro("new")
 _STL_RESTORE_CLANG_WARNINGS

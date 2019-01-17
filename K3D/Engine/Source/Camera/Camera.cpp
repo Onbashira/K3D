@@ -1,12 +1,8 @@
-#include <memory>
-#include "../../Resource/ConstantBuffer.h"
 #include "Camera.h"
-#include "../../CommandContext/GraphicsCommandList.h"
-#include "../../Resource/DepthStencilBuffer.h"
-#include "../../Util/Utility.h"
+
 
 K3D::Camera::Camera() :
-	_mode(CameraMode::Perspective) ,_aspectRatio(0.0f)
+	_mode(CameraMode::Perspective), _aspectRatio(0.0f)
 {
 }
 
@@ -33,8 +29,8 @@ void K3D::Camera::InitializeCamera(CameraMode type, const float width, const flo
 }
 
 void K3D::Camera::InitializeCameraFOV(const float fov, const float width, const float height, const float nearClip, const float farClip, const Vector3 & position, const Vector3 & target, const Vector3 & upWard)
-{	
-	
+{
+
 	_mode = CameraMode::Perspective;
 
 	_fov = DegToRad(fov);
@@ -58,7 +54,7 @@ HRESULT K3D::Camera::InitializeCameraDepthStencill(DXGI_FORMAT depthFormat, unsi
 
 }
 
-void K3D::Camera::SetCameraParamater(std::weak_ptr<GraphicsCommandList> list, unsigned int paramaterIndex)
+void K3D::Camera::SetCameraParamater(std::weak_ptr<CommandList> list, unsigned int paramaterIndex)
 {
 	list.lock()->GetCommandList()->SetGraphicsRootConstantBufferView(paramaterIndex, _cameraMatrixBuffer.GetResource()->GetGPUVirtualAddress());
 }
@@ -73,7 +69,7 @@ void K3D::Camera::Discard()
 
 HRESULT K3D::Camera::CreateBuffer()
 {
-	auto hr = _cameraMatrixBuffer.Create(Util::Alignment256Bytes(sizeof(CameraInfo)));
+	auto hr = _cameraMatrixBuffer.Create(1, true);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -90,7 +86,7 @@ void K3D::Camera::ChangeCameraMode(CameraMode mode)
 		InitializeOrthogonal(_windowWidth, _windowHeight, this->_near, _far, this->GetPos(), this->GetPos() + GetLocalAxis().w, GetLocalAxis().v);
 		break;
 	case K3D::CameraMode::Orthogonal:
-		initializePerspective(_windowWidth, _windowHeight, this->_near, _far,this->GetPos(), this->GetPos() + GetLocalAxis().w, GetLocalAxis().v);
+		initializePerspective(_windowWidth, _windowHeight, this->_near, _far, this->GetPos(), this->GetPos() + GetLocalAxis().w, GetLocalAxis().v);
 		break;
 	default:
 		break;
@@ -179,7 +175,7 @@ K3D::CameraInfo K3D::Camera::GetCameraInfo()
 	return this->_info;
 }
 
-K3D::ConstantBuffer & K3D::Camera::GetCameraBuffer()
+K3D::UploadBuffer<K3D::CameraInfo> & K3D::Camera::GetCameraBuffer()
 {
 	return this->_cameraMatrixBuffer;
 }
@@ -204,31 +200,29 @@ float K3D::Camera::GetFarClip()
 	return -(_projection._43 / (_projection._33 - 1.0f));
 }
 
+const D3D12_VIEWPORT & K3D::Camera::GetViewport() const
+{
+	return _viewport;
+}
+
+const D3D12_RECT & K3D::Camera::GetScissorRect() const
+{
+	return _scissorRect;
+}
+
 void K3D::Camera::Update()
 {
 	CameraInfo cameraMat{};
-	//std::cout << "POSITION : X = " << GetPos().x << std::endl;
-	//std::cout << "POSITION : Y = " << GetPos().y << std::endl;
-	//std::cout << "POSITION : Z = " << GetPos().z << std::endl;
-
-	//std::cout << "ANGLE : X = " << GetEulerAngles().x << " ";
-	//std::cout << "ANGLE : Y = " << GetEulerAngles().y << " ";
-	//std::cout << "ANGLE : Z = " << GetEulerAngles().z << std::endl;
-
-	////std::cout << "Rot : X = " << GetRotation().x << " ";
-	////std::cout << "Rot : Y = " << GetRotation().y << " ";
-	////std::cout << "Rot : Z = " << GetRotation().z << " ";
-	////std::cout << "Rot : W = " << GetRotation().w << std::endl;
-
-
-
 
 	this->_info.projection = this->_projection;
 	this->_info.view = this->GetView();
+	this->_info.invView = Matrix::Invert(this->_info.view);
+	this->_info.invViewProj = Matrix::Invert(this->_projection * this->GetView());
+
 	this->_info.windowHeight = this->_windowHeight;
 	this->_info.windowWidth = this->_windowWidth;
 
-	_cameraMatrixBuffer.Update(&this->_info, sizeof(CameraInfo), 0);
+	_cameraMatrixBuffer.CopyData(0, cameraMat);
 }
 
 void K3D::Camera::DebugMove(K3D::InputManager & input)
@@ -274,9 +268,3 @@ void K3D::Camera::DebugRotate(InputManager & input)
 		RotationAxisAngles(GetLocalAxis().w, DegToRad(-1.0f));
 	}
 }
-
-
-
-
-
-

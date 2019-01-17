@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Source\Debug\DebugWindow.cpp" />
     <ClCompile Include="Engine\Source\Debug\DebugManager.cpp" />
-    <ClCompile Include="Engine\Source\DynamicHeap\DynamicHeap.cpp" />
     <ClCompile Include="Engine\Source\MemoryAllocator\DefaultRawMemoryAllocator.cpp" />
     <ClCompile Include="Engine\Source\Rendering\DecaleBuffer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\CommandManager.cpp" />
@@ -59,7 +59,7 @@
     <ClCompile Include="Engine\Source\GameObject\Model\ModelLoader\PMD\PMDModel.cpp" />
     <ClCompile Include="Engine\Source\GameObject\Model\ModelLoader\PMX\PMXLoader.cpp" />
     <ClCompile Include="Engine\Source\GameObject\Model\ModelLoader\PMX\PMXModel.cpp" />
-    <ClCompile Include="Engine\Source\PIpelineState\PipelineStateObject.cpp" />
+    <ClCompile Include="Engine\Source\PipelineState\PipelineStateObject.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingManager.cpp" />
     <ClCompile Include="Engine\Source\Rendering\SwapChain.cpp" />
     <ClCompile Include="Engine\Source\Resource\ConstantBuffer.cpp" />
@@ -75,12 +75,13 @@
     <ClCompile Include="Engine\Source\ShaderObject\ShaderObjectManager.cpp" />
     <ClCompile Include="Engine\Source\Signature\CommandSignature.cpp" />
     <ClCompile Include="Engine\Source\Signature\RootSignature.cpp" />
+    <ClCompile Include="Engine\Source\Texture\DDSTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureLoader.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureManager.cpp" />
+    <ClCompile Include="Engine\Source\Texture\WICTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Time\Timer.cpp" />
-    <ClCompile Include="Engine\Source\Utility\Logger.cpp" />
+    <ClCompile Include="Engine\Source\Debug\Logger.cpp" />
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp" />
-    <ClCompile Include="Engine\Source\Utility\WICTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Window\Window.cpp" />
     <ClCompile Include="Engine\Source\Window\WindowManager.cpp" />
     <ClCompile Include="Engine\Source\TemporarilyBuffer\TemporarilyBuffer.cpp" />
@@ -106,16 +107,24 @@
     <ClCompile Include="Engine\Source\Resource\Sampler.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineResourceTable.cpp" />
+    <ClCompile Include="Engine\Source\Device\RenderingDevice.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\Camera\Camera.h" />
     <ClInclude Include="Engine\Source\Debug\DebugWindow.h" />
     <ClInclude Include="Engine\Source\Debug\DebugManager.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\DefaultRawMemoryAllocator.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\STDAllocator.h" />
+    <ClInclude Include="Engine\Source\Texture\DDSTextureLoader12.h" />
+    <ClInclude Include="Engine\Source\Texture\WICTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Utility\BasicTypes.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h" />
-    <ClInclude Include="Engine\Source\DynamicHeap\DynamicHeap.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\LifetimedMemory\LifetimedMemory.h" />
     <ClInclude Include="Engine\Source\Rendering\DecaleBuffer.h" />
@@ -155,7 +164,7 @@
     <ClInclude Include="Engine\Source\GameObject\Model\ModelLoader\PMD\PMDModel.h" />
     <ClInclude Include="Engine\Source\GameObject\Model\ModelLoader\PMX\PMXLoader.h" />
     <ClInclude Include="Engine\Source\GameObject\Model\ModelLoader\PMX\PMXModel.h" />
-    <ClInclude Include="Engine\Source\PIpelineState\PipelineStateObject.h" />
+    <ClInclude Include="Engine\Source\PipelineState\PipelineStateObject.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingManager.h" />
     <ClInclude Include="Engine\Source\Rendering\SwapChain.h" />
     <ClInclude Include="Engine\Source\Resource\ConstantBuffer.h" />
@@ -177,11 +186,10 @@
     <ClInclude Include="Engine\Source\Time\Timer.h" />
     <ClInclude Include="Engine\Source\Utility\D3D12Common.h" />
     <ClInclude Include="Engine\Source\Utility\d3dx12.h" />
-    <ClInclude Include="Engine\Source\Utility\Logger.h" />
+    <ClInclude Include="Engine\Source\Debug\Logger.h" />
     <ClInclude Include="Engine\Source\Utility\ManagerComponentBase.h" />
     <ClInclude Include="Engine\Source\Utility\NonCopyable.h" />
     <ClInclude Include="Engine\Source\Utility\Utility.h" />
-    <ClInclude Include="Engine\Source\Utility\WICTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Window\Window.h" />
     <ClInclude Include="Engine\Source\Window\WindowManager.h" />
     <ClInclude Include="Engine\Source\TemporarilyBuffer\TemporarilyBuffer.h" />
@@ -209,6 +217,9 @@
     <ClInclude Include="Engine\Source\Resource\Sampler.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineState.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineResourceTable.h" />
+    <ClInclude Include="Engine\Source\Device\RenderingDevice.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\includes\ShaderMath.hlsl">
@@ -291,10 +302,16 @@
       <ConformanceMode>false</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/include;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/lib/Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -319,14 +336,18 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/include;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/lib/Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

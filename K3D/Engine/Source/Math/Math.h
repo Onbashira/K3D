@@ -1016,17 +1016,6 @@ namespace Easing {
 	};
 };//Easing
 
-struct Vertex3D {
-	Vector3 pos;
-	Vector3	normal;
-	Vector2	texCoord;
-};
-
-struct Vertex2D {
-	Vector2 pos;
-	Vector2	texCoord;
-};
-
 //DirectXMathOperator
 inline DirectX::XMFLOAT3 operator - (const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b) {
 	return DirectX::XMFLOAT3(a.x - b.x, a.y - b.y, a.z - b.z);

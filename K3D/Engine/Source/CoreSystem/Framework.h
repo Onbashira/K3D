@@ -37,6 +37,8 @@ namespace K3D {
 
 		CommandQueue _queue;
 
+		std::shared_ptr<CommandList> _defaultCommandList;
+
 		Factory _factory;
 
 		Window		_window;
@@ -74,7 +76,6 @@ namespace K3D {
 			}
 		};
 
-
 		static void Destory() {
 
 			if (_instance != nullptr) {
@@ -91,6 +92,8 @@ namespace K3D {
 		static K3D::Factory& GetFactory();
 
 		static K3D::CommandQueue& GetCommandQueue();
+
+		static std::shared_ptr<CommandList> GetCommandList();
 
 		static K3D::Window& GetWindow();
 
@@ -122,18 +125,6 @@ namespace K3D {
 
 		static int LoopMessage();
 
-		static void PushBackOntimeBuffer(Resource* buffer);
-
-		static void PushBackOntimeBuffer(CommandList* buffer);
-
-		static void PushBackOntimeBuffer(DescriptorHeap* buffer);
-
-		static void PushBackOntimeBuffer(Microsoft::WRL::ComPtr<ID3D12DeviceChild> buffer);
-
-		static void PushFrontCommandList(CommandList* drawlist);
-
-		static void PushBackCommandList(CommandList* resourcelist);
-
 	private:
 
 		Framework();
@@ -155,6 +146,8 @@ namespace K3D {
 		HRESULT InitFactory();
 
 		HRESULT InitCommandQueue();
+
+		HRESULT InitCommandList();
 
 		HRESULT InitRenderingManager();
 

@@ -16,6 +16,8 @@ namespace K3D {
 
 		D3D_FEATURE_LEVEL						_featureLevel;
 
+		DXGI_ADAPTER_DESC1						_adapterDesc;
+
 		bool									_useWarpDevice;
 
 	public:	

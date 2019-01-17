@@ -1,7 +1,7 @@
 #include "Resource.h"
 #include "Engine/Source/Utility/D3D12Common.h"
 #include "Engine/Source/Utility/Utility.h"
-#include "Engine/Source/Utility/Logger.h"
+#include "Engine/Source/Debug/Logger.h"
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CoreSystem/Framework.h"
 
@@ -54,8 +54,13 @@ K3D::Resource::~Resource()
 	Discard();
 }
 
+LifetimedShared_Ptr<K3D::Resource> K3D::Resource::Create()
+{
+	return LifetimedShared_Ptr<Resource>();
+}
 
-HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps,const  D3D12_HEAP_FLAGS& flags,const  D3D12_RESOURCE_DESC& resourceDesc,const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
+
+HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
 {
 
 	_currentResourceState = state;
@@ -144,14 +149,9 @@ void K3D::Resource::Alignment256ByteUpdate(const void * pSrc, unsigned int eleme
 	}
 }
 
-ID3D12Resource * K3D::Resource::GetResource()
+Microsoft::WRL::ComPtr<ID3D12Resource>& K3D::Resource::GetResource()
 {
-	return _resource.Get();
-}
-
-ID3D12Resource ** K3D::Resource::GetAddressOf()
-{
-	return _resource.GetAddressOf();
+	return _resource;
 }
 
 const std::tuple<D3D12_HEAP_PROPERTIES, D3D12_HEAP_FLAGS> K3D::Resource::GetHeapPropaties()

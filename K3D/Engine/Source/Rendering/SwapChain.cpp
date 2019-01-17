@@ -63,11 +63,12 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 	//レンダーターゲットの作成
 	{
 		for (UINT i = 0; i < bufferNum; i++) {
+			auto res = this->_rtResource[i].GetResource();
 			//ディスプレイバッファの取得
-			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i].GetAddressOf()))))
+			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(res.GetAddressOf()))))
 				return FALSE;
 			//レンダーターゲットビューの取得
-			Framework::GetDevice().GetDevice()->CreateRenderTargetView(_rtResource[i].GetResource(), nullptr, _rtHeap.GetCPUHandle(i));
+			Framework::GetDevice().GetDevice()->CreateRenderTargetView(_rtResource[i].GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
 			_rtResource[i].SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
 			_rtResource[i].SetName("RenderTargetResource ");
 		}
@@ -125,7 +126,7 @@ HRESULT K3D::SwapChain::SetStateGenericRead(std::shared_ptr<CommandList> list)
 
 HRESULT K3D::SwapChain::CopyToRenderTarget(std::shared_ptr<CommandList> list,Resource* pSrc)
 {
-	list->GetCommandList()->CopyResource(this->_rtResource[_currentIndex].GetResource(),pSrc->GetResource());
+	list->GetCommandList()->CopyResource(this->_rtResource[_currentIndex].GetResource().Get(),pSrc->GetResource().Get());
 	return S_OK;
 }
 

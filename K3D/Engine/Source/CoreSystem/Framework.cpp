@@ -1,4 +1,6 @@
 #include "Framework.h"
+#include "Engine/Source/GraphicsManager/GraphicsContextManager.h"
+
 
 K3D::Framework::Framework() :
 	_windowWidth(640), _windowHeight(480), _useWarpDevice(false), _backBufferNum(3)
@@ -40,6 +42,11 @@ K3D::Factory & K3D::Framework::GetFactory()
 K3D::CommandQueue & K3D::Framework::GetCommandQueue()
 {
 	return _instance->_queue;
+}
+
+std::shared_ptr<K3D::CommandList> K3D::Framework::GetCommandList()
+{
+	return _instance->_defaultCommandList;
 }
 
 K3D::Window & K3D::Framework::GetWindow()
@@ -148,6 +155,8 @@ HRESULT K3D::Framework::InitD3D12()
 
 	CHECK_RESULT(InitCommandQueue());
 
+	CHECK_RESULT(InitCommandList());
+
 	CHECK_RESULT(InitRenderingManager());
 
 	CHECK_RESULT(InitInputManager());
@@ -177,6 +186,15 @@ HRESULT K3D::Framework::InitCommandQueue()
 	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
 
 	return _queue.Create(desc);
+}
+
+HRESULT K3D::Framework::InitCommandList()
+{
+	auto ret = GraphicsContextManager::GetInstance().CreateCommandList("DefaultDataUpdata", 0, D3D12_COMMAND_LIST_TYPE_BUNDLE);
+
+	this->_defaultCommandList = GraphicsContextManager::GetInstance().GetCommandList("DefaultDataUpdata");
+
+	return 	ret;
 }
 
 HRESULT K3D::Framework::InitRenderingManager()
