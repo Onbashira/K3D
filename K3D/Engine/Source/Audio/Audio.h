@@ -40,6 +40,7 @@ namespace K3D {
 		bool _isLoop;
 		//”jŠü‚³‚ê‚½‚©
 		bool _isDiscarded;
+
 	protected:
 
 	public:

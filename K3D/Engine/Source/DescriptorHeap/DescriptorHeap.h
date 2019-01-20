@@ -10,24 +10,32 @@ namespace K3D {
 
 	private:
 
+		//！CPUアドレス開始地点
 		D3D12_CPU_DESCRIPTOR_HANDLE						_cpuHandle;
 
+		//！CPUアドレス開始地点
 		D3D12_GPU_DESCRIPTOR_HANDLE						_gpuHandle;
 
+		//!タイプ
 		UINT											_type;
 
+		//！インクリメントサイズ
 		UINT											_incrementSize;
 
+		//！ヒープデスクリプション
 		D3D12_DESCRIPTOR_HEAP_DESC						_heapDesc;
 
+		//!ヒープ
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>	_heap;
 
+		//！ヒープ名
 		std::string										_heapName;
 
 	public:
 		DescriptorHeap();
 
 		~DescriptorHeap();
+
 
 		D3D12_CPU_DESCRIPTOR_HANDLE						GetCPUHandle(UINT indexCount)const;
 

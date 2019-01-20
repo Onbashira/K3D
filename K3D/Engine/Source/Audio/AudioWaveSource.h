@@ -12,24 +12,28 @@ namespace K3D {
 	public:
 
 	protected:
-
+		//!フォーマット
 		WAVEFORMATEXTENSIBLE _format;
-
+		//!波形データ
 		std::vector<float>	_wave;	//32bit wave
 
 	private:
 
 		struct AudioLoadingInfo {
 
-			//どれくらい読み込んだか
+			//!どれくらい読み込んだか
 			unsigned int _loadedSize;
-			//どれくらい読み込みサイクルを行ったか
+
+			//!どれくらい読み込みサイクルを行ったか
 			unsigned int _cycleNum;
-			//どれくらい読み込みサイクルを行えばいいか
+
+			//!どれくらい読み込みサイクルを行えばいいか
 			unsigned int _cycleMax;
-			//どれくらいの配列分読み取ったか
+
+			//!どれくらいの配列分読み取ったか
 			unsigned int _loadedIndex;
 
+			//!ロード済みフラグ
 			bool _isWaveLoaded;
 
 			AudioLoadingInfo() :
@@ -44,12 +48,32 @@ namespace K3D {
 
 		virtual ~AudioWaveSource();
 
+		/**
+		* @fn
+		* @brief フォーマットの取得
+		* @return フォーマットへの参照
+		*/
 		WAVEFORMATEX& GetWaveFormat();
 
+		/**
+		* @fn
+		* @brief Exフォーマットの取得
+		* @return Exフォーマットへの参照
+		*/
 		WAVEFORMATEXTENSIBLE& GetWaveFormatExtensible();
 
+		/**
+		* @fn
+		* @brief 波形の取得
+		* @return 波形の配列
+		*/
 		std::vector<float>&	GetWave();
 
+		/**
+		* @fn
+		* @brief ロードが終了しているか否か
+		* @return trueでロード終了、それ以外でロード中
+		*/
 		bool IsWaveLoaded();
 
 	protected:

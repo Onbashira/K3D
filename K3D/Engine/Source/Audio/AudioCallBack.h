@@ -11,22 +11,27 @@ namespace K3D {
 	private:
 
 	protected:
-				
+		
+		//!開始時に呼ばれる関数オブジェクト
 		std::function<void(UINT32)> _onVoiceProcessingPassStart;
 
+		//!終了時に呼ばれる関数オブジェクト
 		std::function<void()> _onVoiceProcessingPassEnd;
 
+		//!ストリーム終了地点で呼ばれる関数オブジェクト
 		std::function<void()> _onStreamEnd;
 
+		//!バッファの頭で呼ばれる関数オブジェクト
 		std::function<void(void*)> _onBufferStart;
 
+		//!バッファ終端で呼ばれる関数オブジェクト
 		std::function<void(void*)> _onBufferEnd;
 
+		//!ループ時に呼ばれる関数オブジェクト
 		std::function<void(void*)> _onLoopEnd;
 
+		//!エラー発生時に呼ばれる関数オブジェクト
 		std::function<void(void*, HRESULT)> _onVoiceError;
-
-
 
 	public:
 

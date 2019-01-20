@@ -4,18 +4,21 @@
 #include <string>
 namespace K3D {
 
+	class D3D12Device;
+
 	class CommandQueue
 	{
 
 
 	public:
 	private:
+		//!キュー
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_commandQueue;
-
+		
+		//!フェンス
 		K3D::Fence	_fence;
-
-		D3D12_COMMAND_QUEUE_DESC _desc;
-
+				
+		//!キューの名前
 		std::string _name;
 
 	public:
@@ -24,18 +27,62 @@ namespace K3D {
 
 		~CommandQueue();
 
+		/**
+		* @fn
+		* @brief キュー作成
+		* @param[in] desc キューのデスクリプション
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT												Create(D3D12_COMMAND_QUEUE_DESC& desc);
+		
+		/**
+		* @fn
+		* @brief キュー作成
+		* @param[in] device デバイス
+		* @param[in] desc キューのデスクリプション
+		* @return リザルト　S_OKで成功
+		*/
+		HRESULT												Create(std::weak_ptr<D3D12Device> device,D3D12_COMMAND_QUEUE_DESC& desc);
 
-		Microsoft::WRL::ComPtr<ID3D12CommandQueue>			GetQueue()const;
+		/**
+		* @fn
+		* @brief キューのフェッチ
+		* @return キューへの参照
+		*/
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>&			GetQueue();
 
+		/**
+		* @fn
+		* @brief 待機
+		* @param[in] fence　フェンス　NullPtrで保持フェンスで待機
+		*/
 		void												Wait(Fence* fence = nullptr);
 
+		/**
+		* @fn
+		* @brief タイムスタンプの取得
+		* @return タイムスタンプ
+		*/
 		UINT64												GetTimestampFrequency();
 
-		D3D12_COMMAND_QUEUE_DESC							GetDesc();
+		/**
+		* @fn
+		* @brief キューのデスクリプションの取得
+		* @return デスクリプション
+		*/
+		D3D12_COMMAND_QUEUE_DESC&							GetDesc();
 
+		/**
+		* @fn
+		* @brief キューの名前の設定
+		* @param[in] name 名前
+		*/
 		void SetName(std::string name);
 
+		/**
+		* @fn
+		* @brief 破棄
+		*/
 		void Discard();
 
 	private:

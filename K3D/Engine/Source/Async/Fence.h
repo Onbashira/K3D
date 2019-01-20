@@ -18,11 +18,13 @@ namespace K3D {
 
 	private:
 
-		//Fence本体
+		//!Fence本体
 		Microsoft::WRL::ComPtr<ID3D12Fence> _fence;
-		//Fenceバリュー
+
+		//!Fenceバリュー
 		UINT64								_fenceValue;
-		//イベント
+
+		//!イベント
 		void*								_fenceEvent;
 
 	public:

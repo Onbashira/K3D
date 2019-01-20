@@ -26,8 +26,10 @@ namespace K3D {
 
 	private:
 
+		//!XAudio2
 		IXAudio2* _xAudio2;
 
+		//！マスタボイス
 		IXAudio2MasteringVoice* _masterVoice;
 
 	public:
@@ -39,14 +41,36 @@ namespace K3D {
 			return instance;
 		}
 
+		/**
+		* @fn
+		* @brief Xaudio2初期化
+		*/
 		static void InitializeXAudio2();
 
+		/**
+		* @fn
+		* @brief 破棄
+		*/
 		void Discard();
 
+		/**
+		* @fn
+		* @brief サウンドエンジンの起動
+		*/
 		void StartSoundEngine();
 
+		/**
+		* @fn
+		* @brief サウンドエンジンの停止
+		*/
 		void StopSoundEngine();
 
+		/**
+		* @fn
+		* @brief オーディオのロード
+		* @oparam[in] audioFilePath ファイルパス
+		* @return サウンドデータ
+		*/
 		std::unique_ptr<Audio> LoadAudio(std::string audioPath);
 
 	private:
@@ -61,9 +85,27 @@ namespace K3D {
 
 		void operator = (AudioManager&&value) {};
 
+		/**
+		* @fn
+		* @brief ソースボイスの作成
+		* @oparam[in] waveResource ファイルパス
+		* @oparam[in] callback コールバック
+		* @oparam[in] sendList リスト
+		* @oparam[in] effectChain エフェクト
+		* @return サウンドデータ
+		*/
 		std::unique_ptr<Audio> CreateSourceVoice(std::weak_ptr<AudioWaveSource> waveResource, AudioCallBack *callback = nullptr,
 			const XAUDIO2_VOICE_SENDS *sendList = nullptr, const XAUDIO2_EFFECT_CHAIN *effectChain = nullptr);
-
+		
+		/**
+		* @fn
+		* @brief ソースボイスの作成
+		* @oparam[in] waveResource ファイルパス
+		* @oparam[in] callback コールバック
+		* @oparam[in] sendList リスト
+		* @oparam[in] effectChain エフェクト
+		* @return サウンドデータ
+		*/
 		std::unique_ptr<Audio> CreateSourceVoiceEx(std::weak_ptr<AudioWaveSource> waveResource, AudioCallBack *callback = nullptr,
 			const XAUDIO2_VOICE_SENDS *sendList = nullptr, const XAUDIO2_EFFECT_CHAIN *effectChain = nullptr);
 	};

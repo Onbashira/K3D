@@ -31,17 +31,45 @@ namespace K3D {
 			return instance;
 		}
 
-
+		/**
+		* @fn
+		* @brief ローダを停止する
+		*/
 		void StopLoad();
 
+		/**
+		* @fn
+		* @brief ローダを再起動
+		*/
 		void ReStartLoad();
 
+		/**
+		* @fn
+		* @brief ロードが停止中か否か
+		* @return trueでロード停止中、それ以外で稼働中
+		*/
 		bool IsStopLoad();
 
+		/**
+		* @fn
+		* @brief 波形をロードしているスレッドを停止、破棄する
+		*/
 		void DiscardWorkerThreads();
 
+		/**
+		* @fn
+		* @brief オーディオのロード
+		* @oparam[in] audioFilePath ファイルパス
+		* @return 波形の生データ
+		*/
 		std::shared_ptr<AudioWaveSource> LoadAudio(std::string audioFilePath);
 
+		/**
+		* @fn
+		* @brief オーディオのロード
+		* @oparam[in] audioFilePath ファイルパス
+		* @return 波形の生データ
+		*/
 		std::shared_ptr<AudioWaveSource> LoadAudioEx(std::string audioFilePath);
 
 	private:

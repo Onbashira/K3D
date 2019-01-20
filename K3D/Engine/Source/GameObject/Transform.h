@@ -3,19 +3,19 @@
 
 namespace K3D {
 
-	///オブジェクトの移動、回転情報
+	//!オブジェクトの移動、回転情報を保持、計算するクラス
 	class Transform
 	{
 	public:
 
 	protected:
-		///ルートオブジェクトの位置
+		//!ルートオブジェクトの位置
 		Vector3 _pos;
 
-		///ルートオブジェクトの任意軸と回転量
+		//!ルートオブジェクトの任意軸と回転量
 		Quaternion _rotation;
 
-		///保持オイラー角
+		//!保持オイラー角
 		Vector3 _eulerAngles;
 
 	private:

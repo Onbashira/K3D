@@ -6,6 +6,7 @@
 #include "Engine/Source/Utility/NonCopyable.h"
 
 namespace K3D {
+	//!ログレベル
 	enum class LogLevel {
 		Details,
 		Info,
@@ -25,12 +26,34 @@ namespace K3D {
 
 		virtual ~ILogger() {};
 
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] format ログ文
+		*/
 		virtual void		Log(LogLevel level, std::string format) = 0;
 
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] format ログ文
+		*/
 		virtual void		LogW(LogLevel level, std::wstring format) = 0;
 
+		/**
+		* @fn
+		* @brief フィルター以下のレベルのロギングを抑制するためフィルターの設定
+		* @param[in] level 
+		*/
 		virtual void		SetFilter(LogLevel level) = 0;
 
+		/**
+		* @fn
+		* @brief フィルターのフェッチ
+		* @return フィルタ
+		*/
 		virtual LogLevel	GetFilter() = 0;
 
 	};
@@ -38,8 +61,10 @@ namespace K3D {
 	class  SystemLogger : public ILogger, private NonCopyable {
 	private:
 
+		//!フィルタ
 		LogLevel _LogFilter;
 		
+		//！デバッグファイル
 		std::ofstream _debugFile;
 
 	public:
@@ -54,26 +79,84 @@ namespace K3D {
 
 		~SystemLogger();
 
+		/**
+		* @fn
+		* @brief ファイルへマッピング
+		* @param[in] fileName ファイル名
+		*/
 		void		Map(std::string fileName);
 		
+		/**
+		* @fn
+		* @brief マップ解除
+		*/
 		void		UnMap();
 		
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] hr リザルト
+		*/
 		void		Log(LogLevel level, HRESULT hr);
-		
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] format ログ文
+		*/
 		void		Log(LogLevel level, std::string format);
 		
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] format ログ文
+		*/
 		void		Log(LogLevel level, const char* format, ...);
 		
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] format ログ文
+		*/
 		void		LogW(LogLevel level, std::wstring format);
 		
+		/**
+		* @fn
+		* @brief ロギング
+		* @param[in] level ログレベル
+		* @param[in] format ログ文
+		*/
 		void		LogW(LogLevel level, const wchar_t* format, ...);
 		
+		/**
+		* @fn
+		* @brief フィルター以下のレベルのロギングを抑制するためフィルターの設定
+		* @param[in] level
+		*/
 		void		SetFilter(LogLevel level);
 		
+		/**
+		* @fn
+		* @brief フィルターのフェッチ
+		* @return フィルタ
+		*/
 		LogLevel	GetFilter();
 		
+		/**
+		* @fn
+		* @brief 出力パスの設定
+		* @param[in] filePath
+		*/
 		void		SetDebugFilePath(std::string filePath);
 		
+		/**
+		* @fn
+		* @brief インスタンスの取得
+		* @return インスタンス
+		*/
 		static SystemLogger& GetInstance();
 	};
 

@@ -18,15 +18,19 @@ namespace K3D {
 	public:
 
 	private:
-		//スレッド
+		//!スレッド
 		std::vector< std::thread > _workers;
-		//タスク
+
+		//!タスク
 		std::queue< std::function<void()> > _tasks;
-		//ミューテックス
+
+		//!ミューテックス
 		std::mutex _queueMutex;
-		//状態変数
+
+		//!状態変数
 		std::condition_variable _condition;
-		//停止フラグ
+
+		//!停止フラグ
 		bool _stop;
 	
 	public:

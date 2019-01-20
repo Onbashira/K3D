@@ -13,10 +13,9 @@ namespace K3D {
 	public:
 		
 	private:
-		
+		//!ì¬‚³‚ê‚½ƒLƒ…[‚ğ•Û
 		UnorderedManagerComponentBase<CommandQueue> _queues;
-		
-
+	
 	public:
 
 		CommandQueueManager();

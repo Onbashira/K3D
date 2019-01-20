@@ -29,15 +29,19 @@ namespace K3D {
 	public:
 
 	private:
-		//グラフィクスコマンドリスト
+		//!グラフィクスコマンドリスト
 		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>	_commandList;
-		//コマンドリスト
+
+		//!コマンドリスト
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>		_commandAllocator;
-		//コマンドリストの名前
+
+		//!コマンドリストの名前
 		std::string											_commandListName;
-		//コマンドアロケータの名前
+
+		//!コマンドアロケータの名前
 		std::string											_commandAllocatorName;
-		//
+
+		//!リストのタイプ
 		D3D12_COMMAND_LIST_TYPE								_listType;
 
 
@@ -47,33 +51,117 @@ namespace K3D {
 
 		~CommandList();
 
+		/**
+		* @fn
+		* @brief コマンドリストの作成
+		* @param[in] nodeMask ノードマスク
+		* @param[in] listType リストのタイプ
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
+		/**
+		* @fn
+		* @brief コマンドリストの作成
+		* @param[in] device 作成に使うデバイス
+		* @param[in] nodeMask ノードマスク
+		* @param[in] listType リストのタイプ
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
+		/**
+		* @fn
+		* @brief リソースの状態遷移
+		* @param[in] resource 遷移するリソース
+		* @param[in] beforeState 前の状態
+		* @param[in] afterState 新しい状態
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT SetResourceBarrie(ID3D12Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
 
+		/**
+		* @fn
+		* @brief リソースの状態遷移
+		* @param[in] resource 遷移するリソース
+		* @param[in] beforeState 前の状態
+		* @param[in] afterState 新しい状態
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT SetResourceBarrie(Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
-
+	
+		/**
+		* @fn
+		* @brief コマンドリストの取得
+		* @return コマンドリストへの参照
+		*/
 		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>&	GetCommandList();
 
+		/**
+		* @fn
+		* @brief コマンドアロケーターの取得
+		* @return コマンドアロケーターへの参照
+		*/
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>&		GetAllocator();
 
+		/**
+		* @fn
+		* @brief リストのリセット
+		* @param[in] pInitialState　パイプラインステート
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT	ResetCommandList(ID3D12PipelineState* pInitialState = nullptr);
 
+		/**
+		* @fn
+		* @brief アロケーターのリセット
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT	ResetAllocator();
 
+		/**
+		* @fn
+		* @brief リスト、アロケーターのリセット
+		*/
 		void Reset();
 
+		/**
+		* @fn
+		* @brief コマンドリストのクローズ
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT	CloseCommandList();
 
+		/**
+		* @fn
+		* @brief リスト、アロケーターの破棄
+		*/
 		void Discard();
 
+		/**
+		* @fn
+		* @brief リスト、アロケーターの名前の設定
+		* @param[in] objectName リスト、アロケーターの名前
+		*/
 		void SetName(std::string objectName);
 
+		/**
+		* @fn
+		* @brief リストの名前の設定
+		* @param[in] objectName リストの名前
+		*/
 		void SetCommandListName(std::string name);
 
+		/**
+		* @fn
+		* @brief アロケーターの名前の設定
+		* @param[in] objectName アロケーターの名前
+		*/
 		void SetCommandAllocatorName(std::string name);
+
+		//以下の関数はID3D12GraphicsCommandListの関数をラッピングしたものである
+		//リファレンスとしてMSDNのリンクを貼っておく
+		//https://docs.microsoft.com/en-us/windows/desktop/api/d3d12/nn-d3d12-id3d12graphicscommandlist
 
 		void BeginEvent(unsigned int metadata, const void *pData, unsigned int size);
 

@@ -41,7 +41,7 @@ K3D::Factory & K3D::Framework::GetFactory()
 
 K3D::CommandQueue & K3D::Framework::GetCommandQueue()
 {
-	return _instance->_queue;
+	return _instance->_drawQueue;
 }
 
 std::shared_ptr<K3D::CommandList> K3D::Framework::GetCommandList()
@@ -185,7 +185,7 @@ HRESULT K3D::Framework::InitCommandQueue()
 	desc.Flags = D3D12_COMMAND_QUEUE_FLAGS::D3D12_COMMAND_QUEUE_FLAG_NONE;
 	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-	return _queue.Create(desc);
+	return _drawQueue.Create(desc);
 }
 
 HRESULT K3D::Framework::InitCommandList()
@@ -199,7 +199,7 @@ HRESULT K3D::Framework::InitCommandList()
 
 HRESULT K3D::Framework::InitRenderingManager()
 {
-	return _renderingManager.Initialize(&_queue, &_factory, &_window, _windowWidth, _windowHeight, _backBufferNum);
+	return _renderingManager.Initialize(&_drawQueue, &_factory, &_window, _windowWidth, _windowHeight, _backBufferNum);
 }
 
 HRESULT K3D::Framework::InitInputManager()
@@ -227,7 +227,7 @@ void K3D::Framework::TermWindow()
 void K3D::Framework::TermD3D()
 {
 	_renderingManager.Term();
-	_queue.Discard();
+	_drawQueue.Discard();
 	this->_timer.Stop();
 	this->_factory.Discard();
 	this->_device.Discard();

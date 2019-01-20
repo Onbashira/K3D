@@ -9,6 +9,7 @@ namespace K3D {
 
 	private:
 
+		//!波形の生データを保持するクラス
 		UnorderedManagerComponentBase<AudioWaveSource> _resourceMap;
 
 	public:
@@ -31,14 +32,40 @@ namespace K3D {
 
 		static AudioSourceManager& GetInstance() { static AudioSourceManager instance; return instance; };
 
+		/**
+		* @fn
+		* @brief 波形データのセット
+		* @oparam[in] resourceName 波形の名前
+		* @oparam[in] source 波形の生データ
+		*/
 		void SetResource(std::string resourceName, std::shared_ptr<AudioWaveSource> source);
 
+		/**
+		* @fn
+		* @brief 波形データのセット
+		* @oparam[in] resourceName 波形の名前
+		* @return 波形データへの弱参照
+		*/
 		std::weak_ptr<K3D::AudioWaveSource> GetResource(std::string resourceName);
-
+	
+		/**
+		* @fn
+		* @brief 波形削除
+		*/
 		void EraseResource(std::string name);
 
+		/**
+		* @fn
+		* @brief 波形がロード済みかどうか
+		* @oparam[in] resourceName 波形の名前
+		* @return trueでロード済み、Falseで未ロード
+		*/
 		bool IsLoaded(std::string resourceName);
 
+		/**
+		* @fn
+		* @brief 保持データの破棄
+		*/
 		void DiscardManager();
 	};
 }

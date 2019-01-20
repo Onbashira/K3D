@@ -11,7 +11,7 @@ namespace K3D {
 	class DescriptorHeap;
 	class CommandList;
 
-	class DebugWindow
+	class [[depulicated]]DebugWindow
 	{
 	public:
 		struct FrameResource {
@@ -32,8 +32,6 @@ namespace K3D {
 		FrameResource* _frameResource;
 
 		DXGI_FORMAT		_format;
-
-
 
 	public:
 
