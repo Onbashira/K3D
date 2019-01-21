@@ -40,7 +40,7 @@ namespace K3D {
 		std::wstring _appClassName;
 
 		//!デバイス
-		D3D12Device _device;
+		std::shared_ptr<D3D12Device> _device;
 
 		//!デフォルトのコマンドリスト
 		std::shared_ptr<CommandList> _defaultCommandList;
@@ -124,7 +124,7 @@ namespace K3D {
 		* @brief デバイスフェッチ
 		* @return デバイス
 		*/
-		static K3D::D3D12Device& GetDevice();
+		static std::shared_ptr<K3D::D3D12Device>& GetDevice();
 
 		/**
 		* @fn
@@ -133,38 +133,118 @@ namespace K3D {
 		*/
 		static K3D::Factory& GetFactory();
 
+		/**
+		* @fn
+		* @brief コマンドキューフェッチ
+		* @return キュー
+		*/
 		static K3D::CommandQueue& GetCommandQueue();
 
+		/**
+		* @fn
+		* @brief コマンドリスト
+		* @return リスト
+		*/
 		static std::shared_ptr<CommandList> GetCommandList();
 
+		/**
+		* @fn
+		* @brief ウインドウフェッチ
+		* @return ウインドウ
+		*/
 		static K3D::Window& GetWindow();
 
+		/**
+		* @fn
+		* @brief 描画マネージャフェッチ
+		* @return 描画マネージャ
+		*/
 		static K3D::RenderingManager& GetRenderingManagre();
 
+		/**
+		* @fn
+		* @brief タイマーフェッチ
+		* @return タイマー
+		*/
 		static K3D::Timer& Time();
 
+		/**
+		* @fn
+		* @brief バックサーフェスをフリップする
+		*/
 		static void FlipScreen();
 
+		/**
+		* @fn
+		* @brief スクリーンをクリアする
+		* @param[in] list　コマンドリストの弱参照
+		*/
 		static void ClearScreen(std::weak_ptr<CommandList> list);
 
+		/**
+		* @fn
+		* @brief ウインドウの名前を設定する
+		* @param[in] name ウインドウの名前
+		*/
 		static void SetWindowName(std::wstring name);
 
+		/**
+		* @fn
+		* @brief ウインドウのサイズを設定する
+		* @param[in] width ウインドウの幅
+		* @param[in] height ウインドウの高さ
+		*/
 		static void SetWindowSize(unsigned int width, unsigned int  height);
 
+		/**
+		* @fn
+		* @brief バックバッファの数を設定する
+		* @param[in] backBufferNum バックバッファの数
+		*/
 		static void SetBackBufferNum(unsigned int backBufferNum);
 
+		/**
+		* @fn
+		* @brief 計測開始
+		*/
 		static void TimerStart();
 
+		/**
+		* @fn
+		* @brief 計測停止
+		*/
 		static void TimerStop();
 
+		/**
+		* @fn
+		* @brief 呼び出し時点での差分をコミット
+		*/
 		static void Tick();
 
+		/**
+		* @fn
+		* @brief 前フレームとの差分を取得
+		*/
 		static float DeltaTime();
 
+		/**
+		* @fn
+		* @brief 入力マネージャフェッチ
+		* @return 入力マネージャ
+		*/
 		static InputManager& Input();
 
+		/**
+		* @fn
+		* @brief オーディオマネージャフェッチ
+		* @return オーディオマネージャ
+		*/
 		static AudioManager& AudioManager();
 
+		/**
+		* @fn
+		* @brief メッセージループ
+		*/
 		static int LoopMessage();
 
 	private:
@@ -179,26 +259,79 @@ namespace K3D {
 
 		Framework& operator =(Framework&&) { return *this; };
 
+		/**
+		* @fn
+		* @brief ウインドウの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitWindow();
 
+		/**
+		* @fn
+		* @brief D3D12システムの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitD3D12();
 
+		/**
+		* @fn
+		* @brief デバイスの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitDevice();
 
+		/**
+		* @fn
+		* @brief ファクトリの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitFactory();
 
+		/**
+		* @fn
+		* @brief コマンドキューの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitCommandQueue();
 
+		/**
+		* @fn
+		* @brief コマンドリストの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitCommandList();
 
+		/**
+		* @fn
+		* @brief レンダリングマネージャの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitRenderingManager();
 
+		/**
+		* @fn
+		* @brief 入力マネージャの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitInputManager();
 
+		/**
+		* @fn
+		* @brief オーディオマネージャの初期化
+		* @return　リザルト　S_OKで成功
+		*/
 		HRESULT InitAudioManager();
 
+		/**
+		* @fn
+		* @brief ウインドウの処理を終了する
+		*/
 		void TermWindow();
 
+		/**
+		* @fn
+		* @brief D3D12システムを終了させる
+		*/
 		void TermD3D();
 	};
 }

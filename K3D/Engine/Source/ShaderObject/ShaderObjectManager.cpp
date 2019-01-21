@@ -18,7 +18,7 @@ K3D::ShaderObjectManager::~ShaderObjectManager()
 }
 
 
-HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC gps, ID3DBlob * signature)
+HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC& gps, ID3DBlob * signature)
 {
 	if (_psolibrary.find(psoName) == _psolibrary.end()) {
 		HRESULT hr = {};
@@ -42,7 +42,12 @@ HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_
 	return E_FAIL;
 }
 
-HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC cps, ID3DBlob * signature)
+HRESULT K3D::ShaderObjectManager::CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gps, ID3DBlob * signature)
+{
+	return E_NOTIMPL;
+}
+
+HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC& cps, ID3DBlob * signature)
 {
 	if (_psolibrary.find(psoName) == _psolibrary.end()) {
 		this->_psolibrary[psoName] = std::make_shared<K3D::PipelineStateObject>();
@@ -62,6 +67,11 @@ HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_COMPUTE_P
 		return hr;
 	}
 	return E_FAIL;
+}
+
+HRESULT K3D::ShaderObjectManager::CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC & gps, ID3DBlob * rootSignature)
+{
+	return E_NOTIMPL;
 }
 
 HRESULT K3D::ShaderObjectManager::CreateRootSignature(std::string rsName, ID3DBlob * signature)

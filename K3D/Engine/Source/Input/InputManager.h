@@ -152,10 +152,19 @@ namespace K3D {
 	public:
 
 	private:
+		//!前フレームのキーボードの入力情報
 		BYTE _preKey[256];
+
+		//!現フレームのキーボードの入力情報
 		BYTE _key[256];
+
+		//!マウス情報
 		Vector2 _mousePos;
+		
+		//!ゲームパッドマネージャ
 		GamePadManager _gamePadManager;
+
+		//!フォーカスしているHWND
 		HWND _forcusWindowHandle;
 
 	public:
@@ -164,26 +173,84 @@ namespace K3D {
 
 		~InputManager();
 
+		/**
+		* @fn
+		* @brief 入力全体の更新
+		*/
 		void InputUpdate();
 
+		/**
+		* @fn
+		* @brief キーが押された瞬間かどうか
+		* @param[in] code 仮想キーコード
+		* @return 真で押された瞬間
+		*/
 		bool IsTriggerDown(VIRTUAL_KEY_STATE code);
 
+		/**
+		* @fn
+		* @brief キーが離された瞬間かどうか
+		* @param[in] code 仮想キーコード
+		* @return 真で離された瞬間
+		*/
 		bool IsTriggerUp(VIRTUAL_KEY_STATE code);
 
+		/**
+		* @fn
+		* @brief キーが押されている瞬間かどうか
+		* @param[in] code 仮想キーコード
+		* @return 真で押されている状態
+		*/
 		bool IsDown(VIRTUAL_KEY_STATE code);
 
+		/**
+		* @fn
+		* @brief キーがトグル状態かどうか
+		* @param[in] code 仮想キーコード
+		* @return 真でトグル状態
+		*/
 		bool IsToggle(VIRTUAL_KEY_STATE code);
 
+		/**
+		* @fn
+		* @brief マウスの位置の取得
+		* @return マウスのスクリーンスペースでの位置
+		*/
 		Vector2 GetMousePos();
 
+		/**
+		* @fn
+		* @brief 破棄
+		*/
 		void Discard();
 
+		/**
+		* @fn
+		* @brief フォーカス先のセット
+		* @param[in] forcusWindow フォーカス先ウインドウハンドル
+		*/
 		void SetFocusWindow(HWND forcusWindow);
 
+		/**
+		* @fn
+		* @brief コントローラーの初期化
+		* @param[in] cotrollerNum コントローラー数
+		*/
 		void GamePadInitialize(int cotrollerNum = 4);
 
+		/**
+		* @fn
+		* @brief ゲームパッドマネージャのフェッチ
+		* @return ゲームパッドマネージャの参照
+		*/
 		GamePadManager& GetGamePadManager();
 
+		/**
+		* @fn
+		* @brief ゲームパッドのフェッチ
+		* @param[in] cotrollerID コントローラID
+		* @return ゲームパッドの参照
+		*/
 		std::shared_ptr<GamePad> GetGamePad(int cotrollerID = 0);
 
 	private:

@@ -3,6 +3,9 @@
 #include <string>
 
 namespace K3D {
+
+	class D3D12Device;
+
 	class DescriptorHeap
 	{
 
@@ -36,27 +39,107 @@ namespace K3D {
 
 		~DescriptorHeap();
 
-
+		/**
+		* @fn
+		* @brief CPUハンドルのフェッチ
+		* @param[in] index ビューインデックス
+		* @return CPUハンドル
+		*/
 		D3D12_CPU_DESCRIPTOR_HANDLE						GetCPUHandle(UINT indexCount)const;
 
+		/**
+		* @fn
+		* @brief GPUハンドルのフェッチ
+		* @param[in] index ビューインデックス
+		* @return GPUハンドル
+		*/
 		D3D12_GPU_DESCRIPTOR_HANDLE						GetGPUHandle(UINT indexCount)const;
 
+		/**
+		* @fn
+		* @brief インクリメントサイズのフェッチ
+		* @return ヒープインクリメントサイズ
+		*/
 		UINT											GetIncrementSize()const;
 
-		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>	GetHeap()const;
+		/**
+		* @fn
+		* @brief ヒープのフェッチ
+		* @return ヒープの参照
+		*/
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>&	GetHeap();
 
+		/**
+		* @fn
+		* @brief ヒープポインタのフェッチ
+		* @return ヒープのポインタ
+		*/
 		ID3D12DescriptorHeap* 							GetPtr()const;
 
+		/**
+		* @fn
+		* @brief 情報のフェッチ
+		* @return 情報
+		*/
 		const D3D12_DESCRIPTOR_HEAP_DESC&				GetDesc()const;
 
+		/**
+		* @fn
+		* @brief ヒープポインタのフェッチ
+		* @return ヒープのポインタ
+		*/
 		ID3D12DescriptorHeap*							operator ->();
 
+		/**
+		* @fn
+		* @brief ヒープの作成
+		* @param[in] pDesc デスクリプションへのポインタ
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT											Create(D3D12_DESCRIPTOR_HEAP_DESC* pDesc);
 
+		/**
+		* @fn
+		* @brief ヒープの作成
+		* @param[in] device 作成に使用するデバイス
+		* @param[in] pDesc デスクリプションへのポインタ
+		* @return リザルト　S_OKで成功
+		*/
+		HRESULT											Create(std::shared_ptr<D3D12Device> device,D3D12_DESCRIPTOR_HEAP_DESC* pDesc);
+
+		/**
+		* @fn
+		* @brief ヒープの作成
+		* @param[in] type ヒープのタイプ
+		* @param[in] numDescriptors デスクリプタの数
+		* @param[in] nodeMask ノードマスク
+		* @return リザルト　S_OKで成功
+		*/
 		HRESULT											Create(D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask = 0);
 
+		/**
+		* @fn
+		* @brief ヒープの作成
+		* @param[in] device 作成に使用するデバイス
+		* @param[in] type ヒープのタイプ
+		* @param[in] numDescriptors デスクリプタの数
+		* @param[in] nodeMask ノードマスク
+		* @return リザルト　S_OKで成功
+		*/
+		HRESULT											Create(std::shared_ptr<D3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask = 0);
+
+		/**
+		* @fn
+		* @brief ヒープの名前の設定
+		* @param[in] name 名前
+		* @return リザルト　S_OKで成功
+		*/
 		void											SetName(std::string name);
 
+		/**
+		* @fn
+		* @brief ヒープの破棄
+		*/
 		void											Discard();
 
 	private:

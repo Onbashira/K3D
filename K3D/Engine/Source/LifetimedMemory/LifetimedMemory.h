@@ -90,8 +90,13 @@ private:
 	virtual void DeleteThis() noexcept = 0;
 #endif /* _M_CEE_PURE */
 
+	//!ユーザーカウント
 	std::_Atomic_counter_t _uses;
+
+	//!弱参照カウント
 	std::_Atomic_counter_t _weaks;
+
+	//!生存時間
 	std::atomic<unsigned long> _lifetime;
 
 protected:

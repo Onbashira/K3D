@@ -49,7 +49,7 @@ void K3D::GraphicsContextManager::ResetCommandList(std::string commandListName)
 
 }
 
-HRESULT K3D::GraphicsContextManager::ExcutionCommandListAsync(CommandQueue * queue, std::vector<std::string> commandListNames, Fence * fence)
+HRESULT K3D::GraphicsContextManager::ExecutionCommandListAsync(CommandQueue * queue, std::vector<std::string> commandListNames, Fence * fence)
 {
 
 	std::vector<ID3D12CommandList*> lists(commandListNames.size());
@@ -63,7 +63,7 @@ HRESULT K3D::GraphicsContextManager::ExcutionCommandListAsync(CommandQueue * que
 	return S_OK;
 }
 
-HRESULT K3D::GraphicsContextManager::ExcutionAllCommandLists(CommandQueue * queue, Fence* fence)
+HRESULT K3D::GraphicsContextManager::ExecutionAllCommandLists(CommandQueue * queue, Fence* fence)
 {
 
 	std::vector< ID3D12CommandList *> lists;
@@ -82,17 +82,26 @@ HRESULT K3D::GraphicsContextManager::ExcutionAllCommandLists(CommandQueue * queu
 HRESULT K3D::GraphicsContextManager::CreateCommandList(std::string commandListName, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	return _commandListLibrary.Create(commandListName, nodeMask, listType);
-
 }
 
-HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC gps, ID3DBlob * rootSignature)
+HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC& gps, ID3DBlob * rootSignature)
 {
 	return _shaderObjectLibrary.CreatePSO(psoName, gps, rootSignature);
 }
 
-HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC cps, ID3DBlob * rootSignature)
+HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gps, ID3DBlob * rootSignature)
+{
+	return _shaderObjectLibrary.CreatePSO(device,psoName, gps, rootSignature);
+}
+
+HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC& cps, ID3DBlob * rootSignature)
 {
 	return _shaderObjectLibrary.CreatePSO(psoName, cps, rootSignature);
+}
+
+HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC & cps, ID3DBlob * rootSignature)
+{
+	return _shaderObjectLibrary.CreatePSO(device,psoName, cps, rootSignature);
 }
 
 HRESULT K3D::GraphicsContextManager::CreateCommandQueue(std::string queueName, D3D12_COMMAND_QUEUE_DESC& desc)

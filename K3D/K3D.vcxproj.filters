@@ -54,9 +54,6 @@
     <ClCompile Include="Engine\Source\GameObject\Model\ModelLoader\PMX\PMXModel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Scene\Scene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\GameObject\Primitive\Plane.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -336,9 +333,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\GameObject\Model\ModelLoader\PMX\PMXModel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Scene\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\GameObject\Primitive\Cube.h">

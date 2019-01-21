@@ -19,26 +19,59 @@ namespace K3D {
 		};
 	private:
 
+		//!シェーダーマップ
 		std::unordered_map<SHADER_TYPE, D3D12_SHADER_BYTECODE> _shaderMap;
 
+		//!シェーダーマクロ
 		std::vector<D3D_SHADER_MACRO> _shaderMacro;
-
-	
 
 	public:
 
 		ShaderHelper();
 
 		~ShaderHelper();
-		
+
+		/**
+		* @fn
+		* @brief シェーダーバイトコードの取得
+		* @param[in] type シェーダータイプ
+		* @return バイトコード
+		*/
 		D3D12_SHADER_BYTECODE GetShader(ShaderHelper::SHADER_TYPE type);
 
+		/**
+		* @fn
+		* @brief マクロの追加
+		* @param[in] name マクロネーム
+		* @param[in] definition 定義
+		*/
 		void AddShaderMacro(std::string name, std::string definition);
 
+		/**
+		* @fn
+		* @brief マクロの削除
+		* @param[in] name マクロネーム
+		*/
 		void EraseShaderMacro(std::string name);
 
+		/**
+		* @fn
+		* @brief マクロのフェッチ
+		* @param[in] name マクロネーム
+		* @return マクロ配列
+		*/
 		const std::vector<D3D_SHADER_MACRO>& GetShaderMacro()const;
 
+		/**
+		* @fn
+		* @brief シェーダーコンパイル
+		* @param[in] type タイプ
+		* @param[in] shaderPath プロジェクト相対のシェーダーパス
+		* @param[in] functionName 関数名
+		* @param[in] shaderMode シェーダーマクロ
+		* @param[in] includePath インクルードパス
+		* @return リザルト
+		*/
 		HRESULT CompileShader(SHADER_TYPE type, std::string shaderPath, std::string functionName, std::string  shaderMode, std::string includePath = "");
 
 private:

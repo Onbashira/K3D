@@ -29,7 +29,7 @@ void K3D::Framework::Terminate()
 	_instance->TermWindow();
 }
 
-K3D::D3D12Device & K3D::Framework::GetDevice()
+std::shared_ptr<K3D::D3D12Device> & K3D::Framework::GetDevice()
 {
 	return _instance->_device;
 }
@@ -169,7 +169,8 @@ HRESULT K3D::Framework::InitD3D12()
 
 HRESULT K3D::Framework::InitDevice()
 {
-	return _device.Create(&_factory, _useWarpDevice);
+	_device = std::make_shared<D3D12Device>();
+	return _device->Create(&_factory, _useWarpDevice);
 }
 
 HRESULT K3D::Framework::InitFactory()
@@ -230,5 +231,5 @@ void K3D::Framework::TermD3D()
 	_drawQueue.Discard();
 	this->_timer.Stop();
 	this->_factory.Discard();
-	this->_device.Discard();
+	this->_device.reset();
 }

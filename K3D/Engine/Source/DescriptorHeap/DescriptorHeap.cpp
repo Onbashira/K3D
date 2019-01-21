@@ -37,7 +37,7 @@ UINT K3D::DescriptorHeap::GetIncrementSize()const
 	return _incrementSize;
 }
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> K3D::DescriptorHeap::GetHeap() const
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& K3D::DescriptorHeap::GetHeap()
 {
 	return _heap;
 }
@@ -62,7 +62,7 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_DESC* desc)
 	if (desc == nullptr) {
 		return E_FAIL;
 	}
-	auto hr = Framework::GetDevice().GetDevice()->CreateDescriptorHeap(desc, IID_PPV_ARGS(&_heap));
+	auto hr = Framework::GetDevice()->GetDevice()->CreateDescriptorHeap(desc, IID_PPV_ARGS(&_heap));
 	if (FAILED(hr)) {
 		return  E_FAIL;
 	}
@@ -70,7 +70,24 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_DESC* desc)
 	_gpuHandle = this->_heap->GetGPUDescriptorHandleForHeapStart();
 	_heapDesc = *desc;
 	_type = desc->Type;
-	_incrementSize = Framework::GetDevice().GetDevice()->GetDescriptorHandleIncrementSize(desc->Type);
+	_incrementSize = Framework::GetDevice()->GetDevice()->GetDescriptorHandleIncrementSize(desc->Type);
+	return S_OK;
+}
+
+HRESULT K3D::DescriptorHeap::Create(std::shared_ptr<D3D12Device> device, D3D12_DESCRIPTOR_HEAP_DESC * pDesc)
+{
+	if (pDesc == nullptr) {
+		return E_FAIL;
+	}
+	auto hr = device->GetDevice()->CreateDescriptorHeap(pDesc, IID_PPV_ARGS(&_heap));
+	if (FAILED(hr)) {
+		return  E_FAIL;
+	}
+	_cpuHandle = this->_heap->GetCPUDescriptorHandleForHeapStart();
+	_gpuHandle = this->_heap->GetGPUDescriptorHandleForHeapStart();
+	_heapDesc = *pDesc;
+	_type = pDesc->Type;
+	_incrementSize = device->GetDevice()->GetDescriptorHandleIncrementSize(pDesc->Type);
 	return S_OK;
 }
 
@@ -114,6 +131,50 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned in
 	}
 
 	auto hr = Create(&desc);
+	CHECK_RESULT(hr);
+	return hr;
+}
+
+HRESULT K3D::DescriptorHeap::Create(std::shared_ptr<D3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask)
+{
+	D3D12_DESCRIPTOR_HEAP_DESC desc;
+	switch (type)
+	{
+	case D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV:
+		desc.NumDescriptors = numDescriptors;
+		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		desc.NodeMask = nodeMask;
+		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		break;
+	case D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER:
+		desc.NumDescriptors = numDescriptors;
+		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		desc.NodeMask = nodeMask;
+		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
+		break;
+	case D3D12_DESCRIPTOR_HEAP_TYPE_RTV:
+		desc.NumDescriptors = numDescriptors;
+		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		desc.NodeMask = nodeMask;
+		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+		break;
+	case D3D12_DESCRIPTOR_HEAP_TYPE_DSV:
+		desc.NumDescriptors = numDescriptors;
+		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		desc.NodeMask = nodeMask;
+		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		break;
+	case D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES:
+		desc.NumDescriptors = numDescriptors;
+		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+		desc.NodeMask = nodeMask;
+		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES;
+		break;
+	default:
+		break;
+	}
+
+	auto hr = Create(device,&desc);
 	CHECK_RESULT(hr);
 	return hr;
 }

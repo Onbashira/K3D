@@ -54,12 +54,6 @@ K3D::Resource::~Resource()
 	Discard();
 }
 
-LifetimedShared_Ptr<K3D::Resource> K3D::Resource::Create()
-{
-	return LifetimedShared_Ptr<Resource>();
-}
-
-
 HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
 {
 
@@ -72,7 +66,28 @@ HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D
 		Discard();
 	}
 
-	auto hr = Framework::GetDevice().GetDevice()->CreateCommittedResource(&heapProps, flags, &resourceDesc, state, clearValue, IID_PPV_ARGS(&this->_resource));
+	auto hr = Framework::GetDevice()->GetDevice()->CreateCommittedResource(&heapProps, flags, &resourceDesc, state, clearValue, IID_PPV_ARGS(&this->_resource));
+
+	if (FAILED(hr)) {
+		SystemLogger::GetInstance().Log(LogLevel::Error, hr);
+
+		return E_FAIL;
+	}
+	return S_OK;
+}
+
+HRESULT K3D::Resource::Create(std::shared_ptr<D3D12Device> device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
+{
+	_currentResourceState = state;
+	if (clearValue != nullptr) {
+		_clearValue = *clearValue;
+	}
+
+	if (_resource.Get() != nullptr) {
+		Discard();
+	}
+
+	auto hr = device->GetDevice()->CreateCommittedResource(&heapProps, flags, &resourceDesc, state, clearValue, IID_PPV_ARGS(&this->_resource));
 
 	if (FAILED(hr)) {
 		SystemLogger::GetInstance().Log(LogLevel::Error, hr);

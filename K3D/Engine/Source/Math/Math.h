@@ -26,7 +26,7 @@ namespace {
 
 	static constexpr float ONB_EPSILON = 0.01f;                             // 正規直交規定を算出する際に用いるイプシロン値
 
-		//二つの値から大きい値を求める
+	//二つの値から大きい値を求める
 	template< typename T >inline T Max(const T& a, const T& b)
 	{
 		return (a > b) ? a : b;
