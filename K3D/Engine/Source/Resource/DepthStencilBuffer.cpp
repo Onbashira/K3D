@@ -73,7 +73,7 @@ HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceF
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	dsvDesc.Flags = D3D12_DSV_FLAGS::D3D12_DSV_FLAG_NONE;
 
-	Framework::GetDevice().GetDevice()->CreateDepthStencilView(GetResource().Get(), &dsvDesc, _dsvHeap.GetCPUHandle(0));
+	Framework::GetDevice()->GetDevice()->CreateDepthStencilView(GetResource().Get(), &dsvDesc, _dsvHeap.GetCPUHandle(0));
 
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
@@ -103,7 +103,7 @@ HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceF
 HRESULT K3D::DepthStencil::CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC srv, D3D12_CPU_DESCRIPTOR_HANDLE handle)
 {
 
-	Framework::GetDevice().GetDevice()->CreateShaderResourceView(this->GetResource().Get(), &srv, handle);
+	Framework::GetDevice()->GetDevice()->CreateShaderResourceView(this->GetResource().Get(), &srv, handle);
 	return S_OK;
 }
 

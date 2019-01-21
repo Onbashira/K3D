@@ -63,6 +63,6 @@ HRESULT K3D::ConstantBuffer::Create( ULONG64 size)
 HRESULT K3D::ConstantBuffer::CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cbvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
 
-	Framework::GetDevice().GetDevice()->CreateConstantBufferView(&cbvDesc, cpuDescriptorHandle);
+	Framework::GetDevice()->GetDevice()->CreateConstantBufferView(&cbvDesc, cpuDescriptorHandle);
 	return S_OK;
 }

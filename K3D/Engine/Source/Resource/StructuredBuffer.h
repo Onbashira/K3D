@@ -25,7 +25,7 @@ namespace K3D {
 			SRV_DESCRIPTOR_OFFSET = 1,
 			HEAP_OFFSET_MAX,
 		};
-		//GPUMemにアップロードするためのメモリ　（リードバック用のメモリは継承元のリソース
+
 		Resource								_readBackResource;
 
 		D3D12_RANGE								_readRange;
@@ -41,13 +41,12 @@ namespace K3D {
 
 		HRESULT									CreateHeap(unsigned numElements, unsigned int nodeMask = 0);
 		
-
 	public:	
 
 		StructuredBuffer();
 
 		virtual~StructuredBuffer();
-		//リードバックバッファとアップロードバッファを作成。ついでにGPUに配置
+		//リードバックバッファとアップロードバッファを作成。ついでに配置
 		HRESULT									Create(unsigned int elementSize, unsigned int numElements, void* pBufferData);
 		//デスクリプタの作成
 		HRESULT									CreateDescriptors(unsigned int elementSize, unsigned int numElements);

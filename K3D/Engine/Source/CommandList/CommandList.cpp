@@ -29,12 +29,12 @@ HRESULT K3D::CommandList::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE 
 {
 	_listType = listType;
 	HRESULT result;
-	result = K3D::Framework::GetDevice().GetDevice()->CreateCommandAllocator(_listType, IID_PPV_ARGS(&_commandAllocator));
+	result = K3D::Framework::GetDevice()->GetDevice()->CreateCommandAllocator(_listType, IID_PPV_ARGS(&_commandAllocator));
 	if (result != S_OK) {
 		return E_FAIL;
 	}
 
-	result = K3D::Framework::GetDevice().GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator.Get(), nullptr, IID_PPV_ARGS(&_commandList));
+	result = K3D::Framework::GetDevice()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator.Get(), nullptr, IID_PPV_ARGS(&_commandList));
 	if (result != S_OK) {
 		return E_FAIL;
 	}

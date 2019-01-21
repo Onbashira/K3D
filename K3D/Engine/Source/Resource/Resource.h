@@ -132,7 +132,7 @@ namespace K3D {
 		* @param[in] readRange “Ç‚İ‚İƒŒƒ“ƒW
 		* @param[in] writtenRange ‘‚«‚İƒŒƒ“ƒW
 		*/
-		void																Update(const void* pSrc, ULONG64 size, const UINT dstOffset, UINT subResource, D3D12_RANGE* readRange = nullptr, D3D12_RANGE* writtenRange = nullptr);
+		void																Update(const void* pSrc, ULONG64 size, const UINT dstOffset, UINT subResource, D3D12_RANGE* readRange, D3D12_RANGE* writtenRange);
 		
 		/**
 		* @fn

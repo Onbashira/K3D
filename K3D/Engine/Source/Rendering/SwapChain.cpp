@@ -68,7 +68,7 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(res.GetAddressOf()))))
 				return FALSE;
 			//レンダーターゲットビューの取得
-			Framework::GetDevice().GetDevice()->CreateRenderTargetView(_rtResource[i].GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
+			Framework::GetDevice()->GetDevice()->CreateRenderTargetView(_rtResource[i].GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
 			_rtResource[i].SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
 			_rtResource[i].SetName("RenderTargetResource ");
 		}

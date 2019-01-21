@@ -15,7 +15,7 @@ K3D::CommandQueue::~CommandQueue()
 
 HRESULT K3D::CommandQueue::Create(D3D12_COMMAND_QUEUE_DESC& desc)
 {
-	CHECK_RESULT(K3D::Framework::GetDevice().GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_commandQueue)));
+	CHECK_RESULT(K3D::Framework::GetDevice()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_commandQueue)));
 	CHECK_RESULT(_fence.Create(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE));
 
 	return S_OK;
@@ -23,7 +23,7 @@ HRESULT K3D::CommandQueue::Create(D3D12_COMMAND_QUEUE_DESC& desc)
 
 HRESULT K3D::CommandQueue::Create(std::weak_ptr<D3D12Device> device, D3D12_COMMAND_QUEUE_DESC & desc)
 {
-	CHECK_RESULT(K3D::Framework::GetDevice().GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_commandQueue)));
+	CHECK_RESULT(K3D::Framework::GetDevice()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_commandQueue)));
 	CHECK_RESULT(_fence.Create(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE));
 
 	return S_OK;

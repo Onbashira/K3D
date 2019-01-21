@@ -6,6 +6,9 @@ namespace K3D {
 
 	class VertexBuffer : public K3D::Resource
 	{
+
+	public:
+
 	private:
 		D3D12_VERTEX_BUFFER_VIEW _view;
 		
@@ -13,11 +16,7 @@ namespace K3D {
 		
 		UINT _stride;
 
-	public:
 
-	private:
-
-		HRESULT	Create(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr)override final { return E_FAIL; };
 
 	public:		
 
@@ -37,8 +36,12 @@ namespace K3D {
 		
 		void Discard();
 
-		D3D12_VERTEX_BUFFER_VIEW GetView() const;
+		D3D12_VERTEX_BUFFER_VIEW& GetView() ;
 		
+	private:
+
+		//‰B‚·
+		HRESULT	Create(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr)override final { return E_FAIL; };
 
 	};
 }

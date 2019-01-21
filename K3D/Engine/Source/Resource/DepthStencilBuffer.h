@@ -30,9 +30,9 @@ namespace K3D {
 		
 		void											Discard();
 		
-		DescriptorHeap*									GetDSVHeapPtr() { return &_dsvHeap; };
+		DescriptorHeap&									GetDSVHeapPtr() { return _dsvHeap; };
 		
-		DescriptorHeap*									GetReadOnlySRVHeap() { return &_readOnlySRVHeap; };
+		DescriptorHeap&									GetReadOnlySRVHeap() { return _readOnlySRVHeap; };
 		
 		void											ClearDepthStencil(std::shared_ptr<K3D::CommandList> list);
 	

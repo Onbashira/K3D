@@ -25,7 +25,7 @@ HRESULT K3D::RootSignature::CreateFromShader(ID3DBlob * shader)
 	{
 		return E_FAIL;
 	}
-	auto hr = Framework::GetDevice().GetDevice()->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&_rootSignature));
+	auto hr = Framework::GetDevice()->GetDevice()->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&_rootSignature));
 	if (FAILED(hr)) {
 		return hr;
 	};
@@ -44,7 +44,7 @@ HRESULT K3D::RootSignature::CreateFromDesc(D3D12_ROOT_SIGNATURE_DESC * desc)
 		return E_FAIL;
 	}
 
-	Framework::GetDevice().GetDevice()->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&_rootSignature));
+	Framework::GetDevice()->GetDevice()->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&_rootSignature));
 	signature.Reset();
 	error.Reset();
 	return S_OK;
