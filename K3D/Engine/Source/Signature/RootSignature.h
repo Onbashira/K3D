@@ -10,8 +10,10 @@ namespace K3D {
 
 	private:
 
+		//!ルートシグネチャ
 		Microsoft::WRL::ComPtr<ID3D12RootSignature> _rootSignature;
 
+		//!名前
 		std::string									_name;
 
 	public:
@@ -20,14 +22,40 @@ namespace K3D {
 
 		~RootSignature();
 
+		/**
+		* @fn
+		* @brief ルートシグネチャの作成
+		* @param[in] shader バインドされたシェーダー
+		* @return リザルト
+		*/
 		HRESULT CreateFromShader(ID3DBlob* shader);
 
+		/**
+		* @fn
+		* @brief ルートシグネチャの作成
+		* @param[in] desc デスクリプション
+		* @return リザルト
+		*/
 		HRESULT CreateFromDesc(D3D12_ROOT_SIGNATURE_DESC* desc);
 
-		Microsoft::WRL::ComPtr<ID3D12RootSignature> GetSignature();
+		/**
+		* @fn
+		* @brief ルートシグネチャのフェッチ
+		* @return ルートシグネチャへの参照
+		*/
+		Microsoft::WRL::ComPtr<ID3D12RootSignature>& GetSignature();
 
+		/**
+		* @fn
+		* @brief 名前の設定
+		* @param[in] name 名前
+		*/
 		void SetName(std::string name);
 
+		/**
+		* @fn
+		* @brief　破棄
+		*/
 		void Discard();
 
 	private:

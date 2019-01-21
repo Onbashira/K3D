@@ -84,7 +84,6 @@
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp" />
     <ClCompile Include="Engine\Source\Window\Window.cpp" />
     <ClCompile Include="Engine\Source\Window\WindowManager.cpp" />
-    <ClCompile Include="Engine\Source\TemporarilyBuffer\TemporarilyBuffer.cpp" />
     <ClCompile Include="Engine\Source\GameObject\Primitive\Plane.cpp" />
     <ClCompile Include="Engine\Source\GameObject\Primitive\Sphere.cpp" />
     <ClCompile Include="Engine\Source\GameObject\Primitive\PrimitiveBase.cpp" />
@@ -191,7 +190,6 @@
     <ClInclude Include="Engine\Source\Utility\Utility.h" />
     <ClInclude Include="Engine\Source\Window\Window.h" />
     <ClInclude Include="Engine\Source\Window\WindowManager.h" />
-    <ClInclude Include="Engine\Source\TemporarilyBuffer\TemporarilyBuffer.h" />
     <ClInclude Include="Engine\Source\GameObject\Primitive\Plane.h" />
     <ClInclude Include="Engine\Source\GameObject\Primitive\Sphere.h" />
     <ClInclude Include="Engine\Source\GameObject\Primitive\PrimitiveBase.h" />

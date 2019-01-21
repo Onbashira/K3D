@@ -5,13 +5,18 @@
 namespace K3D {
 
 	class RootSignature;
+	class D3D12Device;
+
 	class CommandSignature
 	{
 	public:
 
 	private:
+
+		//!コマンドシグネチャ
 		Microsoft::WRL::ComPtr<ID3D12CommandSignature>	 _commandSignature;
 
+		//!名前
 		std::string										 _name;
 
 	public:
@@ -20,17 +25,62 @@ namespace K3D {
 
 		~CommandSignature();
 
-		//コマンドバッファの解釈を記述したDESCとコマンドシグネチャを適用するRootSignatureを引数に取る
+		/**
+		* @fn
+		* @brief コマンドシグネチャの作成
+		* @param[in] desc パイプラインスステート名
+		* @param[in] rs バインド先のルートシグネチャ
+		* @return リザルト
+		*/
 		HRESULT	Create(const D3D12_COMMAND_SIGNATURE_DESC& desc, std::weak_ptr<K3D::RootSignature> rs);
 
-		//コマンドバッファの解釈を記述したDESCとコマンドシグネチャを適用するRootSignatureを引数に取る
+		/**
+		* @fn
+		* @brief コマンドシグネチャの作成
+		* @param[in] device 作成に使用するデバイス
+		* @param[in] desc パイプラインスステート名
+		* @param[in] rs バインド先のルートシグネチャ
+		* @return リザルト
+		*/
+		HRESULT	Create(std::shared_ptr<D3D12Device> device,const D3D12_COMMAND_SIGNATURE_DESC& desc, std::weak_ptr<K3D::RootSignature> rs);
+
+		/**
+		* @fn
+		* @brief コマンドシグネチャの作成
+		* @param[in] desc パイプラインスステート名
+		* @return リザルト
+		*/
 		HRESULT	Create(const D3D12_COMMAND_SIGNATURE_DESC& desc);
 
-		Microsoft::WRL::ComPtr<ID3D12CommandSignature> GetSignature();
+		/**
+		* @fn
+		* @brief コマンドシグネチャの作成
+		* @param[in] device 作成に使用するデバイス
+		* @param[in] desc パイプラインスステート名
+		* @return リザルト
+		*/
+		HRESULT	Create(std::shared_ptr<D3D12Device> device,const D3D12_COMMAND_SIGNATURE_DESC& desc);
 
+		/**
+		* @fn
+		* @brief コマンドシグネチャのフェッチ
+		* @return コマンドシグネチャ
+		*/
+		Microsoft::WRL::ComPtr<ID3D12CommandSignature>& GetSignature();
+
+		/**
+		* @fn
+		* @brief コマンドシグネチャのフェッチ
+		* @param[in] name 名前
+		*/
 		void	SetName(std::string name);
 
+		/**
+		* @fn
+		* @brief 破棄
+		*/
 		void	Discard();
+
 	private:
 	};
 }

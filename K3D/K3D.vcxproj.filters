@@ -24,9 +24,6 @@
     <ClCompile Include="Engine\Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\TemporarilyBuffer\TemporarilyBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\GameObject\GameObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -303,9 +300,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Utility\Utility.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\TemporarilyBuffer\TemporarilyBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\GameObject\GameObject.h">
