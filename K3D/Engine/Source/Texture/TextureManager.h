@@ -15,6 +15,8 @@ namespace K3D {
 	class TextureManager
 	{
 
+	public:
+
 		friend class TextureLoader;
 
 	private:
@@ -27,12 +29,9 @@ namespace K3D {
 
 		//!白テクスチャへの名前
 		const std::string _nullTextureWhiteName = "NULL_WHITE_TEXTURE";
-		
+
 		//!情報キャリア
 		UnorderedManagerComponent< ShaderResource> _textureResourceMap;
-
-	public:
-
 
 
 	public:

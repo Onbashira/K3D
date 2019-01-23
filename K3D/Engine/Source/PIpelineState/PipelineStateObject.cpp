@@ -29,7 +29,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_GRAPHICS_PIPELI
 	return hr;
 }
 
-HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device> device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, ID3DBlob * shader)
+HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device>& device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, ID3DBlob * shader)
 {
 	if (shader != nullptr) {
 		GraphicsContextManager::GetInstance().CreateRootSignature(name + "RootSignature", shader);
@@ -54,7 +54,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_COMPUTE_PIPELIN
 	return hr;
 }
 
-HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device> device, std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC & cpsDesc, ID3DBlob * shader)
+HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device>& device, std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC & cpsDesc, ID3DBlob * shader)
 {
 	if (shader != nullptr) {
 		GraphicsContextManager::GetInstance().CreateRootSignature(name + "RootSignature", shader);
@@ -78,7 +78,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_GRAPHICS_PIPELI
 	return hr;
 }
 
-HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device> device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, std::weak_ptr<RootSignature> rootSignature)
+HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device>& device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, std::weak_ptr<RootSignature> rootSignature)
 {
 	_rootSignature = rootSignature;
 	gpsDesc.pRootSignature = _rootSignature.lock()->GetSignature().Get();
@@ -99,7 +99,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_COMPUTE_PIPELIN
 	return hr;
 }
 
-HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device> device, std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC & cpsDesc, std::weak_ptr<RootSignature> rootSignature)
+HRESULT K3D::PipelineStateObject::Create(std::shared_ptr<D3D12Device>& device, std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC & cpsDesc, std::weak_ptr<RootSignature> rootSignature)
 {
 	_rootSignature = rootSignature;
 	cpsDesc.pRootSignature = _rootSignature.lock()->GetSignature().Get();

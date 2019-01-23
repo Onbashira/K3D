@@ -42,7 +42,7 @@ namespace K3D {
 		* @param[in] rs バインド先のルートシグネチャ
 		* @return リザルト
 		*/
-		HRESULT	Create(std::shared_ptr<D3D12Device> device,const D3D12_COMMAND_SIGNATURE_DESC& desc, std::weak_ptr<K3D::RootSignature> rs);
+		HRESULT	Create(std::shared_ptr<D3D12Device>& device,const D3D12_COMMAND_SIGNATURE_DESC& desc, std::weak_ptr<K3D::RootSignature> rs);
 
 		/**
 		* @fn
@@ -59,7 +59,7 @@ namespace K3D {
 		* @param[in] desc パイプラインスステート名
 		* @return リザルト
 		*/
-		HRESULT	Create(std::shared_ptr<D3D12Device> device,const D3D12_COMMAND_SIGNATURE_DESC& desc);
+		HRESULT	Create(std::shared_ptr<D3D12Device>& device,const D3D12_COMMAND_SIGNATURE_DESC& desc);
 
 		/**
 		* @fn

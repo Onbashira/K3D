@@ -48,7 +48,7 @@ namespace K3D {
 		* @param[in] shader hlslに記述したルートシグネチャがバインドされているシェーダー
 		* @return リザルト
 		*/
-		virtual HRESULT								Create(std::shared_ptr<D3D12Device> device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, ID3DBlob* shader);
+		virtual HRESULT								Create(std::shared_ptr<D3D12Device>& device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, ID3DBlob* shader);
 
 		/**
 		* @fn
@@ -69,7 +69,7 @@ namespace K3D {
 		* @param[in] shader hlslに記述したルートシグネチャがバインドされているシェーダー
 		* @return リザルト
 		*/
-		virtual HRESULT								Create(std::shared_ptr<D3D12Device> device,std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC &  cpsDesc, ID3DBlob* shader);
+		virtual HRESULT								Create(std::shared_ptr<D3D12Device>& device,std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC &  cpsDesc, ID3DBlob* shader);
 
 		/**
 		* @fn
@@ -90,7 +90,7 @@ namespace K3D {
 		* @param[in] rootSignature ルートシグネチャ
 		* @return リザルト
 		*/
-		virtual HRESULT								Create(std::shared_ptr<D3D12Device> device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, std::weak_ptr<RootSignature> rootSignature);
+		virtual HRESULT								Create(std::shared_ptr<D3D12Device>& device, std::string name, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gpsDesc, std::weak_ptr<RootSignature> rootSignature);
 
 		/**
 		* @fn
@@ -111,7 +111,7 @@ namespace K3D {
 		* @param[in] rootSignature ルートシグネチャ
 		* @return リザルト
 		*/
-		virtual HRESULT								Create(std::shared_ptr<D3D12Device> device,std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC &  cpsDesc, std::weak_ptr<RootSignature> rootSignature);
+		virtual HRESULT								Create(std::shared_ptr<D3D12Device>& device,std::string name, D3D12_COMPUTE_PIPELINE_STATE_DESC &  cpsDesc, std::weak_ptr<RootSignature> rootSignature);
 
 		/**
 		* @fn

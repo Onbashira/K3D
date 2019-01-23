@@ -4,7 +4,7 @@
 
 namespace K3D {
 
-	class ShaderResource : public K3D::Resource
+	class ShaderResource : public Resource
 	{
 	private:
 

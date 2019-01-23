@@ -105,7 +105,7 @@ namespace K3D {
 		* @param[in] pDesc デスクリプションへのポインタ
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT											Create(std::shared_ptr<D3D12Device> device,D3D12_DESCRIPTOR_HEAP_DESC* pDesc);
+		HRESULT											Create(std::shared_ptr<D3D12Device>& device,D3D12_DESCRIPTOR_HEAP_DESC* pDesc);
 
 		/**
 		* @fn
@@ -126,7 +126,7 @@ namespace K3D {
 		* @param[in] nodeMask ノードマスク
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT											Create(std::shared_ptr<D3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask = 0);
+		HRESULT											Create(std::shared_ptr<D3D12Device>& device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask = 0);
 
 		/**
 		* @fn

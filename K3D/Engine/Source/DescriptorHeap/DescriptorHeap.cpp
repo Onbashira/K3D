@@ -74,7 +74,7 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_DESC* desc)
 	return S_OK;
 }
 
-HRESULT K3D::DescriptorHeap::Create(std::shared_ptr<D3D12Device> device, D3D12_DESCRIPTOR_HEAP_DESC * pDesc)
+HRESULT K3D::DescriptorHeap::Create(std::shared_ptr<D3D12Device>& device, D3D12_DESCRIPTOR_HEAP_DESC * pDesc)
 {
 	if (pDesc == nullptr) {
 		return E_FAIL;
@@ -135,7 +135,7 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned in
 	return hr;
 }
 
-HRESULT K3D::DescriptorHeap::Create(std::shared_ptr<D3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask)
+HRESULT K3D::DescriptorHeap::Create(std::shared_ptr<D3D12Device>& device, D3D12_DESCRIPTOR_HEAP_TYPE type, unsigned int numDescriptors, unsigned int nodeMask)
 {
 	D3D12_DESCRIPTOR_HEAP_DESC desc;
 	switch (type)

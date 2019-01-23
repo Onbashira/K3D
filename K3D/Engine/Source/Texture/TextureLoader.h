@@ -11,12 +11,11 @@ namespace K3D {
 	class CommandList;
 	class CommandQueue;
 	class D3D12Device;
+	class TextureObject;
 
 	class TextureLoader
 	{
 	private:
-
-
 
 	public:
 
@@ -50,6 +49,32 @@ namespace K3D {
 		*/
 		void LoadModelTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, DescriptorHeap& heap, unsigned int heapStartIndex, std::string modelName, std::vector<std::string>& paths);
 
+		/**
+		* @fn
+		* @brief テクスチャのロードを行う
+		* @param[in] commandList リストの参照
+		* @param[in] commandQueue キューの参照
+		* @param[in] paths ファイルパス
+		* @return テクスチャオブジェクトの参照の所有権
+		*/
+		std::shared_ptr<TextureObject> LoadTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue,std::string texturePath);
+
+		/**
+		* @fn
+		* @brief テクスチャのロードをマスターが持つコマンドキューとコマンドリストを用いて行う
+		* @param[in] paths ファイルパス
+		* @return テクスチャオブジェクトの参照の所有権
+		*/
+		std::shared_ptr<TextureObject> LoadTexture(std::shared_ptr<D3D12Device>& device,std::string texturePath);
+
+		/**
+		* @fn
+		* @brief テクスチャのロードをマスターが持つコマンドキューとコマンドリスト、デバイスを用いて行う
+		* @param[in] paths ファイルパス
+		* @return テクスチャオブジェクトの参照の所有権
+		*/
+		std::shared_ptr<TextureObject> LoadTexture(std::string texturePath);
+
 	private:
 
 		TextureLoader();
@@ -63,10 +88,11 @@ namespace K3D {
 		* @param[out] subResource サブリソース
 		* @param[in] modelName パス
 		* @param[in] paths ファイルパス
+		* @return リザルト
 		*/
-		HRESULT LoadUpdateSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource,D3D12_SUBRESOURCE_DATA& subResource, std::string path);
+		HRESULT LoadUpdateSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path);
 
-		HRESULT LoadWriteToSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path );
+		HRESULT LoadWriteToSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path);
 
 		HRESULT LoadWICFile(DirectX::TexMetadata& metaData, DirectX::ScratchImage& scratchImage, std::string& path);
 
@@ -77,6 +103,6 @@ namespace K3D {
 		bool IsUseGamma(DXGI_FORMAT format);
 
 		HRESULT LoadTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, std::string path);
-		
+
 	};
 }

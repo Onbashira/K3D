@@ -89,7 +89,7 @@ HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_GRAPHI
 	return _shaderObjectLibrary.CreatePSO(psoName, gps, rootSignature);
 }
 
-HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gps, ID3DBlob * rootSignature)
+HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device>& device, std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC & gps, ID3DBlob * rootSignature)
 {
 	return _shaderObjectLibrary.CreatePSO(device,psoName, gps, rootSignature);
 }
@@ -99,7 +99,7 @@ HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_COMPUT
 	return _shaderObjectLibrary.CreatePSO(psoName, cps, rootSignature);
 }
 
-HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC & cps, ID3DBlob * rootSignature)
+HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device>& device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC & cps, ID3DBlob * rootSignature)
 {
 	return _shaderObjectLibrary.CreatePSO(device,psoName, cps, rootSignature);
 }

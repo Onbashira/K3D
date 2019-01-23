@@ -47,7 +47,7 @@ namespace K3D {
 		* @param[in] rootSignature ルートシグネチャ
 		* @return 成功でS_OK
 		*/
-		HRESULT CreatePSO(std::shared_ptr<D3D12Device> device ,std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC& gps, ID3DBlob* signature = nullptr);
+		HRESULT CreatePSO(std::shared_ptr<D3D12Device>& device ,std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC& gps, ID3DBlob* signature = nullptr);
 
 		/**
 		* @fn
@@ -68,7 +68,7 @@ namespace K3D {
 		* @param[in] rootSignature ルートシグネチャ
 		* @return 成功でS_OK
 		*/
-		HRESULT CreatePSO(std::shared_ptr<D3D12Device> device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC& gps, ID3DBlob * rootSignature = nullptr);
+		HRESULT CreatePSO(std::shared_ptr<D3D12Device>& device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC& gps, ID3DBlob * rootSignature = nullptr);
 
 		/**
 		* @fn

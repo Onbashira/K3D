@@ -76,7 +76,7 @@ HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D
 	return S_OK;
 }
 
-HRESULT K3D::Resource::Create(std::shared_ptr<D3D12Device> device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
+HRESULT K3D::Resource::Create(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
 {
 	_currentResourceState = state;
 	if (clearValue != nullptr) {

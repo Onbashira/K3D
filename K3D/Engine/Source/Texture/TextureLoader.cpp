@@ -7,6 +7,9 @@
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CommandQueue/CommandQueue.h"
 #include "Engine/Source/Resource/ShaderResource.h"
+#include "Engine/Source/Texture/TextureObject.h"
+
+
 
 K3D::TextureLoader::TextureLoader()
 {
@@ -21,8 +24,6 @@ K3D::TextureLoader::~TextureLoader()
 
 void K3D::TextureLoader::LoadModelTexture(std::shared_ptr<CommandList> commandList, CommandQueue * commandQueue, std::string madelName, std::vector<std::string>& paths)
 {
-
-	//仕様変更に伴い、この関数ではデスクリプタの生成を行わない
 
 	if (paths.size() <= 0)
 	{
@@ -40,20 +41,15 @@ void K3D::TextureLoader::LoadModelTexture(std::shared_ptr<CommandList> commandLi
 			//中間リソースの生成とか
 			FILE* fp = nullptr;
 
+			//ファイルが存在するかどうかの確認のため
 			if (paths[i].c_str() != '\0') {
 				fopen_s(&fp, paths[i].c_str(), "rb");
 			}
 
 			if (fp == NULL)
 			{
-				D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-				srvDesc.Format = managerRef._textureResourceMap.GetMap()[managerRef._nullTextureName]->GetResourceDesc()->Format;
-				srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-				srvDesc.Texture2D.MipLevels = 1;
-				srvDesc.Texture2D.MostDetailedMip = 0;
-				srvDesc.Texture2D.PlaneSlice = 0;
-				srvDesc.Texture2D.ResourceMinLODClamp = 0.0F;
-				srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+				std::wstring text = Util::StringToWString(paths[i]) + L"にあるファイルが見つかりません";
+				MessageBox(Framework::GetWindow().GetWindowHandle(), text.c_str(), L"テクスチャ読み込みエラー", MB_OK);
 
 			}
 			else if (fp != NULL)
@@ -62,22 +58,12 @@ void K3D::TextureLoader::LoadModelTexture(std::shared_ptr<CommandList> commandLi
 				LoadTexture(commandList, commandQueue, resource, paths[i]);
 				//file Close
 				fclose(fp);
-
-				D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-				srvDesc.Format = resource->GetResourceDesc()->Format;
-				srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-				srvDesc.Texture2D.MipLevels = 1;
-				srvDesc.Texture2D.MostDetailedMip = 0;
-				srvDesc.Texture2D.PlaneSlice = 0;
-				srvDesc.Texture2D.ResourceMinLODClamp = 0.0F;
-				srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-
 				resource->SetName(paths[i]);
-
 				managerRef._textureResourceMap.GetMap()[paths[i]] = resource;
 			}
 		}
 		else {
+
 		}
 
 		resource.reset();//所有権の放棄
@@ -94,15 +80,51 @@ void K3D::TextureLoader::LoadModelTexture(std::shared_ptr<CommandList> commandLi
 	}
 
 	auto& managerRef = TextureManager::GetInstance();
+	std::shared_ptr<ShaderResource> resource;
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 
 	for (unsigned int i = 0; i < paths.size(); i++) {
 		if (managerRef._textureResourceMap.GetMap().find(paths[i]) == managerRef._textureResourceMap.GetMap().end()) {
-			assert(true);
+			//もしテクスチャリソースが読み込まれてなければ
+			//ロードしてからビュー作成
+						//中間リソースの生成とか
+			FILE* fp = nullptr;
+
+			//ファイルが存在するかどうかの確認のため
+			if (paths[i].c_str() != '\0') {
+				fopen_s(&fp, paths[i].c_str(), "rb");
+			}
+
+			if (fp == NULL)
+			{
+				std::wstring text = Util::StringToWString(paths[i]) + L"にあるファイルが見つかりません";
+				MessageBox(Framework::GetWindow().GetWindowHandle(), text.c_str(), L"テクスチャ読み込みエラー", MB_OK);
+
+			}
+			else if (fp != NULL)
+			{
+				resource = std::make_shared<ShaderResource>();
+				LoadTexture(commandList, commandQueue, resource, paths[i]);
+				//file Close
+				fclose(fp);
+				resource->SetName(paths[i]);
+				managerRef._textureResourceMap.GetMap()[paths[i]] = resource;
+			}
+
+			srvDesc.Format = managerRef._textureResourceMap.GetMap()[paths[i]]->GetResourceDesc()->Format;
+			srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+			srvDesc.Texture2D.MipLevels = 1;
+			srvDesc.Texture2D.MostDetailedMip = 0;
+			srvDesc.Texture2D.PlaneSlice = 0;
+			srvDesc.Texture2D.ResourceMinLODClamp = 0.0F;
+			srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+			auto cpuHandle = heap.GetCPUHandle(heapStartIndex + i);
+			managerRef._textureResourceMap.GetMap()[paths[i]]->CreateView(srvDesc, cpuHandle);
+
 		}
 		else {
 			//もしテクスチャリソースがあったなら
 
-			D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 			srvDesc.Format = managerRef._textureResourceMap.GetMap()[paths[i]]->GetResourceDesc()->Format;
 			srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 			srvDesc.Texture2D.MipLevels = 1;
@@ -113,7 +135,24 @@ void K3D::TextureLoader::LoadModelTexture(std::shared_ptr<CommandList> commandLi
 			auto cpuHandle = heap.GetCPUHandle(heapStartIndex + i);
 			managerRef._textureResourceMap.GetMap()[paths[i]]->CreateView(srvDesc, cpuHandle);
 		}
+
+		resource.reset();
 	}
+}
+
+std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTexture(std::shared_ptr<CommandList> commandList, CommandQueue * commandQueue, std::string texturePath)
+{
+	return std::shared_ptr<TextureObject>();
+}
+
+std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTexture(std::shared_ptr<D3D12Device>& device, std::string texturePath)
+{
+	return std::shared_ptr<TextureObject>();
+}
+
+std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTexture(std::string texturePath)
+{
+	return std::shared_ptr<TextureObject>();
 }
 
 HRESULT K3D::TextureLoader::LoadUpdateSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path)
@@ -263,6 +302,7 @@ HRESULT K3D::TextureLoader::LoadTexture(std::shared_ptr<CommandList> commandList
 	{
 		//Asign nullTex
 
+		
 	}
 	else
 	{

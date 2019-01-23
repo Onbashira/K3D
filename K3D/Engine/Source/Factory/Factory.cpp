@@ -35,11 +35,6 @@ HRESULT K3D::Factory::Create(UINT createFlags)
 	return S_OK;
 }
 
-HRESULT K3D::Factory::Create(std::shared_ptr<D3D12Device> device, UINT createFlags)
-{
-	return E_NOTIMPL;
-}
-
 Microsoft::WRL::ComPtr<IDXGIFactory5>& K3D::Factory::GetFactory()
 {
 	return _factory;
