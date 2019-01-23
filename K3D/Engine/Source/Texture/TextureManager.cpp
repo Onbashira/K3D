@@ -27,12 +27,13 @@ K3D::TextureManager::TextureManager()
 		resDesc.SampleDesc.Quality = 0;
 		resDesc.Flags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE;
 
-		resource->Create(props, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, resDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+		resource->Create(16,16,1, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
+	
 	}
 
 	//éQè∆ÇÃí«â¡
 	resource->SetName("Nulltexture ");
-	_modelTextureResourceMap[this->_nullTextureName] = resource;
+	_textureResourceMap.Set(this->_nullTextureName,resource);
 	//éQè∆ÇÃîjä¸
 	resource.reset();
 
@@ -46,32 +47,32 @@ K3D::TextureManager::~TextureManager()
 
 std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetSpriteShaderResource(std::string name)
 {
-	return _modelTextureResourceMap[name];
+	return _textureResourceMap.GetMap()[name];
 }
 
 std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetModelTextureShaderResource(std::string modelPath)
 {
-	return _modelTextureResourceMap[modelPath];
+	return _textureResourceMap.GetMap()[modelPath];
 }
 
 std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetNullTextureShaderResource()
 {
-	return _modelTextureResourceMap[this->_nullTextureName];
+	return _textureResourceMap.GetMap()[this->_nullTextureName];
 }
 
 std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetNullBlackTextureShaderResource()
 {
-	return _modelTextureResourceMap[this->_nullTextureBlackName];
+	return _textureResourceMap.GetMap()[this->_nullTextureBlackName];
 }
 
 std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetNullWhiteTextureShaderResource()
 {
-	return _modelTextureResourceMap[this->_nullTextureWhiteName];
+	return _textureResourceMap.GetMap()[this->_nullTextureWhiteName];
 }
 
 void K3D::TextureManager::Discard()
 {
-	_modelTextureResourceMap.clear();
+	_textureResourceMap.DiscardMap();
 }
 
 

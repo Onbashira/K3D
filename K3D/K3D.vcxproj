@@ -185,7 +185,7 @@
     <ClInclude Include="Engine\Source\Utility\D3D12Common.h" />
     <ClInclude Include="Engine\Source\Utility\d3dx12.h" />
     <ClInclude Include="Engine\Source\Debug\Logger.h" />
-    <ClInclude Include="Engine\Source\Utility\ManagerComponentBase.h" />
+    <ClInclude Include="Engine\Source\Utility\ManagerComponent.h" />
     <ClInclude Include="Engine\Source\Utility\NonCopyable.h" />
     <ClInclude Include="Engine\Source\Utility\Utility.h" />
     <ClInclude Include="Engine\Source\Window\Window.h" />

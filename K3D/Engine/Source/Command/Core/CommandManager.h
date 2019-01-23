@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Source/Utility/ManagerComponentBase.h"
+#include "Engine/Source/Utility/ManagerComponent.h"
 #include "Engine/Source/Command/Core/InternalCommand.h"
 #include <list>
 namespace K3D {

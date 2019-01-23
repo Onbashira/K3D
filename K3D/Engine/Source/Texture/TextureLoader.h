@@ -30,24 +30,6 @@ namespace K3D {
 
 		/**
 		* @fn
-		* @brief スプライトのロード
-		* @param[in] commandList リストの参照
-		* @param[in] commandQueue キューの参照
-		* @param[in] path ファイルパス
-		*/
-		void LoadSpriteTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, std::string path);
-
-		/**
-		* @fn
-		* @brief スプライトのロードとスプライトに対するSRVハンドルの作成
-		* @param[in] commandList リストの参照
-		* @param[in] commandQueue キューの参照
-		* @param[in] path ファイルパス
-		*/
-		void LoadSpriteTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, std::string path, D3D12_CPU_DESCRIPTOR_HANDLE handle);
-
-		/**
-		* @fn
 		* @brief モデルのテクスチャのロード
 		* @param[in] commandList リストの参照
 		* @param[in] commandQueue キューの参照

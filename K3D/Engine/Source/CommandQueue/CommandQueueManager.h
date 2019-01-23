@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Source/CommandQueue/CommandQueue.h"
-#include "Engine/Source/Utility/ManagerComponentBase.h"
+#include "Engine/Source/Utility/ManagerComponent.h"
 #include "Engine/Source/Utility/NonCopyable.h"
 
 namespace K3D {
@@ -14,7 +14,7 @@ namespace K3D {
 		
 	private:
 		//!ì¬‚³‚ê‚½ƒLƒ…[‚ğ•Û
-		UnorderedManagerComponentBase<CommandQueue> _queues;
+		UnorderedManagerComponent<CommandQueue> _queues;
 	
 	public:
 

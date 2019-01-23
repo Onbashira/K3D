@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Source/Utility/NonCopyable.h"
-#include "Engine/Source/Utility/ManagerComponentBase.h"
+#include "Engine/Source/Utility/ManagerComponent.h"
 
 namespace K3D {
 	class AudioWaveSource;
@@ -10,7 +10,7 @@ namespace K3D {
 	private:
 
 		//!波形の生データを保持するクラス
-		UnorderedManagerComponentBase<AudioWaveSource> _resourceMap;
+		UnorderedManagerComponent<AudioWaveSource> _resourceMap;
 
 	public:
 

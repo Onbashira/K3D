@@ -5,7 +5,7 @@
 namespace K3D {
 
 	class ShaderResource;
-
+	class D3D12Device;
 	struct TextureObjectDesc {
 		float gamma;
 		std::string fileName;
@@ -49,11 +49,18 @@ namespace K3D {
 
 		/**
 		* @fn
-		* @brief デスクリプションのフェッチ
+		* @brief テクスチャのロードと自分自身へのバインド
 		* @param[in] texturePath プロジェクトディレクトリ相対のテスクチャへのパス
 		*/
 		void LoadTexture(std::string texturePath)const;
 
+		/**
+		* @fn
+		* @brief シェーダーリソースバッファへの弱参照の取得
+		* @return シェーダーリソースバッファへの弱参照
+		*/
+		std::weak_ptr<ShaderResource> GetShaderResource();
+		
 	private:
 	
 	};

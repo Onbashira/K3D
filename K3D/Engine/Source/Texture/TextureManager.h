@@ -1,7 +1,7 @@
 #pragma once
 
 #include"Engine/Source/Utility/D3D12Common.h"
-#include "Engine/Source/Utility/ManagerComponentBase.h"
+#include "Engine/Source/Utility/ManagerComponent.h"
 #include <map>
 #include <memory>
 
@@ -27,11 +27,9 @@ namespace K3D {
 
 		//!白テクスチャへの名前
 		const std::string _nullTextureWhiteName = "NULL_WHITE_TEXTURE";
-
+		
 		//!情報キャリア
-		std::map < std::string, std::shared_ptr<ShaderResource> > _modelTextureResourceMap;
-
-		UnorderedManagerComponentBase< ShaderResource> _textureResourceMap;
+		UnorderedManagerComponent< ShaderResource> _textureResourceMap;
 
 	public:
 
