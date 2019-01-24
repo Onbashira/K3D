@@ -15,56 +15,70 @@ namespace K3D {
 
 	class TextureLoader
 	{
-	
-		class TextureManager;
-
-	public:
-
 	private:
 
 	public:
 
-		static TextureLoader& GetIsntace() {
-			static TextureLoader instance;
-			return instance;
-		};
-			~TextureLoader();
+		~TextureLoader();
 
-		/**
-		* @fn
-		* @brief テクスチャのロード
-		* @param[in] filePath ファイルパス
-		* @return ロードしたテクスチャへの参照
-		*/
-		std::shared_ptr<TextureObject>& LoadTextureResource(std::string filePath);
+		static TextureLoader & GetInstance() {
+			static TextureLoader loader;
+			return loader;
+
+		}
 
 		/**
 		* @fn
 		* @brief モデルのテクスチャのロード
 		* @param[in] commandList リストの参照
 		* @param[in] commandQueue キューの参照
-		* @param[in] filePath ファイルパス
+		* @param[in] modelName モデルの名前
+		* @param[in] paths ファイルパス
 		*/
-		std::shared_ptr<TextureObject>& LoadTextureResource(std::shared_ptr<CommandList>& commandList, CommandQueue* queue, std::string filePath);
+		void LoadModelTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, std::string modelName, std::vector<std::string>& paths);
 
 		/**
 		* @fn
-		* @brief モデルのテクスチャのロード
-		* @param[in] device 作成に使うデバイス
+		* @brief モデルのテクスチャのロードとヒープへビューを作成
 		* @param[in] commandList リストの参照
 		* @param[in] commandQueue キューの参照
-		* @param[in] filePath ファイルパス
+		* @param[in] heap ヒープの参照
+		* @param[in] heapStartIndex ヒープのテクスチャビューのスタートインデックス
+		* @param[in] modelName モデルの名前
+		* @param[in] paths ファイルパス
 		*/
-		std::shared_ptr<TextureObject>& LoadTextureResource(std::shared_ptr<D3D12Device>& device, std::shared_ptr<CommandList>& commandList, CommandQueue* queue, std::string filePath);
+		void LoadModelTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, DescriptorHeap& heap, unsigned int heapStartIndex, std::string modelName, std::vector<std::string>& paths);
 
 		/**
 		* @fn
-		* @brief フォーマットからガンマ補正がかかっているかどうかの検討をつける
-		* @param[in] format format
-		* @return リザルト 真でガンマ値あり
+		* @brief テクスチャのロードを行う
+		* @param[in] commandList リストの参照
+		* @param[in] commandQueue キューの参照
+		* @param[in] paths ファイルパス
+		* @return テクスチャオブジェクトの参照の所有権
 		*/
-		bool IsUseGamma(DXGI_FORMAT format);
+		std::shared_ptr<TextureObject> LoadTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue,std::string texturePath);
 
+		/**
+		* @fn
+		* @brief テクスチャのロードをマスターが持つコマンドキューとコマンドリストを用いて行う
+		* @param[in] paths ファイルパス
+		* @return テクスチャオブジェクトの参照の所有権
+		*/
+		std::shared_ptr<TextureObject> LoadTexture(std::shared_ptr<D3D12Device>& device,std::string texturePath);
+
+		/**
+		* @fn
+		* @brief テクスチャのロードをマスターが持つコマンドキューとコマンドリスト、デバイスを用いて行う
+		* @param[in] paths ファイルパス
+		* @return テクスチャオブジェクトの参照の所有権
+		*/
+		std::shared_ptr<TextureObject> LoadTexture(std::string texturePath);
+
+		
+		
+
+		
 	private:
 
 		TextureLoader();
@@ -94,17 +108,6 @@ namespace K3D {
 		* @return リザルト
 		*/
 		HRESULT WriteToSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path);
-
-
-		/**
-		* @fn
-		* @brief Fileの読み込み
-		* @param[out] metaData メタデータへの参照
-		* @param[out] scratchImage スクラッチデータへの参照
-		* @param[in] path ファイルパス
-		* @return リザルト
-		*/
-		HRESULT LoadFile(DirectX::TexMetadata& metaData, DirectX::ScratchImage& scratchImage, std::string& path);
 
 		/**
 		* @fn
@@ -144,6 +147,29 @@ namespace K3D {
 		*/
 		bool IsUseGamma(DXGI_FORMAT format);
 
-	};
+		/**
+		* @fn
+		* @brief　テクスチャの読み込み
+		* @param[in] commandList リストの参照
+		* @param[in] commandQueue キューの参照
+		* @param[out] resource シェーダーリソースへの参照
+		* @param[in] path ファイルパス
+		* @return リザルト
+		*/
+		HRESULT LoadRawTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, std::shared_ptr<ShaderResource>& resource, std::string path);
 
+		/**
+		* @fn
+		* @brief テクスチャの読み込み
+		* @param[in] commandList リストの参照
+		* @param[in] commandQueue キューの参照
+		* @param[out] textureObj テクスチャオブジェクトへの参照
+		* @param[in] path ファイルパス
+		* @return リザルト
+		*/
+		HRESULT LoadRawTexture(std::shared_ptr<CommandList> commandList, CommandQueue* commandQueue, std::shared_ptr<TextureObject>& textureObj, std::string path);
+
+
+
+	};
 }

@@ -12,3 +12,6 @@
 #include <comdef.h>
 #include <wrl.h>
 #include "Engine/Source/LifetimedMemory/LifetimedMemory.h"
+#include "Engine/Source/Utility/BasicTypes.h"
+#include "Engine/Source/Utility/Utility.h"
+#include "Engine/Source/Math/Math.h"

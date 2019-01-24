@@ -5,6 +5,7 @@
 namespace K3D {
 
 	class ShaderResource;
+	class TextureLoader;
 	class D3D12Device;
 	struct TextureObjectDesc {
 		float gamma;
@@ -46,6 +47,13 @@ namespace K3D {
 		* @return デスクリプション
 		*/
 		const TextureObjectDesc& GetDesc()const;
+
+		/**
+		* @fn
+		* @brief デスクリプションのフェッチ
+		* @return デスクリプション
+		*/
+		void SetDesc(TextureObjectDesc&& desc);
 
 		/**
 		* @fn

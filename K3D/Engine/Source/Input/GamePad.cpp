@@ -408,7 +408,7 @@ Vector2 K3D::GamePad::GetSaturatedLeftStick()
 
 float K3D::GamePad::GetSaturatedRT()
 {
-	float st = ::Clamp(static_cast<float>(_nowState.Gamepad.bRightTrigger) / static_cast<float>(_rightTriggerDeadline), -1.0f, 1.0f);
+	float st = ::Clamp(static_cast<float>(_nowState.Gamepad.bRightTrigger) / static_cast<float>(_rightTriggerDeadline), 0.0f, 1.0f);
 #ifdef _DEBUG
 	std::cout << st << std::endl;
 #endif // _DEBUG
@@ -417,7 +417,7 @@ float K3D::GamePad::GetSaturatedRT()
 
 float K3D::GamePad::GetSaturatedLT()
 {
-	float st = ::Clamp(static_cast<float>(_nowState.Gamepad.bLeftTrigger) / static_cast<float>(_leftTriggerDeadline), -1.0f, 1.0f);
+	float st = ::Clamp(static_cast<float>(_nowState.Gamepad.bLeftTrigger) / static_cast<float>(_leftTriggerDeadline), 0.0f, 1.0f);
 #ifdef _DEBUG
 	std::cout << st << std::endl;
 #endif // _DEBUG

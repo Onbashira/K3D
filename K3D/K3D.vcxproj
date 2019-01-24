@@ -120,6 +120,7 @@
     <ClInclude Include="Engine\Source\MemoryAllocator\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\STDAllocator.h" />
     <ClInclude Include="Engine\Source\Texture\DDSTextureLoader12.h" />
+    <ClInclude Include="Engine\Source\Texture\TextureLoader.h" />
     <ClInclude Include="Engine\Source\Texture\WICTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Utility\BasicTypes.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h" />
@@ -179,7 +180,6 @@
     <ClInclude Include="Engine\Source\ShaderObject\ShaderObjectManager.h" />
     <ClInclude Include="Engine\Source\Signature\CommandSignature.h" />
     <ClInclude Include="Engine\Source\Signature\RootSignature.h" />
-    <ClInclude Include="Engine\Source\Texture\TextureLoader.h" />
     <ClInclude Include="Engine\Source\Texture\TextureManager.h" />
     <ClInclude Include="Engine\Source\Time\Timer.h" />
     <ClInclude Include="Engine\Source\Utility\D3D12Common.h" />

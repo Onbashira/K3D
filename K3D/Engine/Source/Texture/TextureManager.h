@@ -11,7 +11,7 @@ namespace K3D {
 	class DescriptorHeap;
 	class TextureLoader;
 	class ShaderResource;
-
+	class D3D12Device;
 	class TextureManager
 	{
 
@@ -43,9 +43,11 @@ namespace K3D {
 			return instance;
 		};
 
-		std::weak_ptr<ShaderResource> GetSpriteShaderResource(std::string name);
+		std::shared_ptr<TextureObject> GetTexture(String filename);
 
-		std::weak_ptr<ShaderResource> GetModelTextureShaderResource(std::string modelPath);
+		std::shared_ptr<TextureObject> LoadTexture(String filename,std::shared_ptr<D3D12Device> device = nullptr, std::shared_ptr<CommandList> list = nullptr , CommandQueue* queue = nullptr);
+
+		std::shared_ptr<TextureObject> DuplicateTexture(String srcFilename, String dstFilename);
 
 		std::weak_ptr<ShaderResource> GetNullTextureShaderResource();
 
