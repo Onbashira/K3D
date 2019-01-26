@@ -11,7 +11,7 @@ namespace K3D {
 	class DescriptorHeap;
 	class CommandList;
 
-	class [[depulicated]]DebugWindow
+	class DebugWindow
 	{
 	public:
 		struct FrameResource {

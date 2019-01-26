@@ -25,7 +25,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_GRAPHICS_PIPELI
 		_rootSignature = GraphicsContextManager::GetInstance().GetRootSignature(name + "RootSignature");
 		gpsDesc.pRootSignature = _rootSignature.lock()->GetSignature().Get();
 	}
-	auto hr = Framework::GetDevice()->GetDevice()->CreateGraphicsPipelineState(&gpsDesc, IID_PPV_ARGS(&_pipelineState));
+	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateGraphicsPipelineState(&gpsDesc, IID_PPV_ARGS(&_pipelineState));
 	return hr;
 }
 
@@ -48,7 +48,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_COMPUTE_PIPELIN
 		cpsDesc.pRootSignature = _rootSignature.lock()->GetSignature().Get();
 	}
 
-	auto hr = Framework::GetDevice()->GetDevice()->CreateComputePipelineState(&cpsDesc, IID_PPV_ARGS(&_pipelineState));
+	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateComputePipelineState(&cpsDesc, IID_PPV_ARGS(&_pipelineState));
 	SetName(name);
 
 	return hr;
@@ -72,7 +72,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_GRAPHICS_PIPELI
 {
 	_rootSignature = rootSignature;
 	gpsDesc.pRootSignature = _rootSignature.lock()->GetSignature().Get();
-	auto hr = Framework::GetDevice()->GetDevice()->CreateGraphicsPipelineState(&gpsDesc, IID_PPV_ARGS(&_pipelineState));
+	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateGraphicsPipelineState(&gpsDesc, IID_PPV_ARGS(&_pipelineState));
 	SetName(name);
 
 	return hr;
@@ -93,7 +93,7 @@ HRESULT K3D::PipelineStateObject::Create(std::string name, D3D12_COMPUTE_PIPELIN
 	_rootSignature = rootSignature;
 	cpsDesc.pRootSignature = _rootSignature.lock()->GetSignature().Get();
 
-	auto hr = Framework::GetDevice()->GetDevice()->CreateComputePipelineState(&cpsDesc, IID_PPV_ARGS(&_pipelineState));
+	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateComputePipelineState(&cpsDesc, IID_PPV_ARGS(&_pipelineState));
 	SetName(name);
 
 	return hr;

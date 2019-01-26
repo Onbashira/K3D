@@ -9,6 +9,7 @@ namespace K3D {
 
 	class PipelineStateObject;
 	class RootSignature;
+	class D3D12Device;
 
 	class ShaderObjectManager
 	{

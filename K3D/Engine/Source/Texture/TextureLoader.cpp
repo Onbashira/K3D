@@ -19,25 +19,53 @@ K3D::TextureLoader::~TextureLoader()
 	CoUninitialize();
 }
 
-
- K3D::TextureLoader::LoadTextureResource(std::string filePath)
+std::shared_ptr<K3D::TextureObject>& K3D::TextureLoader::LoadTextureResource(std::string filePath)
 {
 	DirectX::TexMetadata metaData = {};
 	DirectX::ScratchImage scratchImage = {};
 	auto hr = LoadFile(metaData, scratchImage, filePath);
 
-	CHECK_RESULT(hr);
+	if (hr != S_OK) 
+	{
+		std::shared_ptr<K3D::TextureObject>();
+	}
 	D3D12_SUBRESOURCE_DATA subResource = {};
 
 	subResource.pData = scratchImage.GetPixels();
 	subResource.RowPitch = scratchImage.GetImages()->rowPitch;
 	subResource.SlicePitch = scratchImage.GetImages()->slicePitch;
 	
-	return E_NOTIMPL;
+	TextureObjectDesc desc = {};
+
+	desc.subResource = std::move(subResource);
+	desc.metaData = std::move(metaData);
+	desc.fileName = std::move(filePath);
+	
+	if (IsUseGamma(scratchImage.GetImages()->format)) {
+		//汎用ガンマ
+		desc.gamma = 2.2f;
+	}
+	std::shared_ptr<K3D::TextureObject> object = std::make_shared< K3D::TextureObject>();
+
+	UpdateSubResource(Framework::GetInstance().GetCommandList(), &Framework::GetInstance().GetCommandQueue(), object->GetShaderResource(),desc.subResource,desc.fileName);
+
+	
+
+	return object;
+}
+
+std::shared_ptr<K3D::TextureObject>& K3D::TextureLoader::LoadTextureResource(std::shared_ptr<CommandList>& commandList, CommandQueue * queue, std::string filePath)
+{
+	// TODO: return ステートメントをここに挿入します
 }
 
 
- bool K3D::TextureLoader::IsUseGamma(DXGI_FORMAT format)
+std::shared_ptr<K3D::TextureObject>& K3D::TextureLoader::LoadTextureResource(std::shared_ptr<D3D12Device>& device, std::shared_ptr<CommandList>& commandList, CommandQueue * queue, std::string filePath)
+{
+	// TODO: return ステートメントをここに挿入します
+}
+
+bool K3D::TextureLoader::IsUseGamma(DXGI_FORMAT format)
  {
 	 return(
 		 DXGI_FORMAT_R8G8B8A8_UNORM_SRGB == format || DXGI_FORMAT_BC1_UNORM_SRGB == format ||
@@ -162,7 +190,7 @@ HRESULT K3D::TextureLoader::LoadFile(DirectX::TexMetadata & metaData, DirectX::S
 	if (hr != S_OK) {
 #ifdef _DEBUG
 		std::wstring text = Util::StringToWString(path) + L"が見つかりません";
-		MessageBox(Framework::GetWindow().GetWindowHandle(), text.c_str(), L"テクスチャ読み込みエラー", MB_OK);
+		MessageBox(Framework::GetInstance().GetWindow().GetWindowHandle(), text.c_str(), L"テクスチャ読み込みエラー", MB_OK);
 #endif
 	}
 	return hr;

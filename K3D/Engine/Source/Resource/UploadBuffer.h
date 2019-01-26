@@ -79,17 +79,17 @@ namespace K3D {
 		void CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cbvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 		{
 
-			Framework::GetDevice()->GetDevice()->CreateConstantBufferView(&cbvDesc, cpuDescriptorHandle);
+			Framework::GetInstance().GetDevice()->GetDevice()->CreateConstantBufferView(&cbvDesc, cpuDescriptorHandle);
 		};
 
 		void CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC & srv, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 		{
-			Framework::GetDevice()->GetDevice()->CreateShaderResourceView(this->GetResource(), &srv, cpuDescriptorHandle);
+			Framework::GetInstance().GetDevice()->GetDevice()->CreateShaderResourceView(this->GetResource(), &srv, cpuDescriptorHandle);
 		};
 
 		void CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC & uav, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle, ID3D12Resource* counterResource)
 		{
-			Framework::GetDevice()->GetDevice()->CreateUnorderedAccessView(this->GetResource(), counterResource, &uav, cpuDescriptorHandle);
+			Framework::GetInstance().GetDevice()->GetDevice()->CreateUnorderedAccessView(this->GetResource(), counterResource, &uav, cpuDescriptorHandle);
 		};
 
 		unsigned int ElementByteSize()

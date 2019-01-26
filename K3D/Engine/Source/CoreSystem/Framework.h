@@ -64,7 +64,7 @@ namespace K3D {
 
 		//!マスター描画コマンドキュー
 		CommandQueue _drawQueue;
-		
+
 		//!マスターコピーキュー
 		CommandQueue _copyQueue;
 
@@ -87,7 +87,7 @@ namespace K3D {
 		* @fn
 		* @brief インスタンスのセットアップ
 		*/
-		static void SetUp() {
+		void SetUp() {
 
 			if (_instance == nullptr) {
 				_instance = new Framework();
@@ -98,7 +98,7 @@ namespace K3D {
 		* @fn
 		* @brief インスタンス削除
 		*/
-		static void Destory() {
+		void Destory() {
 
 			if (_instance != nullptr) {
 				delete _instance;
@@ -107,85 +107,102 @@ namespace K3D {
 
 		/**
 		* @fn
+		* @brief インスタンス削除
+		*/
+		static Framework& GetInstance() {
+
+			if (_instance != nullptr) {
+				return *_instance;
+			}
+			else {
+				//強制エラー
+				assert(0);
+				std::exit(EXIT_FAILURE);
+			}
+		};
+
+
+		/**
+		* @fn
 		* @brief イニシャライズ
 		* @return 成功でS_OK
 		*/
-		static HRESULT Initialize();
+		HRESULT Initialize();
 
 		/**
 		* @fn
 		* @brief 終端処理
 		*/
-		static void Terminate();
+		void Terminate();
 
 		/**
 		* @fn
 		* @brief デバイスフェッチ
 		* @return デバイス
 		*/
-		static std::shared_ptr<K3D::D3D12Device>& GetDevice();
+		std::shared_ptr<K3D::D3D12Device>& GetDevice();
 
 		/**
 		* @fn
 		* @brief ファクトリフェッチ
 		* @return ファクトリ
 		*/
-		static K3D::Factory& GetFactory();
+		K3D::Factory& GetFactory();
 
 		/**
 		* @fn
 		* @brief コマンドキューフェッチ
 		* @return キュー
 		*/
-		static K3D::CommandQueue& GetCommandQueue();
+		K3D::CommandQueue& GetCommandQueue();
 
 		/**
 		* @fn
 		* @brief コマンドリスト
 		* @return リスト
 		*/
-		static std::shared_ptr<CommandList> GetCommandList();
+		std::shared_ptr<CommandList> GetCommandList();
 
 		/**
 		* @fn
 		* @brief ウインドウフェッチ
 		* @return ウインドウ
 		*/
-		static K3D::Window& GetWindow();
+		K3D::Window& GetWindow();
 
 		/**
 		* @fn
 		* @brief 描画マネージャフェッチ
 		* @return 描画マネージャ
 		*/
-		static K3D::RenderingManager& GetRenderingManagre();
+		K3D::RenderingManager& GetRenderingManagre();
 
 		/**
 		* @fn
 		* @brief タイマーフェッチ
 		* @return タイマー
 		*/
-		static K3D::Timer& Time();
+		K3D::Timer& Time();
 
 		/**
 		* @fn
 		* @brief バックサーフェスをフリップする
 		*/
-		static void FlipScreen();
+		void FlipScreen();
 
 		/**
 		* @fn
 		* @brief スクリーンをクリアする
 		* @param[in] list　コマンドリストの弱参照
 		*/
-		static void ClearScreen(std::weak_ptr<CommandList> list);
+		void ClearScreen(std::weak_ptr<CommandList> list);
 
 		/**
 		* @fn
 		* @brief ウインドウの名前を設定する
 		* @param[in] name ウインドウの名前
 		*/
-		static void SetWindowName(std::wstring name);
+		void SetWindowName(std::wstring name);
 
 		/**
 		* @fn
@@ -193,58 +210,58 @@ namespace K3D {
 		* @param[in] width ウインドウの幅
 		* @param[in] height ウインドウの高さ
 		*/
-		static void SetWindowSize(unsigned int width, unsigned int  height);
+		void SetWindowSize(unsigned int width, unsigned int  height);
 
 		/**
 		* @fn
 		* @brief バックバッファの数を設定する
 		* @param[in] backBufferNum バックバッファの数
 		*/
-		static void SetBackBufferNum(unsigned int backBufferNum);
+		void SetBackBufferNum(unsigned int backBufferNum);
 
 		/**
 		* @fn
 		* @brief 計測開始
 		*/
-		static void TimerStart();
+		void TimerStart();
 
 		/**
 		* @fn
 		* @brief 計測停止
 		*/
-		static void TimerStop();
+		void TimerStop();
 
 		/**
 		* @fn
 		* @brief 呼び出し時点での差分をコミット
 		*/
-		static void Tick();
+		void Tick();
 
 		/**
 		* @fn
 		* @brief 前フレームとの差分を取得
 		*/
-		static float DeltaTime();
+		float DeltaTime();
 
 		/**
 		* @fn
 		* @brief 入力マネージャフェッチ
 		* @return 入力マネージャ
 		*/
-		static InputManager& Input();
+		InputManager& Input();
 
 		/**
 		* @fn
 		* @brief オーディオマネージャフェッチ
 		* @return オーディオマネージャ
 		*/
-		static AudioManager& AudioManager();
+		AudioManager& AudioManager();
 
 		/**
 		* @fn
 		* @brief メッセージループ
 		*/
-		static int LoopMessage();
+		int LoopMessage();
 
 	private:
 

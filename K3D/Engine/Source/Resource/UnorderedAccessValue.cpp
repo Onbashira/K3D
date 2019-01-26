@@ -163,13 +163,13 @@ D3D12_GPU_DESCRIPTOR_HANDLE K3D::UnorderedAccessValue::GetUAVGPUHandle()
 
 HRESULT K3D::UnorderedAccessValue::CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC* uavDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
-	Framework::GetDevice()->GetDevice()->CreateUnorderedAccessView(_stagingResource.GetResource().Get(), nullptr, uavDesc, cpuDescriptorHandle);
+	Framework::GetInstance().GetDevice()->GetDevice()->CreateUnorderedAccessView(_stagingResource.GetResource().Get(), nullptr, uavDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 
 HRESULT K3D::UnorderedAccessValue::CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC * srvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
-	Framework::GetDevice()->GetDevice()->CreateShaderResourceView(_stagingResource.GetResource().Get(), srvDesc, cpuDescriptorHandle);
+	Framework::GetInstance().GetDevice()->GetDevice()->CreateShaderResourceView(_stagingResource.GetResource().Get(), srvDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 

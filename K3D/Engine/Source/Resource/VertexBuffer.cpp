@@ -77,7 +77,7 @@ HRESULT K3D::VertexBuffer::Create(ULONG64 size, UINT stride, const void * pVerti
 	desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	desc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
-	auto hr = Framework::GetDevice()->GetDevice()->CreateCommittedResource(&prop, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(this->GetResource().GetAddressOf()));
+	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateCommittedResource(&prop, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(this->GetResource().GetAddressOf()));
 
 	if (FAILED(hr)) {
 		return E_FAIL;

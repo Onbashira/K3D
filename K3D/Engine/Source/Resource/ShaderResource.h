@@ -28,6 +28,8 @@ namespace K3D {
 		UINT64 GetHeight();
 
 		UINT64 GetDepthOfArarry();
+
+		void Discard();
 		
 	};
 

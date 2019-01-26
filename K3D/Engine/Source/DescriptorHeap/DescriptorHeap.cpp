@@ -62,7 +62,7 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_DESC* desc)
 	if (desc == nullptr) {
 		return E_FAIL;
 	}
-	auto hr = Framework::GetDevice()->GetDevice()->CreateDescriptorHeap(desc, IID_PPV_ARGS(&_heap));
+	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateDescriptorHeap(desc, IID_PPV_ARGS(&_heap));
 	if (FAILED(hr)) {
 		return  E_FAIL;
 	}
@@ -70,7 +70,7 @@ HRESULT K3D::DescriptorHeap::Create(D3D12_DESCRIPTOR_HEAP_DESC* desc)
 	_gpuHandle = this->_heap->GetGPUDescriptorHandleForHeapStart();
 	_heapDesc = *desc;
 	_type = desc->Type;
-	_incrementSize = Framework::GetDevice()->GetDevice()->GetDescriptorHandleIncrementSize(desc->Type);
+	_incrementSize = Framework::GetInstance().GetDevice()->GetDevice()->GetDescriptorHandleIncrementSize(desc->Type);
 	return S_OK;
 }
 
