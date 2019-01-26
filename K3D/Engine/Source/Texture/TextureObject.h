@@ -7,7 +7,9 @@ namespace K3D {
 	class ShaderResource;
 	class TextureLoader;
 	class D3D12Device;
+
 	struct TextureObjectDesc {
+
 		float gamma;
 		std::string fileName;
 		D3D12_SUBRESOURCE_DATA subResource;
@@ -17,7 +19,8 @@ namespace K3D {
 	class TextureObject
 	{
 	public:
-
+		friend class TextureLoader;
+		friend class TextureManager;
 	private:
 		
 		//!テクスチャリソースへの参照
@@ -54,13 +57,6 @@ namespace K3D {
 		* @return デスクリプション
 		*/
 		void SetDesc(TextureObjectDesc&& desc);
-
-		/**
-		* @fn
-		* @brief テクスチャのロードと自分自身へのバインド
-		* @param[in] texturePath プロジェクトディレクトリ相対のテスクチャへのパス
-		*/
-		void LoadTexture(std::string texturePath)const;
 
 		/**
 		* @fn

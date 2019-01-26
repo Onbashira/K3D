@@ -16,7 +16,7 @@ namespace K3D {
 	class TextureLoader
 	{
 	
-		class TextureManager;
+		friend class TextureManager;
 
 	public:
 
@@ -24,7 +24,7 @@ namespace K3D {
 
 	public:
 
-		static TextureLoader& GetIsntace() {
+		static TextureLoader& GetInstance() {
 			static TextureLoader instance;
 			return instance;
 		};
@@ -36,7 +36,7 @@ namespace K3D {
 		* @param[in] filePath ファイルパス
 		* @return ロードしたテクスチャへの参照
 		*/
-		std::shared_ptr<TextureObject>& LoadTextureResource(std::string filePath);
+		std::shared_ptr<TextureObject> LoadTextureResource(std::string filePath);
 
 		/**
 		* @fn
@@ -45,25 +45,8 @@ namespace K3D {
 		* @param[in] commandQueue キューの参照
 		* @param[in] filePath ファイルパス
 		*/
-		std::shared_ptr<TextureObject>& LoadTextureResource(std::shared_ptr<CommandList>& commandList, CommandQueue* queue, std::string filePath);
+		std::shared_ptr<TextureObject> LoadTextureResource(std::shared_ptr<CommandList>& commandList, CommandQueue* queue, std::string filePath);
 
-		/**
-		* @fn
-		* @brief モデルのテクスチャのロード
-		* @param[in] device 作成に使うデバイス
-		* @param[in] commandList リストの参照
-		* @param[in] commandQueue キューの参照
-		* @param[in] filePath ファイルパス
-		*/
-		std::shared_ptr<TextureObject>& LoadTextureResource(std::shared_ptr<D3D12Device>& device, std::shared_ptr<CommandList>& commandList, CommandQueue* queue, std::string filePath);
-
-		/**
-		* @fn
-		* @brief フォーマットからガンマ補正がかかっているかどうかの検討をつける
-		* @param[in] format format
-		* @return リザルト 真でガンマ値あり
-		*/
-		bool IsUseGamma(DXGI_FORMAT format);
 
 	private:
 
@@ -84,6 +67,18 @@ namespace K3D {
 
 		/**
 		* @fn
+		* @brief UpdateSubresourceを用いたバッファへの書き込み
+		* @param[in] resource シェーダーリソースへの弱参照
+		* @param[out] subResource サブリソース
+		* @param[in] modelName パス
+		* @param[in] paths ファイルパス
+		* @return リザルト
+		*/
+		HRESULT UpdateSubResource(std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path);
+
+
+		/**
+		* @fn
 		* @brief WriteToSubResourceを用いたバッファへの書き込み
 		* @param[in] commandList リストの参照
 		* @param[in] commandQueue キューの参照
@@ -94,6 +89,17 @@ namespace K3D {
 		* @return リザルト
 		*/
 		HRESULT WriteToSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path);
+
+		/**
+		* @fn
+		* @brief WriteToSubResourceを用いたバッファへの書き込み
+		* @param[in] resource シェーダーリソースへの弱参照
+		* @param[out] subResource サブリソース
+		* @param[in] modelName パス
+		* @param[in] paths ファイルパス
+		* @return リザルト
+		*/
+		HRESULT WriteToSubResource(std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path);
 
 
 		/**

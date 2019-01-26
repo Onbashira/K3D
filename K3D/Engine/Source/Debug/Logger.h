@@ -7,7 +7,7 @@
 
 namespace K3D {
 	//!ログレベル
-	enum class LogLevel {
+	enum class LOG_LEVEL {
 		Details,
 		Info,
 		Debug,
@@ -32,7 +32,7 @@ namespace K3D {
 		* @param[in] level ログレベル
 		* @param[in] format ログ文
 		*/
-		virtual void		Log(LogLevel level, std::string format) = 0;
+		virtual void		Log(LOG_LEVEL level, std::string format) = 0;
 
 		/**
 		* @fn
@@ -40,21 +40,21 @@ namespace K3D {
 		* @param[in] level ログレベル
 		* @param[in] format ログ文
 		*/
-		virtual void		LogW(LogLevel level, std::wstring format) = 0;
+		virtual void		LogW(LOG_LEVEL level, std::wstring format) = 0;
 
 		/**
 		* @fn
 		* @brief フィルター以下のレベルのロギングを抑制するためフィルターの設定
 		* @param[in] level 
 		*/
-		virtual void		SetFilter(LogLevel level) = 0;
+		virtual void		SetFilter(LOG_LEVEL level) = 0;
 
 		/**
 		* @fn
 		* @brief フィルターのフェッチ
 		* @return フィルタ
 		*/
-		virtual LogLevel	GetFilter() = 0;
+		virtual LOG_LEVEL	GetFilter() = 0;
 
 	};
 
@@ -62,7 +62,7 @@ namespace K3D {
 	private:
 
 		//!フィルタ
-		LogLevel _LogFilter;
+		LOG_LEVEL _LogFilter;
 		
 		//！デバッグファイル
 		std::ofstream _debugFile;
@@ -98,14 +98,14 @@ namespace K3D {
 		* @param[in] level ログレベル
 		* @param[in] hr リザルト
 		*/
-		void		Log(LogLevel level, HRESULT hr);
+		void		Log(LOG_LEVEL level, HRESULT hr);
 		/**
 		* @fn
 		* @brief ロギング
 		* @param[in] level ログレベル
 		* @param[in] format ログ文
 		*/
-		void		Log(LogLevel level, std::string format);
+		void		Log(LOG_LEVEL level, std::string format);
 		
 		/**
 		* @fn
@@ -113,7 +113,7 @@ namespace K3D {
 		* @param[in] level ログレベル
 		* @param[in] format ログ文
 		*/
-		void		Log(LogLevel level, const char* format, ...);
+		void		Log(LOG_LEVEL level, const char* format, ...);
 		
 		/**
 		* @fn
@@ -121,7 +121,7 @@ namespace K3D {
 		* @param[in] level ログレベル
 		* @param[in] format ログ文
 		*/
-		void		LogW(LogLevel level, std::wstring format);
+		void		LogW(LOG_LEVEL level, std::wstring format);
 		
 		/**
 		* @fn
@@ -129,21 +129,21 @@ namespace K3D {
 		* @param[in] level ログレベル
 		* @param[in] format ログ文
 		*/
-		void		LogW(LogLevel level, const wchar_t* format, ...);
+		void		LogW(LOG_LEVEL level, const wchar_t* format, ...);
 		
 		/**
 		* @fn
 		* @brief フィルター以下のレベルのロギングを抑制するためフィルターの設定
 		* @param[in] level
 		*/
-		void		SetFilter(LogLevel level);
+		void		SetFilter(LOG_LEVEL level);
 		
 		/**
 		* @fn
 		* @brief フィルターのフェッチ
 		* @return フィルタ
 		*/
-		LogLevel	GetFilter();
+		LOG_LEVEL	GetFilter();
 		
 		/**
 		* @fn
@@ -160,12 +160,12 @@ namespace K3D {
 		static SystemLogger& GetInstance();
 	};
 
-#define HRESULT_LOG(hr)		K3D::SystemLogger::GetInstance().Log(K3D::LogLevel::Details,	"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, reinterpret_cast<const char*>(_com_error(hr).ErrorMessage()))
-#define	DEBUG_LOG(str)		K3D::SystemLogger::GetInstance().Log(K3D::LogLevel::Debug,		"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
-#define INFO_LOG(str)		K3D::SystemLogger::GetInstance().Log(K3D::LogLevel::Info ,		"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
-#define DETAILS_LOG(str)	K3D::SystemLogger::GetInstance().Log(K3D::LogLevel::Details ,	"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
-#define WARNING_LOG(str)	K3D::SystemLogger::GetInstance().Log(K3D::LogLevel::Warning ,	"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
-#define ERROR_LOG(str)		K3D::SystemLogger::GetInstance().Log(K3D::LogLevel::Error ,		"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
+#define HRESULT_LOG(hr)		K3D::SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Details,	"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, reinterpret_cast<const char*>(_com_error(hr).ErrorMessage()))
+#define	DEBUG_LOG(str)		K3D::SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Debug,		"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
+#define INFO_LOG(str)		K3D::SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Info ,		"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
+#define DETAILS_LOG(str)	K3D::SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Details ,	"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
+#define WARNING_LOG(str)	K3D::SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Warning ,	"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
+#define ERROR_LOG(str)		K3D::SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Error ,		"[ FILE : %s, LINE : %d] { %s }\n", __FILE__, __LINE__, str.c_str())
 
 
 #if defined(UNICODE) || defined(_UNICODE)

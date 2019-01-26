@@ -16,11 +16,11 @@ namespace K3D {
 	{
 		CONSOLE_SCREEN_BUFFER_INFO  ScreenBuffer;
 
-		void BindColor(LogLevel level);
+		void BindColor(LOG_LEVEL level);
 		void UnBindColor();
 	};
 
-	void ConsoleScreen::BindColor(LogLevel level)
+	void ConsoleScreen::BindColor(LOG_LEVEL level)
 	{
 		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 		GetConsoleScreenBufferInfo(handle, &ScreenBuffer);
@@ -28,21 +28,21 @@ namespace K3D {
 		unsigned short attribute = ScreenBuffer.wAttributes;
 		switch (level)
 		{
-		case LogLevel::Details:
+		case LOG_LEVEL::Details:
 			attribute = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
 			break;
 
-		case LogLevel::Info:
+		case LOG_LEVEL::Info:
 			attribute = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY;
 			break;
-		case LogLevel::Debug:
+		case LOG_LEVEL::Debug:
 			attribute = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
 			break;
-		case LogLevel::Warning:
+		case LOG_LEVEL::Warning:
 			attribute = FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY;
 			break;
 
-		case LogLevel::Error:
+		case LOG_LEVEL::Error:
 			attribute = FOREGROUND_RED | FOREGROUND_INTENSITY;
 			break;
 		}
@@ -57,7 +57,7 @@ namespace K3D {
 }
 
 
-K3D::SystemLogger::SystemLogger(): _LogFilter(LogLevel::Details)
+K3D::SystemLogger::SystemLogger(): _LogFilter(LOG_LEVEL::Details)
 {
 #ifdef _DEBUG
 	CreateDebugFile();
@@ -109,7 +109,7 @@ void K3D::SystemLogger::UnMap()
 #endif // _DEBUG
 }
 
-void K3D::SystemLogger::Log(LogLevel level , HRESULT hr)
+void K3D::SystemLogger::Log(LOG_LEVEL level , HRESULT hr)
 {
 #ifdef _DEBUG
 	if (level >= _LogFilter)
@@ -126,14 +126,14 @@ void K3D::SystemLogger::Log(LogLevel level , HRESULT hr)
 #endif
 }
 
-void K3D::SystemLogger::Log(LogLevel level, std::string format)
+void K3D::SystemLogger::Log(LOG_LEVEL level, std::string format)
 {
 #ifdef _DEBUG
 	Log(level, format.c_str());
 #endif // _DEBUG
 }
 
-void K3D::SystemLogger::Log(LogLevel level, const char * format, ...)
+void K3D::SystemLogger::Log(LOG_LEVEL level, const char * format, ...)
 {
 	
 #ifdef _DEBUG
@@ -161,7 +161,7 @@ void K3D::SystemLogger::Log(LogLevel level, const char * format, ...)
 #endif	
 }
 
-void K3D::SystemLogger::LogW(LogLevel level, std::wstring format)
+void K3D::SystemLogger::LogW(LOG_LEVEL level, std::wstring format)
 {
 #ifdef _DEBUG
 
@@ -169,7 +169,7 @@ void K3D::SystemLogger::LogW(LogLevel level, std::wstring format)
 #endif
 }
 
-void K3D::SystemLogger::LogW(LogLevel level, const wchar_t * format, ...)
+void K3D::SystemLogger::LogW(LOG_LEVEL level, const wchar_t * format, ...)
 {
 #ifdef _DEBUG
 
@@ -196,12 +196,12 @@ void K3D::SystemLogger::LogW(LogLevel level, const wchar_t * format, ...)
 #endif
 }
 
-void K3D::SystemLogger::SetFilter(LogLevel level)
+void K3D::SystemLogger::SetFilter(LOG_LEVEL level)
 {
 	_LogFilter = level;
 }
 
-K3D::LogLevel K3D::SystemLogger::GetFilter()
+K3D::LOG_LEVEL K3D::SystemLogger::GetFilter()
 {
 	return _LogFilter;
 }

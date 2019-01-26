@@ -1,71 +1,102 @@
 #include "TextureManager.h"
-#include "../DescriptorHeap/DescriptorHeap.h"
-#include "../Resource/ShaderResource.h"
-
+#include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
+#include "Engine/Source/Resource/ShaderResource.h"
+#include "Engine/Source/Texture/TextureObject.h"
+#include "Engine/Source/CommandQueue/CommandQueue.h"
+#include "Engine/Source/CommandList/CommandList.h"
+#include "Engine/Source/Texture/TextureLoader.h"
+#include "Engine/Source/CoreSystem/Framework.h"
 
 K3D::TextureManager::TextureManager()
 {
-	//ヌルテクスチャの作成
-	std::shared_ptr<ShaderResource> resource = std::make_shared<ShaderResource>();
-	{
-		D3D12_HEAP_PROPERTIES props = {};
-		props.Type = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_DEFAULT;
-		props.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY::D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-		props.MemoryPoolPreference = D3D12_MEMORY_POOL::D3D12_MEMORY_POOL_UNKNOWN;
-		props.CreationNodeMask = 0;
-		props.VisibleNodeMask = 0;
-
-		D3D12_RESOURCE_DESC resDesc = {};
-		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-		resDesc.Width = 16;
-		resDesc.Height = 16;
-		resDesc.DepthOrArraySize = 1;
-		resDesc.MipLevels = 0;
-		resDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
-		resDesc.Layout = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_UNKNOWN;
-		resDesc.SampleDesc.Count = 1;
-		resDesc.SampleDesc.Quality = 0;
-		resDesc.Flags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE;
-
-		resource->Create(16,16,1, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS);
-	
-	}
-
-	//参照の追加
-	resource->SetName("Nulltexture ");
-	_textureResourceMap.Set(this->_nullTextureName,resource);
-	//参照の破棄
-	resource.reset();
-
+	CreateBlackTexture();
+	CreateWhiteTexture();
 }
-
 
 K3D::TextureManager::~TextureManager()
 {
 	Discard();
 }
 
-std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetSpriteShaderResource(std::string name)
+
+std::shared_ptr<K3D::TextureObject> K3D::TextureManager::GetTexture(String filename)
 {
-	return _textureResourceMap.GetMap()[name];
+	return _textureResourceMap.Get(filename).lock();
 }
 
-std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetModelTextureShaderResource(std::string modelPath)
+std::shared_ptr<K3D::TextureObject> K3D::TextureManager::LoadTexture(String filename, std::shared_ptr<D3D12Device> device, std::shared_ptr<CommandList> list, CommandQueue * queue)
 {
-	return _textureResourceMap.GetMap()[modelPath];
+	auto obj = TextureLoader::GetInstance().LoadTextureResource(filename);
+	if (obj != nullptr)
+	{
+		this->_textureResourceMap.Set(filename, obj);
+		return obj;
+	}
+	return obj;
 }
 
-std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetNullTextureShaderResource()
+std::shared_ptr<K3D::TextureObject> K3D::TextureManager::DuplicateTexture(String srcFilename, String dstFilename)
+{
+	return std::shared_ptr<TextureObject>();
+}
+
+std::shared_ptr<K3D::TextureObject> K3D::TextureManager::CreateColorTexture(String name, const Vector4 color)
+{
+	float maxValue = 255.0f;
+	const unsigned int colorNum = 4;
+	unsigned char uc_color[colorNum] = { static_cast<unsigned char>(color.x * maxValue),
+		static_cast<unsigned char>(color.y * maxValue),
+		static_cast<unsigned char>(color.z * maxValue),
+		static_cast<unsigned char>(color.w * maxValue) };
+	std::string texName = "SingleColorTexture";
+	for (int i = 0; i < colorNum; ++i)
+	{
+		texName += Util::ConvertNumberToString(uc_color[i]);
+	}
+
+	auto findTex = _textureResourceMap.GetMap().find(texName);
+	if (findTex != _textureResourceMap.GetMap().end())
+	{
+		return findTex->second;
+	}
+
+	const unsigned int width = 16;
+	const unsigned int height = 16;
+	std::vector<unsigned char> colorDatas(width * height * colorNum);
+	for (unsigned int i = 0; i < static_cast<unsigned int>(colorDatas.size()); i += colorNum)
+	{
+		for (unsigned int j = 0; j < colorNum; ++j)
+		{
+			colorDatas[i + j] = uc_color[j];
+		}
+	}
+
+	std::shared_ptr<TextureObject> obj = std::make_shared<TextureObject>();
+
+	obj->_desc.subResource.pData = colorDatas.data();
+	obj->_desc.subResource.RowPitch = width * sizeof(uc_color);
+	obj->_desc.subResource.SlicePitch = obj->GetDesc().subResource.RowPitch * height;
+	obj->_desc.fileName = texName;
+
+
+	obj->_textureResource = std::make_shared<ShaderResource>();
+	obj->_desc.gamma = 1.0f;
+	TextureLoader::GetInstance().UpdateSubResource(obj->_textureResource, obj->_desc.subResource,texName);
+	_textureResourceMap.Set(name, obj);
+	return obj;
+}
+
+std::weak_ptr<K3D::TextureObject> K3D::TextureManager::GetNullTexture()
 {
 	return _textureResourceMap.GetMap()[this->_nullTextureName];
 }
 
-std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetNullBlackTextureShaderResource()
+std::weak_ptr<K3D::TextureObject> K3D::TextureManager::GetBlackTexture()
 {
 	return _textureResourceMap.GetMap()[this->_nullTextureBlackName];
 }
 
-std::weak_ptr<K3D::ShaderResource> K3D::TextureManager::GetNullWhiteTextureShaderResource()
+std::weak_ptr<K3D::TextureObject> K3D::TextureManager::GetWhiteTexture()
 {
 	return _textureResourceMap.GetMap()[this->_nullTextureWhiteName];
 }
@@ -75,4 +106,13 @@ void K3D::TextureManager::Discard()
 	_textureResourceMap.DiscardMap();
 }
 
+void K3D::TextureManager::CreateBlackTexture()
+{
+	CreateColorTexture(this->_nullTextureBlackName, Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
+void K3D::TextureManager::CreateWhiteTexture()
+{
+	CreateColorTexture(this->_nullTextureWhiteName, Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+}
 

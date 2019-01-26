@@ -6,7 +6,7 @@
 
 
 void main() {
-	K3D::Framework::GetInstance().SetUp();
+	K3D::Framework::SetUp();
 	K3D::Framework::GetInstance().SetBackBufferNum(2);
 	K3D::Framework::GetInstance().SetWindowName(L"test");
 	K3D::Framework::GetInstance().SetWindowSize(1280, 720);
@@ -19,6 +19,6 @@ void main() {
 	}
 	K3D::Framework::GetInstance().TimerStop();
 
-	K3D::Framework::GetInstance().Destory();
+	K3D::Framework::Destory();
 
 }

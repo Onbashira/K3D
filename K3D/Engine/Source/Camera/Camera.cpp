@@ -2,7 +2,7 @@
 
 
 K3D::Camera::Camera() :
-	_mode(CameraMode::Perspective), _aspectRatio(0.0f)
+	_mode(CAMERA_MODE::Perspective), _aspectRatio(0.0f)
 {
 }
 
@@ -13,14 +13,14 @@ K3D::Camera::~Camera()
 }
 
 
-void K3D::Camera::InitializeCamera(CameraMode type, const float width, const float height, const float nearClip, const float farClip, const Vector3 & position, const Vector3 & target, const Vector3 & upWard)
+void K3D::Camera::InitializeCamera(CAMERA_MODE type, const float width, const float height, const float nearClip, const float farClip, const Vector3 & position, const Vector3 & target, const Vector3 & upWard)
 {
 	switch (type)
 	{
-	case CameraMode::Perspective:
+	case CAMERA_MODE::Perspective:
 		initializePerspective(width, height, nearClip, farClip, position, target, upWard);
 		break;
-	case CameraMode::Orthogonal:
+	case CAMERA_MODE::Orthogonal:
 		InitializeOrthogonal(width, height, nearClip, farClip, position, target, upWard);
 		break;
 	default:
@@ -31,7 +31,7 @@ void K3D::Camera::InitializeCamera(CameraMode type, const float width, const flo
 void K3D::Camera::InitializeCameraFOV(const float fov, const float width, const float height, const float nearClip, const float farClip, const Vector3 & position, const Vector3 & target, const Vector3 & upWard)
 {
 
-	_mode = CameraMode::Perspective;
+	_mode = CAMERA_MODE::Perspective;
 
 	_fov = DegToRad(fov);
 	_near = nearClip;
@@ -77,15 +77,15 @@ HRESULT K3D::Camera::CreateBuffer()
 	return hr;
 }
 
-void K3D::Camera::ChangeCameraMode(CameraMode mode)
+void K3D::Camera::ChangeCameraMode(CAMERA_MODE mode)
 {
 
 	switch (mode)
 	{
-	case K3D::CameraMode::Perspective:
+	case K3D::CAMERA_MODE::Perspective:
 		InitializeOrthogonal(_windowWidth, _windowHeight, this->_near, _far, this->GetPos(), this->GetPos() + GetLocalAxis().w, GetLocalAxis().v);
 		break;
-	case K3D::CameraMode::Orthogonal:
+	case K3D::CAMERA_MODE::Orthogonal:
 		initializePerspective(_windowWidth, _windowHeight, this->_near, _far, this->GetPos(), this->GetPos() + GetLocalAxis().w, GetLocalAxis().v);
 		break;
 	default:
@@ -96,7 +96,7 @@ void K3D::Camera::ChangeCameraMode(CameraMode mode)
 
 HRESULT K3D::Camera::InitializeOrthogonal(const float width, const float height, const float nearClip, const float farClip, const Vector3 & position, const Vector3 & target, const Vector3 & upWard)
 {
-	_mode = CameraMode::Orthogonal;
+	_mode = CAMERA_MODE::Orthogonal;
 
 	_fov = 0;
 	_near = nearClip;
@@ -127,7 +127,7 @@ HRESULT K3D::Camera::InitializeOrthogonal(const float width, const float height,
 HRESULT K3D::Camera::initializePerspective(const float width, const float height, const float nearClip, const float farClip, const Vector3 & position, const Vector3 & target, const Vector3 & upWard)
 {
 
-	_mode = CameraMode::Perspective;
+	_mode = CAMERA_MODE::Perspective;
 
 	_fov = 0;
 	_near = nearClip;
@@ -155,7 +155,7 @@ HRESULT K3D::Camera::initializePerspective(const float width, const float height
 	return S_OK;
 }
 
-K3D::CameraMode K3D::Camera::GetMode()
+K3D::CAMERA_MODE K3D::Camera::GetMode()
 {
 	return _mode;
 }

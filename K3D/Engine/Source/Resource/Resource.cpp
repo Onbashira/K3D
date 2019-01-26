@@ -69,7 +69,7 @@ HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D
 	auto hr = Framework::GetInstance().GetDevice()->GetDevice()->CreateCommittedResource(&heapProps, flags, &resourceDesc, state, clearValue, IID_PPV_ARGS(&this->_resource));
 
 	if (FAILED(hr)) {
-		SystemLogger::GetInstance().Log(LogLevel::Error, hr);
+		SystemLogger::GetInstance().Log(LOG_LEVEL::Error, hr);
 
 		return E_FAIL;
 	}
@@ -90,7 +90,7 @@ HRESULT K3D::Resource::Create(std::shared_ptr<D3D12Device>& device, const D3D12_
 	auto hr = device->GetDevice()->CreateCommittedResource(&heapProps, flags, &resourceDesc, state, clearValue, IID_PPV_ARGS(&this->_resource));
 
 	if (FAILED(hr)) {
-		SystemLogger::GetInstance().Log(LogLevel::Error, hr);
+		SystemLogger::GetInstance().Log(LOG_LEVEL::Error, hr);
 
 		return E_FAIL;
 	}

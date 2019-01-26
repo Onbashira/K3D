@@ -25,11 +25,6 @@ void K3D::TextureObject::SetDesc(TextureObjectDesc && desc)
 	this->_desc = desc;
 }
 
-void K3D::TextureObject::LoadTexture(std::string texturePath) const
-{
-	TextureLoader::GetInstance().LoadTexture(texturePath);
-}
-
 std::weak_ptr<K3D::ShaderResource> K3D::TextureObject::GetShaderResource()
 {
 	return this->_textureResource;

@@ -9,7 +9,7 @@ namespace K3D {
 	class CommandList;
 	
 	//!カメラのモード
-	enum class CameraMode {
+	enum class CAMERA_MODE {
 		Perspective,
 		Orthogonal
 	};
@@ -33,7 +33,7 @@ namespace K3D {
 
 	private:
 		//！モード
-		CameraMode		_mode;
+		CAMERA_MODE		_mode;
 
 		//!Field　Of　View
 		float			_fov;
@@ -80,7 +80,7 @@ namespace K3D {
 		* @brief カメラのモードを取得
 		* @return モード
 		*/
-		CameraMode		GetMode();
+		CAMERA_MODE		GetMode();
 
 		/**
 		* @fn
@@ -184,7 +184,7 @@ namespace K3D {
 		* @brief モードの変更
 		* @oaram[in] mode　モード
 		*/
-		void ChangeCameraMode(CameraMode mode);
+		void ChangeCameraMode(CAMERA_MODE mode);
 
 		/**
 		* @fn
@@ -198,7 +198,7 @@ namespace K3D {
 		* @oaram[in] target　ターゲット位置
 		* @oaram[in] upWard　アップベクトル
 		*/
-		void InitializeCamera(CameraMode type, const float width, const float height, const float nearClip, const float farClip, const Vector3& position, const Vector3& target, const Vector3& upWard);
+		void InitializeCamera(CAMERA_MODE type, const float width, const float height, const float nearClip, const float farClip, const Vector3& position, const Vector3& target, const Vector3& upWard);
 
 		/**
 		* @fn

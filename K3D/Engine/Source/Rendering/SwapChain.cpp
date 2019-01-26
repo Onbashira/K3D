@@ -63,9 +63,8 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 	//レンダーターゲットの作成
 	{
 		for (UINT i = 0; i < bufferNum; i++) {
-			auto res = this->_rtResource[i].GetResource();
 			//ディスプレイバッファの取得
-			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(res.GetAddressOf()))))
+			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i].GetResource().GetAddressOf()))))
 				return FALSE;
 			//レンダーターゲットビューの取得
 			Framework::GetInstance().GetDevice()->GetDevice()->CreateRenderTargetView(_rtResource[i].GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));

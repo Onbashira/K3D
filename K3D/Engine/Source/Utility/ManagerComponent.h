@@ -11,7 +11,6 @@ namespace K3D {
 	class ManagerComponent
 	{
 	private:
-
 		//!リソースキャリアー
 		std::map<std::string, std::shared_ptr<T>> _resourceMap;
 
@@ -302,5 +301,4 @@ inline std::unordered_map<std::string, std::shared_ptr<T>>& K3D::UnorderedManage
 {
 	return _resourceMap;
 }
-
 

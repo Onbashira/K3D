@@ -106,6 +106,7 @@
     <ClCompile Include="Engine\Source\Command\State\PipelineState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineResourceTable.cpp" />
     <ClCompile Include="Engine\Source\Device\RenderingDevice.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -214,6 +215,7 @@
     <ClInclude Include="Engine\Source\Command\State\PipelineState.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineResourceTable.h" />
     <ClInclude Include="Engine\Source\Device\RenderingDevice.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
   </ItemGroup>

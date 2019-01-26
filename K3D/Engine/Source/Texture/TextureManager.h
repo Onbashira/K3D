@@ -11,7 +11,11 @@ namespace K3D {
 	class DescriptorHeap;
 	class TextureLoader;
 	class ShaderResource;
+	class TextureObject;
 	class D3D12Device;
+	class CommandQueue;
+	class CommandList;
+
 	class TextureManager
 	{
 
@@ -31,7 +35,7 @@ namespace K3D {
 		const std::string _nullTextureWhiteName = "NULL_WHITE_TEXTURE";
 
 		//!èÓïÒÉLÉÉÉäÉA
-		UnorderedManagerComponent< ShaderResource> _textureResourceMap;
+		UnorderedManagerComponent<TextureObject> _textureResourceMap;
 
 
 	public:
@@ -49,11 +53,13 @@ namespace K3D {
 
 		std::shared_ptr<TextureObject> DuplicateTexture(String srcFilename, String dstFilename);
 
-		std::weak_ptr<ShaderResource> GetNullTextureShaderResource();
+		std::shared_ptr<TextureObject> CreateColorTexture(String name, const Vector4 color);
 
-		std::weak_ptr<ShaderResource> GetNullBlackTextureShaderResource();
+		std::weak_ptr<TextureObject> GetNullTexture();
 
-		std::weak_ptr<ShaderResource> GetNullWhiteTextureShaderResource();
+		std::weak_ptr<TextureObject> GetBlackTexture();
+
+		std::weak_ptr<TextureObject> GetWhiteTexture();
 
 		void Discard();
 
@@ -68,5 +74,12 @@ namespace K3D {
 		TextureManager(const TextureManager& other) {};
 
 		TextureManager(TextureManager&& other) {};
+
+		void CreateBlackTexture();
+
+		void CreateWhiteTexture();
+
+		void CreateNullTexture();
+
 	};
 }

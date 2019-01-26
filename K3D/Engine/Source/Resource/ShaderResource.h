@@ -15,7 +15,7 @@ namespace K3D {
 		
 		virtual ~ShaderResource();
 
-		HRESULT	Create(UINT texHeight, UINT texWidth, UINT texDepth ,DXGI_FORMAT texFormat,D3D12_RESOURCE_FLAGS allowFlags ,const Vector4& clearColor = Vector4(0.0f,0.0f,0.0f,1.0f));
+		HRESULT	Create(UINT texHeight, UINT texWidth, UINT texDepth ,DXGI_FORMAT texFormat,D3D12_RESOURCE_FLAGS allowFlags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE,const Vector4& clearColor = Vector4(0.0f,0.0f,0.0f,1.0f));
 
 		void CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC& srv, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
 

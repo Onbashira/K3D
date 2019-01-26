@@ -87,7 +87,7 @@ namespace K3D {
 		* @fn
 		* @brief インスタンスのセットアップ
 		*/
-		void SetUp() {
+		static void SetUp() {
 
 			if (_instance == nullptr) {
 				_instance = new Framework();
@@ -98,7 +98,7 @@ namespace K3D {
 		* @fn
 		* @brief インスタンス削除
 		*/
-		void Destory() {
+		static void Destory() {
 
 			if (_instance != nullptr) {
 				delete _instance;
@@ -119,6 +119,7 @@ namespace K3D {
 				assert(0);
 				std::exit(EXIT_FAILURE);
 			}
+
 		};
 
 
