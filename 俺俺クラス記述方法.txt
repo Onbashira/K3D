@@ -1,0 +1,13 @@
+class A
+{
+//メンバ変数
+public:
+protected:
+private:
+//メンバ変数ここまで
+//メンバ関数
+public:
+protected:
+private:
+//メンバ関数ここまで
+}

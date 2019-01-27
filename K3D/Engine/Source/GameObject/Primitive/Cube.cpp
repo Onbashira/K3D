@@ -2,11 +2,11 @@
 
 
 
-Cube::Cube()
+K3D::Cube::Cube()
 {
 }
 
 
-Cube::~Cube()
+K3D::Cube::~Cube()
 {
 }

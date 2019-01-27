@@ -2,11 +2,11 @@
 
 
 
-Sphere::Sphere()
+K3D::Sphere::Sphere()
 {
 }
 
 
-Sphere::~Sphere()
+K3D::Sphere::~Sphere()
 {
 }

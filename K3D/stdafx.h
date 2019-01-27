@@ -14,4 +14,7 @@
 #include "Engine/Source/LifetimedMemory/LifetimedMemory.h"
 #include "Engine/Source/Utility/BasicTypes.h"
 #include "Engine/Source/Utility/Utility.h"
+#include "Engine/Source/Utility/NonCopyable.h"
 #include "Engine/Source/Math/Math.h"
+#include "Engine/Source/Utility/D3D12Common.h"
+

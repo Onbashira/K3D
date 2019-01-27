@@ -52,3 +52,4 @@ namespace K3D {
 		virtual void Draw() = 0;
 	};
 }
+

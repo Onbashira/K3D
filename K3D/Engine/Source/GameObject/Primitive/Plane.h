@@ -1,8 +1,10 @@
 #pragma once
-class Plane
-{
-public:
-	Plane();
-	~Plane();
-};
+namespace K3D {
+	class Plane
+	{
+	public:
+		Plane();
+		~Plane();
+	};
+}
 

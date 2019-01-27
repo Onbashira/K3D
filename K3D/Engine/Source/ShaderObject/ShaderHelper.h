@@ -72,9 +72,9 @@ namespace K3D {
 		* @param[in] includePath インクルードパス
 		* @return リザルト
 		*/
-		HRESULT CompileShader(SHADER_TYPE type, std::string shaderPath, std::string functionName, std::string  shaderMode, std::string includePath = "");
+		HRESULT CompileShader(SHADER_TYPE type, std::string shaderPath, std::string functionName, std::string  shaderMode);
 
-private:
+	private:
 
 	};
 }

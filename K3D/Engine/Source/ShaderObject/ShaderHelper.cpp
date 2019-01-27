@@ -53,7 +53,7 @@ const std::vector<D3D_SHADER_MACRO>& K3D::ShaderHelper::GetShaderMacro() const
 	return _shaderMacro;
 }
 
-HRESULT K3D::ShaderHelper::CompileShader(SHADER_TYPE type, std::string shaderPath, std::string functionName, std::string shaderMode, std::string includePath)
+HRESULT K3D::ShaderHelper::CompileShader(SHADER_TYPE type, std::string shaderPath, std::string functionName, std::string shaderMode)
 {
 #if defined(_DEBUG)
 	//グラフィックデバッグツールによるシェーダーのデバッグの有効化処理
@@ -67,9 +67,9 @@ HRESULT K3D::ShaderHelper::CompileShader(SHADER_TYPE type, std::string shaderPat
 	ID3DBlob* error;
 
 	HRESULT hret = {};
-	auto includer = K3D::HLSLIncluder(includePath);
-	D3D_SHADER_MACRO* ptr = _shaderMacro.size() >0 ? &this->_shaderMacro[0] : nullptr ;
-	ID3DInclude* includePtr = (includePath == "") ? nullptr : &includer;
+	auto includer = K3D::HLSLIncluder(Util::GetRelativePath(shaderPath));
+	D3D_SHADER_MACRO* ptr = _shaderMacro.size() > 0 ? &this->_shaderMacro[0] : nullptr;
+	ID3DInclude* includePtr = (includer._relativePath == "") ? nullptr : &includer;
 
 	hret = D3DCompileFromFile(Util::StringToWString(shaderPath).c_str(), ptr, includePtr, functionName.c_str(), shaderMode.c_str(), compileFlag, 0, &shader, &error);
 
@@ -94,5 +94,4 @@ HRESULT K3D::ShaderHelper::CompileShader(SHADER_TYPE type, std::string shaderPat
 
 
 	return S_OK;
-
 }

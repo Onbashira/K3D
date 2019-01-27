@@ -1,8 +1,9 @@
 #pragma once
-class PrimitiveBase
-{
-public:
-	PrimitiveBase();
-	~PrimitiveBase();
-};
-
+namespace K3D {
+	class PrimitiveBase
+	{
+	public:
+		PrimitiveBase();
+		~PrimitiveBase();
+	};
+}

@@ -2,11 +2,11 @@
 
 
 
-Plane::Plane()
+K3D::Plane::Plane()
 {
 }
 
 
-Plane::~Plane()
+K3D::Plane::~Plane()
 {
 }

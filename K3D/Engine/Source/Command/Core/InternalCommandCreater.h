@@ -26,7 +26,7 @@ namespace K3D {
 
 		void ClearCommands();
 
-
+		void SetThreadID(unsigned int threadID);
 
 	private:
 

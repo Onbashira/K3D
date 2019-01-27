@@ -6,6 +6,9 @@ namespace K3D {
 
 	class HLSLIncluder : public ID3DInclude
 	{
+		friend class ShaderHelper;
+	public:
+
 	private:
 
 		//!相対パス
@@ -14,9 +17,7 @@ namespace K3D {
 		//!インクルード文字列
 		std::string _nowString;
 
-	public:
 
-	private:
 	
 	public:
 
@@ -41,6 +42,8 @@ namespace K3D {
 		* @param[in] relativePath 相対パス
 		*/
 		HLSLIncluder(std::string relativePath);
+
+	private:
 
 	};
 }

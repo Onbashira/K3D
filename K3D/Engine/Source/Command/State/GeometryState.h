@@ -21,31 +21,31 @@ namespace K3D {
 
 		/**
 		* @fn
-		* @brief 頂点バッファの取得
-		* @return  頂点バッファへの参照
+		* @brief 頂点バッファビューの取得
+		* @return  頂点バッファビューへの参照
 		*/
-		D3D12_VERTEX_BUFFER_VIEW& GetVertexBuffer();
+		D3D12_VERTEX_BUFFER_VIEW& GetVertexBufferView();
 
 		/**
 		* @fn
-		* @brief インデックスバッファの取得
-		* @return  インデックスバッファへの参照
+		* @brief インデックスバッファビューの取得
+		* @return  インデックスバッファビューへの参照
 		*/
-		D3D12_INDEX_BUFFER_VIEW& GetIndexBuffef();
+		D3D12_INDEX_BUFFER_VIEW& GetIndexBufferView();
 
 		/**
 		* @fn
-		* @brief 頂点バッファのセット
-		* @oaram[in] vertexBuffer　VBO
+		* @brief 頂点バッファビューのセット
+		* @oaram[in] vertexBuffer　VBV
 		*/
-		void SetVertexBuffer(D3D12_VERTEX_BUFFER_VIEW& vertexBuffer);
+		void SetVertexBufferView(D3D12_VERTEX_BUFFER_VIEW& vertexBufferView);
 
 		/**
 		* @fn
-		* @brief インデックスバッファのセット
-		* @oaram[in] vertexBuffer　VBO
+		* @brief インデックスバッファビューのセット
+		* @oaram[in] indexBuffer　IBV
 		*/
-		void SetIndexBuffef(D3D12_INDEX_BUFFER_VIEW& indexBuffer);
+		void SetIndexBufferView(D3D12_INDEX_BUFFER_VIEW& indexBufferView);
 
 	private:
 

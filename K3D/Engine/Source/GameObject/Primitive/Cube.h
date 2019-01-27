@@ -1,8 +1,9 @@
 #pragma once
-class Cube
-{
-public:
-	Cube();
-	~Cube();
-};
-
+namespace K3D {
+	class Cube
+	{
+	public:
+		Cube();
+		~Cube();
+	};
+}
