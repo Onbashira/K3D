@@ -13,7 +13,7 @@ namespace K3D {
 	//Meshをレンダリングするためのクラス。主にシェーダーに投げるためのヒープを管理する
 	class MeshHeap
 	{
-
+		friend class ModelMesh;
 	public:
 	protected:
 	private:
