@@ -327,7 +327,7 @@
     <ClCompile Include="Engine\Source\Model\ModelLoader\PMX\PMXModel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ModelMesh.cpp">
+    <ClCompile Include="Engine\Source\Mesh\ModelMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -689,7 +689,7 @@
     <ClInclude Include="Engine\Source\Model\ModelLoader\PMX\PMXModel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ModelMesh.h">
+    <ClInclude Include="Engine\Source\Mesh\ModelMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,6 +12,8 @@ namespace K3D {
 	class MeshBuffer
 	{
 
+		friend class ModelMesh;
+
 	public:
 
 	protected:
