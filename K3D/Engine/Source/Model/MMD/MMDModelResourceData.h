@@ -1,13 +1,8 @@
 #pragma once
-#include <memory>
-#include <vector>
-#include <string>
-#include "../../Util/Math.h"
-#include "../PMX/PMXModel.h"
-#include "../PMD/PMDModel.h"
-#include "../../PipelineState/PipelineStateObject.h"
-#include "../../DescriptorHeap/DescriptorHeap.h"
-#include "../../Resource/UnorderedAccessValue.h"
+#include "Engine/Source/Model/ModelLoader/PMD/PMDModel.h"
+#include "Engine/Source/Model/ModelLoader/PMX/PMXModel.h"
+#include "Engine/Source/PipelineState/PipelineStateObject.h"
+#include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
 
 
 namespace K3D {
@@ -48,27 +43,6 @@ namespace K3D {
 		~MMDWeightDeform() {};
 	};
 
-	/*struct MMDWeightDeform {
-		unsigned int deformType;
-		int boneIndex01;
-		int boneIndex02;
-		int boneIndex03;
-		int boneIndex04;
-		float boneWeight01;
-		float boneWeight02;
-		float boneWeight03;
-		float boneWeight04;
-		Vector3 c;
-		Vector3 r0;
-		Vector3 r1;
-		MMDWeightDeform() : 
-			deformType(0),boneIndex01(0), boneIndex02(0), boneIndex03(0), boneIndex04(0),
-			boneWeight01(0.0f), boneWeight02(0.0f), boneWeight03(0.0f), boneWeight04(0.0f),
-			c(),r0(),r1()
-		{};
-		~MMDWeightDeform() {};
-	};
-*/
 	enum class MMDMaterialFlags {
 		NO_CULL,
 		GROUND_SHADOW,

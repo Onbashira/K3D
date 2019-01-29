@@ -2,23 +2,18 @@
 namespace K3D {
 	class MeshHeap;
 	class MeshBuffer;
-	class VertexBuffer;
-	class IndexBuffer;
-	class GeometryState;
 
-	class ModelMesh
+	struct ModelMesh
 	{
-	public:
-		
+
 		//基本メッシュ情報を保持したもの
-		std::unique_ptr<MeshBuffer> _meshBuffer;
+		std::unique_ptr<MeshBuffer> meshBuffer;
 		//デスクリプタヒープやマテリアルバッファ、テクスチャへの参照をもったもの
-		std::unique_ptr<MeshHeap> _meshHeap;
+		std::unique_ptr<MeshHeap> meshHeap;
 
-
-	public:
 		ModelMesh();
 
 		~ModelMesh();
+
 	};
 }

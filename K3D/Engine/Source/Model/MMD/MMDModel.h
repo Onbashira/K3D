@@ -1,14 +1,5 @@
 #pragma once
-#include "Math.h"
-#include "../../Animator/Animator.h"
-#include "../../Animator/StateMachineController.h"
-#include "./MMDModelResourceData.h"
-#include "../../Mesh/ModelMesh.h"
-#include "../../GameConponent/GameObject/GameObject.h"
-#include "../../Mesh/MeshHeap.h"
-#include "../../Model/ModelObject.h"
-#include <memory>
-#include <vector>
+#include "Engine/Source/Model/Model/ModelObject.h"
 
 namespace K3D {
 
@@ -29,7 +20,6 @@ namespace K3D {
 		//スフィアマップのブレンディングタイプ
 		int	sphereBlendType;
 	};
-
 
 	//ゲーム本編で使うモデル
 	class MMDModel :

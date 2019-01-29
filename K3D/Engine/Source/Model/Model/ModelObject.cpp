@@ -1,5 +1,6 @@
 #include "ModelObject.h"
-
+#include "Engine/Source/Mesh/MeshHeap.h"
+#include "Engine/Source/Mesh/MeshBuffer.h"
 
 K3D::ModelObject::ModelObject()
 {
@@ -9,11 +10,11 @@ K3D::ModelObject::ModelObject()
 
 K3D::ModelObject::~ModelObject()
 {
-	DiscardModelObject();
+	Discard();
 }
 
-void K3D::ModelObject::DiscardModelObject()
+void K3D::ModelObject::Discard()
 {
-	this->DiscardMeshHeap();
-	this->DiscardMeshBuffer();
+	this->_meshData->meshBuffer->Discard();
+	this->_meshData->meshHeap->Discard();
 }

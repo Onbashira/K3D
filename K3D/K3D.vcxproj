@@ -38,11 +38,10 @@
     <ClCompile Include="Engine\Source\Model\Model\ModelObject.cpp" />
     <ClCompile Include="Engine\Source\Model\Model\ModelPool.cpp" />
     <ClCompile Include="Engine\Source\Model\Model\ModelResource.cpp" />
-    <ClCompile Include="Engine\Source\MemoryAllocator\DefaultRawMemoryAllocator.cpp" />
     <ClCompile Include="Engine\Source\Rendering\DecaleBuffer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\CommandManager.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\DrawArgsIndexedInstanced.cpp" />
-    <ClCompile Include="Engine\Source\GameObject\Primitive\Cube.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Cube.cpp" />
     <ClCompile Include="Engine\Source\CommandQueue\CommandQueueManager.cpp" />
     <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\Source\Async\Fence.cpp" />
@@ -61,7 +60,7 @@
     <ClCompile Include="Engine\Source\CoreSystem\Framework.cpp" />
     <ClCompile Include="Engine\Source\DescriptorHeap\DescriptorHeap.cpp" />
     <ClCompile Include="Engine\Source\Device\D3D12Device.cpp" />
-    <ClCompile Include="Engine\Source\Drawnable\DrawableComponent.cpp" />
+    <ClCompile Include="Engine\Source\DrawableComponent\DrawableComponent.cpp" />
     <ClCompile Include="Engine\Source\Factory\Factory.cpp" />
     <ClCompile Include="Engine\Source\GameObject\GameObject.cpp" />
     <ClCompile Include="Engine\Source\GameObject\Transform.cpp" />
@@ -100,9 +99,8 @@
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp" />
     <ClCompile Include="Engine\Source\Window\Window.cpp" />
     <ClCompile Include="Engine\Source\Window\WindowManager.cpp" />
-    <ClCompile Include="Engine\Source\GameObject\Primitive\Plane.cpp" />
-    <ClCompile Include="Engine\Source\GameObject\Primitive\Sphere.cpp" />
-    <ClCompile Include="Engine\Source\GameObject\Primitive\PrimitiveBase.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Plane.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Sphere.cpp" />
     <ClCompile Include="Engine\Source\Rendering\MeshRenderer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\InternalCommandCreater.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\InternalCommand.cpp" />
@@ -148,9 +146,6 @@
     <ClInclude Include="Engine\Source\Model\Model\ModelObject.h" />
     <ClInclude Include="Engine\Source\Model\Model\ModelPool.h" />
     <ClInclude Include="Engine\Source\Model\Model\ModelResource.h" />
-    <ClInclude Include="Engine\Source\MemoryAllocator\DefaultRawMemoryAllocator.h" />
-    <ClInclude Include="Engine\Source\MemoryAllocator\MemoryAllocator.h" />
-    <ClInclude Include="Engine\Source\MemoryAllocator\STDAllocator.h" />
     <ClInclude Include="Engine\Source\Texture\DDSTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Texture\TextureLoader.h" />
     <ClInclude Include="Engine\Source\Texture\WICTextureLoader12.h" />
@@ -162,7 +157,7 @@
     <ClInclude Include="Engine\K3D.h" />
     <ClInclude Include="Engine\Source\Command\Core\CommandManager.h" />
     <ClInclude Include="Engine\Source\Command\Core\DrawArgsIndexedInstanced.h" />
-    <ClInclude Include="Engine\Source\GameObject\Primitive\Cube.h" />
+    <ClInclude Include="Engine\Source\Primitive\Cube.h" />
     <ClInclude Include="Engine\Source\CommandQueue\CommandQueueManager.h" />
     <ClInclude Include="Engine\Source\Async\Fence.h" />
     <ClInclude Include="Engine\Source\Async\ThreadPool.h" />
@@ -181,7 +176,7 @@
     <ClInclude Include="Engine\Source\CoreSystem\Framework.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\DescriptorHeap.h" />
     <ClInclude Include="Engine\Source\Device\D3D12Device.h" />
-    <ClInclude Include="Engine\Source\Drawnable\DrawableComponent.h" />
+    <ClInclude Include="Engine\Source\DrawableComponent\DrawableComponent.h" />
     <ClInclude Include="Engine\Source\Factory\Factory.h" />
     <ClInclude Include="Engine\Source\GameObject\GameObject.h" />
     <ClInclude Include="Engine\Source\GameObject\Transform.h" />
@@ -222,9 +217,8 @@
     <ClInclude Include="Engine\Source\Utility\Utility.h" />
     <ClInclude Include="Engine\Source\Window\Window.h" />
     <ClInclude Include="Engine\Source\Window\WindowManager.h" />
-    <ClInclude Include="Engine\Source\GameObject\Primitive\Plane.h" />
-    <ClInclude Include="Engine\Source\GameObject\Primitive\Sphere.h" />
-    <ClInclude Include="Engine\Source\GameObject\Primitive\PrimitiveBase.h" />
+    <ClInclude Include="Engine\Source\Primitive\Plane.h" />
+    <ClInclude Include="Engine\Source\Primitive\Sphere.h" />
     <ClInclude Include="Engine\Source\Rendering\MeshRenderer.h" />
     <ClInclude Include="Engine\Source\Command\Core\InternalCommandCreater.h" />
     <ClInclude Include="Engine\Source\Command\Core\InternalCommand.h" />

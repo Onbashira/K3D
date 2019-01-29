@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "ModelMesh.h"
+#include "Engine/Source/Mesh/MeshBuffer.h"
+#include "Engine/Source/Mesh/MeshHeap.h"
 
-
-ModelMesh::ModelMesh()
+K3D::ModelMesh::ModelMesh() :
+	meshBuffer(new MeshBuffer()), meshHeap(new MeshHeap)
 {
+
 }
 
-
-ModelMesh::~ModelMesh()
+K3D::ModelMesh::~ModelMesh()
 {
 }

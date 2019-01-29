@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <Windows.h>
-#include "../../Util/ManagerComponentBase.h"
+#include "Engine/Source/Utility/ManagerComponent.h"
 
 namespace K3D {
 	struct MMDModelResourceData;
@@ -12,7 +12,7 @@ namespace K3D {
 	class MMDModelResourceDataManager
 	{
 	private:
-		ManagerComponentBase< MMDModelResourceData >	_pool;
+		ManagerComponent< MMDModelResourceData >	_pool;
 
 	public:
 
