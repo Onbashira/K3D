@@ -16,7 +16,7 @@ namespace K3D {
 	private:
 
 		//スレッド数
-		static inline unsigned int _THREAD_NUM = 8;
+		static inline unsigned int THREAD_NUM = 8;
 		//ワーカースレッド
 		ThreadPool _loadThreadPool;
 		//ロード停止フラグ
@@ -74,11 +74,11 @@ namespace K3D {
 
 	private:
 
-		AudioLoader() : _loadThreadPool(_THREAD_NUM) {};
+		AudioLoader() : _loadThreadPool(THREAD_NUM) {};
 
-		AudioLoader(const AudioLoader&value) : _loadThreadPool(_THREAD_NUM) {};
+		AudioLoader(const AudioLoader&value) : _loadThreadPool(THREAD_NUM) {};
 
-		AudioLoader(AudioLoader&&value) : _loadThreadPool(_THREAD_NUM) {};
+		AudioLoader(AudioLoader&&value) : _loadThreadPool(THREAD_NUM) {};
 
 		void operator = (const AudioLoader& value) {};
 

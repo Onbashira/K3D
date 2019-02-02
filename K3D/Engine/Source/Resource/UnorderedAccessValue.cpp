@@ -65,7 +65,7 @@ HRESULT K3D::UnorderedAccessValue::Create(unsigned int elementSize, unsigned int
 			defaultResourceDesc.Width = numElements * elementSize;
 			defaultResourceDesc.Height = 1;
 			defaultResourceDesc.DepthOrArraySize = 1;
-			defaultResourceDesc.MipLevels = 0;
+			defaultResourceDesc.MipLevels = 1;
 			defaultResourceDesc.Format = DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
 			defaultResourceDesc.Layout = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_UNKNOWN;
 			defaultResourceDesc.SampleDesc.Count = 1;

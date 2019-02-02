@@ -17,4 +17,5 @@
 #include "Engine/Source/Utility/NonCopyable.h"
 #include "Engine/Source/Math/Math.h"
 #include "Engine/Source/Utility/D3D12Common.h"
+#include "Engine/Source/Debug/Logger.h"
 

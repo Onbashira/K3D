@@ -66,43 +66,8 @@ std::unique_ptr<K3D::Audio> K3D::AudioManager::CreateSourceVoiceEx(std::weak_ptr
 	audio->_rawData = waveResource;
 	//終端位置(最終要素番号+1)を代入 
 	audio->_audioLength = static_cast<unsigned int>(waveResource.lock()->GetWave().size());
-
-	//１秒分のデータの情報を持つデータ分のバッファを指定させる 一秒間に必要なサンプリング数*チャンネル数
-	unsigned int seekValue = waveResource.lock()->GetWaveFormat().nSamplesPerSec * waveResource.lock()->GetWaveFormat().nChannels;
-	unsigned int audioBytePerSec = waveResource.lock()->GetWaveFormat().nAvgBytesPerSec;
-	//一秒分のデータを二本キューに送る
-	for (unsigned int i = 0; i < audio->_callBack.AUDIO_BUFFER_QUEUE_MAX; i++) {
-
-		//もしも曲データがシークポイント + 1秒間のデータ量が一秒未満なら
-		if (audio->_seekPoint + seekValue >= audio->_audioLength) {
-
-			audio->_audioBuffer.AudioBytes = static_cast<UINT32>((audio->_audioLength - audio->_seekPoint) * sizeof(float));
-			audio->_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&waveResource.lock()->GetWave()[audio->_seekPoint]);
-
-			//std::stringstream ss;
-			//ss << static_cast<float>((float)audio->_seekPoint / (float)audio->_audioLength) * 100.0f << " % ";
-			//DETAILS_LOG(ss.str());
-
-			audio->SubmitBuffer();
-			audio->_seekPoint = 0;
-			break;
-		}
-		else {
-			//一秒間の再生に必要なバイト数
-			audio->_audioBuffer.AudioBytes = static_cast<UINT32>(audioBytePerSec);
-			//一秒間の再生いに必要な波形データへのポインタ
-			audio->_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&waveResource.lock()->GetWave()[audio->_seekPoint]);
-
-			//std::stringstream ss;
-			//ss << static_cast<float>((float)audio->_seekPoint / (float)audio->_audioLength) * 100.0f << " % ";
-			//DETAILS_LOG(ss.str());
-
-			audio->SubmitBuffer();
-		}
-		audio->_seekPoint += seekValue;
-	}
-	audio->StreamSubmit();
-	//サブミット
+	audio->_loopHead = audio->_audioLength;
+	audio->_loopTail = 0;
 	return std::move(audio);
 }
 

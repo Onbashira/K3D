@@ -34,8 +34,12 @@ namespace K3D {
 		WAVEFORMATEXTENSIBLE _format;
 		//生データのどの位置から一秒間のサンプリングを行っているかを知らせる要素番号
 		unsigned int _seekPoint;
-		//曲の最大ながさ。ループポイントを設定するとこの長さが変わる。デフォルトで結尾部分のポイント
+		//曲の最大ながさ
 		unsigned int _audioLength;
+		//曲のループヘッド
+		unsigned int _loopHead;
+		//曲のループテール
+		unsigned int _loopTail;
 		//ループするかしないか。
 		bool _isLoop;
 		//破棄されたか
@@ -66,6 +70,7 @@ namespace K3D {
 		 * @brief ループ再生を許可
 		 */
 		void LoopEnable();
+
 		/**
 		 * @fn
 		 * @brief ループ再生を不許可
@@ -73,11 +78,26 @@ namespace K3D {
 		void LoopDisable();
 
 		/**
-		 * @fn
-		 * @brief ループポイントを設定する
-		 * @param[in] loopPoint ループ地点
-		 */
-		void SetLoopPoint(unsigned int loopPoint = 0);
+		* @fn
+		* @brief ループポイントを設定する
+		* @param[in] headPointTime ヘッド地点の時間（秒単位）
+		* @param[in] tailPointTime テール地点の時間（秒単位）
+		*/
+		void SetLoopPoints(float headPointTime, float tailPointTime);
+
+		/**
+		* @fn
+		* @brief ループポイントを設定する
+		* @param[in] headPointTime ループヘッド地点の時間（秒単位）
+		*/
+		void SetLoopHeadPoint(float headPointTime);
+
+		/**
+		* @fn
+		* @brief ループポイントを設定する
+		* @param[in] headPointTime ループテール地点の時間（秒単位）
+		*/
+		void SetLoopTailPoint(float tailPointTime);
 
 		/**
 		 * @fn
@@ -91,6 +111,13 @@ namespace K3D {
 		 * @param[in] pause trueでポーズ
 		 */
 		virtual void Pause(bool pause);
+
+		/**
+		* @fn
+		* @brief ボリューム設定
+		* @param[in] volume 1.0でゲイン値0（元の音量）
+		*/
+		virtual void SetVolume(float volume);
 
 		/**
 		 * @fn
@@ -111,19 +138,33 @@ namespace K3D {
 		 */
 		void SubmitBuffer();
 
-	private:
-
 		/**
 		 * @fn
-		 * @brief 一括コミット
+		 * @brief 一括サブミットをバッファエンド時に呼ばれるコールバックにセット
 		 */
 		void BulkSubmit();
 
 		/**
 		 * @fn
-		 * @brief ストリーミングコミット
+		 * @brief ストリーミングサブミットをバッファエンド時に呼ばれるコールバックにセット
 		 */
 		void StreamSubmit();
+
+		/**
+		* @fn
+		* @brief 一括サブミット
+		*/
+		void DirectBulkSubmit();
+
+		/**
+		 * @fn
+		 * @brief ストリーミングサブミット
+		 */
+		void DirectStreamSubmit();
+
+	private:
+
+
 
 	};
 }

@@ -51,7 +51,7 @@ HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceF
 	resDesc.Width = width;
 	resDesc.Height = height;
 	resDesc.DepthOrArraySize = 1;
-	resDesc.MipLevels = 0;
+	resDesc.MipLevels = 1;
 	resDesc.Format = resourceFormat;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.SampleDesc.Quality = 0;
