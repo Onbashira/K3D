@@ -22,6 +22,7 @@ constexpr unsigned int AUDIO_LOADER_THREAD_NUM = 12;
 constexpr float AUDIO_8BIT_NORMALIZE_FACTOR = 127.0f;
 constexpr float AUDIO_16BIT_NORMALIZE_FACTOR = 32768.0f;
 constexpr float AUDIO_24BIT_NORMALIZE_FACTOR = 0xFFFF;
+constexpr float AUDIO_32BIT_NORMALIZE_FACTOR = 1.0f;
 
 
 namespace K3D {
@@ -552,8 +553,8 @@ void K3D::LoadStereo32bitSound(HMMIO mmio, AudioWaveSource & wave, MMCKINFO & da
 		}
 		//波形　正規化vおよび代入
 		{
-			wave.GetWave()[wave._loadingInfo._loadedIndex] = (static_cast<float>(waveInfo.left) / AUDIO_16BIT_NORMALIZE_FACTOR);
-			wave.GetWave()[wave._loadingInfo._loadedIndex + 1] = (static_cast<float>(waveInfo.right) / AUDIO_16BIT_NORMALIZE_FACTOR);
+			wave.GetWave()[wave._loadingInfo._loadedIndex] = (static_cast<float>(waveInfo.left));
+			wave.GetWave()[wave._loadingInfo._loadedIndex + 1] = (static_cast<float>(waveInfo.right) );
 		}
 		//インクリメント
 		{
@@ -569,16 +570,100 @@ void K3D::LoadStereo32bitSound(HMMIO mmio, AudioWaveSource & wave, MMCKINFO & da
 
 void K3D::LoadMonaural8bitSound(HMMIO mmio, AudioWaveSource & wave, MMCKINFO & dataChunk, unsigned int rawFormatSampleBit, unsigned int firstReadIndex)
 {
+	Mono8Bit waveInfo{}; //読み込んだ波形の情報		
+	do {
+		wave._loadingInfo._loadedSize += mmioRead(mmio, (HPSTR)&waveInfo, sizeof(Stereo16Bit));
+		if (wave._loadingInfo._loadedSize != sizeof(Mono8Bit)*(++wave._loadingInfo._cycleNum)) {
+			ERROR_LOG(std::string("mmioReadが失敗しました。(WaveLoad)"));
+			mmioClose(mmio, 0);
+			return;
+		}
+		//波形　正規化vおよび代入
+		{
+			wave.GetWave()[wave._loadingInfo._loadedIndex] = (static_cast<float>(waveInfo.wave) / AUDIO_8BIT_NORMALIZE_FACTOR);
+		}
+		//インクリメント
+		{
+			wave._loadingInfo._loadedIndex += static_cast<unsigned int>(wave.GetWaveFormat().nChannels);
+		}
+	} while (wave._loadingInfo._cycleMax > wave._loadingInfo._cycleNum);
+
+	wave._loadingInfo._isWaveLoaded = true;
+	//ハンドルクローズ
+	mmioClose(mmio, 0);
 }
 
 void K3D::LoadMonaural16bitSound(HMMIO mmio, AudioWaveSource & wave, MMCKINFO & dataChunk, unsigned int rawFormatSampleBit, unsigned int firstReadIndex)
 {
+	Mono8Bit waveInfo{}; //読み込んだ波形の情報		
+	do {
+		wave._loadingInfo._loadedSize += mmioRead(mmio, (HPSTR)&waveInfo, sizeof(Stereo16Bit));
+		if (wave._loadingInfo._loadedSize != sizeof(Mono8Bit)*(++wave._loadingInfo._cycleNum)) {
+			ERROR_LOG(std::string("mmioReadが失敗しました。(WaveLoad)"));
+			mmioClose(mmio, 0);
+			return;
+		}
+		//波形　正規化vおよび代入
+		{
+			wave.GetWave()[wave._loadingInfo._loadedIndex] = (static_cast<float>(waveInfo.wave) / AUDIO_16BIT_NORMALIZE_FACTOR);
+		}
+		//インクリメント
+		{
+			wave._loadingInfo._loadedIndex += static_cast<unsigned int>(wave.GetWaveFormat().nChannels);
+		}
+	} while (wave._loadingInfo._cycleMax > wave._loadingInfo._cycleNum);
+
+	wave._loadingInfo._isWaveLoaded = true;
+	//ハンドルクローズ
+	mmioClose(mmio, 0);
 }
 
 void K3D::LoadMonaural24bitSound(HMMIO mmio, AudioWaveSource & wave, MMCKINFO & dataChunk, unsigned int rawFormatSampleBit, unsigned int firstReadIndex)
 {
+	Mono8Bit waveInfo{}; //読み込んだ波形の情報		
+	do {
+		wave._loadingInfo._loadedSize += mmioRead(mmio, (HPSTR)&waveInfo, sizeof(Stereo16Bit));
+		if (wave._loadingInfo._loadedSize != sizeof(Mono8Bit)*(++wave._loadingInfo._cycleNum)) {
+			ERROR_LOG(std::string("mmioReadが失敗しました。(WaveLoad)"));
+			mmioClose(mmio, 0);
+			return;
+		}
+		//波形　正規化vおよび代入
+		{
+			wave.GetWave()[wave._loadingInfo._loadedIndex] = (static_cast<float>(waveInfo.wave) / AUDIO_16BIT_NORMALIZE_FACTOR);
+		}
+		//インクリメント
+		{
+			wave._loadingInfo._loadedIndex += static_cast<unsigned int>(wave.GetWaveFormat().nChannels);
+		}
+	} while (wave._loadingInfo._cycleMax > wave._loadingInfo._cycleNum);
+
+	wave._loadingInfo._isWaveLoaded = true;
+	//ハンドルクローズ
+	mmioClose(mmio, 0);
 }
 
 void K3D::LoadMonaural32bitSound(HMMIO mmio, AudioWaveSource & wave, MMCKINFO & dataChunk, unsigned int rawFormatSampleBit, unsigned int firstReadIndex)
 {
+	Mono8Bit waveInfo{}; //読み込んだ波形の情報		
+	do {
+		wave._loadingInfo._loadedSize += mmioRead(mmio, (HPSTR)&waveInfo, sizeof(Stereo16Bit));
+		if (wave._loadingInfo._loadedSize != sizeof(Mono8Bit)*(++wave._loadingInfo._cycleNum)) {
+			ERROR_LOG(std::string("mmioReadが失敗しました。(WaveLoad)"));
+			mmioClose(mmio, 0);
+			return;
+		}
+		//波形　正規化vおよび代入
+		{
+			wave.GetWave()[wave._loadingInfo._loadedIndex] = (static_cast<float>(waveInfo.wave));
+		}
+		//インクリメント
+		{
+			wave._loadingInfo._loadedIndex += static_cast<unsigned int>(wave.GetWaveFormat().nChannels);
+		}
+	} while (wave._loadingInfo._cycleMax > wave._loadingInfo._cycleNum);
+
+	wave._loadingInfo._isWaveLoaded = true;
+	//ハンドルクローズ
+	mmioClose(mmio, 0);
 }

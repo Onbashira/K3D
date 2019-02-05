@@ -16,12 +16,8 @@ K3D::ConstantBuffer::~ConstantBuffer()
 
 HRESULT K3D::ConstantBuffer::Create( ULONG64 size)
 {
-	if (size == 0) {
-		return E_FAIL;
-	}
-	if ((size % 256) != 0) {
-		return E_FAIL;
-	}
+	_initializeSize = size;
+	size = Util::Alignment256Bytes(size);
 	if (_resource.Get() != nullptr) {
 		Resource::Discard();
 	}
@@ -65,4 +61,9 @@ HRESULT K3D::ConstantBuffer::CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cbvDesc
 
 	Framework::GetInstance().GetDevice()->GetDevice()->CreateConstantBufferView(&cbvDesc, cpuDescriptorHandle);
 	return S_OK;
+}
+
+unsigned int K3D::ConstantBuffer::GetInitializeSize()
+{
+	return _initializeSize;
 }

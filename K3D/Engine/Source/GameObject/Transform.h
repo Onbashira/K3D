@@ -17,6 +17,9 @@ namespace K3D {
 
 		//!保持オイラー角
 		Vector3 _eulerAngles;
+		
+		//!拡縮情報
+		Vector3 _scale;
 
 	private:
 
@@ -32,61 +35,98 @@ namespace K3D {
 
 		void SetEulerAngles(const Vector3 euler);
 
+		void SetScale(const Vector3 scale);
+
 		Vector3 GetPos();
 
 		Quaternion GetRotation();
 
 		Vector3 GetEulerAngles();
 
-		///@fn				オブジェクトの移動（ローカル軸基準）
-		///@param			(velocity) 変化量	
+		Vector3 GetScale();
+
+		/**
+		* @fn オブジェクトの移動（ローカル軸基準）
+		* @param[in] velocity 変化量
+		*/
 		void				Translate(const Vector3& velocity);
 
-
-		///@fn				オブジェクトの移動（ワールド軸基準）
-		///@param			(velocity) 変化量	
+		/**
+		* @fn オブジェクトの移動（ワールド軸基準）
+		* @param[in] velocity 変化量
+		*/	
 		void				Move(const Vector3& velocity);
 
-
-		///@fn				原点中心回転
-		///@param			(rot) 四元数	
+		/**
+		* @fn 原点中心回転
+		* @param[in] rot 四元数
+		*/	
 		void				Rotation(const Quaternion& rot);
 
-		///@fn				ローカル中心回転
-		///@param			(rot) 四元数	
+		/**
+		* @fn ローカル中心回転
+		* @param[in] rot 四元数
+		*/	
 		void				RotationLocalWorld(const Quaternion& rot);
 
-		///@fnオイラー角で原点中心回転
-		///@param			(eulerAngles) 変化量	
+		/**
+		* @fn オイラー角で原点中心回転
+		* @param[in] eulerAngles 変化量
+		*/
 		void				RotationLocalWorld(const Vector3& eulerAngles);
 
-		///@fnオイラー角で原点中心回転
-		///@param			(eulerAngles) 絶対量	
+		/**
+		* @fn オイラー角で原点中心回転
+		* @param[in] eulerAngles 絶対量	
+		*/
 		void				RotationEulerAngles(const Vector3& eulerAngles);
 
-		///@fn軸と回転量で回転
-		///@param			(axis)	軸
-		///@param			(rad)	弧度
+		/**
+		* @fn 軸と回転量で回転
+		* @param[in] axis 軸
+		* @param[in] rad 弧度
+		*/
 		void				RotationAxisAngles(const Vector3& axis, float rad);
 
-		///@fnポイント周りに軸と回転量で回転
-		///@param			(point)	世界座標
-		///@param			(rot)	回転量
+		/**
+		* @fn ポイント周りに軸と回転量で回転
+		* @param[in] point 世界座標
+		* @param[in] rot 回転量
+		*/
 		void				RotateAround(const Vector3& point, const Quaternion& rot);
-		///@fnポイント周りに軸と回転量で回転
-		///@param			(point)	世界座標
-		///@param			(axis)	軸
-		///@param			(rad)	弧度
+		
+		/**
+		* @fn ポイント周りに軸と回転量で回転
+		* @param[in] point 世界座標
+		* @param[in] axis 軸
+		* @param[in] rad 弧度
+		*/
 		void				RotateAround(const Vector3& point, const Vector3& axis, float rad);
 
-		///@fnオブジェクトのローカルForward軸がポイントを見るように回転
+		/**
+		* @fn オブジェクトのローカルForward軸がポイントを見るように回転
+		* @param[in] point ターゲット位置
+		* @param[in] up アップ軸
+		*/
 		void				LookAt(const Vector3& point, const Vector3& up);
-
-		///@fnワールド座標で見たローカル軸の取得
+		
+		/**
+		* @fn ワールド座標で見たローカル軸の取得
+		* @return ローカル軸
+		*/
 		OrthonormalBasis	GetLocalAxis();
 
-		///@fnこのオブジェクトのビュー行列を取得
+		/**
+		* @fn このオブジェクトのビュー行列を取得
+		* @return ビュー行列
+		*/
 		Matrix				GetView();
+
+		/**
+		* @fn このオブジェクトのビュー行列を取得
+		* @return SRT行列
+		*/
+		Matrix				GetSRTMatrix();
 
 	private:
 

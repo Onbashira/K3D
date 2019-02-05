@@ -62,6 +62,12 @@ namespace K3D {
 		virtual void Play();
 
 		/**
+		* @fn
+		* @brief ループの頭から再生
+		*/
+		virtual void PlayFromBeginning();
+
+		/**
 		 * @fn
 		 * @brief 一時停止
 		 * @param[in] pause trueでポーズ

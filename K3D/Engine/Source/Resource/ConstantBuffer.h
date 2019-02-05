@@ -13,6 +13,8 @@ namespace K3D {
 
 	private:
 
+		unsigned int _initializeSize;
+
 	public:
 				
 		ConstantBuffer();
@@ -21,7 +23,9 @@ namespace K3D {
 
 		virtual HRESULT Create(ULONG64 size);
 		
-		HRESULT			CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
+		HRESULT	CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
+
+		unsigned int GetInitializeSize();
 
 	private:
 

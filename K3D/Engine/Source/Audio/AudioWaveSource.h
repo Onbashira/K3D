@@ -112,10 +112,19 @@ struct Stereo16Bit {
 	short right;
 };
 
+struct Stereo32Bit {
+	short left;
+	short right;
+};
+
 struct Mono8Bit {
 	unsigned char wave;
 };
 
 struct Mono16Bit {
 	short wave;
+};
+
+struct Mono32Bit {
+	float wave;
 };

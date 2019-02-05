@@ -119,11 +119,22 @@ void K3D::Audio::DirectStreamSubmit()
 
 void K3D::Audio::Play()
 {
-	DirectStreamSubmit();
+	if (_rawData.lock()->IsWaveLoaded())
+	{
+		DirectBulkSubmit();
+	}
+	else
+	{
+		DirectStreamSubmit();
+	}
 
 	UpdateState();
 
 	this->_sourceVoice->Start();
+}
+
+void K3D::Audio::PlayFromBeginning()
+{
 }
 
 void K3D::Audio::Pause()

@@ -2,7 +2,7 @@
 #include <utility>
 
 K3D::Transform::Transform() :
-	_pos(), _rotation(Quaternion::CreateIdentity())
+	_pos(), _rotation(Quaternion::CreateIdentity()),_scale(Vector3::one)
 {
 
 }
@@ -32,6 +32,11 @@ void K3D::Transform::SetEulerAngles(const Vector3 eulerAugles)
 	_rotation = std::move(Quaternion::CreateFromEulerAngles(eulerAugles));
 }
 
+void K3D::Transform::SetScale(const Vector3 scale)
+{
+	_scale = scale;
+}
+
 Vector3 K3D::Transform::GetPos()
 {
 	return _pos;
@@ -47,6 +52,11 @@ Vector3 K3D::Transform::GetEulerAngles()
 	return _rotation.EulerAngles();
 }
 
+Vector3 K3D::Transform::GetScale()
+{
+	return _scale;
+}
+
 void K3D::Transform::Translate(const Vector3 & velocity)
 {
 	_pos += velocity;
@@ -55,7 +65,6 @@ void K3D::Transform::Translate(const Vector3 & velocity)
 void K3D::Transform::Move(const Vector3 & velocity)
 {
 	_pos += Vector3::Rotate(velocity, _rotation);
-
 }
 
 void K3D::Transform::Rotation(const Quaternion & rot)
@@ -143,6 +152,18 @@ Matrix K3D::Transform::GetView()
 	mat = Matrix::Invert(mat);
 	//mat.EpsilonCheck();
 
+	return mat;
+}
+
+Matrix K3D::Transform::GetSRTMatrix()
+{
+	auto mat = std::move(Matrix::CreateFromQuaternion(_rotation));
+
+	mat = std::move(Matrix::CreateScaleMatrix(_scale) * mat);
+	mat.axisW.x = _pos.x;
+	mat.axisW.y = _pos.y;
+	mat.axisW.z = _pos.z;
+	mat.axisW.w = 1.0f;
 	return mat;
 }
 
