@@ -7,9 +7,7 @@ namespace K3D {
 	class AudioCallBack : public IXAudio2VoiceCallback
 	{	
 	public:
-		static inline unsigned int AUDIO_BUFFER_QUEUE_MAX = 2;
 	private:
-
 	protected:
 		
 		//!開始時に呼ばれる関数オブジェクト

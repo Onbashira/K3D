@@ -20,6 +20,8 @@ namespace K3D {
 	public:
 
 	private:
+		//キューの最大値
+		inline static unsigned int AUDIO_BUFFER_QUEUE_MAX = 2;
 		//サウンドごとのデータ
 		XAUDIO2_BUFFER _audioBuffer;
 		//コミット用ソースボイス
@@ -58,6 +60,13 @@ namespace K3D {
 		 * @brief 再生
 		 */
 		virtual void Play();
+
+		/**
+		 * @fn
+		 * @brief 一時停止
+		 * @param[in] pause trueでポーズ
+		 */
+		virtual void Pause();
 
 		/**
 		 * @fn
@@ -101,16 +110,9 @@ namespace K3D {
 
 		/**
 		 * @fn
-		 * @brief 状態の取得
+		 * @brief 状態の更新
 		 */
-		XAUDIO2_VOICE_STATE GetState();
-
-		/**
-		 * @fn
-		 * @brief 一時停止
-		 * @param[in] pause trueでポーズ
-		 */
-		virtual void Pause(bool pause);
+		void UpdateState();
 
 		/**
 		* @fn
@@ -164,7 +166,13 @@ namespace K3D {
 
 	private:
 
-
+		/**
+		* @fn
+		* @brief オーディオバッファに波形データをサブミットする
+		* @param[in] audioBytePerSec サブミットするオーディオのバイト数
+		* @param[in] bufferPoint 波形開始地点
+		*/
+		void SubmitAudioBuffer(UINT32 audioBytePerSec, unsigned int bufferPoint);
 
 	};
 }

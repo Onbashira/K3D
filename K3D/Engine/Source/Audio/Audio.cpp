@@ -47,14 +47,12 @@ void K3D::Audio::DirectBulkSubmit()
 		this->_callBack.SetOnBufferEnd([](void* context) {});
 		return;
 	}
-	_audioBuffer.AudioBytes = static_cast<UINT32>(_rawData.lock()->GetWave().size() * sizeof(float));
-	_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&_rawData.lock()->GetWave()[0]);
-	_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;
 
 	if (_isLoop == false) {
 		Stop();
+		return;
 	}
-	SubmitBuffer();
+	SubmitAudioBuffer(static_cast<UINT32>(_rawData.lock()->GetWave().size() * sizeof(float)), _loopHead);
 }
 
 void K3D::Audio::DirectStreamSubmit()
@@ -64,32 +62,35 @@ void K3D::Audio::DirectStreamSubmit()
 		this->_callBack.SetOnBufferEnd([](void* context) {});
 		return;
 	}
-	auto state = GetState();
+
+	UpdateState();
 
 	//もしキュー内のバッファがQ設定数値以下ならバッファに対して新しいデータを供給する
-	if (state.BuffersQueued < _callBack.AUDIO_BUFFER_QUEUE_MAX)
+	int cycle = AUDIO_BUFFER_QUEUE_MAX - _voiceState.BuffersQueued;
+	// 44.1k * byte * channel
+	unsigned int seekValue = _rawData.lock()->GetWaveFormat().nSamplesPerSec * _rawData.lock()->GetWaveFormat().nChannels;
+	unsigned int audioBytePerSec = _rawData.lock()->GetWaveFormat().nAvgBytesPerSec;
+	unsigned int seekPoint = (_loopHead + _seekPoint);
+	for (int i = 0; i < cycle; ++i)
 	{
-		// 44.1k * byte * channel
-		unsigned int seekValue = _rawData.lock()->GetWaveFormat().nSamplesPerSec * _rawData.lock()->GetWaveFormat().nChannels;
-		unsigned int audioBytePerSec = _rawData.lock()->GetWaveFormat().nAvgBytesPerSec;
-		unsigned int seekPoint = (_loopHead + _seekPoint);
+
+		bool ealyReturn = (_voiceState.BuffersQueued < AUDIO_BUFFER_QUEUE_MAX);
 
 		if (seekPoint >= _loopTail)
 		{
 			_seekPoint = 0;
-			seekPoint = (_loopHead + _seekPoint);
-
-			_audioBuffer.AudioBytes = static_cast<UINT32>(audioBytePerSec);
-			_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&_rawData.lock()->GetWave()[seekPoint]);
-			_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;
-
-			SubmitBuffer();
-			_seekPoint += seekValue;
 			if (_isLoop == false)
 			{
-				Stop();
+				Pause();
+				return;
 			}
-			return;
+			seekPoint = (_loopHead + _seekPoint);
+
+			SubmitAudioBuffer(static_cast<UINT32>((audioBytePerSec)), seekPoint);
+
+			_seekPoint += seekValue;
+			seekPoint += seekValue;
+
 		}
 
 
@@ -97,30 +98,37 @@ void K3D::Audio::DirectStreamSubmit()
 		if ((seekPoint + seekValue) >= _loopTail)
 		{
 			unsigned int  byte = _loopTail - seekPoint;
-			//全体のバイト数　－　現在のサンプル点
-			_audioBuffer.AudioBytes = static_cast<UINT32>((byte) * sizeof(float));
-			_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&_rawData.lock()->GetWave()[seekPoint]);
-			_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;
-			SubmitBuffer();
+
+			SubmitAudioBuffer(static_cast<UINT32>((byte) * sizeof(float)), seekPoint);
 
 			_seekPoint += byte;
+			seekPoint += byte;
+
 			return;
 		}
 		else
 		{
-			_audioBuffer.AudioBytes = static_cast<UINT32>(audioBytePerSec);
-			_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&_rawData.lock()->GetWave()[seekPoint]);
-			_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;
-			SubmitBuffer();
-			_seekPoint += seekValue;
+			SubmitAudioBuffer(static_cast<UINT32>((audioBytePerSec)), seekPoint);
 
+			_seekPoint += seekValue;
+			seekPoint += seekValue;
+			continue;
 		}
 	}
 }
 
 void K3D::Audio::Play()
 {
+	DirectStreamSubmit();
+
+	UpdateState();
+
 	this->_sourceVoice->Start();
+}
+
+void K3D::Audio::Pause()
+{
+	_sourceVoice->Stop();
 }
 
 void K3D::Audio::Stop()
@@ -163,20 +171,9 @@ void K3D::Audio::SetLoopTailPoint(float tailPointTime)
 	this->_loopHead = static_cast<unsigned int> (seekValue * tailPointTime);
 }
 
-XAUDIO2_VOICE_STATE K3D::Audio::GetState()
+void K3D::Audio::UpdateState()
 {
 	_sourceVoice->GetState(&_voiceState);
-	return this->_voiceState;
-}
-
-void K3D::Audio::Pause(bool pause)
-{
-	if (pause) {
-		_sourceVoice->Stop();
-	}
-	else {
-		_sourceVoice->Start();
-	}
 }
 
 void K3D::Audio::SetVolume(float volume)
@@ -211,4 +208,13 @@ void K3D::Audio::Discard()
 void K3D::Audio::SubmitBuffer()
 {
 	this->_sourceVoice->SubmitSourceBuffer(&this->_audioBuffer);
+}
+
+
+void K3D::Audio::SubmitAudioBuffer(UINT32 audioBytePerSec, unsigned int bufferPoint)
+{
+	_audioBuffer.AudioBytes = static_cast<UINT32>(audioBytePerSec);
+	_audioBuffer.pAudioData = reinterpret_cast<BYTE*>(&_rawData.lock()->GetWave()[bufferPoint]);
+	_audioBuffer.Flags = 0;
+	SubmitBuffer();
 }
