@@ -1,8 +1,10 @@
 #pragma once
-class ComponentLocator
-{
-public:
-	ComponentLocator();
-	virtual ~ComponentLocator();
-};
 
+namespace K3D {
+	class ComponentLocator
+	{
+	public:
+		ComponentLocator();
+		virtual ~ComponentLocator();
+	};
+}
