@@ -63,8 +63,8 @@
     <ClCompile Include="Engine\Source\Device\D3D12Device.cpp" />
     <ClCompile Include="Engine\Source\DrawableComponent\DrawableComponent.cpp" />
     <ClCompile Include="Engine\Source\Factory\Factory.cpp" />
-    <ClCompile Include="Engine\Source\GameObject\GameObject.cpp" />
-    <ClCompile Include="Engine\Source\GameObject\Transform.cpp" />
+    <ClCompile Include="Engine\Source\Component\GameObject\GameObject.cpp" />
+    <ClCompile Include="Engine\Source\Component\GameObject\Transform.cpp" />
     <ClCompile Include="Engine\Source\Input\GamePad.cpp" />
     <ClCompile Include="Engine\Source\Input\GamePadManager.cpp" />
     <ClCompile Include="Engine\Source\Input\InputManager.cpp" />
@@ -183,8 +183,8 @@
     <ClInclude Include="Engine\Source\Device\D3D12Device.h" />
     <ClInclude Include="Engine\Source\DrawableComponent\DrawableComponent.h" />
     <ClInclude Include="Engine\Source\Factory\Factory.h" />
-    <ClInclude Include="Engine\Source\GameObject\GameObject.h" />
-    <ClInclude Include="Engine\Source\GameObject\Transform.h" />
+    <ClInclude Include="Engine\Source\Component\GameObject\GameObject.h" />
+    <ClInclude Include="Engine\Source\Component\GameObject\Transform.h" />
     <ClInclude Include="Engine\Source\Input\GamePad.h" />
     <ClInclude Include="Engine\Source\Input\GamePadManager.h" />
     <ClInclude Include="Engine\Source\Input\InputManager.h" />

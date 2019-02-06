@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine/Source/Math/Math.h"
 
 namespace K3D {
 
