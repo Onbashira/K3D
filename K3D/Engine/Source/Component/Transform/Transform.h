@@ -28,20 +28,52 @@ namespace K3D {
 
 		virtual ~Transform();
 
+		/**
+		* @fn　位置直接設定
+		* @param[in] pos 位置
+		*/
 		void SetPos(const Vector3 pos);
 
+		/**
+		* @fn　回転量直接設定
+		* @param[in] rotation 回転
+		*/
 		void SetRotation(const Quaternion rotation);
 
+		/**
+		* @fn　回転量直接設定
+		* @param[in] euler 回転
+		*/
 		void SetEulerAngles(const Vector3 euler);
 
+		/**
+		* @fn　スケール直接設定
+		* @param[in] scale スケール
+		*/
 		void SetScale(const Vector3 scale);
 
+		/**
+		* @fn　位置の取得
+		* @return 位置
+		*/
 		Vector3 GetPos();
 
+		/**
+		* @fn　回転の取得
+		* @return 四元数
+		*/
 		Quaternion GetRotation();
 
+		/**
+		* @fn　回転の取得
+		* @return オイラー角
+		*/
 		Vector3 GetEulerAngles();
 
+		/**
+		* @fn　スケール取得
+		* @return スケール
+		*/
 		Vector3 GetScale();
 
 		/**

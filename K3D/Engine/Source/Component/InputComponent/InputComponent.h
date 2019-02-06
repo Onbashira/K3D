@@ -3,6 +3,9 @@ namespace K3D {
 
 	class GameObject;
 
+	class InputManager;
+
+	//ユーザ操作よりオブジェクトの操作をサポートするベースコンポネント
 	class InputComponent
 	{
 	public:
@@ -11,11 +14,11 @@ namespace K3D {
 	
 	public:
 		
-		InputComponent();
+		InputComponent() {};
 		
-		virtual ~InputComponent();
+		virtual ~InputComponent() {};
 	
-		virtual void Update(GameObject* gameObject) = 0;
+		virtual void Update(GameObject* gameObject , InputManager* inputManager) = 0;
 
 	private:
 	

@@ -15,6 +15,8 @@ namespace K3D {
 
 	class GeometryState;
 
+	//単一描画をサポートするベースコンポネント
+
 	class GraphicsComponent
 	{
 	public:
@@ -23,15 +25,11 @@ namespace K3D {
 
 	public:
 
-		GraphicsComponent();
+		GraphicsComponent() {};
 
-		virtual ~GraphicsComponent();
+		virtual ~GraphicsComponent() {};
 
 		virtual void Draw(TargetState* targetState, GeometryState* geometryState, PipelineState* pipelineStae, PipelineResourceTableState* prTbl) = 0;
-
-		virtual void GetMeshRenderer() = 0;
-
-		virtual void GetMeshBuffer() = 0;
 
 	private:
 

@@ -4,7 +4,7 @@ namespace K3D {
 	class ComponentLocator
 	{
 	public:
-		ComponentLocator();
-		virtual ~ComponentLocator();
+		ComponentLocator() {};
+		virtual ~ComponentLocator() {};
 	};
 }

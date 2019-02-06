@@ -64,7 +64,7 @@
     <ClCompile Include="Engine\Source\DrawableComponent\DrawableComponent.cpp" />
     <ClCompile Include="Engine\Source\Factory\Factory.cpp" />
     <ClCompile Include="Engine\Source\Component\GameObject\GameObject.cpp" />
-    <ClCompile Include="Engine\Source\Component\GameObject\Transform.cpp" />
+    <ClCompile Include="Engine\Source\Component\Transform\Transform.cpp" />
     <ClCompile Include="Engine\Source\Input\GamePad.cpp" />
     <ClCompile Include="Engine\Source\Input\GamePadManager.cpp" />
     <ClCompile Include="Engine\Source\Input\InputManager.cpp" />
@@ -121,9 +121,9 @@
     <ClCompile Include="Engine\Source\Mesh\MeshManager.cpp" />
     <ClCompile Include="Engine\Source\Mesh\ModelMesh.cpp" />
     <ClCompile Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.cpp" />
-    <ClCompile Include="Engine\Source\Component\MeshRendererComponent\MeshRendererComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\GameComponent\GameComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\InputComponent\InputComponent.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -184,7 +184,7 @@
     <ClInclude Include="Engine\Source\DrawableComponent\DrawableComponent.h" />
     <ClInclude Include="Engine\Source\Factory\Factory.h" />
     <ClInclude Include="Engine\Source\Component\GameObject\GameObject.h" />
-    <ClInclude Include="Engine\Source\Component\GameObject\Transform.h" />
+    <ClInclude Include="Engine\Source\Component\Transform\Transform.h" />
     <ClInclude Include="Engine\Source\Input\GamePad.h" />
     <ClInclude Include="Engine\Source\Input\GamePadManager.h" />
     <ClInclude Include="Engine\Source\Input\InputManager.h" />
@@ -246,9 +246,9 @@
     <ClInclude Include="Engine\Source\Mesh\MeshManager.h" />
     <ClInclude Include="Engine\Source\Mesh\ModelMesh.h" />
     <ClInclude Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.h" />
-    <ClInclude Include="Engine\Source\Component\MeshRendererComponent\MeshRendererComponent.h" />
     <ClInclude Include="Engine\Source\Component\GameComponent\GameComponent.h" />
     <ClInclude Include="Engine\Source\Component\InputComponent\InputComponent.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
   </ItemGroup>

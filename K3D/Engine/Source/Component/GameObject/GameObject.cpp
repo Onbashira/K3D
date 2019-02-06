@@ -28,6 +28,11 @@ bool K3D::GameObject::IsEnable()
 	return _isEnable;
 }
 
+K3D::Transform & K3D::GameObject::Transform()
+{
+	return _transform;
+}
+
 void K3D::GameObject::UpdateTransformBuffer()
 {
 	auto mat = Matrix::CreateFromQuaternion(this->_transform.GetRotation());

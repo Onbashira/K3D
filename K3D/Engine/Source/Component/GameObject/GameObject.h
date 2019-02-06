@@ -1,7 +1,6 @@
 #pragma once
-#include "Transform.h"
-#include "Engine/Source/Math/Math.h"
 #include "Engine/Source/Resource/ConstantBuffer.h"
+#include "Engine/Source/Component/Transform/Transform.h"
 #include <memory>
 
 
@@ -27,12 +26,11 @@ namespace K3D {
 
 		ConstantBuffer _transformBuffer;
 
-		std::unique_ptr< InputComponent> _inputComponent;
+		std::unique_ptr<InputComponent> _inputComponent;
 
-		std::unique_ptr< GraphicsComponent> _graphicsComponent;
+		std::unique_ptr<GraphicsComponent> _graphicsComponent;
 
-		std::unique_ptr< PhysicsComponent> _physicsComponent;
-
+		std::unique_ptr<PhysicsComponent> _physicsComponent;
 
 	private:
 
