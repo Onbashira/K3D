@@ -4,6 +4,7 @@
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
 #include "Engine/Source/PIpelineState/PipelineStateObject.h"
 #include "Engine/Source/Signature/RootSignature.h"
+
 namespace K3D {
 
 	enum INTERNAL_COMMAND {

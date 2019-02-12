@@ -8,9 +8,13 @@
 #include <Windows.h>
 #include <memory>
 #include <memory_resource>
+#include <vector>
+#include <array>
 #include <algorithm>
 #include <comdef.h>
 #include <wrl.h>
+#include <mutex>
+#include <iomanip>
 #include "Engine/Source/LifetimedMemory/LifetimedMemory.h"
 #include "Engine/Source/Utility/BasicTypes.h"
 #include "Engine/Source/Utility/Utility.h"

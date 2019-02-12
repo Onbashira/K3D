@@ -2,35 +2,43 @@
 #include "InternalCommand.h"
 #include <list>
 namespace K3D {
+
 	struct InternalCommand;
+
+	struct NativeCommand;
+
 	//中間命令を作る機能を持つ
 	class InternalCommandCreater
 	{
+
 	public:
+
 	private:
+
 		//自身が生成されたthreadのID
-		unsigned int _threadID;
-		//
+		std::thread::id _threadID;
+
+		//コマンドリスト
 		std::list<InternalCommand> _commands;
+
+		//ミューテックス
+		std::mutex _mutex;
+
 	public:
 	
 		InternalCommandCreater();
 	
 		~InternalCommandCreater();
+		 
+		void SetThreadID(std::thread::id threadID);
 
-		void CreateCommand();
+		std::thread::id& GetThreadID();
 
-		void AddCommand();
+		void SetThisThreadID();
 
-		void AddCommands();
-
-		void ClearCommands();
-
-		void SetThreadID(unsigned int threadID);
+		NativeCommand ConvertCommand();
 
 	private:
-
-		void SortCommand();
 
 	};
 
