@@ -4,6 +4,8 @@
 #include <list>
 
 namespace K3D {
+
+	class InternalCommand;
 	class CommandManager
 	{
 	public:
@@ -15,11 +17,12 @@ namespace K3D {
 
 	public:
 		
-		CommandManager();
+		CommandManager() {};
 		
-		~CommandManager();
+		~CommandManager() {};
 		
-		void RecordCommand(InternalCommand& command);
+		void RecordCommand(InternalCommand& command) {};
+
 
 	private:
 	};

@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Source/Math/Math.h"
-#include "Engine/Source/GameObject/GameObject.h"
+#include "Engine/Source/Component/GameObject/GameObject.h"
 #include "Engine/Source/Resource/UploadBuffer.h"
 #include "Engine/Source/Resource/DepthStencilBuffer.h"
 

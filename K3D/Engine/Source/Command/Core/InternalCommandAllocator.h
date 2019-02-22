@@ -1,9 +1,12 @@
 #pragma once
+#include "Engine/Source/Command/Core/InternalCommand.h"
 
 namespace K3D {
-	class InternalCommand;
+
+	//中間描画命令リスト管理用クラス
 	class InternalCommandAllocator
 	{
+		friend class CommandManager;
 
 	public:
 
@@ -17,9 +20,10 @@ namespace K3D {
 
 		~InternalCommandAllocator();
 
+		void Reset();
+
 	private:
 		
-		void Reset();
 
 	};
 

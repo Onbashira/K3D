@@ -14,25 +14,8 @@ namespace K3D {
 	class DebugWindow
 	{
 	public:
-		struct FrameResource {
-			IndexBuffer ib;
-			VertexBuffer vb;
-
-		};
 	private:
-
-		D3D12Device* _device;
-
-		D3D12_CPU_DESCRIPTOR_HANDLE _fontCPUHandle;
-
-		D3D12_GPU_DESCRIPTOR_HANDLE _fontGPUHandle;
-
 		DescriptorHeap _fontHeap;
-
-		FrameResource* _frameResource;
-
-		DXGI_FORMAT		_format;
-
 	public:
 
 		DebugWindow();
@@ -40,7 +23,7 @@ namespace K3D {
 		~DebugWindow();
 
 		void Init(D3D12Device* dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle);
-
+		
 		void ShutDown();
 
 		void NewFrame();
@@ -50,6 +33,7 @@ namespace K3D {
 		void InvalidDataDevicePbject();
 
 		void CreateDeviceObject();
+
 
 	private:
 	};

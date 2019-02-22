@@ -81,6 +81,7 @@ HRESULT K3D::SwapChain::Create(CommandQueue & commandQueue, Factory & factory, W
 	CHECK_RESULT(hr);
 	hr = CreateRenderTargets(bufferNum);
 	CHECK_RESULT(hr);
+	_swapChain->SetMaximumFrameLatency(bufferNum);
 	return hr;
 }
 

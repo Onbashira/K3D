@@ -1,5 +1,8 @@
 #pragma once
 #include "Engine/Source/Mesh/BasicMesh.h"
+#include "Engine/Source/Resource/IndexBuffer.h"
+#include "Engine/Source/Resource/VertexBuffer.h"
+
 #include <vector>
 #include <memory>
 
@@ -12,7 +15,7 @@ namespace K3D {
 	class MeshBuffer
 	{
 
-		friend class ModelMesh;
+		friend struct ModelMesh;
 
 	public:
 

@@ -35,8 +35,8 @@ std::vector<D3D12_VERTEX_BUFFER_VIEW> K3D::MeshBuffer::GetMeshVBViews()
 	if (geometryState.SizeInBytes != 0) {
 		views.push_back(geometryState);
 	}
-	int cycleNum = this->_additionalVBOs.size();
-	for (int i = 0;i < cycleNum; ++i) {
+	unsigned int cycleNum = static_cast<unsigned int>(this->_additionalVBOs.size());
+	for (unsigned int i = 0;i < cycleNum; ++i) {
 		views.push_back(this->_additionalVBOs[i]->GetView());
 	}
 	return views;
@@ -56,9 +56,9 @@ std::unique_ptr<K3D::VertexBuffer>& K3D::MeshBuffer::GetCustomVBO(unsigned int i
 {
 	if (this->_additionalVBOs.empty() || this->_additionalVBOs.size() <= index) {
 		//テンポラリオブジェクト
-		return std::make_unique< K3D::VertexBuffer>();
+		return std::unique_ptr<K3D::VertexBuffer>(nullptr);
 	}
-	this->_additionalVBOs[index];
+	return this->_additionalVBOs[index];
 }
 
 std::unique_ptr<K3D::IndexBuffer>& K3D::MeshBuffer::GetIBO()

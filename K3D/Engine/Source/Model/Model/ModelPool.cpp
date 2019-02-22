@@ -2,7 +2,7 @@
 #include "ModelResource.h"
 #include "ModelObject.h"
 #include "ModelResource.h"
-#include "Engine/Source/PIpelineState/PipelineStateObject.h"
+#include "Engine/Source/PipelineState/PipelineStateObject.h"
 #include "Engine/Source/Signature/RootSignature.h"
 #include "Engine/Source/Model/Model/ModelConverter.h"
 #include <memory>

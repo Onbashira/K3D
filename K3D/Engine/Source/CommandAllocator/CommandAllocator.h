@@ -1,6 +1,8 @@
 #pragma once
 namespace K3D {
 
+	class D3D12Device;
+
 	class CommandAllocator
 	{
 	public:

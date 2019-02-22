@@ -5,6 +5,8 @@ namespace K3D {
 
 	struct InternalCommand;
 
+	class InternalCommandAllocator;
+
 	struct NativeCommand;
 
 	//中間命令を作る機能を持つ
@@ -17,9 +19,6 @@ namespace K3D {
 
 		//自身が生成されたthreadのID
 		std::thread::id _threadID;
-
-		//コマンドリスト
-		std::list<InternalCommand> _commands;
 
 		//ミューテックス
 		std::mutex _mutex;

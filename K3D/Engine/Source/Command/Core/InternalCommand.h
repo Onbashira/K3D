@@ -2,7 +2,8 @@
 #include "Engine/Source/Command/State/GeometryState.h"
 #include "Engine/Source/Command/State/TargetState.h"
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
-#include "Engine/Source/PIpelineState/PipelineStateObject.h"
+#include "Engine/Source/Command/State/PipelineResourceTable.h"
+#include "Engine/Source/Command/State/PipelineState.h"
 #include "Engine/Source/Signature/RootSignature.h"
 
 namespace K3D {
@@ -51,14 +52,19 @@ namespace K3D {
 
 	};
 
-
-	struct InternalCommandArgment {
+	struct InternalCommandArgment
+	{
+		std::shared_ptr< GeometryState> geometry;
+		std::shared_ptr< TargetState> target;
+		std::shared_ptr< PipelineResourceTable> pipelineResource;
+		std::shared_ptr< PipelineState> piepline;
 	};
 
 	struct InternalCommand {
 
 		InternalCommandHeader header;
 
+		InternalCommandArgment argment;
 
 	};
 
