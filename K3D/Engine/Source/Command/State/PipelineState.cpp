@@ -25,7 +25,7 @@ void K3D::PipelineState::SetPSO(std::weak_ptr<PipelineStateObject> pso)
 
 }
 
-void K3D::PipelineState::SetRS(std::weak_ptr<PipelineStateObject> rs)
+void K3D::PipelineState::SetRS(std::weak_ptr<RootSignature> rs)
 {
 	this->_rs = rs.lock();
 }

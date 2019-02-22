@@ -9,6 +9,7 @@ namespace K3D {
 	class ShaderResource;
 	class TextureObject;
 	class CommandList;
+	class ModelMesh;
 
 	//Meshをレンダリングするためのクラス。主にシェーダーに投げるためのヒープを管理する
 	class MeshHeap

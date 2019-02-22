@@ -2,11 +2,11 @@
 #include "MeshManager.h"
 
 
-MeshManager::MeshManager()
+K3D::MeshManager::MeshManager()
 {
 }
 
 
-MeshManager::~MeshManager()
+K3D::MeshManager::~MeshManager()
 {
 }

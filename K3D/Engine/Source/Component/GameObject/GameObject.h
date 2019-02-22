@@ -1,18 +1,17 @@
 #pragma once
 #include "Engine/Source/Resource/ConstantBuffer.h"
 #include "Engine/Source/Component/Transform/Transform.h"
+#include "Engine/Source/Component/GraphicsComponent/GraphicsComponent.h"
+#include "Engine/Source/Component/InputComponent/InputComponent.h"
+#include "Engine/Source/Component/PhysicsComponent/PhysicsComponent.h"
+
+
 #include <memory>
 
 
 namespace K3D {
 
 	class CommandList;
-
-	class InputComponent;
-
-	class GraphicsComponent;
-
-	class PhysicsComponent;
 
 	class GameObject
 	{

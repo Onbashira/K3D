@@ -3,9 +3,10 @@ namespace K3D {
 	class MeshHeap;
 	class MeshBuffer;
 
-	struct ModelMesh
+	class ModelMesh
 	{
 
+	public:
 		//基本メッシュ情報を保持したもの
 		std::unique_ptr<MeshBuffer> meshBuffer;
 		//デスクリプタヒープやマテリアルバッファ、テクスチャへの参照をもったもの

@@ -52,7 +52,7 @@ namespace K3D {
 		* @fn
 		* @brief RS�̎擾
 		*/
-		void SetRS(std::weak_ptr<PipelineStateObject> rs);
+		void SetRS(std::weak_ptr<RootSignature> rs);
 
 	private:
 

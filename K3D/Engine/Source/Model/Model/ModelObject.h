@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Source/GameObject/GameObject.h"
+#include "Engine/Source/Component/GameObject/GameObject.h"
 #include "Engine//Source/Mesh/ModelMesh.h"
 #include "Engine/Source/DrawableComponent/DrawableComponent.h"
 #include <vector>
@@ -8,7 +8,7 @@ namespace K3D {
 	class ModelMesh;
 
 	//ベースのモデルオブジェクト　基本メッシュ情報、描画するためのヒープ、描画するためのパイプライン情報、ゲームオブジェクト属性を持つ
-	class ModelObject : public GameObject ,public DrawableComponent
+	class ModelObject : public GameObject
 	{
 
 	public:
