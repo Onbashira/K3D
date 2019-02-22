@@ -2,6 +2,7 @@
 #include "Engine/Source/Utility/ManagerComponent.h"
 #include "Engine/Source/Command/Core/InternalCommand.h"
 #include <list>
+
 namespace K3D {
 	class CommandManager
 	{
@@ -9,6 +10,7 @@ namespace K3D {
 
 	private:
 
+		//中間描画コマンドリスト
 		std::list<InternalCommand> command;
 
 	public:

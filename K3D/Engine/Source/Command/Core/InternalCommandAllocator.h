@@ -1,4 +1,5 @@
 #pragma once
+
 namespace K3D {
 	class InternalCommand;
 	class InternalCommandAllocator
