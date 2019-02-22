@@ -169,7 +169,7 @@ namespace K3D {
 
 	float smoothstep(float a, float b, float t) { if (a >= b) return 0.f; float x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
 
-	double smoothstep(double a, double b, double t) { if (a >= b) return 0.f; float x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
+	double smoothstep(double a, double b, double t) { if (a >= b) return 0.f; double x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
 
 	float radians(float deg) { return (deg / 180.f)*F_PI; }
 

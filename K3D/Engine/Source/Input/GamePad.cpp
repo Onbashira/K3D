@@ -384,7 +384,7 @@ void K3D::GamePad::VibrationLeftMotor(unsigned short frequency, unsigned int tim
 
 }
 
-Vector2 K3D::GamePad::GetSaturatedRightStick()
+K3D::Vector2 K3D::GamePad::GetSaturatedRightStick()
 {
 	float x = ::Clamp(static_cast<float>(_nowState.Gamepad.sThumbRX - _rightStickFixValueX)  / static_cast<float>(_righrStickDeadline - _rightStickFixValueX), -1.0f, 1.0f);
 	float y = ::Clamp(static_cast<float>(_nowState.Gamepad.sThumbRY - _rightStickFixValueY) / static_cast<float>(_righrStickDeadline - _rightStickFixValueY),-1.0f,1.0f);
@@ -395,7 +395,7 @@ Vector2 K3D::GamePad::GetSaturatedRightStick()
 	return Vector2(x, y);
 }
 
-Vector2 K3D::GamePad::GetSaturatedLeftStick()
+K3D::Vector2 K3D::GamePad::GetSaturatedLeftStick()
 {
 	float x = ::Clamp(static_cast<float>(_nowState.Gamepad.sThumbLX - _leftStickFixValueX) / static_cast<float>(_leftStickDeadline - _leftStickFixValueX), -1.0f, 1.0f);
 	float y = ::Clamp(static_cast<float>(_nowState.Gamepad.sThumbLY - _leftStickFixValueY) / static_cast<float>(_leftStickDeadline - _leftStickFixValueY),	-1.0f,1.0f);

@@ -5,7 +5,7 @@
 
 namespace K3D {
 
-	class InternalCommand;
+	struct InternalCommand;
 	class CommandManager
 	{
 	public:

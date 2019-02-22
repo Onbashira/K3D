@@ -37,22 +37,22 @@ void K3D::Transform::SetScale(const Vector3 scale)
 	_scale = scale;
 }
 
-Vector3 K3D::Transform::GetPos()
+K3D::Vector3 K3D::Transform::GetPos()
 {
 	return _pos;
 }
 
-Quaternion  K3D::Transform::GetRotation()
+K3D::Quaternion  K3D::Transform::GetRotation()
 {
 	return	_rotation;
 }
 
-Vector3 K3D::Transform::GetEulerAngles()
+K3D::Vector3 K3D::Transform::GetEulerAngles()
 {
 	return _rotation.EulerAngles();
 }
 
-Vector3 K3D::Transform::GetScale()
+K3D::Vector3 K3D::Transform::GetScale()
 {
 	return _scale;
 }
@@ -129,7 +129,7 @@ void K3D::Transform::LookAt(const Vector3 & target, const Vector3 & up)
 	_eulerAngles = _rotation.EulerAngles();
 }
 
-OrthonormalBasis K3D::Transform::GetLocalAxis()
+K3D::OrthonormalBasis K3D::Transform::GetLocalAxis()
 {
 	OrthonormalBasis orthonomal;
 	auto mat = std::move(Matrix::CreateFromQuaternion(_rotation));
@@ -139,7 +139,7 @@ OrthonormalBasis K3D::Transform::GetLocalAxis()
 	return orthonomal;
 }
 
-Matrix K3D::Transform::GetView()
+K3D::Matrix K3D::Transform::GetView()
 {
 	//âÒì]çsóÒ
 	auto mat = Matrix::CreateFromQuaternion(_rotation);
@@ -155,7 +155,7 @@ Matrix K3D::Transform::GetView()
 	return mat;
 }
 
-Matrix K3D::Transform::GetSRTMatrix()
+K3D::Matrix K3D::Transform::GetSRTMatrix()
 {
 	auto mat = std::move(Matrix::CreateFromQuaternion(_rotation));
 

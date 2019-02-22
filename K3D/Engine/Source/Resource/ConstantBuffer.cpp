@@ -63,7 +63,7 @@ HRESULT K3D::ConstantBuffer::CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cbvDesc
 	return S_OK;
 }
 
-unsigned int K3D::ConstantBuffer::GetInitializeSize()
+unsigned long long K3D::ConstantBuffer::GetInitializeSize()
 {
 	return _initializeSize;
 }

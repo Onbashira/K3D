@@ -27,12 +27,12 @@ void K3D::Material::Metalness(float metalness)
 	this->_metalness = metalness;
 }
 
-Vector3 & K3D::Material::GetBaseColor()
+K3D::Vector3 & K3D::Material::GetBaseColor()
 {
 	return _baseColor;
 }
 
-Vector3 & K3D::Material::GetAmbient()
+K3D::Vector3 & K3D::Material::GetAmbient()
 {
 	return _ambient;
 }

@@ -57,7 +57,7 @@ bool K3D::InputManager::IsToggle(VIRTUAL_KEY_STATE code)
 	return false;
 }
 
-Vector2 K3D::InputManager::GetMousePos()
+K3D::Vector2 K3D::InputManager::GetMousePos()
 {
 	return _mousePos;
 }

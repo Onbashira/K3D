@@ -160,12 +160,12 @@ K3D::CAMERA_MODE K3D::Camera::GetMode()
 	return _mode;
 }
 
-const Matrix & K3D::Camera::GetProjection()
+const K3D::Matrix & K3D::Camera::GetProjection()
 {
 	return this->_projection;
 }
 
-const Matrix  K3D::Camera::GetViewProjection()
+const K3D::Matrix  K3D::Camera::GetViewProjection()
 {
 	return Matrix::Multiply(this->_transform.GetView(), _projection);
 }

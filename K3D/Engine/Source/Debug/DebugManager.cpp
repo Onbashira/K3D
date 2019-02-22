@@ -103,6 +103,7 @@ bool K3D::DebugManager::Init(HWND hwnd, D3D12Device * dev, int frame, DXGI_FORMA
 	}
 	this->_debugWindow = std::make_shared<DebugWindow>();
 	_debugWindow->Init(dev, frame, format, fontSrvCPUDescHandle, fontSrvGPUDescHandle);
+	return true;
 }
 
 void K3D::DebugManager::DebugWindowNewFrame()

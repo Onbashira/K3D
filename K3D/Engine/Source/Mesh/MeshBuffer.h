@@ -15,7 +15,7 @@ namespace K3D {
 	class MeshBuffer
 	{
 
-		friend struct ModelMesh;
+		friend class ModelMesh;
 
 	public:
 

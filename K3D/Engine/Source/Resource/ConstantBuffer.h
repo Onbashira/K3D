@@ -13,7 +13,7 @@ namespace K3D {
 
 	private:
 
-		unsigned int _initializeSize;
+		unsigned long long _initializeSize;
 
 	public:
 				
@@ -25,7 +25,7 @@ namespace K3D {
 		
 		HRESULT	CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
 
-		unsigned int GetInitializeSize();
+		unsigned long long GetInitializeSize();
 
 	private:
 
