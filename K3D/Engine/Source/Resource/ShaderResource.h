@@ -30,7 +30,9 @@ namespace K3D {
 		UINT64 GetDepthOfArarry();
 
 		void Discard();
-		
+
+	private:
+
 	};
 
 }

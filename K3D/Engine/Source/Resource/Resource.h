@@ -15,41 +15,41 @@ namespace K3D {
 	private:
 
 	protected:
-		
+
 		//!現在のリソースステート
-		D3D12_RESOURCE_STATES					_currentResourceState;
-		
+		D3D12_RESOURCE_STATES _currentResourceState;
+
 		//!マップされたポインタ
-		UCHAR*									_pDst;
-		
+		UCHAR* _pDst;
+
 		//!クリアバリュー
-		D3D12_CLEAR_VALUE						_clearValue;
-	
+		D3D12_CLEAR_VALUE _clearValue;
+
 		//!レジスタ番号
-		unsigned int							_shaderRegisterNumber;
-	
+		unsigned int _shaderRegisterNumber;
+
 		//!リソース本体
-		Microsoft::WRL::ComPtr<ID3D12Resource>	_resource;
-	
+		Microsoft::WRL::ComPtr<ID3D12Resource> _resource;
+
 		//!名前
-		std::string								_name;
+		std::string _name;
 
 	private:
 
 	public:
-		
+
 		Resource();
-		
+
 		Resource(const Resource& other);
-		
+
 		Resource(Resource&& value);
-		
+
 		Resource& operator= (const Resource& value);
-		
+
 		Resource& operator= (Resource&& value);
-		
+
 		virtual ~Resource();
-		
+
 		/**
 		* @fn
 		* @brief バッファの作成
@@ -60,8 +60,8 @@ namespace K3D {
 		* @param[in] clearValue クリアバリュー
 		* @return リザルト
 		*/
-		virtual HRESULT														Create(const D3D12_HEAP_PROPERTIES& heapProps,const D3D12_HEAP_FLAGS& flags,const D3D12_RESOURCE_DESC& resourceDesc,const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
-		
+		virtual HRESULT Create(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
+
 		/**
 		* @fn
 		* @brief バッファの作成
@@ -73,7 +73,7 @@ namespace K3D {
 		* @param[in] clearValue クリアバリュー
 		* @return リザルト
 		*/
-		virtual HRESULT														Create(std::shared_ptr<D3D12Device>& device,const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
+		virtual HRESULT Create(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
 
 		/**
 		* @fn
@@ -82,29 +82,29 @@ namespace K3D {
 		* @param[in] readRange 読み込みレンジ
 		* @return リザルト
 		*/
-		virtual HRESULT														Map(UINT subResource, D3D12_RANGE* readRange);
-		
+		virtual HRESULT Map(UINT subResource, D3D12_RANGE* readRange);
+
 		/**
 		* @fn
 		* @brief マッピング解除
 		* @param[in] subResource サブリソース
 		* @param[in] writtenRange 書き込みレンジ
 		*/
-		virtual void														Unmap(UINT subResource, D3D12_RANGE* writtenRange);
-		
+		virtual void Unmap(UINT subResource, D3D12_RANGE* writtenRange);
+
 		/**
 		* @fn
 		* @brief マッピングされたポインタの取得
 		* @return バッファにマッピングされたポインタ
 		*/
-		UCHAR*																GetMappedPointer();
-	
+		UCHAR* GetMappedPointer();
+
 		/**
 		* @fn
 		* @brief バッファ破棄
 		*/
-		void																Discard();
-		
+		void Discard();
+
 		/**
 		* @fn
 		* @brief バッファ更新・書き込み
@@ -112,8 +112,8 @@ namespace K3D {
 		* @param[in] size サイズ
 		* @param[in] dstOffset オフセット
 		*/
-		virtual void														Update(const void* pSrc, ULONG64 size, const UINT dstOffset);
-		
+		virtual void Update(const void* pSrc, ULONG64 size, const UINT dstOffset);
+
 		/**
 		* @fn
 		* @brief バッファ更新・書き込み
@@ -121,8 +121,8 @@ namespace K3D {
 		* @param[in] size サイズ
 		* @param[in] dstOffset オフセット
 		*/
-		virtual void														Read(void* pDstBuffer,ULONG64 readSize, const unsigned int dstOffsest = 0);
-		
+		virtual void Read(void* pDstBuffer, ULONG64 readSize, const unsigned int dstOffsest = 0);
+
 		/**
 		* @fn
 		* @brief バッファ更新・書き込み
@@ -132,8 +132,8 @@ namespace K3D {
 		* @param[in] readRange 読み込みレンジ
 		* @param[in] writtenRange 書き込みレンジ
 		*/
-		void																Update(const void* pSrc, ULONG64 size, const UINT dstOffset, UINT subResource, D3D12_RANGE* readRange, D3D12_RANGE* writtenRange);
-		
+		void Update(const void* pSrc, ULONG64 size, const UINT dstOffset, UINT subResource, D3D12_RANGE* readRange, D3D12_RANGE* writtenRange);
+
 		/**
 		* @fn
 		* @brief 256バイトアライメントしてバッファ更新・書き込み
@@ -141,43 +141,43 @@ namespace K3D {
 		* @param[in] elementCount １要素サイズ
 		* @param[in] elementCount 要素数
 		*/
-		void																Alignment256ByteUpdate(const void* pSrc, unsigned int elementSize, unsigned int elementCount = 1);
-		
+		void Alignment256ByteUpdate(const void* pSrc, unsigned int elementSize, unsigned int elementCount = 1);
+
 		/**
 		* @fn
 		* @brief バッファのフェッチ
 		* @return バッファへの参照
 		*/
-		Microsoft::WRL::ComPtr<ID3D12Resource>&								GetResource();
-			
+		Microsoft::WRL::ComPtr<ID3D12Resource>& GetResource();
+
 		/**
 		* @fn
 		* @brief ヒープの情報のフェッチ
 		* @return （プロパティ、フラグ）
 		*/
-		const std::tuple<D3D12_HEAP_PROPERTIES, D3D12_HEAP_FLAGS>			GetHeapPropaties();
-		
+		const std::tuple<D3D12_HEAP_PROPERTIES, D3D12_HEAP_FLAGS> GetHeapPropaties();
+
 		/**
 		* @fn
 		* @brief バッファのデスクリプションのフェッチ
 		* @return デスクリプション
 		*/
-		const D3D12_RESOURCE_DESC*											GetResourceDesc();
-		
+		const D3D12_RESOURCE_DESC* GetResourceDesc();
+
 		/**
 		* @fn
 		* @brief バッファステートのフェッチ
 		* @return ステート
 		*/
-		const D3D12_RESOURCE_STATES&										GetResourceState();
-		
+		const D3D12_RESOURCE_STATES& GetResourceState();
+
 		/**
 		* @fn
 		* @brief バッファステートのセット
 		* @param[in] state バッファステート
 		*/
-		void																SetResourceState(D3D12_RESOURCE_STATES state);
-		
+		void SetResourceState(D3D12_RESOURCE_STATES state);
+
 		/**
 		* @fn
 		* @brief バッファステートの遷移
@@ -185,8 +185,8 @@ namespace K3D {
 		* @param[in] nextState バッファステート
 		* @return リザルト
 		*/
-		HRESULT																ResourceTransition(CommandList* list, D3D12_RESOURCE_STATES nextState);
-		
+		HRESULT	ResourceTransition(CommandList* list, D3D12_RESOURCE_STATES nextState);
+
 		/**
 		* @fn
 		* @brief バッファステートの遷移
@@ -194,30 +194,31 @@ namespace K3D {
 		* @param[in] nextState バッファステート
 		* @return リザルト
 		*/
-		HRESULT																ResourceTransition(std::weak_ptr<CommandList> list, D3D12_RESOURCE_STATES nextState);
-		
+		HRESULT	ResourceTransition(std::weak_ptr<CommandList> list, D3D12_RESOURCE_STATES nextState);
+
 		/**
 		* @fn
 		* @brief クリアバリューのフェッチ
 		* @return クリアバリュー
 		*/
-		D3D12_CLEAR_VALUE													GetClearValue();
-		
+		D3D12_CLEAR_VALUE GetClearValue();
+
 		/**
 		* @fn
 		* @brief リソースの名前の設定
 		* @param[in] name 名前
 		*/
-		void																SetName(std::string name);
-		
+		void SetName(std::string name);
+
 		/**
 		* @fn
 		* @brief レジスタ番号の設定
 		* @param[in] number レジスタ番号
 		*/
-		void																RegisterShaderSlot(unsigned int number);
+		void RegisterShaderSlot(unsigned int number);
 
 	private:
+
 
 	};
 }

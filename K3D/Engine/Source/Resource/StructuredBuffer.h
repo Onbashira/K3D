@@ -26,20 +26,20 @@ namespace K3D {
 			HEAP_OFFSET_MAX,
 		};
 
-		Resource								_readBackResource;
+		Resource _readBackResource;
 
-		D3D12_RANGE								_readRange;
+		D3D12_RANGE _readRange;
 
-		DescriptorHeap							_heap;
+		DescriptorHeap _heap;
 
-		D3D12_UNORDERED_ACCESS_VIEW_DESC		_unorderedAccessViewDesc;
+		D3D12_UNORDERED_ACCESS_VIEW_DESC _unorderedAccessViewDesc;
 
-		D3D12_SHADER_RESOURCE_VIEW_DESC			_shaderResourceViewDesc;
+		D3D12_SHADER_RESOURCE_VIEW_DESC _shaderResourceViewDesc;
 	public:
 		
 	private:
 
-		HRESULT									CreateHeap(unsigned numElements, unsigned int nodeMask = 0);
+		HRESULT CreateHeap(unsigned numElements, unsigned int nodeMask = 0);
 		
 	public:	
 
@@ -47,33 +47,34 @@ namespace K3D {
 
 		virtual~StructuredBuffer();
 		//リードバックバッファとアップロードバッファを作成。ついでに配置
-		HRESULT									Create(unsigned int elementSize, unsigned int numElements, void* pBufferData);
+		HRESULT Create(unsigned int elementSize, unsigned int numElements, void* pBufferData);
 		//デスクリプタの作成
-		HRESULT									CreateDescriptors(unsigned int elementSize, unsigned int numElements);
+		HRESULT CreateDescriptors(unsigned int elementSize, unsigned int numElements);
 
-		HRESULT									CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC* uavDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle,Resource* counterResource = nullptr);
+		HRESULT CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC* uavDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle,Resource* counterResource = nullptr);
+ 
+		HRESULT CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC* srvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
 
-		HRESULT									CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC* srvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
+		void WriteToBuffer(unsigned int numElements, unsigned int elementSize, void* pBufferData);
 
-		void									WriteToBuffer(unsigned int numElements, unsigned int elementSize, void* pBufferData);
-
-		void									WaitForProcess(K3D::CommandQueue* queue);
+		void WaitForProcess(K3D::CommandQueue* queue);
 		
-		D3D12_CPU_DESCRIPTOR_HANDLE				GetSRVCPUHandle();
+		D3D12_CPU_DESCRIPTOR_HANDLE GetSRVCPUHandle();
 		
-		D3D12_CPU_DESCRIPTOR_HANDLE				GetUAVCPUHandle();
+		D3D12_CPU_DESCRIPTOR_HANDLE GetUAVCPUHandle();
 		
-		D3D12_GPU_DESCRIPTOR_HANDLE				GetSRVGPUHandle();
+		D3D12_GPU_DESCRIPTOR_HANDLE GetSRVGPUHandle();
 		
-		D3D12_GPU_DESCRIPTOR_HANDLE				GetUAVGPUHandle();
+		D3D12_GPU_DESCRIPTOR_HANDLE GetUAVGPUHandle();
 
-		void									Discard();
+		void Discard();
 				
-		DescriptorHeap*							GetHeap();
+		DescriptorHeap* GetHeap();
 
-		D3D12_UNORDERED_ACCESS_VIEW_DESC		GetUAVDesc();
+		D3D12_UNORDERED_ACCESS_VIEW_DESC GetUAVDesc();
 
-		D3D12_SHADER_RESOURCE_VIEW_DESC			GetSRVDesc();
+		D3D12_SHADER_RESOURCE_VIEW_DESC GetSRVDesc();
+
 
 	};
 }
