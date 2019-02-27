@@ -1,5 +1,0 @@
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\commandlist\commandlistmanager.cpp, LINE : 25] { CommandListÇ™ê≥èÌÇ…çÏê¨ÅEìoò^Ç≥ÇÍÇ‹ÇµÇΩ : DefaultDataUpdata }
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\commandqueue\commandqueue.cpp, LINE : 76] {  is Reset }
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\resource\resource.cpp, LINE : 133] { Resource : RenderTargetResource  is  Reset }
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\resource\resource.cpp, LINE : 133] { Resource : RenderTargetResource  is  Reset }
-[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\descriptorheap\descriptorheap.cpp, LINE : 195] { DescriptorHeap : RendertargetsHeap  is Reset }

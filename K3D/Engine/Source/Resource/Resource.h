@@ -219,7 +219,5 @@ namespace K3D {
 
 	private:
 
-	private:	
-
 	};
 }

@@ -31,12 +31,6 @@ namespace K3D {
 
 		void CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* buffer);
 
-		void BeginRendering();
-
-		void EndRendering();
-
-		void RenderingUpdate();
-
 		void Term();
 
 	private:

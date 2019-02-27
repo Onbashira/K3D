@@ -33,18 +33,6 @@ void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, 
 
 }
 
-void K3D::RenderingManager::BeginRendering()
-{
-}
-
-void K3D::RenderingManager::EndRendering()
-{
-}
-
-void K3D::RenderingManager::RenderingUpdate()
-{
-}
-
 void K3D::RenderingManager::Term()
 {
 	_swapChain.Discard();

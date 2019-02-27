@@ -106,6 +106,8 @@
     <ClCompile Include="Engine\Source\Component\InputComponent\InputComponent.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\InternalCommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\Source\Scene\Scene.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingPath\RenderingPath.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -213,6 +215,8 @@
     <ClInclude Include="Engine\Source\Component\InputComponent\InputComponent.h" />
     <ClInclude Include="Engine\Source\Command\Core\InternalCommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.h" />
+    <ClInclude Include="Engine\Source\Scene\Scene.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingPath\RenderingPath.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
   </ItemGroup>

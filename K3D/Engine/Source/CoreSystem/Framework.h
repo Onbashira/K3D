@@ -71,12 +71,6 @@ namespace K3D {
 		//!マスター計算コマンドキュー
 		CommandQueue _computeQueue;
 
-		enum DRAW_QUEUE_INDEX {
-			DRAW_QUEUE_INDEX_ONE,
-			DRAW_QUEUE_INDEX_TWO,
-			DRAW_QUEUE_INDEX_THREE,
-		};
-
 	private:
 
 	public:
