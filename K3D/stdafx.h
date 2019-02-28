@@ -1,8 +1,8 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN
-#define SHADER_TARGET_DIR
-#define THIRD_PARTY_TARGET_DIR
+#define SHADER_TARGET_DIR "Engine/Shader/"
+#define THIRD_PARTY_TARGET_DIR "Engine/ThirdParty/"
 
 
 #include <Windows.h>
