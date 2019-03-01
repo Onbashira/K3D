@@ -14,6 +14,13 @@ namespace K3D {
 
 		virtual void ExecutePath() = 0;
 
+		virtual String& GetName() = 0;
+
+		virtual int GetPathIndex() = 0;
+
+
+
+
 	private:
 	};
 

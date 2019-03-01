@@ -10,10 +10,13 @@ namespace K3D {
 		Scene();
 		
 		~Scene();
+		virtual void ScreenClear() = 0;
 
 		virtual void Update() = 0;
 
 		virtual void Rendering() = 0;
+
+		virtual void ScreenFlip() = 0;
 
 	private:
 
