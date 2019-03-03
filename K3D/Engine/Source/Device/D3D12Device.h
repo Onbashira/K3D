@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine/Source/Utility/D3D12Common.h"
 
 namespace K3D {
 
@@ -17,6 +16,8 @@ namespace K3D {
 		D3D_FEATURE_LEVEL						_featureLevel;
 
 		DXGI_ADAPTER_DESC1						_adapterDesc;
+
+		D3D12_FEATURE_DATA_ARCHITECTURE1		_architectureData;
 
 		bool									_useWarpDevice;
 

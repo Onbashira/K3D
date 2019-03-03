@@ -16,7 +16,7 @@ const D3D_FEATURE_LEVEL FeatureLevels[] =
 const std::wstring GPU_CARD_SPEC_LIST[] = {
 	L"NVIDIA GeForce GTX 1080",
 	L"NVIDIA GeForce GTX 1060",
-	L"INTEL"
+	L"INTEL HD Graphics"
 
 };
 
@@ -71,7 +71,6 @@ HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
 							if (FAILED(result)) {
 								return result;
 							};
-							_device->SetName(L"Device");
 							return result;
 						}
 					}
@@ -80,11 +79,8 @@ HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
 
 		}
 		adapter.Reset();
-
-
 	}
-
-
+	
 
 	return result;
 }

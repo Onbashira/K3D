@@ -14,9 +14,9 @@ void main() {
 	K3D::Framework::GetInstance().TimerStart();
 
 	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
-		K3D::Framework::GetInstance().ClearScreen();
+		//K3D::Framework::GetInstance().ClearScreen();
 		K3D::Framework::GetInstance().Tick();
-		K3D::Framework::GetInstance().FlipScreen();
+		//K3D::Framework::GetInstance().FlipScreen();
 
 	}
 	K3D::Framework::GetInstance().TimerStop();

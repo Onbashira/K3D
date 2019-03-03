@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\DeferredLayer.cpp" />
     <ClCompile Include="Engine\Source\CommandAllocator\CommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\ComponentLocator\ComponentLocator.cpp" />
     <ClCompile Include="Engine\Source\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Source\Debug\DebugWindow.cpp" />
     <ClCompile Include="Engine\Source\Debug\DebugManager.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\DecaleBuffer.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\CommandManager.cpp" />
     <ClCompile Include="Engine\Source\Primitive\Cube.cpp" />
     <ClCompile Include="Engine\Source\CommandQueue\CommandQueueManager.cpp" />
@@ -86,7 +87,7 @@
     <ClCompile Include="Engine\Source\Command\Core\InternalCommand.cpp" />
     <ClCompile Include="Engine\Source\Command\State\GeometryState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\TargetState.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\GeometryBuffer.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\GeometryBuffer.cpp" />
     <ClCompile Include="Engine\Source\RingBuffer\RingBuffer.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui_demo.cpp" />
@@ -108,6 +109,10 @@
     <ClCompile Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Scene\Scene.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingPath\RenderingPath.cpp" />
+    <ClCompile Include="Engine\Source\DescriptorHeap\GameHeap.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\RenderingLayer.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\ForwardLayer.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -115,6 +120,7 @@
     <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\DeferredLayer.h" />
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\ComponentLocator\ComponentLocator.h" />
     <ClInclude Include="Engine\Source\Camera\Camera.h" />
@@ -127,7 +133,7 @@
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\LifetimedMemory\LifetimedMemory.h" />
-    <ClInclude Include="Engine\Source\Rendering\DecaleBuffer.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.h" />
     <ClInclude Include="Engine\K3D.h" />
     <ClInclude Include="Engine\Source\Command\Core\CommandManager.h" />
     <ClInclude Include="Engine\Source\Primitive\Cube.h" />
@@ -192,7 +198,7 @@
     <ClInclude Include="Engine\Source\Command\Core\InternalCommand.h" />
     <ClInclude Include="Engine\Source\Command\State\GeometryState.h" />
     <ClInclude Include="Engine\Source\Command\State\TargetState.h" />
-    <ClInclude Include="Engine\Source\Rendering\GeometryBuffer.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\GeometryBuffer.h" />
     <ClInclude Include="Engine\Source\RingBuffer\RingBuffer.h" />
     <ClInclude Include="Engine\ThirdParty\imgui\imconfig.h" />
     <ClInclude Include="Engine\ThirdParty\imgui\imgui.h" />
@@ -217,6 +223,10 @@
     <ClInclude Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.h" />
     <ClInclude Include="Engine\Source\Scene\Scene.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingPath\RenderingPath.h" />
+    <ClInclude Include="Engine\Source\DescriptorHeap\GameHeap.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\RenderingLayer.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\ForwardLayer.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
   </ItemGroup>
