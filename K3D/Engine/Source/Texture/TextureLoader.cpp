@@ -99,8 +99,6 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::shared_ptr<CommandList> list,
 	D3D12_SUBRESOURCE_DATA& subresource = subResource;
 
 	//テクスチャのロード処理
-	Resource uploadHeap;
-
 	D3D12_RESOURCE_DESC uploadDesc = {
 		D3D12_RESOURCE_DIMENSION_BUFFER,
 		0,
@@ -121,16 +119,12 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::shared_ptr<CommandList> list,
 		1,
 		1
 	};
-	auto result = uploadHeap.Create(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
 
+	std::unique_ptr<Resource> uploadHeap = std::make_unique<Resource>(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
 
-	if (FAILED(result))
-	{
-		return E_FAIL;
-	}
-	uploadHeap.SetName(path + "_UploadHeap");
+	uploadHeap->SetName(path + "_UploadHeap");
 
-	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap.GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
+	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap->GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
 
 	resource.lock()->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE |
 		D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
@@ -142,7 +136,7 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::shared_ptr<CommandList> list,
 
 	list->ResetAllocator();
 	list->ResetCommandList();
-	uploadHeap.Discard();
+	uploadHeap->Discard();
 	return S_OK;
 }
 
@@ -154,7 +148,6 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::weak_ptr<ShaderResource> reso
 	auto commandQueue = &Framework::GetInstance().GetCommandQueue();
 
 	//テクスチャのロード処理
-	Resource uploadHeap;
 
 	D3D12_RESOURCE_DESC uploadDesc = {
 		D3D12_RESOURCE_DIMENSION_BUFFER,
@@ -176,16 +169,12 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::weak_ptr<ShaderResource> reso
 		1,
 		1
 	};
-	auto result = uploadHeap.Create(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
+	
+	std::unique_ptr<Resource> uploadHeap = std::make_unique<Resource>(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
 
+	uploadHeap->SetName(path + "_UploadHeap");
 
-	if (FAILED(result))
-	{
-		return E_FAIL;
-	}
-	uploadHeap.SetName(path + "_UploadHeap");
-
-	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap.GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
+	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap->GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
 
 	resource.lock()->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE |
 		D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
@@ -197,14 +186,14 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::weak_ptr<ShaderResource> reso
 
 	list->ResetAllocator();
 	list->ResetCommandList();
-	uploadHeap.Discard();
+	uploadHeap->Discard();
 	return S_OK;
 }
 
 HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list, CommandQueue * commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path)
 {
 	D3D12_RESOURCE_DESC desc = *resource.lock()->GetResourceDesc();
-	Resource destRes;
+
 	D3D12_HEAP_PROPERTIES heapProp = {};
 	heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
@@ -213,7 +202,7 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list
 	heapProp.VisibleNodeMask = 1;
 
 	int count = resource.lock()->GetResource().Reset();
-	destRes.Create(heapProp, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
+	std::unique_ptr<Resource> destRes = std::make_unique<Resource>(heapProp, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
 
 
 	D3D12_BOX box = {};
@@ -224,11 +213,11 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list
 	box.front = 0;
 	box.back = 1;
 
-	auto ret = destRes.GetResource()->WriteToSubresource(0, &box, subResource.pData, box.right * 4, box.bottom * 4);
+	auto ret = destRes->GetResource()->WriteToSubresource(0, &box, subResource.pData, box.right * 4, box.bottom * 4);
 	CHECK_RESULT(ret);
-	destRes.ResourceTransition(list, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	destRes->ResourceTransition(list, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 	resource.lock()->Discard();
-	resource.lock()->GetResource() = destRes.GetResource();
+	resource.lock()->GetResource() = destRes->GetResource();
 	resource.lock()->SetName(path);
 	list->CloseCommandList();
 	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
@@ -248,7 +237,7 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::weak_ptr<ShaderResource> res
 	auto list = Framework::GetInstance().GetCommandList();
 	auto commandQueue = &Framework::GetInstance().GetCommandQueue();
 
-	Resource destRes;
+
 	D3D12_HEAP_PROPERTIES heapProp = {};
 	heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
@@ -257,7 +246,7 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::weak_ptr<ShaderResource> res
 	heapProp.VisibleNodeMask = 1;
 
 	int count = resource.lock()->GetResource().Reset();
-	destRes.Create(heapProp, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
+	std::unique_ptr<Resource> destRes = std::make_unique<Resource>(heapProp, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
 
 
 	D3D12_BOX box = {};
@@ -268,11 +257,11 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::weak_ptr<ShaderResource> res
 	box.front = 0;
 	box.back = 1;
 
-	auto ret = destRes.GetResource()->WriteToSubresource(0, &box, subResource.pData, box.right * 4, box.bottom * 4);
+	auto ret = destRes->GetResource()->WriteToSubresource(0, &box, subResource.pData, box.right * 4, box.bottom * 4);
 	CHECK_RESULT(ret);
-	destRes.ResourceTransition(list, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	destRes->ResourceTransition(list, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 	resource.lock()->Discard();
-	resource.lock()->GetResource() = destRes.GetResource();
+	resource.lock()->GetResource() = destRes->GetResource();
 	resource.lock()->SetName(path);
 	list->CloseCommandList();
 	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };

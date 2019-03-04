@@ -17,16 +17,15 @@ namespace K3D {
 	public:
 	
 	private:
-		unsigned int										_bufferNum;
+		unsigned int _bufferNum;
 
-		unsigned int										_currentIndex;
+		unsigned int _currentIndex;
 
-		Microsoft::WRL::ComPtr<IDXGISwapChain4>				_swapChain;
+		Microsoft::WRL::ComPtr<IDXGISwapChain4> _swapChain;
 
-		std::vector<Resource>								_rtResource;
+		std::vector<std::shared_ptr<Resource>> _rtResource;
 
-		DescriptorHeap										_rtHeap;
-
+		DescriptorHeap _rtHeap;
 
 	public:
 

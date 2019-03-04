@@ -13,6 +13,15 @@ K3D::Resource::Resource() :
 {
 }
 
+K3D::Resource::Resource(const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue):
+	_resource(), _pDst(nullptr),
+	_clearValue({}), _currentResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COMMON)
+	, _name("UnNamedResource ")
+{
+	HRESULT ret = Init(heapProps,flags, resourceDesc, state, clearValue);
+	assert(ret == S_OK);
+}
+
 K3D::Resource::Resource(const Resource & other)
 {
 	*this = other;
@@ -54,7 +63,25 @@ K3D::Resource::~Resource()
 	Discard();
 }
 
-HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
+std::unique_ptr<K3D::Resource> K3D::Resource::CreateUnique()
+{
+	return std::unique_ptr<Resource>();
+}
+
+std::shared_ptr<K3D::Resource> K3D::Resource::CreateShared()
+{
+	return std::shared_ptr<K3D::Resource>();
+}
+
+LifetimedShared_Ptr<K3D::Resource> K3D::Resource::CreateLifetimedShared()
+{
+
+	auto& res = LifetimedShared_Ptr<Resource>();
+	res.set_lifetime_count(1);
+	return res;
+}
+
+HRESULT K3D::Resource::Init(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
 {
 
 	_currentResourceState = state;
@@ -76,7 +103,7 @@ HRESULT K3D::Resource::Create(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D
 	return S_OK;
 }
 
-HRESULT K3D::Resource::Create(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
+HRESULT K3D::Resource::Init(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
 {
 	_currentResourceState = state;
 	if (clearValue != nullptr) {

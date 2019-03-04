@@ -2,11 +2,11 @@
 #include "Scene.h"
 
 
-Scene::Scene()
+K3D::Scene::Scene()
 {
 }
 
 
-Scene::~Scene()
+K3D::Scene::~Scene()
 {
 }

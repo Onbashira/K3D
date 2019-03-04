@@ -2,11 +2,11 @@
 #include "GameHeap.h"
 
 
-GameHeap::GameHeap()
+K3D::GameHeap::GameHeap()
 {
 }
 
 
-GameHeap::~GameHeap()
+K3D::GameHeap::~GameHeap()
 {
 }

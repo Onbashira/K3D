@@ -27,9 +27,9 @@ namespace K3D {
 			HEAP_OFFSET_MAX,
 		};
 		//ステージング用のメモリ
-		Resource _stagingResource;
+		std::unique_ptr<Resource> _stagingResource;
 		//GPUMemにアップロードするためのメモリ　（リードバック用のメモリは継承元のリソース
-		Resource _uploadResource;
+		std::unique_ptr<Resource> _uploadResource;
 
 		D3D12_RANGE _readRange;
 

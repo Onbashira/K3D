@@ -38,7 +38,7 @@ HRESULT K3D::IndexBuffer::Create(ULONG64 size, DXGI_FORMAT format, const void * 
 		D3D12_RESOURCE_FLAG_NONE
 	};
 
-	auto hr = Resource::Create(props,D3D12_HEAP_FLAG_NONE,desc,D3D12_RESOURCE_STATE_GENERIC_READ);
+	auto hr = Resource::Init(props,D3D12_HEAP_FLAG_NONE,desc,D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	if (FAILED(hr))
 	{

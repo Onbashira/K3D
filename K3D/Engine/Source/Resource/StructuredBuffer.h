@@ -26,8 +26,6 @@ namespace K3D {
 			HEAP_OFFSET_MAX,
 		};
 
-		Resource _readBackResource;
-
 		D3D12_RANGE _readRange;
 
 		DescriptorHeap _heap;
@@ -35,6 +33,7 @@ namespace K3D {
 		D3D12_UNORDERED_ACCESS_VIEW_DESC _unorderedAccessViewDesc;
 
 		D3D12_SHADER_RESOURCE_VIEW_DESC _shaderResourceViewDesc;
+
 	public:
 		
 	private:

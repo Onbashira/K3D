@@ -1,10 +1,10 @@
 #pragma once
-#include "Engine/Source/Utility/D3D12Common.h"
 #include "Engine/Source/Async/Fence.h"
 #include <string>
 namespace K3D {
 
 	class D3D12Device;
+	class CommandList;
 
 	class CommandQueue
 	{
@@ -12,6 +12,7 @@ namespace K3D {
 
 	public:
 	private:
+
 		//!キュー
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_commandQueue;
 		
@@ -33,7 +34,7 @@ namespace K3D {
 		* @param[in] desc キューのデスクリプション
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT												Create(D3D12_COMMAND_QUEUE_DESC& desc);
+		HRESULT Create(D3D12_COMMAND_QUEUE_DESC& desc);
 		
 		/**
 		* @fn
@@ -42,35 +43,43 @@ namespace K3D {
 		* @param[in] desc キューのデスクリプション
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT												Create(std::weak_ptr<D3D12Device> device,D3D12_COMMAND_QUEUE_DESC& desc);
+		HRESULT Create(std::weak_ptr<D3D12Device> device,D3D12_COMMAND_QUEUE_DESC& desc);
 
 		/**
 		* @fn
 		* @brief キューのフェッチ
 		* @return キューへの参照
 		*/
-		Microsoft::WRL::ComPtr<ID3D12CommandQueue>&			GetQueue();
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>& GetQueue();
 
 		/**
 		* @fn
 		* @brief 待機
 		* @param[in] fence　フェンス　NullPtrで保持フェンスで待機
 		*/
-		void												Wait(Fence* fence = nullptr);
+		void Wait(Fence* fence = nullptr);
 
 		/**
 		* @fn
 		* @brief タイムスタンプの取得
 		* @return タイムスタンプ
 		*/
-		UINT64												GetTimestampFrequency();
+		UINT64 GetTimestampFrequency();
 
 		/**
 		* @fn
 		* @brief キューのデスクリプションの取得
 		* @return デスクリプション
 		*/
-		D3D12_COMMAND_QUEUE_DESC&							GetDesc();
+		D3D12_COMMAND_QUEUE_DESC& GetDesc();
+
+		/**
+		* @fn
+		* @brief キューのデスクリプションの取得
+		* @param[in] lists　コマンドリストベクタへの参照
+		* @return デスクリプション
+		*/
+		void ExecuteCommandLists(std::vector<std::shared_ptr<CommandList>>& lists);
 
 		/**
 		* @fn

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\DeferredLayer.cpp" />
     <ClCompile Include="Engine\Source\CommandAllocator\CommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\ComponentLocator\ComponentLocator.cpp" />
     <ClCompile Include="Engine\Source\Camera\Camera.cpp" />
@@ -103,15 +102,12 @@
     <ClCompile Include="Engine\Source\Mesh\MeshManager.cpp" />
     <ClCompile Include="Engine\Source\Mesh\ModelMesh.cpp" />
     <ClCompile Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.cpp" />
-    <ClCompile Include="Engine\Source\Component\GameComponent\GameComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\InputComponent\InputComponent.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\InternalCommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Scene\Scene.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingPath\RenderingPath.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPath.cpp" />
     <ClCompile Include="Engine\Source\DescriptorHeap\GameHeap.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\RenderingLayer.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\ForwardLayer.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -120,7 +116,6 @@
     <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\DeferredLayer.h" />
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\ComponentLocator\ComponentLocator.h" />
     <ClInclude Include="Engine\Source\Camera\Camera.h" />
@@ -217,15 +212,12 @@
     <ClInclude Include="Engine\Source\Mesh\MeshManager.h" />
     <ClInclude Include="Engine\Source\Mesh\ModelMesh.h" />
     <ClInclude Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.h" />
-    <ClInclude Include="Engine\Source\Component\GameComponent\GameComponent.h" />
     <ClInclude Include="Engine\Source\Component\InputComponent\InputComponent.h" />
     <ClInclude Include="Engine\Source\Command\Core\InternalCommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.h" />
     <ClInclude Include="Engine\Source\Scene\Scene.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingPath\RenderingPath.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPath.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\GameHeap.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\RenderingLayer.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\ForwardLayer.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />

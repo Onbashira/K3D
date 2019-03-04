@@ -20,29 +20,27 @@ namespace K3D {
 	class IndexBuffer;
 	class RootSignature;
 	class D3D12Device;
+	class CommandAllocator;
 
 
 	class CommandList
 	{
 		friend class CommandListManager;
-
+		
 	public:
 
 	private:
 		//!グラフィクスコマンドリスト
-		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>	_commandList;
+		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2> _commandList;
 
 		//!コマンドリスト
-		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>		_commandAllocator;
+		std::shared_ptr<CommandAllocator> _commandAllocator;
 
 		//!コマンドリストの名前
-		std::string											_commandListName;
-
-		//!コマンドアロケータの名前
-		std::string											_commandAllocatorName;
+		std::string _commandListName;
 
 		//!リストのタイプ
-		D3D12_COMMAND_LIST_TYPE								_listType;
+		D3D12_COMMAND_LIST_TYPE _listType;
 
 
 	public:
@@ -72,6 +70,17 @@ namespace K3D {
 
 		/**
 		* @fn
+		* @brief コマンドリストの作成
+		* @param[in] device 作成に使うデバイス
+		* @param[in] nodeMask ノードマスク
+		* @param[in] listType リストのタイプ
+		* @param[in] commandAllocator アロケータの参照
+		* @return リザルト　S_OKで成功
+		*/
+		HRESULT Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator);
+
+		/**
+		* @fn
 		* @brief リソースの状態遷移
 		* @param[in] resource 遷移するリソース
 		* @param[in] beforeState 前の状態
@@ -89,7 +98,7 @@ namespace K3D {
 		* @return リザルト　S_OKで成功
 		*/
 		HRESULT SetResourceBarrie(Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState);
-	
+
 		/**
 		* @fn
 		* @brief コマンドリストの取得
@@ -102,7 +111,7 @@ namespace K3D {
 		* @brief コマンドアロケーターの取得
 		* @return コマンドアロケーターへの参照
 		*/
-		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>&		GetAllocator();
+		std::shared_ptr<CommandAllocator>& GetAllocator();
 
 		/**
 		* @fn
@@ -114,10 +123,18 @@ namespace K3D {
 
 		/**
 		* @fn
-		* @brief アロケーターのリセット
+		* @brief リストのリセット
+		* @param[in] allocator　コマンドアロケーター
+		* @param[in] pInitialState　パイプラインステート
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT	ResetAllocator();
+		HRESULT	ResetCommandList(std::shared_ptr<CommandAllocator>& allocator, ID3D12PipelineState* pInitialState = nullptr);
+
+		/**
+		* @fn
+		* @brief バインドされたアロケーターのリセット
+		*/
+		void ResetAllocator();
 
 		/**
 		* @fn
@@ -144,20 +161,6 @@ namespace K3D {
 		* @param[in] objectName リスト、アロケーターの名前
 		*/
 		void SetName(std::string objectName);
-
-		/**
-		* @fn
-		* @brief リストの名前の設定
-		* @param[in] objectName リストの名前
-		*/
-		void SetCommandListName(std::string name);
-
-		/**
-		* @fn
-		* @brief アロケーターの名前の設定
-		* @param[in] objectName アロケーターの名前
-		*/
-		void SetCommandAllocatorName(std::string name);
 
 		//以下の関数はID3D12GraphicsCommandListの関数をラッピングしたものである
 		//リファレンスとしてMSDNのリンクを貼っておく

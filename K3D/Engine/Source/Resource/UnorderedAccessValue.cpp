@@ -33,7 +33,6 @@ HRESULT K3D::UnorderedAccessValue::Create(unsigned int elementSize, unsigned int
 
 		D3D12_RESOURCE_DESC defaultResourceDesc;
 		D3D12_RESOURCE_DESC uploadResourceDesc;
-		Resource uploadResource;
 
 		{
 			defaultHeapProp.Type = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_CUSTOM;
@@ -80,14 +79,15 @@ HRESULT K3D::UnorderedAccessValue::Create(unsigned int elementSize, unsigned int
 		//リソース作成
 		{
 
-			_stagingResource.Create(defaultHeapProp, D3D12_HEAP_FLAG_NONE, defaultResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-			Resource::Create(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
+			_stagingResource->Init(defaultHeapProp, D3D12_HEAP_FLAG_NONE, defaultResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+			Resource::Init(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
 			
 			uploadHeapProp.Type = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_UPLOAD;
-			_uploadResource.Create(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+			std::unique_ptr<Resource> uploadResource = std::make_unique<Resource>(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+
 #ifdef _DEBUG
 			SetName("UAVUploadResource");
-			_stagingResource.SetName("UAVStagingResource");
+			_stagingResource->SetName("UAVStagingResource");
 #endif // _DEBUG
 
 		}
@@ -163,13 +163,13 @@ D3D12_GPU_DESCRIPTOR_HANDLE K3D::UnorderedAccessValue::GetUAVGPUHandle()
 
 HRESULT K3D::UnorderedAccessValue::CreateView(D3D12_UNORDERED_ACCESS_VIEW_DESC* uavDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
-	Framework::GetInstance().GetDevice()->GetDevice()->CreateUnorderedAccessView(_stagingResource.GetResource().Get(), nullptr, uavDesc, cpuDescriptorHandle);
+	Framework::GetInstance().GetDevice()->GetDevice()->CreateUnorderedAccessView(_stagingResource->GetResource().Get(), nullptr, uavDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 
 HRESULT K3D::UnorderedAccessValue::CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC * srvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle)
 {
-	Framework::GetInstance().GetDevice()->GetDevice()->CreateShaderResourceView(_stagingResource.GetResource().Get(), srvDesc, cpuDescriptorHandle);
+	Framework::GetInstance().GetDevice()->GetDevice()->CreateShaderResourceView(_stagingResource->GetResource().Get(), srvDesc, cpuDescriptorHandle);
 	return S_OK;
 }
 
@@ -199,29 +199,29 @@ void K3D::UnorderedAccessValue::AsyncWriteToBuffer(std::weak_ptr<K3D::CommandLis
 	{
 		uploadResourceDesc = CD3DX12_RESOURCE_DESC::Buffer(numElements * elementSize);
 	}
-	_uploadResource.Discard();
-	_uploadResource.Create(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+	_uploadResource->Discard();
+	_uploadResource->Init(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
 
 	//ステージングのためのリソース遷移
-	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
+	_stagingResource->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
 	//リソース送信
-	UpdateSubresources<1>(list.lock()->GetCommandList().Get(), _stagingResource.GetResource().Get(), _uploadResource.GetResource().Get(), 0, 0, 1, &subresourceData);
-	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	UpdateSubresources<1>(list.lock()->GetCommandList().Get(), _stagingResource->GetResource().Get(), _uploadResource->GetResource().Get(), 0, 0, 1, &subresourceData);
+	_stagingResource->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 }
 
 void K3D::UnorderedAccessValue::AsyncReadBack(std::weak_ptr<K3D::CommandList> list, K3D::CommandQueue* queue)
 {
 	assert(!list.expired());
-	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_SOURCE);
-	list.lock()->GetCommandList()->CopyResource(this->_resource.Get(), _stagingResource.GetResource().Get());
-	_stagingResource.ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	_stagingResource->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_SOURCE);
+	list.lock()->GetCommandList()->CopyResource(this->_resource.Get(), _stagingResource->GetResource().Get());
+	_stagingResource->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 }
 
 void K3D::UnorderedAccessValue::Discard()
 {
 	_heap.Discard();
-	_stagingResource.Discard();
+	_stagingResource->Discard();
 }
 
 K3D::DescriptorHeap * K3D::UnorderedAccessValue::GetHeap()

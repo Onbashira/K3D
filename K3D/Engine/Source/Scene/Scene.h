@@ -4,7 +4,9 @@ namespace K3D {
 	class CommandList;
 	class CommandAlocator;
 	class Fence;
-
+	class RenderContext;
+	class RenderingPassHolder;
+	class Render
 
 	class Scene
 	{

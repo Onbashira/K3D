@@ -249,9 +249,6 @@
     <ClCompile Include="Engine\Source\Component\ComponentLocator\ComponentLocator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Component\GameComponent\GameComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\Component\InputComponent\InputComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -279,19 +276,7 @@
     <ClCompile Include="Engine\Source\Scene\Scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingPath\RenderingPath.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\DescriptorHeap\GameHeap.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\RenderingLayer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\ForwardLayer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingLayer\DeferredLayer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\GeometryBuffer.cpp">
@@ -301,6 +286,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPath.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -578,9 +566,6 @@
     <ClInclude Include="Engine\Source\Component\ComponentLocator\ComponentLocator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Component\GameComponent\GameComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\Component\InputComponent\InputComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -608,19 +593,7 @@
     <ClInclude Include="Engine\Source\Scene\Scene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingPath\RenderingPath.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\DescriptorHeap\GameHeap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\RenderingLayer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\ForwardLayer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingLayer\DeferredLayer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\GeometryBuffer.h">
@@ -630,6 +603,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPath.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

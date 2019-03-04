@@ -36,6 +36,18 @@ Microsoft::WRL::ComPtr<ID3D12CommandAllocator>& K3D::CommandAllocator::GetAlloca
 	return this->_allocator;
 }
 
+void K3D::CommandAllocator::SetName(String name)
+{
+	_name = name;
+
+	this->_allocator->SetName(Util::StringToWString(name).c_str());
+}
+
+K3D::String & K3D::CommandAllocator::GetName()
+{
+	return _name;
+}
+
 void K3D::CommandAllocator::ResetAllocator()
 {
 	this->_allocator->Reset();

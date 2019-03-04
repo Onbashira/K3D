@@ -7,13 +7,12 @@
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
 #include "Engine/Source/Signature/RootSignature.h"
 #include "Engine/Source/Signature/CommandSignature.h"
-#include "Engine/Source/Math/Math.h"
 #include "Engine/Source/Device/D3D12Device.h"
+#include "Engine/Source/CommandAllocator/CommandAllocator.h"
 
 K3D::CommandList::CommandList() :
 	_commandList(), _commandAllocator(),
-	_commandListName("UnNamed_CommandList"),
-	_commandAllocatorName("UnNamed_CommandAllocator")
+	_commandListName("UnNamed_CommandList")
 {
 
 }
@@ -29,12 +28,10 @@ HRESULT K3D::CommandList::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE 
 {
 	_listType = listType;
 	HRESULT result;
-	result = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandAllocator(_listType, IID_PPV_ARGS(&_commandAllocator));
-	if (result != S_OK) {
-		return E_FAIL;
-	}
 
-	result = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator.Get(), nullptr, IID_PPV_ARGS(&_commandList));
+
+
+	result = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
 	if (result != S_OK) {
 		return E_FAIL;
 	}
@@ -43,22 +40,36 @@ HRESULT K3D::CommandList::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE 
 	return S_OK;
 }
 
-HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device,unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	_listType = listType;
 	HRESULT result;
-	result = device.lock()->GetDevice()->CreateCommandAllocator(_listType, IID_PPV_ARGS(&_commandAllocator));
+	this->_commandAllocator = std::make_shared<CommandAllocator>();
+	result = _commandAllocator->Create(device.lock().get(), nodeMask, listType);
 	if (result != S_OK) {
 		return E_FAIL;
 	}
 
-	result = device.lock()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator.Get(), nullptr, IID_PPV_ARGS(&_commandList));
+	result = device.lock()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
 	if (result != S_OK) {
 		return E_FAIL;
 	}
 
 
 	return S_OK;
+}
+
+HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator)
+{
+	HRESULT result;
+	if (commandAllocator->GetAllocator().Get() == nullptr) {
+		return E_ACCESSDENIED;
+	}
+	result = device.lock()->GetDevice()->CreateCommandList(nodeMask, _listType, commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
+	if (result != S_OK) {
+		return result;
+	}
+	return result;
 }
 
 HRESULT K3D::CommandList::SetResourceBarrie(ID3D12Resource * resource, D3D12_RESOURCE_STATES beforeState, D3D12_RESOURCE_STATES afterState)
@@ -96,21 +107,26 @@ Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>& K3D::CommandList::GetCommand
 	return this->_commandList;
 }
 
-Microsoft::WRL::ComPtr<ID3D12CommandAllocator>& K3D::CommandList::GetAllocator()
+std::shared_ptr<K3D::CommandAllocator>& K3D::CommandList::GetAllocator()
 {
 	return this->_commandAllocator;
 }
 
 HRESULT K3D::CommandList::ResetCommandList(ID3D12PipelineState * pInitialState)
 {
-	auto hr = _commandList->Reset(_commandAllocator.Get(), pInitialState);
+	auto hr = _commandList->Reset(_commandAllocator->GetAllocator().Get(), pInitialState);
 	return hr;
 }
 
-HRESULT K3D::CommandList::ResetAllocator()
+HRESULT K3D::CommandList::ResetCommandList(std::shared_ptr<CommandAllocator>& allocator, ID3D12PipelineState * pInitialState)
 {
-	auto  hr = _commandAllocator->Reset();
+	auto hr = _commandList->Reset(allocator->GetAllocator().Get(), pInitialState);
 	return hr;
+}
+
+void K3D::CommandList::ResetAllocator()
+{
+	_commandAllocator->ResetAllocator();
 }
 
 void K3D::CommandList::Reset()
@@ -125,8 +141,6 @@ HRESULT K3D::CommandList::CloseCommandList()
 	return hr;
 }
 
-
-
 void K3D::CommandList::Discard()
 {
 
@@ -135,10 +149,10 @@ void K3D::CommandList::Discard()
 			assert(true);
 
 		}
-		this->_commandAllocator.Reset();
+		this->_commandAllocator->ResetAllocator();
 		this->_commandList.Reset();
 		DEBUG_LOG(std::string("CommandList : " + _commandListName + " is Reset"));
-		DEBUG_LOG(std::string("CommandAllocator : " + _commandAllocatorName + " is Reset"));
+		DEBUG_LOG(std::string("CommandAllocator : " + _commandAllocator->GetName() + " is Reset"));
 
 	}
 
@@ -147,21 +161,7 @@ void K3D::CommandList::Discard()
 void K3D::CommandList::SetName(std::string objectName)
 {
 	_commandListName = objectName + "List";
-	SetCommandListName(_commandListName);
-	_commandAllocatorName = objectName + "Allocator";
-	SetCommandAllocatorName(_commandAllocatorName);
-}
-
-void K3D::CommandList::SetCommandListName(std::string name)
-{
-	_commandListName = name;
 	this->_commandList->SetName(Util::StringToWString(_commandListName).c_str());
-}
-
-void K3D::CommandList::SetCommandAllocatorName(std::string name)
-{
-	_commandAllocatorName = name;
-	this->_commandAllocator->SetName(Util::StringToWString(_commandAllocatorName).c_str());
 }
 
 void K3D::CommandList::BeginEvent(unsigned int metadata, const void * pData, unsigned int size)
@@ -371,7 +371,7 @@ void K3D::CommandList::SetComputeRootSignature(std::shared_ptr<RootSignature> pR
 
 void K3D::CommandList::SetComputeRootUnorderedAccessView(unsigned int RootParameterIndex, D3D12_GPU_VIRTUAL_ADDRESS BufferLocation)
 {
-	this->_commandList->SetComputeRootUnorderedAccessView(RootParameterIndex,BufferLocation);
+	this->_commandList->SetComputeRootUnorderedAccessView(RootParameterIndex, BufferLocation);
 
 }
 

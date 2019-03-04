@@ -36,6 +36,7 @@ HRESULT K3D::RenderContext::Create(int frameNum, int nodeMask, std::shared_ptr<C
 		this->_cmdLists.resize(_frameNum);
 		for (int i = 0; i < frameNum; ++i) {
 			_cmdLists[i][0] = std::make_shared<CommandList>();
+
 			_cmdLists[i][1] = std::make_shared<CommandList>();
 
 			_cmdLists[i][0]->Create(nodeMask,
@@ -64,39 +65,60 @@ HRESULT K3D::RenderContext::Create(int frameNum, int nodeMask, std::shared_ptr<C
 
 int K3D::RenderContext::GetCurrentIndex()
 {
-	return 0;
+	return _currentIndex;
 }
 
 int K3D::RenderContext::IncrementCount()
 {
-	return 0;
+	_currentIndex = (_currentIndex + 1) % _frameNum;
+	return _currentIndex;
 }
 
-std::weak_ptr<K3D::CommandList> K3D::RenderContext::GetCurrentList(RenderCommandList & listType)
+std::weak_ptr<K3D::CommandList> K3D::RenderContext::GetCurrentList(RC_COMMAND_LIST_TYPE & listType)
 {
-	return std::weak_ptr<K3D::CommandList>();
+	return _cmdLists[_currentIndex][static_cast<int>(listType)];
 }
 
-std::weak_ptr<K3D::CommandList> K3D::RenderContext::GetCurrentCmdAllocator()
+std::weak_ptr<K3D::CommandAllocator> K3D::RenderContext::GetCurrentCmdAllocator()
 {
-	return std::weak_ptr<K3D::CommandList>();
+	return _cmdAllocators[_currentIndex];
 }
 
 K3D::Fence & K3D::RenderContext::GetCurrentFence()
 {
-	// TODO: return ステートメントをここに挿入します
+	return _fences[_currentIndex];
+}
+
+std::shared_ptr<K3D::CommandQueue>& K3D::RenderContext::GetCommandQueue()
+{
+	return _queueRef;
+}
+
+void K3D::RenderContext::ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue)
+{
+	
 }
 
 void K3D::RenderContext::ResetAllocators()
 {
+	std::lock_guard mutexLock(_allocatorMutex);
+
+	for (auto& allocator : _cmdAllocators)
+	{
+		allocator->ResetAllocator();
+	}
 }
 
 void K3D::RenderContext::ResetCurrentCommandList()
 {
+	std::lock_guard mutexLock(_allocatorMutex);
+
+	_cmdAllocators[_currentIndex]->ResetAllocator();
 }
 
 void K3D::RenderContext::ResetCommandList(std::shared_ptr<CommandList>& list)
 {
+	list->ResetCommandList();
 }
 
 void K3D::RenderContext::Reset()

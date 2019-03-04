@@ -3,7 +3,7 @@
 #include "Engine/Source/Utility/Utility.h"
 #include "Engine/Source/Debug/Logger.h"
 
-K3D::CommandQueue::CommandQueue()  : _commandQueue()
+K3D::CommandQueue::CommandQueue() : _commandQueue()
 {
 }
 
@@ -62,6 +62,16 @@ UINT64 K3D::CommandQueue::GetTimestampFrequency()
 D3D12_COMMAND_QUEUE_DESC& K3D::CommandQueue::GetDesc()
 {
 	return _commandQueue->GetDesc();
+}
+
+void K3D::CommandQueue::ExecuteCommandLists(std::vector<std::shared_ptr<CommandList>>& lists)
+{
+	std::vector < ID3D12CommandList* > rawLists(lists.size());
+	auto ptr = rawLists.data();
+	for (auto& list : lists) {
+		(*ptr = list->GetCommandList().Get())++;
+	}
+	this->_commandQueue->ExecuteCommandLists(static_cast<unsigned int>(lists.size()), rawLists.data());
 }
 
 void K3D::CommandQueue::SetName(std::string name)

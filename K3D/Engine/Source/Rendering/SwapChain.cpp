@@ -63,13 +63,14 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 	//レンダーターゲットの作成
 	{
 		for (UINT i = 0; i < bufferNum; i++) {
+			_rtResource[i] = Resource::CreateShared();
 			//ディスプレイバッファの取得
-			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i].GetResource().GetAddressOf()))))
+			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i]->GetResource().GetAddressOf()))))
 				return FALSE;
 			//レンダーターゲットビューの取得
-			Framework::GetInstance().GetDevice()->GetDevice()->CreateRenderTargetView(_rtResource[i].GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
-			_rtResource[i].SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
-			_rtResource[i].SetName("RenderTargetResource ");
+			Framework::GetInstance().GetDevice()->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
+			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
+			_rtResource[i]->SetName("RenderTargetResource ");
 		}
 	}
 	return S_OK;
@@ -96,7 +97,7 @@ unsigned int K3D::SwapChain::GetCurrentBuckBuffer()
 
 HRESULT K3D::SwapChain::SetStatePresent(std::shared_ptr<CommandList> list)
 {
-	auto hr = _rtResource[_currentIndex].ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
+	auto hr = _rtResource[_currentIndex]->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
 
 	CHECK_RESULT(hr);
 	return hr;
@@ -104,28 +105,28 @@ HRESULT K3D::SwapChain::SetStatePresent(std::shared_ptr<CommandList> list)
 
 HRESULT K3D::SwapChain::SetStateRenderTarget(std::shared_ptr<CommandList> list)
 {
-	auto hr = _rtResource[_currentIndex].ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET);
+	auto hr = _rtResource[_currentIndex]->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_RENDER_TARGET);
 	CHECK_RESULT(hr);
 	return hr;
 }
 
 HRESULT K3D::SwapChain::SetStateCopyDest(std::shared_ptr<CommandList> list)
 {
-	auto hr =_rtResource[_currentIndex].ResourceTransition(list,D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
+	auto hr =_rtResource[_currentIndex]->ResourceTransition(list,D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
 	CHECK_RESULT(hr);
 	return hr;
 }
 
 HRESULT K3D::SwapChain::SetStateGenericRead(std::shared_ptr<CommandList> list)
 {
-	auto hr = _rtResource[_currentIndex].ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+	auto hr = _rtResource[_currentIndex]->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 	CHECK_RESULT(hr);
 	return hr;
 }
 
 HRESULT K3D::SwapChain::CopyToRenderTarget(std::shared_ptr<CommandList> list,Resource* pSrc)
 {
-	list->GetCommandList()->CopyResource(this->_rtResource[_currentIndex].GetResource().Get(),pSrc->GetResource().Get());
+	list->GetCommandList()->CopyResource(this->_rtResource[_currentIndex]->GetResource().Get(),pSrc->GetResource().Get());
 	return S_OK;
 }
 
@@ -159,7 +160,7 @@ void K3D::SwapChain::Discard()
 {
 	_swapChain.Reset();
 	for (auto& res : _rtResource) {
-		res.Discard();
+		res->Discard();
 	}
 	_rtHeap.Discard();
 }

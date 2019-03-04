@@ -11,7 +11,7 @@ namespace K3D {
 	class RenderContext
 	{
 	public:
-		enum class RenderCommandList
+		enum class RC_COMMAND_LIST_TYPE
 		{
 			BEGIN = 0,
 			END = 1
@@ -33,6 +33,10 @@ namespace K3D {
 
 		std::shared_ptr<CommandQueue> _queueRef;
 
+		std::vector<std::shared_ptr<CommandList>> _listsVector;
+
+
+
 	public:
 
 		RenderContext();
@@ -45,11 +49,15 @@ namespace K3D {
 
 		int IncrementCount();
 
-		std::weak_ptr<K3D::CommandList> GetCurrentList(RenderCommandList& listType);
+		std::weak_ptr<K3D::CommandList> GetCurrentList(RC_COMMAND_LIST_TYPE& listType);
 		
-		std::weak_ptr<K3D::CommandList> GetCurrentCmdAllocator();
+		std::weak_ptr<K3D::CommandAllocator> GetCurrentCmdAllocator();
 
 		K3D::Fence& GetCurrentFence();
+
+		std::shared_ptr<CommandQueue>& GetCommandQueue();
+
+		void ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue);
 
 		void ResetAllocators();
 

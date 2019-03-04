@@ -38,7 +38,8 @@ namespace K3D {
 
 	public:
 
-		Resource();
+
+		Resource(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
 
 		Resource(const Resource& other);
 
@@ -52,6 +53,27 @@ namespace K3D {
 
 		/**
 		* @fn
+		* @brief 未初期化のバッファのユニークなポインタの取得
+		* @return ユニークポインタ
+		*/
+		static  std::unique_ptr<Resource> CreateUnique();
+
+		/**
+		* @fn
+		* @brief 未初期化のバッファの強参照の取得
+		* @return 強参照
+		*/
+		static  std::shared_ptr<Resource> CreateShared();
+
+		/**
+		* @fn
+		* @brief 未初期化のバッファの生存保証つき強参照の取得
+		* @return 生存保証つき強参照
+		*/
+		static  LifetimedShared_Ptr<Resource> CreateLifetimedShared();
+
+		/**
+		* @fn
 		* @brief バッファの作成
 		* @param[in] heapProps プロパティ
 		* @param[in] flags ヒープフラグ
@@ -60,7 +82,7 @@ namespace K3D {
 		* @param[in] clearValue クリアバリュー
 		* @return リザルト
 		*/
-		virtual HRESULT Create(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
+		virtual HRESULT Init(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
 
 		/**
 		* @fn
@@ -73,7 +95,7 @@ namespace K3D {
 		* @param[in] clearValue クリアバリュー
 		* @return リザルト
 		*/
-		virtual HRESULT Create(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
+		virtual HRESULT Init(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr);
 
 		/**
 		* @fn
@@ -216,6 +238,11 @@ namespace K3D {
 		* @param[in] number レジスタ番号
 		*/
 		void RegisterShaderSlot(unsigned int number);
+
+
+	protected:
+
+		Resource();
 
 	private:
 

@@ -49,19 +49,23 @@
 
 //Graphics
 #include "Engine/Source/GraphicsManager/GraphicsContextManager.h"
-#include "Engine/Source/Rendering/MeshRenderer.h"
 #include "Engine/Source/Rendering/RenderingManager.h"
-#include "Engine/Source/Rendering/GeometryBuffer.h"
-#include "Engine/Source/Rendering/DecaleBuffer.h"
-#include "Engine/Source/Rendering/ShrinkBuffer.h"
-#include "Engine/Source/Rendering/TemporaryFrameBuffer.h"
+#include "Engine/Source/Rendering/RenderingManager.h"
+#include "Engine/Source/Rendering/SwapChain.h"
+#include "Engine/Source/Rendering/RenderingBaffer/GeometryBuffer.h"
+#include "Engine/Source/Rendering/RenderingBaffer/DecaleBuffer.h"
+
 
 
 //InternalCommand
 
 //GameObject
-#include "Engine/Source/GameObject/GameObject.h"
-#include "Engine/Source/GameObject/Transform.h"
+#include "Engine/Source/Component/GameObject/GameObject.h"
+#include "Engine/Source/Component/Transform/Transform.h"
+#include "Engine/Source/Component/DrawableComponent/DrawableComponent.h"
+#include "Engine/Source/Component/GraphicsComponent/GraphicsComponent.h"
+#include "Engine/Source/Component/InputComponent/InputComponent.h"
+#include "Engine/Source/Component/PhysicsComponent/PhysicsComponent.h"
 
 //Mesh
 

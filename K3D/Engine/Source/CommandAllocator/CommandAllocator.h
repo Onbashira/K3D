@@ -11,6 +11,8 @@ namespace K3D {
 
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator> _allocator;
 
+		String _name;
+
 	public:
 
 		CommandAllocator();
@@ -37,6 +39,10 @@ namespace K3D {
 		HRESULT Create(D3D12Device* device,unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>& GetAllocator();
+
+		void SetName(String name);
+		
+		String& GetName();
 
 		void ResetAllocator();
 

@@ -65,7 +65,7 @@ HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceF
 	clearValue.DepthStencil.Stencil = 0;
 
 
-	CHECK_RESULT(Resource::Create(heapProp, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, resDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue));
+	CHECK_RESULT(Resource::Init(heapProp, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, resDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue));
 
 	//深度ステンシルビューの設定
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
