@@ -18,7 +18,7 @@ K3D::Resource::Resource(const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEA
 	_clearValue({}), _currentResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COMMON)
 	, _name("UnNamedResource ")
 {
-	HRESULT ret = Init(heapProps,flags, resourceDesc, state, clearValue);
+	HRESULT ret = Initialize(heapProps,flags, resourceDesc, state, clearValue);
 	assert(ret == S_OK);
 }
 
@@ -81,7 +81,7 @@ LifetimedShared_Ptr<K3D::Resource> K3D::Resource::CreateLifetimedShared()
 	return res;
 }
 
-HRESULT K3D::Resource::Init(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
+HRESULT K3D::Resource::Initialize(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12_HEAP_FLAGS& flags, const  D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue)
 {
 
 	_currentResourceState = state;
@@ -103,7 +103,7 @@ HRESULT K3D::Resource::Init(const D3D12_HEAP_PROPERTIES& heapProps, const  D3D12
 	return S_OK;
 }
 
-HRESULT K3D::Resource::Init(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
+HRESULT K3D::Resource::Initialize(std::shared_ptr<D3D12Device>& device, const D3D12_HEAP_PROPERTIES & heapProps, const D3D12_HEAP_FLAGS & flags, const D3D12_RESOURCE_DESC & resourceDesc, const D3D12_RESOURCE_STATES & state, D3D12_CLEAR_VALUE * clearValue)
 {
 	_currentResourceState = state;
 	if (clearValue != nullptr) {

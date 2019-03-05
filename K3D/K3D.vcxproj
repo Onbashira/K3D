@@ -114,6 +114,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
+    <ClCompile Include="Engine\Source\DescriptorHeap\VirtualDescriptorHeap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
+    <ClInclude Include="Engine\Source\DescriptorHeap\VirtualDescriptorHeap.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\includes\ShaderMath.hlsl">

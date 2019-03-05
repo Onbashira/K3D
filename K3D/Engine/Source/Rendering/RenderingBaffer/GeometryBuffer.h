@@ -29,7 +29,7 @@ namespace K3D {
 	
 		~GeometryBuffer();
 	
-		void Initialize(unsigned int windowWidth,unsigned int windowHeight);
+		void Initialize(unsigned int windowWidth,unsigned int windowHeight , unsigned int textureNum);
 
 		void Discard();
 

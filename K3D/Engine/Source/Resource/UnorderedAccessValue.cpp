@@ -79,8 +79,8 @@ HRESULT K3D::UnorderedAccessValue::Create(unsigned int elementSize, unsigned int
 		//リソース作成
 		{
 
-			_stagingResource->Init(defaultHeapProp, D3D12_HEAP_FLAG_NONE, defaultResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-			Resource::Init(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
+			_stagingResource->Initialize(defaultHeapProp, D3D12_HEAP_FLAG_NONE, defaultResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+			Resource::Initialize(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
 			
 			uploadHeapProp.Type = D3D12_HEAP_TYPE::D3D12_HEAP_TYPE_UPLOAD;
 			std::unique_ptr<Resource> uploadResource = std::make_unique<Resource>(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
@@ -200,7 +200,7 @@ void K3D::UnorderedAccessValue::AsyncWriteToBuffer(std::weak_ptr<K3D::CommandLis
 		uploadResourceDesc = CD3DX12_RESOURCE_DESC::Buffer(numElements * elementSize);
 	}
 	_uploadResource->Discard();
-	_uploadResource->Init(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+	_uploadResource->Initialize(uploadHeapProp, D3D12_HEAP_FLAG_NONE, uploadResourceDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
 
 	//ステージングのためのリソース遷移
