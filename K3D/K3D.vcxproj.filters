@@ -288,10 +288,13 @@
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPath.cpp">
+    <ClCompile Include="Engine\Source\DescriptorHeap\VirtualDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\DescriptorHeap\VirtualDescriptorHeap.cpp">
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -608,10 +611,13 @@
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPath.h">
+    <ClInclude Include="Engine\Source\DescriptorHeap\VirtualDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\DescriptorHeap\VirtualDescriptorHeap.h">
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,10 +26,10 @@ namespace K3D {
 
 		virtual int GetPathIndex() = 0;
 
-		virtual std::vector<std::shared_ptr<Resource> >& GetPrePathRenderTargets() { _prePathRenderTarges; };
+		virtual std::vector<std::shared_ptr<Resource> >& GetPrePathRenderTargets();
 
 	private:
-		
+
 	};
 
 }

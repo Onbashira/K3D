@@ -1,17 +1,21 @@
 #pragma once
 namespace K3D {
 
-	class CommandList;
-	class CommandAlocator;
-	class Fence;
 	class RenderContext;
 	class RenderingPassHolder;
-	class Render
+	class Render;
 
 	class Scene
 	{
+
+		friend class RenderingManager;
+		
 	public:
 	private:
+
+		std::unique_ptr<RenderContext> _renderCotext;
+		std::unique_ptr<RenderingPassHolder> _renderCotext;
+
 	public:
 		
 		Scene();
