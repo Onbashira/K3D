@@ -37,23 +37,14 @@ namespace K3D {
 			Descriptor(unsigned int offset, K3D::GameHeap::ViewType& viewType, D3D12_GPU_DESCRIPTOR_HANDLE& gpuAddress, D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) :
 				offset(), viewType(viewType), gpuAddress(gpuAddress), cpuHandle(cpuHandle) {};
 
-			Descriptor(const Descriptor& other) {
-				*this = other;
-			};
+
 
 			Descriptor(Descriptor&& other) {
 				*this = std::move(other);
 
 			};
 
-			Descriptor& operator= (const Descriptor& other) {
-				offset = other.offset;
-				viewType = other.viewType;
-				heapType = other.heapType;
-				gpuAddress = other.gpuAddress;
-				cpuHandle = other.cpuHandle;
-				return *this;
-			};
+
 			Descriptor& operator= (Descriptor&& other) {
 				*this = other;
 
@@ -68,6 +59,18 @@ namespace K3D {
 
 		private:
 
+			Descriptor(const Descriptor& other) {
+				*this = other;
+			};
+
+			Descriptor& operator= (const Descriptor& other) {
+				offset = other.offset;
+				viewType = other.viewType;
+				heapType = other.heapType;
+				gpuAddress = other.gpuAddress;
+				cpuHandle = other.cpuHandle;
+				return *this;
+			};
 		};
 
 		using DescHeapMap = std::map<K3D::GameHeap::HeapType, std::shared_ptr<DescriptorHeap>>;

@@ -13,9 +13,15 @@ namespace K3D {
 	public:
 	private:
 
-		//!キュー
+		//!3Dキュー
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_commandQueue;
-		
+
+		//!コピーキュー
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_copyQueue;
+
+		//!コンピュートキュー
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_computeQueue;
+
 		//!フェンス
 		K3D::Fence	_fence;
 				

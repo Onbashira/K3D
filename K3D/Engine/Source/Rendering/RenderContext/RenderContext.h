@@ -5,10 +5,8 @@ namespace K3D {
 	class CommandAllocator;
 	class Fence;
 	class CommandQueue;
-	class GameHeap;
-
 	// 各シーン毎のレンダーコンテキスト
-
+	
 	class RenderContext
 	{
 	public:
@@ -55,7 +53,7 @@ namespace K3D {
 
 		K3D::Fence& GetCurrentFence();
 
-		std::shared_ptr<CommandQueue>& GetCommandQueue();
+		std::weak_ptr<CommandQueue> GetCommandQueue();
 
 		void ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue);
 

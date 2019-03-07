@@ -89,7 +89,7 @@ K3D::Fence & K3D::RenderContext::GetCurrentFence()
 	return _fences[_currentIndex];
 }
 
-std::shared_ptr<K3D::CommandQueue>& K3D::RenderContext::GetCommandQueue()
+std::weak_ptr<K3D::CommandQueue> K3D::RenderContext::GetCommandQueue()
 {
 	return _queueRef;
 }

@@ -2,6 +2,8 @@
 namespace K3D {
 
 	class Resource;
+	class RenderContext;
+	class RenderingDevice;
 
 	//レンダリングパスベース
 	class RenderingPass

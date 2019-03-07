@@ -6,6 +6,7 @@ namespace K3D {
 	class Render;
 	class GameHeap;
 
+	//シーンを構成する基底クラス
 	class Scene
 	{
 
@@ -14,8 +15,8 @@ namespace K3D {
 	public:
 	private:
 
-		std::unique_ptr<RenderContext> _renderCotext;
-		std::unique_ptr<RenderingPassHolder> _renderCotext;
+		std::shared_ptr<RenderContext> _renderCotext;
+		std::shared_ptr<RenderingPassHolder> _renderCotext;
 		std::shared_ptr<GameHeap> _gameHeap;
 
 	public:
