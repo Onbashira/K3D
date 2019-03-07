@@ -5,6 +5,7 @@ namespace K3D {
 	class CommandAllocator;
 	class Fence;
 	class CommandQueue;
+	class GameHeap;
 
 	// 各シーン毎のレンダーコンテキスト
 
@@ -17,6 +18,7 @@ namespace K3D {
 			END = 1
 		};
 	private:
+
 		int _frameNum;
 
 		int _currentIndex;
@@ -34,8 +36,6 @@ namespace K3D {
 		std::shared_ptr<CommandQueue> _queueRef;
 
 		std::vector<std::shared_ptr<CommandList>> _listsVector;
-
-
 
 	public:
 

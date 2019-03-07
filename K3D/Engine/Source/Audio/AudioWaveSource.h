@@ -22,22 +22,22 @@ namespace K3D {
 		struct AudioLoadingInfo {
 
 			//!どれくらい読み込んだか
-			unsigned int _loadedSize;
+			unsigned int loadedSize;
 
 			//!どれくらい読み込みサイクルを行ったか
-			unsigned int _cycleNum;
+			unsigned int cycleNum;
 
 			//!どれくらい読み込みサイクルを行えばいいか
-			unsigned int _cycleMax;
+			unsigned int cycleMax;
 
 			//!どれくらいの配列分読み取ったか
-			unsigned int _loadedIndex;
+			unsigned int loadedIndex;
 
 			//!ロード済みフラグ
-			bool _isWaveLoaded;
+			bool isWaveLoaded;
 
 			AudioLoadingInfo() :
-				_loadedSize(0), _cycleNum(0), _cycleMax(0), _isWaveLoaded(false), _loadedIndex(0) {};
+				loadedSize(0), cycleNum(0), cycleMax(0), isWaveLoaded(false), loadedIndex(0) {};
 			~AudioLoadingInfo() {};
 
 		}_loadingInfo;

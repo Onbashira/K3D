@@ -29,5 +29,5 @@ std::vector<float>& K3D::AudioWaveSource::GetWave()
 
 bool K3D::AudioWaveSource::IsWaveLoaded()
 {
-	return _loadingInfo._isWaveLoaded;
+	return _loadingInfo.isWaveLoaded;
 }
