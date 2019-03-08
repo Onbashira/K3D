@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\DescriptorHeap\Descriptor.cpp" />
     <ClCompile Include="Engine\Source\CommandAllocator\CommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\ComponentLocator\ComponentLocator.cpp" />
     <ClCompile Include="Engine\Source\Camera\Camera.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\DescriptorHeap\Descriptor.h" />
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\ComponentLocator\ComponentLocator.h" />
     <ClInclude Include="Engine\Source\Camera\Camera.h" />

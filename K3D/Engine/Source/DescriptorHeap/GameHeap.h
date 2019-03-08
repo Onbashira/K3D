@@ -1,5 +1,7 @@
 #pragma once
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
+#include "Engine/Source/DescriptorHeap/Descriptor.h"
+#include "Engine/Source/MemoryAllocator/VariableSizeAllocationManager.h"
 namespace K3D {
 
 	class Resource;
@@ -11,96 +13,56 @@ namespace K3D {
 	{
 	public:
 
-		enum class ViewType {
-			CBV, SRV, UAV, RTV, DSV, SAMP, EMPTY
-		};
-
 		enum class HeapType {
-			CPU, RTV, DSV, SAMP,EMPTY
-		};
-
-		struct Descriptor {
-
-			unsigned int offset;
-
-			K3D::GameHeap::ViewType viewType;
-
-			K3D::GameHeap::HeapType heapType;
-
-			D3D12_GPU_DESCRIPTOR_HANDLE gpuAddress;
-
-			D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle;
-
-			Descriptor() :
-				offset(), viewType(K3D::GameHeap::ViewType::EMPTY), gpuAddress(D3D12_GPU_DESCRIPTOR_HANDLE()), cpuHandle(D3D12_CPU_DESCRIPTOR_HANDLE()) {};
-
-			Descriptor(unsigned int offset, K3D::GameHeap::ViewType& viewType, D3D12_GPU_DESCRIPTOR_HANDLE& gpuAddress, D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle) :
-				offset(), viewType(viewType), gpuAddress(gpuAddress), cpuHandle(cpuHandle) {};
-
-
-
-			Descriptor(Descriptor&& other) {
-				*this = std::move(other);
-
-			};
-
-
-			Descriptor& operator= (Descriptor&& other) {
-				*this = other;
-
-				other.offset = 0;
-				other.viewType = K3D::GameHeap::ViewType::EMPTY;
-				other.heapType = K3D::GameHeap::HeapType::EMPTY ;
-				other.gpuAddress = D3D12_GPU_DESCRIPTOR_HANDLE();
-				other.cpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE();
-				
-				return *this;
-			};
-
-		private:
-
-			Descriptor(const Descriptor& other) {
-				*this = other;
-			};
-
-			Descriptor& operator= (const Descriptor& other) {
-				offset = other.offset;
-				viewType = other.viewType;
-				heapType = other.heapType;
-				gpuAddress = other.gpuAddress;
-				cpuHandle = other.cpuHandle;
-				return *this;
-			};
+			CPU, RTV, DSV, SAMP, EMPTY
 		};
 
 		using DescHeapMap = std::map<K3D::GameHeap::HeapType, std::shared_ptr<DescriptorHeap>>;
 
-		using ViewMap = std::map<K3D::GameHeap::HeapType, std::vector<ViewType>>;
+		using ViewMap = std::map<K3D::GameHeap::HeapType, std::vector<Descriptor::ViewType>>;
+
+		using DescMap = std::map<K3D::GameHeap::HeapType, std::vector<std::shared_ptr<Descriptor>>>;
+		
+
+
+		struct FreeBlocksInfo {
+
+			int head = -1;
+			int tail = -1;
+
+
+		};
+
 
 	private:
 
+		//デバイスの参照
 		std::shared_ptr<D3D12Device> _device;
 
+		//ヒープタイプをキー値としたデスクリプタヒープ
 		DescHeapMap _heaps;
 
+		//各ヒープタイプにバインドされているviewのタイプ
 		ViewMap _allocatedViewMap;
 
+		DescMap _allocatedDescMap;
+
+		//cpuHeapにバインドされたデスクリプタのオフセット　空きブロック検索コストの削減用
 		unsigned int _cpuOffset;
-
+		//rtvHeapにバインドされたデスクリプタのオフセット　空きブロック検索コストの削減用
 		unsigned int _rtvOffset;
-
+		//dsvHeapにバインドされたデスクリプタのオフセット　空きブロック検索コストの削減用
 		unsigned int _dsvOffset;
-
+		//sampelrHeapにバインドされたデスクリプタのオフセット　空きブロック検索コストの削減用
 		unsigned int _samplerOffset;
 
+		//各ミューテックス
 		std::mutex _cpuMutex;
-
 		std::mutex _rtvMutex;
-
 		std::mutex _dsvMutex;
-
 		std::mutex _samplerMutex;
 
+		inline static std::shared_ptr<Descriptor> InvalidDescriptor = std::make_shared<Descriptor>();
 
 	public:
 
@@ -112,23 +74,24 @@ namespace K3D {
 
 		HRESULT ReInitialize(unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize);
 
-		HRESULT ReCreateHeap(const HeapType& heapType, unsigned int maxHeapSize);
+		HRESULT ReCreateHeap(const GameHeap::HeapType& heapType, unsigned int maxHeapSize);
 
-		K3D::GameHeap::Descriptor GetDescriptorHandle(const K3D::GameHeap::HeapType& heapType, unsigned int handleOffset);
+		std::weak_ptr<K3D::Descriptor> GetDescriptorHandle(const K3D::GameHeap::HeapType& heapType, unsigned int handleOffset);
 
-		K3D::GameHeap::Descriptor CreateView(const K3D::GameHeap::HeapType& heapType, const K3D::GameHeap::ViewType& viewType, void* viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource = nullptr);
+		//動作としては基本的に上書き
+		std::weak_ptr<K3D::Descriptor> CreateView(const K3D::GameHeap::HeapType& heapType, const K3D::Descriptor::ViewType& viewType, void* viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource = nullptr);
 
-		K3D::GameHeap::Descriptor CreateCBView(D3D12_CONSTANT_BUFFER_VIEW_DESC& desc);
+		std::weak_ptr<K3D::Descriptor> CreateCBView(D3D12_CONSTANT_BUFFER_VIEW_DESC& desc);
 
-		K3D::GameHeap::Descriptor CreateSRView(D3D12_SHADER_RESOURCE_VIEW_DESC& desc, Resource* resource);
+		std::weak_ptr<K3D::Descriptor> CreateSRView(D3D12_SHADER_RESOURCE_VIEW_DESC& desc, Resource* resource);
 
-		K3D::GameHeap::Descriptor CreateUAView(D3D12_UNORDERED_ACCESS_VIEW_DESC& desc, Resource* resource, Resource* counterResource = nullptr);
-		
-		K3D::GameHeap::Descriptor CreateRTView(D3D12_RENDER_TARGET_VIEW_DESC& desc, Resource* resource);
+		std::weak_ptr<K3D::Descriptor> CreateUAView(D3D12_UNORDERED_ACCESS_VIEW_DESC& desc, Resource* resource, Resource* counterResource = nullptr);
 
-		K3D::GameHeap::Descriptor CreateDSView(D3D12_DEPTH_STENCIL_VIEW_DESC& desc, Resource* resource);
+		std::weak_ptr<K3D::Descriptor> CreateRTView(D3D12_RENDER_TARGET_VIEW_DESC& desc, Resource* resource);
 
-		K3D::GameHeap::Descriptor CreateSampView(D3D12_SAMPLER_DESC& desc);
+		std::weak_ptr<K3D::Descriptor> CreateDSView(D3D12_DEPTH_STENCIL_VIEW_DESC& desc, Resource* resource);
+
+		std::weak_ptr<K3D::Descriptor> CreateSampView(D3D12_SAMPLER_DESC& desc);
 
 		void Discard();
 
