@@ -13,9 +13,13 @@ const std::wstring GPU_CARD_SPEC_LIST[] = {
 
 	L"NVIDIA GeForce GTX 1080Ti",
 	L"NVIDIA GeForce GTX 1080",
-	L"NVIDIA GeForce GTX 1060Ti",
+	L"NVIDIA GeForce GTX 1070Ti",
+	L"NVIDIA GeForce GTX 1070",
 	L"NVIDIA GeForce GTX 1060",
-	L"intel hd graphics"
+	L"NVIDIA GeForce GTX 1050Ti",
+	L"NVIDIA GeForce GTX 1050",
+
+	L"Intel HD Graphics"
 
 };
 

@@ -5,14 +5,14 @@
 void K3D::BasicMesh::CreateVBO(ULONG64 size, UINT stride, const void * pVertices)
 {
 	this->_meshVBO = std::make_unique<VertexBuffer>();
-	_meshVBO->Create(size, stride, pVertices);
+	_meshVBO->Initialize(size, stride, pVertices);
 	this->_geometry.SetVertexBufferView(_meshVBO->GetView());
 }
 
 void K3D::BasicMesh::CreateIBO(ULONG64 size, size_t elementSize, const void * pIndices)
 {
 	this->_meshIBO = std::make_unique<IndexBuffer>();
-	_meshIBO->Create(size, elementSize, pIndices);
+	_meshIBO->Initialize(size, elementSize, pIndices);
 	this->_geometry.SetIndexBufferView(_meshIBO->GetView());
 }
 

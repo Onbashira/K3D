@@ -56,7 +56,7 @@ namespace K3D {
 		* @param[in] listType リストのタイプ
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT Initialize(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		/**
 		* @fn
@@ -66,7 +66,7 @@ namespace K3D {
 		* @param[in] listType リストのタイプ
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		/**
 		* @fn
@@ -77,7 +77,7 @@ namespace K3D {
 		* @param[in] commandAllocator アロケータの参照
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator);
+		HRESULT Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator);
 
 		/**
 		* @fn

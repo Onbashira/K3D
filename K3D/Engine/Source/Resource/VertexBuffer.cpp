@@ -49,7 +49,7 @@ K3D::VertexBuffer::~VertexBuffer()
 }
 
 
-HRESULT K3D::VertexBuffer::Create(ULONG64 size, UINT stride, const void * pVertices)
+HRESULT K3D::VertexBuffer::Initialize(ULONG64 size, UINT stride, const void * pVertices)
 {
 	if (pVertices == nullptr || size == 0 || stride == 0) {
 		return E_FAIL;

@@ -21,7 +21,7 @@ namespace K3D {
 
 		~ConstantBuffer();
 
-		virtual HRESULT Create(ULONG64 size);
+		virtual HRESULT Initialize(ULONG64 size);
 
 		HRESULT	CreateView(D3D12_CONSTANT_BUFFER_VIEW_DESC& cvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
 

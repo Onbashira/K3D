@@ -24,7 +24,7 @@ namespace K3D {
 
 		~DepthStencil();
 
-		HRESULT Create(UINT width, UINT height, DXGI_FORMAT resourceFormat, DXGI_FORMAT clearValueFormat);
+		HRESULT Initialize(UINT width, UINT height, DXGI_FORMAT resourceFormat, DXGI_FORMAT clearValueFormat);
 
 		HRESULT CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC srv, D3D12_CPU_DESCRIPTOR_HANDLE handle);
 

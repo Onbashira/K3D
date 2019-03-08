@@ -14,7 +14,7 @@ K3D::ConstantBuffer::~ConstantBuffer()
 }
 
 
-HRESULT K3D::ConstantBuffer::Create( ULONG64 size)
+HRESULT K3D::ConstantBuffer::Initialize( ULONG64 size)
 {
 	_initializeSize = size;
 	size = Util::Alignment256Bytes(size);
@@ -42,7 +42,7 @@ HRESULT K3D::ConstantBuffer::Create( ULONG64 size)
 	desc.Layout = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	desc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
-	auto hr = Resource::Init(prop, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ);
+	auto hr = Resource::Initialize(prop, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ);
 	if (FAILED(hr)) {
 		return E_FAIL;
 	}

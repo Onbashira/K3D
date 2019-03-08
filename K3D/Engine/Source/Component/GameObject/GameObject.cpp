@@ -48,5 +48,5 @@ void K3D::GameObject::UpdateTransformBuffer()
 
 void K3D::GameObject::InitalizeTransformBuffer(size_t size)
 {
-	_transformBuffer.Create(size);
+	_transformBuffer.Initialize(size);
 }

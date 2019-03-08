@@ -19,7 +19,7 @@ HRESULT K3D::CommandListManager::Create(std::string commandListName,unsigned int
 {
 	if (_library.find(commandListName) == _library.end()) {
 		this->_library[commandListName] = std::make_shared<CommandList>();
-		auto hr = this->_library[commandListName]->Create(nodeMask, listType);
+		auto hr = this->_library[commandListName]->Initialize(nodeMask, listType);
 		this->_library[commandListName]->SetName(commandListName);
 		if (SUCCEEDED(hr)) {
 			DEBUG_LOG(std::string( "CommandList‚ª³í‚Éì¬E“o˜^‚³‚ê‚Ü‚µ‚½ : " + commandListName));

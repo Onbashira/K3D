@@ -18,25 +18,25 @@ K3D::CommandSignature::~CommandSignature()
 }
 
 
-HRESULT K3D::CommandSignature::Create(const D3D12_COMMAND_SIGNATURE_DESC & desc, std::weak_ptr<K3D::RootSignature> rs)
+HRESULT K3D::CommandSignature::Initialize(const D3D12_COMMAND_SIGNATURE_DESC & desc, std::weak_ptr<K3D::RootSignature> rs)
 {
 	auto res = Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandSignature(&desc, rs.lock()->GetSignature().Get(), IID_PPV_ARGS(&_commandSignature));
 	return E_NOTIMPL;
 }
 
-HRESULT K3D::CommandSignature::Create(std::shared_ptr<D3D12Device>& device, const D3D12_COMMAND_SIGNATURE_DESC & desc, std::weak_ptr<K3D::RootSignature> rs)
+HRESULT K3D::CommandSignature::Initialize(std::shared_ptr<D3D12Device>& device, const D3D12_COMMAND_SIGNATURE_DESC & desc, std::weak_ptr<K3D::RootSignature> rs)
 {
 	auto res = device->GetDevice()->CreateCommandSignature(&desc, rs.lock()->GetSignature().Get(), IID_PPV_ARGS(&_commandSignature));
 	return E_NOTIMPL;
 }
 
-HRESULT K3D::CommandSignature::Create(const D3D12_COMMAND_SIGNATURE_DESC & desc)
+HRESULT K3D::CommandSignature::Initialize(const D3D12_COMMAND_SIGNATURE_DESC & desc)
 {
 	auto res = Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandSignature(&desc, nullptr, IID_PPV_ARGS(&_commandSignature));
 	return E_NOTIMPL;
 }
 
-HRESULT K3D::CommandSignature::Create(std::shared_ptr<D3D12Device>& device, const D3D12_COMMAND_SIGNATURE_DESC & desc)
+HRESULT K3D::CommandSignature::Initialize(std::shared_ptr<D3D12Device>& device, const D3D12_COMMAND_SIGNATURE_DESC & desc)
 {
 	auto res = device->GetDevice()->CreateCommandSignature(&desc, nullptr, IID_PPV_ARGS(&_commandSignature));
 	return E_NOTIMPL;

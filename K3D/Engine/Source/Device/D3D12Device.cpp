@@ -33,7 +33,7 @@ K3D::D3D12Device::~D3D12Device()
 }
 
 
-HRESULT K3D::D3D12Device::Create(Factory* factory, bool useWarpDevice)
+HRESULT K3D::D3D12Device::Initialize(Factory* factory, bool useWarpDevice)
 {
 	HRESULT result = {};
 	_useWarpDevice = useWarpDevice;

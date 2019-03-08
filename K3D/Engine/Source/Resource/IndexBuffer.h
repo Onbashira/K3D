@@ -15,9 +15,9 @@ namespace K3D {
 
 		~IndexBuffer();
 
-		virtual HRESULT Create(ULONG64 size, DXGI_FORMAT format, const void * pIndices);
+		virtual HRESULT Initialize(ULONG64 size, DXGI_FORMAT format, const void * pIndices);
 
-		virtual HRESULT Create(ULONG64 size, size_t elementSize, const void * pIndices);
+		virtual HRESULT Initialize(ULONG64 size, size_t elementSize, const void * pIndices);
 
 		void Discard();
 

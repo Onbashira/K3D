@@ -46,7 +46,7 @@ namespace K3D {
 
 		virtual~StructuredBuffer();
 		//リードバックバッファとアップロードバッファを作成。ついでに配置
-		HRESULT Create(unsigned int elementSize, unsigned int numElements, void* pBufferData);
+		HRESULT Initialize(unsigned int elementSize, unsigned int numElements, void* pBufferData);
 		//デスクリプタの作成
 		HRESULT CreateDescriptors(unsigned int elementSize, unsigned int numElements);
 

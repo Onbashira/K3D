@@ -24,14 +24,19 @@ K3D::CommandList::~CommandList()
 }
 
 
-HRESULT K3D::CommandList::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::CommandList::Initialize(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	_listType = listType;
 	HRESULT result;
+	auto& dev = K3D::Framework::GetInstance().GetDevice();
 
+	this->_commandAllocator = std::make_shared<CommandAllocator>();
+	result = _commandAllocator->Initialize(dev, nodeMask, listType);
+	if (result != S_OK) {
+		return E_FAIL;
+	}
 
-
-	result = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
+	result = dev->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
 	if (result != S_OK) {
 		return E_FAIL;
 	}
@@ -40,12 +45,12 @@ HRESULT K3D::CommandList::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE 
 	return S_OK;
 }
 
-HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::CommandList::Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	_listType = listType;
 	HRESULT result;
 	this->_commandAllocator = std::make_shared<CommandAllocator>();
-	result = _commandAllocator->Create(device.lock().get(), nodeMask, listType);
+	result = _commandAllocator->Initialize(device.lock(), nodeMask, listType);
 	if (result != S_OK) {
 		return E_FAIL;
 	}
@@ -59,7 +64,7 @@ HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device, unsigned int
 	return S_OK;
 }
 
-HRESULT K3D::CommandList::Create(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator)
+HRESULT K3D::CommandList::Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator)
 {
 	HRESULT result;
 	if (commandAllocator->GetAllocator().Get() == nullptr) {

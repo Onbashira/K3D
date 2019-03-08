@@ -170,12 +170,12 @@ HRESULT K3D::Framework::InitD3D12()
 HRESULT K3D::Framework::InitDevice()
 {
 	_device = std::make_shared<D3D12Device>();
-	return _device->Create(&_factory, _useWarpDevice);
+	return _device->Initialize(&_factory, _useWarpDevice);
 }
 
 HRESULT K3D::Framework::InitFactory()
 {
-	return _factory.Create();
+	return _factory.Initialize();
 }
 
 HRESULT K3D::Framework::InitCommandQueue()
@@ -186,16 +186,7 @@ HRESULT K3D::Framework::InitCommandQueue()
 	desc.Flags = D3D12_COMMAND_QUEUE_FLAGS::D3D12_COMMAND_QUEUE_FLAG_NONE;
 	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-	return _drawQueue.Create(desc);
-}
-
-HRESULT K3D::Framework::InitCommandList()
-{
-	auto ret = GraphicsContextManager::GetInstance().CreateCommandList("DefaultDataUpdata", 0, D3D12_COMMAND_LIST_TYPE_BUNDLE);
-
-	this->_defaultCommandList = GraphicsContextManager::GetInstance().GetCommandList("DefaultDataUpdata");
-
-	return 	ret;
+	return _drawQueue.Initialize(desc);
 }
 
 HRESULT K3D::Framework::InitRenderingManager()

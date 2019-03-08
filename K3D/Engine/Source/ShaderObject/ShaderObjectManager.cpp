@@ -25,11 +25,11 @@ HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_
 		this->_psolibrary[psoName] = std::make_shared<K3D::PipelineStateObject>();
 		if (signature != nullptr) {
 			hr = CreateRootSignature(psoName, signature);
-			hr = this->_psolibrary[psoName]->Create(psoName, gps, GetRootSignature(psoName ));
+			hr = this->_psolibrary[psoName]->Initialize(psoName, gps, GetRootSignature(psoName ));
 
 		}
 		else {
-			hr = this->_psolibrary[psoName]->Create(psoName, gps, nullptr);
+			hr = this->_psolibrary[psoName]->Initialize(psoName, gps, nullptr);
 		}
 		if (SUCCEEDED(hr)) {
 
@@ -54,11 +54,11 @@ HRESULT K3D::ShaderObjectManager::CreatePSO(std::string psoName, D3D12_COMPUTE_P
 		HRESULT hr = {};
 		if (signature != nullptr) {
 			hr = CreateRootSignature(psoName + "RootSignature", signature);
-			hr = this->_psolibrary[psoName]->Create(psoName, cps, GetRootSignature(psoName + "RootSignature"));
+			hr = this->_psolibrary[psoName]->Initialize(psoName, cps, GetRootSignature(psoName + "RootSignature"));
 
 		}
 		else {
-			hr = this->_psolibrary[psoName]->Create(psoName, cps, nullptr);
+			hr = this->_psolibrary[psoName]->Initialize(psoName, cps, nullptr);
 		}
 		if (SUCCEEDED(hr)) {
 			DEBUG_LOG(std::string("PSO‚ª³í‚Éì¬E“o˜^‚³‚ê‚Ü‚µ‚½ : " + psoName));

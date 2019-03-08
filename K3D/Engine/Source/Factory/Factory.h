@@ -27,7 +27,7 @@ namespace K3D {
 		* @param[in] createFlags オプションフラグ
 		* @return S_OKで成功
 		*/
-		HRESULT	Create(UINT createFlags = 0);
+		HRESULT	Initialize(UINT createFlags = 0);
 
 		/**
 		* @fn

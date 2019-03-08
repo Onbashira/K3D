@@ -56,7 +56,7 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 	_rtResource.resize(bufferNum);
 	//レンダーターゲットビュー用のヒープの作成
 	{
-		if (FAILED(_rtHeap.Create(&desc)))
+		if (FAILED(_rtHeap.Initialize(&desc)))
 			return E_FAIL;
 		_rtHeap.SetName("RendertargetsHeap ");
 	}
@@ -76,7 +76,7 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 	return S_OK;
 }
 
-HRESULT K3D::SwapChain::Create(CommandQueue & commandQueue, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
+HRESULT K3D::SwapChain::Initialize(CommandQueue & commandQueue, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
 {
 	auto hr = CreateSwapChain(commandQueue, factory, window, windowWidth, windowHeight, bufferNum);
 	CHECK_RESULT(hr);

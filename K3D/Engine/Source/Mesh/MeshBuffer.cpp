@@ -18,7 +18,7 @@ void K3D::MeshBuffer::InitializeVBO(ULONG64 size, unsigned int stride, void * ve
 void K3D::MeshBuffer::AddCustomVBO(ULONG64 size, unsigned int stride, void * customVertexDataSrc)
 {
 	std::unique_ptr<VertexBuffer> buffer = std::make_unique<K3D::VertexBuffer>();
-	buffer->Create(size, stride, customVertexDataSrc);
+	buffer->Initialize(size, stride, customVertexDataSrc);
 	this->_additionalVBOs.push_back(std::move(buffer));
 }
 

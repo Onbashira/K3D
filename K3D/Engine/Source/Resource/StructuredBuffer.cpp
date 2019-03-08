@@ -14,12 +14,12 @@ K3D::StructuredBuffer::~StructuredBuffer()
 
 HRESULT K3D::StructuredBuffer::CreateHeap(unsigned numElements, unsigned int nodeMask)
 {
-	auto hr = this->_heap.Create(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, numElements, nodeMask);
+	auto hr = this->_heap.Initialize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, numElements, nodeMask);
 	_heap.SetName("UnorderedAccessValue_Heap");
 	return hr;
 }
 
-HRESULT K3D::StructuredBuffer::Create(unsigned int elementSize, unsigned int numElements, void* pBufferData)
+HRESULT K3D::StructuredBuffer::Initialize(unsigned int elementSize, unsigned int numElements, void* pBufferData)
 {
 	if (elementSize == 0 || numElements == 0) {
 		return E_FAIL;

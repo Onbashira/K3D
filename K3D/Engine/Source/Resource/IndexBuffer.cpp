@@ -8,7 +8,7 @@ enum class IndexListElementType {
 	UINT = 4,
 };
 
-HRESULT K3D::IndexBuffer::Create(ULONG64 size, DXGI_FORMAT format, const void * pIndices)
+HRESULT K3D::IndexBuffer::Initialize(ULONG64 size, DXGI_FORMAT format, const void * pIndices)
 {
 	if (pIndices == nullptr || size == 0)
 	{
@@ -38,7 +38,7 @@ HRESULT K3D::IndexBuffer::Create(ULONG64 size, DXGI_FORMAT format, const void * 
 		D3D12_RESOURCE_FLAG_NONE
 	};
 
-	auto hr = Resource::Init(props,D3D12_HEAP_FLAG_NONE,desc,D3D12_RESOURCE_STATE_GENERIC_READ);
+	auto hr = Resource::Initialize(props,D3D12_HEAP_FLAG_NONE,desc,D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	if (FAILED(hr))
 	{
@@ -62,7 +62,7 @@ HRESULT K3D::IndexBuffer::Create(ULONG64 size, DXGI_FORMAT format, const void * 
 	return S_OK;
 }
 
-HRESULT K3D::IndexBuffer::Create(ULONG64 size, size_t elementSize, const void * pIndices)
+HRESULT K3D::IndexBuffer::Initialize(ULONG64 size, size_t elementSize, const void * pIndices)
 {
 	DXGI_FORMAT format;
 	switch (static_cast<IndexListElementType>(elementSize))
@@ -80,7 +80,7 @@ HRESULT K3D::IndexBuffer::Create(ULONG64 size, size_t elementSize, const void * 
 		format = DXGI_FORMAT::DXGI_FORMAT_R32_UINT;
 		break;
 	}
-	auto hr = Create(size, format, pIndices);
+	auto hr = Initialize(size, format, pIndices);
 	CHECK_RESULT(hr);
 	return hr;
 }

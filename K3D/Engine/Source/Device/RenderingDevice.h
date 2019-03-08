@@ -37,6 +37,7 @@ namespace K3D {
 
 		void Discard();
 
+	private:
 
 	};
 

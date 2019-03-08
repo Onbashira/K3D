@@ -40,7 +40,7 @@ namespace K3D {
 		* @param[in] desc キューのデスクリプション
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(D3D12_COMMAND_QUEUE_DESC& desc);
+		HRESULT Initialize(D3D12_COMMAND_QUEUE_DESC& desc);
 		
 		/**
 		* @fn
@@ -49,7 +49,7 @@ namespace K3D {
 		* @param[in] desc キューのデスクリプション
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(std::weak_ptr<D3D12Device> device,D3D12_COMMAND_QUEUE_DESC& desc);
+		HRESULT Initialize(std::weak_ptr<D3D12Device> device,D3D12_COMMAND_QUEUE_DESC& desc);
 
 		/**
 		* @fn

@@ -21,7 +21,7 @@ namespace K3D {
 		Descriptor() :
 			offset(0), viewType(Descriptor::ViewType::EMPTY), cpuHandle(D3D12_CPU_DESCRIPTOR_HANDLE()), gpuAddress(D3D12_GPU_DESCRIPTOR_HANDLE()) {};
 
-		Descriptor(unsigned int offset, Descriptor::ViewType& viewType,const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle, const D3D12_GPU_DESCRIPTOR_HANDLE& gpuAddress) :
+		Descriptor(unsigned int offset, Descriptor::ViewType viewType,const D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle, const D3D12_GPU_DESCRIPTOR_HANDLE& gpuAddress) :
 			offset(), viewType(viewType), cpuHandle(cpuHandle), gpuAddress(gpuAddress) {};
 
 		Descriptor(Descriptor&& other) {

@@ -5,7 +5,6 @@
 namespace K3D {
 
 	class Resource;
-	class RenderingDevice;
 	class D3D12Device;
 	class CommandList;
 
@@ -81,6 +80,7 @@ namespace K3D {
 		//動作としては基本的に上書き
 		std::weak_ptr<K3D::Descriptor> CreateView(const K3D::GameHeap::HeapType& heapType, const K3D::Descriptor::ViewType& viewType, void* viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource = nullptr);
 
+		//以下の関数は基本的に単一デスクリプタの生成
 		std::weak_ptr<K3D::Descriptor> CreateCBView(D3D12_CONSTANT_BUFFER_VIEW_DESC& desc);
 
 		std::weak_ptr<K3D::Descriptor> CreateSRView(D3D12_SHADER_RESOURCE_VIEW_DESC& desc, Resource* resource);

@@ -33,7 +33,7 @@ namespace K3D {
 
 		~SwapChain();
 
-		HRESULT Create(CommandQueue& commandQueue, Factory& factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
+		HRESULT Initialize(CommandQueue& commandQueue, Factory& factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
 
 		unsigned int GetBufferNum();
 

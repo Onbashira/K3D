@@ -33,41 +33,41 @@ namespace K3D {
 
 	private:
 		//！モード
-		CAMERA_MODE		_mode;
+		CAMERA_MODE _mode;
 
 		//!Field　Of　View
-		float			_fov;
+		float _fov;
 
 		//!アス比
-		float			_aspectRatio;
+		float _aspectRatio;
 		//!ニアクリップ
-		float			_near;
+		float _near;
 		
 		//!ファークリップ
-		float			_far;
+		float _far;
 
 		//!ウインドウ幅
-		float			_windowWidth;
+		float _windowWidth;
 		
 		//!ウインドウ高さ
-		float			_windowHeight;
+		float _windowHeight;
 
 		//!ビューポート
 		D3D12_VIEWPORT	_viewport;
 
 		//!切り抜き矩形
-		D3D12_RECT		_scissorRect;
+		D3D12_RECT _scissorRect;
 
 		//!射影行列
-		Matrix			_projection;
+		Matrix _projection;
 		//!カメラインフォメーションバッファ
-		UploadBuffer<CameraInfo>	_cameraMatrixBuffer;
+		UploadBuffer<CameraInfo > _cameraMatrixBuffer;
 		
 		//!デプスステンシルバッファ
-		DepthStencil	_depthStencillRersource;
+		DepthStencil _depthStencillRersource;
 
 		//!カメラの情報
-		CameraInfo		_info;
+		CameraInfo _info;
 
 	public:
 

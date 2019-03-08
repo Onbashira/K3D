@@ -32,7 +32,7 @@ namespace K3D {
 
 		~VertexBuffer();
 
-		virtual HRESULT Create(ULONG64 size, UINT stride, const void* pVertices);
+		virtual HRESULT Initialize(ULONG64 size, UINT stride, const void* pVertices);
 
 		void Discard();
 
@@ -42,7 +42,7 @@ namespace K3D {
 
 
 		//‰B‚·
-		HRESULT	Init(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr)override final { return E_FAIL; };
+		HRESULT	Initialize(const D3D12_HEAP_PROPERTIES& heapProps, const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_DESC& resourceDesc, const D3D12_RESOURCE_STATES& state, D3D12_CLEAR_VALUE* clearValue = nullptr)override final { return E_FAIL; };
 
 	};
 }

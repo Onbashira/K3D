@@ -12,7 +12,7 @@ K3D::CommandAllocator::~CommandAllocator()
 	Discard();
 }
 
-HRESULT K3D::CommandAllocator::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::CommandAllocator::Initialize(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	
 	auto result = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandAllocator(listType, IID_PPV_ARGS(&_allocator));
@@ -22,7 +22,7 @@ HRESULT K3D::CommandAllocator::Create(unsigned int nodeMask, D3D12_COMMAND_LIST_
 	return result;
 }
 
-HRESULT K3D::CommandAllocator::Create(D3D12Device * device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::CommandAllocator::Initialize(std::shared_ptr<D3D12Device>&device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	auto result = device->GetDevice()->CreateCommandAllocator(listType, IID_PPV_ARGS(&_allocator));
 	if (result != S_OK) {

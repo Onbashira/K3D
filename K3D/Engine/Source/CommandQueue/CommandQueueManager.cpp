@@ -14,7 +14,7 @@ HRESULT K3D::CommandQueueManager::Create(std::string name, D3D12_COMMAND_QUEUE_D
 {
 	auto res = std::make_shared<CommandQueue>();
 	res->SetName(name);
-	auto hr = res->Create(desc);
+	auto hr = res->Initialize(desc);
 	CHECK_RESULT(hr);
 	this->_queues.Set(name, res);
 	return hr;

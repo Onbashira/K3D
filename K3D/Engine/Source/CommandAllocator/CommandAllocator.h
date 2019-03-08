@@ -26,7 +26,7 @@ namespace K3D {
 		* @param[in] listType リストのタイプ
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT Initialize(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		/**
 		* @fn
@@ -36,7 +36,7 @@ namespace K3D {
 		* @param[in] listType リストのタイプ
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(D3D12Device* device,unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator>& GetAllocator();
 

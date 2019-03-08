@@ -20,15 +20,17 @@ namespace K3D {
 
 		RenderingPass();
 
-		~RenderingPass();
+		virtual ~RenderingPass();
 
-		virtual void ExecutePath() = 0;
+		virtual void FrameStartUpdate() = 0;
+
+		virtual void PreExcuteUpdate() = 0;
+
+		virtual void ExecutePath(std::shared_ptr<RenderContext>& renderingContext) = 0;
 
 		virtual String& GetName() = 0;
 
 		virtual int GetPathIndex() = 0;
-
-		virtual std::vector<std::shared_ptr<Resource> >& GetPrePathRenderTargets();
 
 	private:
 

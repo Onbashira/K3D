@@ -40,7 +40,7 @@ namespace K3D {
 		* @param[in] flags 
 		* @return S_OKÇ≈ê¨å˜ÅAÇªÇÍà»äOÇ≈é∏îs
 		*/
-		HRESULT								Create(UINT64 initialFenceValue, D3D12_FENCE_FLAGS flags);
+		HRESULT								Initialize(UINT64 initialFenceValue, D3D12_FENCE_FLAGS flags);
 
 		/**
 		 * @fn

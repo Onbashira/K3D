@@ -12,7 +12,7 @@ K3D::ShaderResource::~ShaderResource()
 {
 }
 
-HRESULT K3D::ShaderResource::Create(UINT texHeight, UINT texWidth, UINT texDepth, DXGI_FORMAT texFormat, D3D12_RESOURCE_FLAGS allowFlags, const Vector4& clearColor)
+HRESULT K3D::ShaderResource::Initialize(UINT texHeight, UINT texWidth, UINT texDepth, DXGI_FORMAT texFormat, D3D12_RESOURCE_FLAGS allowFlags, const Vector4& clearColor)
 {
 
 	D3D12_HEAP_PROPERTIES props = {};
@@ -46,7 +46,7 @@ HRESULT K3D::ShaderResource::Create(UINT texHeight, UINT texWidth, UINT texDepth
 	clearValue.Color[2] = clearColor.z;
 	clearValue.Color[3] = clearColor.w;
 
-	auto hr = Resource::Init(props, D3D12_HEAP_FLAG_NONE, resDesc,
+	auto hr = Resource::Initialize(props, D3D12_HEAP_FLAG_NONE, resDesc,
 		(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE | D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE), &clearValue);
 
 	return hr;

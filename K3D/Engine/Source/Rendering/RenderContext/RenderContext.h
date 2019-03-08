@@ -5,8 +5,9 @@ namespace K3D {
 	class CommandAllocator;
 	class Fence;
 	class CommandQueue;
+	class D3D12Device;
+
 	// 各シーン毎のレンダーコンテキスト
-	
 	class RenderContext
 	{
 	public:
@@ -41,7 +42,9 @@ namespace K3D {
 
 		virtual ~RenderContext();
 
-		HRESULT Create(int frameNum, int nodeMask,std::shared_ptr<CommandQueue>& queue);
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,int frameNum, int nodeMask,std::shared_ptr<CommandQueue>& queue);
+
+		HRESULT CreateCommandList(std::shared_ptr<D3D12Device>& device,D3D12_COMMAND_LIST_TYPE& type, std::shared_ptr<CommandList>& commandList);
 
 		int GetCurrentIndex();
 

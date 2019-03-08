@@ -14,12 +14,12 @@ K3D::UnorderedAccessValue::~UnorderedAccessValue()
 
 HRESULT K3D::UnorderedAccessValue::CreateHeap(unsigned numElements, unsigned int nodeMask)
 {
-	auto hr = this->_heap.Create(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, numElements, nodeMask);
+	auto hr = this->_heap.Initialize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, numElements, nodeMask);
 	_heap.SetName("UnorderedAccessValue_Heap");
 	return hr;
 }
 
-HRESULT K3D::UnorderedAccessValue::Create(unsigned int elementSize, unsigned int numElements, void* pBufferData)
+HRESULT K3D::UnorderedAccessValue::Initialize(unsigned int elementSize, unsigned int numElements, void* pBufferData)
 {
 	if (elementSize == 0 || numElements == 0) {
 		return E_FAIL;

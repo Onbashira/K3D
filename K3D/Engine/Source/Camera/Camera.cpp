@@ -48,7 +48,7 @@ void K3D::Camera::InitializeCameraFOV(const float fov, const float width, const 
 HRESULT K3D::Camera::InitializeCameraDepthStencill(DXGI_FORMAT depthFormat, unsigned int windowWidth, unsigned int windowHeight)
 {
 	_depthStencillRersource.Discard();
-	auto hr = _depthStencillRersource.Create(windowWidth, windowHeight, depthFormat, depthFormat);
+	auto hr = _depthStencillRersource.Initialize(windowWidth, windowHeight, depthFormat, depthFormat);
 	_depthStencillRersource.SetName("CameraDepthStencill");
 	return hr;
 
@@ -69,7 +69,7 @@ void K3D::Camera::Discard()
 
 HRESULT K3D::Camera::CreateBuffer()
 {
-	auto hr = _cameraMatrixBuffer.Create(1, true);
+	auto hr = _cameraMatrixBuffer.Initialize(1, true);
 	if (FAILED(hr)) {
 		return hr;
 	}

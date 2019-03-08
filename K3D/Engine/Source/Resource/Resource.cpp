@@ -65,12 +65,12 @@ K3D::Resource::~Resource()
 
 std::unique_ptr<K3D::Resource> K3D::Resource::CreateUnique()
 {
-	return std::unique_ptr<Resource>();
+	return std::unique_ptr<K3D::Resource>(new K3D::Resource());
 }
 
 std::shared_ptr<K3D::Resource> K3D::Resource::CreateShared()
 {
-	return std::shared_ptr<K3D::Resource>();
+	return std::shared_ptr<K3D::Resource>(new K3D::Resource());
 }
 
 LifetimedShared_Ptr<K3D::Resource> K3D::Resource::CreateLifetimedShared()

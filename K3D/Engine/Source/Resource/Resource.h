@@ -56,14 +56,14 @@ namespace K3D {
 		* @brief 未初期化のバッファのユニークなポインタの取得
 		* @return ユニークポインタ
 		*/
-		static  std::unique_ptr<Resource> CreateUnique();
+		static  std::unique_ptr<K3D::Resource> CreateUnique();
 
 		/**
 		* @fn
 		* @brief 未初期化のバッファの強参照の取得
 		* @return 強参照
 		*/
-		static  std::shared_ptr<Resource> CreateShared();
+		static  std::shared_ptr<K3D::Resource> CreateShared();
 
 		/**
 		* @fn

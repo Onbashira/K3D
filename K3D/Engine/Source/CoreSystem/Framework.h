@@ -10,6 +10,7 @@
 #include "Engine/Source/Rendering/RenderingManager.h"
 #include "Engine/Source/Input/InputManager.h"
 #include "Engine/Source/Audio/AudioManager.h"
+#include "Engine/Source/CommandQueue/CommandQueueManager.h"
 #include <string>
 #include <vector>
 
@@ -61,15 +62,6 @@ namespace K3D {
 
 		//!大麻
 		Timer	_timer;
-
-		//!マスター描画コマンドキュー
-		CommandQueue _drawQueue;
-
-		//!マスターコピーキュー
-		CommandQueue _copyQueue;
-
-		//!マスター計算コマンドキュー
-		CommandQueue _computeQueue;
 
 	private:
 

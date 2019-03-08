@@ -16,7 +16,7 @@ K3D::DepthStencil::~DepthStencil()
 }
 
 
-HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceFormat, DXGI_FORMAT clearValueFormat)
+HRESULT K3D::DepthStencil::Initialize(UINT width, UINT height, DXGI_FORMAT resourceFormat, DXGI_FORMAT clearValueFormat)
 {
 
 	D3D12_DESCRIPTOR_HEAP_DESC	heapDesc = {};
@@ -26,13 +26,13 @@ HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceF
 	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	heapDesc.NodeMask = 0;
 
-	_dsvHeap.Create(&heapDesc);
+	_dsvHeap.Initialize(&heapDesc);
 	_dsvHeap.SetName("DepthStencilDSVHeap");
 
 	heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 
-	_readOnlySRVHeap.Create(&heapDesc);
+	_readOnlySRVHeap.Initialize(&heapDesc);
 	_readOnlySRVHeap.SetName("DepthStencilReadOnlyTextureHeap");
 
 
@@ -65,7 +65,7 @@ HRESULT K3D::DepthStencil::Create(UINT width, UINT height, DXGI_FORMAT resourceF
 	clearValue.DepthStencil.Stencil = 0;
 
 
-	CHECK_RESULT(Resource::Init(heapProp, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, resDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue));
+	CHECK_RESULT(Resource::Initialize(heapProp, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, resDesc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue));
 
 	//深度ステンシルビューの設定
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};

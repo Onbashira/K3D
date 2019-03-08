@@ -31,7 +31,7 @@ namespace K3D {
 			Unmap(0, nullptr);
 		};
 
-		HRESULT Create(unsigned int elementCount = 1, bool isCB = false, D3D12_RESOURCE_FLAGS flags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE)
+		HRESULT Initialize(unsigned int elementCount = 1, bool isCB = false, D3D12_RESOURCE_FLAGS flags = D3D12_RESOURCE_FLAGS::D3D12_RESOURCE_FLAG_NONE)
 		{
 			isConstantBuffer = isCB;
 
@@ -61,7 +61,7 @@ namespace K3D {
 			desc.Layout = D3D12_TEXTURE_LAYOUT::D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 			desc.Flags = flags;
 
-			auto hr = Resource::Init(prop, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+			auto hr = Resource::Initialize(prop, D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 			Map(0, nullptr);
 			return hr;
 		};

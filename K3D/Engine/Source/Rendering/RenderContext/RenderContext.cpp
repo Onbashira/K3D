@@ -15,7 +15,7 @@ K3D::RenderContext::~RenderContext()
 
 }
 
-HRESULT K3D::RenderContext::Create(int frameNum, int nodeMask, std::shared_ptr<CommandQueue>& queue)
+HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int frameNum, int nodeMask, std::shared_ptr<CommandQueue>& queue)
 {
 	this->_currentIndex = 0;
 	this->_node = nodeMask;
@@ -24,9 +24,9 @@ HRESULT K3D::RenderContext::Create(int frameNum, int nodeMask, std::shared_ptr<C
 	//CreateAllocator
 	{
 		this->_cmdAllocators.resize(_frameNum);
-		for (int i = 0; i < frameNum;++i) {
+		for (int i = 0; i < frameNum; ++i) {
 			_cmdAllocators[i] = std::make_shared<CommandAllocator>();
-			hret = _cmdAllocators[i]->Create(nodeMask, D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+			hret = _cmdAllocators[i]->Initialize(device,nodeMask, D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 			if (FAILED(hret))
 				return hret;
 		}
@@ -39,12 +39,12 @@ HRESULT K3D::RenderContext::Create(int frameNum, int nodeMask, std::shared_ptr<C
 
 			_cmdLists[i][1] = std::make_shared<CommandList>();
 
-			_cmdLists[i][0]->Create(nodeMask,
-				D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+			_cmdLists[i][0]->Initialize(device,nodeMask,
+				D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
 			if (FAILED(hret))
 				return hret;
-			_cmdLists[i][1]->Create(nodeMask, 
-				D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+			_cmdLists[i][1]->Initialize(device,nodeMask,
+				D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
 			if (FAILED(hret))
 				return hret;
 		}
@@ -55,11 +55,16 @@ HRESULT K3D::RenderContext::Create(int frameNum, int nodeMask, std::shared_ptr<C
 		this->_fences.resize(_frameNum);
 		for (int i = 0; i < frameNum; ++i) {
 
-			_fences[i].Create(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE);
+			_fences[i].Initialize(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE);
 			if (FAILED(hret))
 				return hret;
 		}
 	}
+	return E_NOTIMPL;
+}
+
+HRESULT K3D::RenderContext::CreateCommandList(std::shared_ptr<D3D12Device>& device, D3D12_COMMAND_LIST_TYPE & type, std::shared_ptr<CommandList>& commandList)
+{
 	return E_NOTIMPL;
 }
 

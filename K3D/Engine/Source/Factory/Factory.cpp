@@ -15,7 +15,7 @@ K3D::Factory::~Factory()
 }
 
 
-HRESULT K3D::Factory::Create(UINT createFlags)
+HRESULT K3D::Factory::Initialize(UINT createFlags)
 {
 #if defined(_DEBUG)
 	// DirectX12のデバッグレイヤーを有効にする

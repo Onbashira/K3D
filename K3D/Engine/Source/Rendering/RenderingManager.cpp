@@ -11,7 +11,7 @@ K3D::RenderingManager::~RenderingManager()
 
 HRESULT K3D::RenderingManager::Initialize(CommandQueue* commandQueue, Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
 {
-	CHECK_RESULT(_swapChain.Create(*commandQueue, *factory, *window, windowWidth, windowHeight, bufferNum));
+	CHECK_RESULT(_swapChain.Initialize(*commandQueue, *factory, *window, windowWidth, windowHeight, bufferNum));
 	return S_OK;
 }
 

@@ -27,7 +27,7 @@ namespace K3D {
 
 		~D3D12Device();
 
-		HRESULT									Create(Factory* factory, bool useWarpDevice = false);
+		HRESULT									Initialize(Factory* factory, bool useWarpDevice = false);
 
 		Microsoft::WRL::ComPtr<ID3D12Device3>	GetDevice()const;
 
