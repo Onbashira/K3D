@@ -21,46 +21,37 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 	this->_node = nodeMask;
 	this->_frameNum = frameNum;
 	HRESULT hret = {};
-	//CreateAllocator
-	{
-		this->_cmdAllocators.resize(_frameNum);
-		for (int i = 0; i < frameNum; ++i) {
-			_cmdAllocators[i] = std::make_shared<CommandAllocator>();
-			hret = _cmdAllocators[i]->Initialize(device,nodeMask, D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
-			if (FAILED(hret))
-				return hret;
-		}
+
+	this->_cmdAllocators.resize(_frameNum);
+	this->_cmdLists.resize(_frameNum);
+	this->_fences.resize(_frameNum);
+
+	for (int i = 0; i < frameNum; ++i) {
+		_cmdAllocators[i] = std::make_shared<CommandAllocator>();
+
+		hret = _cmdAllocators[i]->Initialize(device, nodeMask, D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
+		if (FAILED(hret))
+			return hret;
+
+		_cmdLists[i][0] = std::make_shared<CommandList>();
+		_cmdLists[i][1] = std::make_shared<CommandList>();
+		_cmdLists[i][0]->Initialize(device, nodeMask,
+			D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
+		if (FAILED(hret))
+			return hret;
+		_cmdLists[i][1]->Initialize(device, nodeMask,
+			D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
+		if (FAILED(hret))
+			return hret;
+
+
+		_fences[i].Initialize(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE);
+		if (FAILED(hret))
+			return hret;
+
 	}
-	//CreateCommandList
-	{
-		this->_cmdLists.resize(_frameNum);
-		for (int i = 0; i < frameNum; ++i) {
-			_cmdLists[i][0] = std::make_shared<CommandList>();
+	return hret;
 
-			_cmdLists[i][1] = std::make_shared<CommandList>();
-
-			_cmdLists[i][0]->Initialize(device,nodeMask,
-				D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
-			if (FAILED(hret))
-				return hret;
-			_cmdLists[i][1]->Initialize(device,nodeMask,
-				D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
-			if (FAILED(hret))
-				return hret;
-		}
-
-	}
-	//CreateFence
-	{
-		this->_fences.resize(_frameNum);
-		for (int i = 0; i < frameNum; ++i) {
-
-			_fences[i].Initialize(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE);
-			if (FAILED(hret))
-				return hret;
-		}
-	}
-	return E_NOTIMPL;
 }
 
 HRESULT K3D::RenderContext::CreateCommandList(std::shared_ptr<D3D12Device>& device, D3D12_COMMAND_LIST_TYPE & type, std::shared_ptr<CommandList>& commandList)
@@ -99,9 +90,9 @@ std::weak_ptr<K3D::CommandQueue> K3D::RenderContext::GetCommandQueue()
 	return _queueRef;
 }
 
-void K3D::RenderContext::ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue)
+void K3D::RenderContext::ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue, bool executeNow = false)
 {
-	
+
 }
 
 void K3D::RenderContext::ResetAllocators()

@@ -58,7 +58,7 @@ namespace K3D {
 
 		std::weak_ptr<CommandQueue> GetCommandQueue();
 
-		void ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue);
+		void ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue,bool executeNow = false);
 
 		void ResetAllocators();
 
