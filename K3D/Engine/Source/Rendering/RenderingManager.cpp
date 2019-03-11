@@ -25,11 +25,11 @@ void K3D::RenderingManager::FlipScreen()
 	_swapChain.FlipScreen();
 }
 
-void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* buffer)
+void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* src)
 {
-	buffer->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
-	this->_swapChain.CopyToRenderTarget(list.lock(), buffer);
-	buffer->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
+	src->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
+	this->_swapChain.CopyToRenderTarget(list.lock(), src);
+	src->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
 }
 

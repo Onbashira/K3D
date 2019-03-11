@@ -14,7 +14,7 @@ namespace K3D {
 	private:
 
 		//!3Dキュー
-		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_commandQueue;
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_3DQueue;
 
 		//!コピーキュー
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_copyQueue;
@@ -60,6 +60,20 @@ namespace K3D {
 
 		/**
 		* @fn
+		* @brief COPYキューのフェッチ
+		* @return キューへの参照
+		*/
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>& GetCopyQueue();
+		
+		/**
+		* @fn
+		* @brief COMPUTEキューのフェッチ
+		* @return キューへの参照
+		*/
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue>& GetComputeQueue();
+
+		/**
+		* @fn
 		* @brief 待機
 		* @param[in] fence　フェンス　NullPtrで保持フェンスで待機
 		*/
@@ -86,6 +100,22 @@ namespace K3D {
 		* @return デスクリプション
 		*/
 		void ExecuteCommandLists(std::vector<std::shared_ptr<CommandList>>& lists);
+
+		/**
+		* @fn
+		* @brief キューのデスクリプションの取得
+		* @param[in] lists　コマンドリストベクタへの参照
+		* @return デスクリプション
+		*/
+		void ExecuteCopy(std::vector<std::shared_ptr<CommandList>>& lists);
+
+		/**
+		* @fn
+		* @brief キューのデスクリプションの取得
+		* @param[in] lists　コマンドリストベクタへの参照
+		* @return デスクリプション
+		*/
+		void ExecuteCompute(std::vector<std::shared_ptr<CommandList>>& lists);
 
 		/**
 		* @fn

@@ -29,7 +29,7 @@ namespace K3D {
 
 		void FlipScreen();
 
-		void CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* buffer);
+		void CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* src);
 
 		void Term();
 
