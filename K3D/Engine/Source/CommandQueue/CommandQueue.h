@@ -107,7 +107,7 @@ namespace K3D {
 		* @param[in] lists　コマンドリストベクタへの参照
 		* @return デスクリプション
 		*/
-		void ExecuteCopy(std::vector<std::shared_ptr<CommandList>>& lists);
+		void ExecuteCopyCommands(std::vector<std::shared_ptr<CommandList>>& lists);
 
 		/**
 		* @fn
@@ -115,7 +115,7 @@ namespace K3D {
 		* @param[in] lists　コマンドリストベクタへの参照
 		* @return デスクリプション
 		*/
-		void ExecuteCompute(std::vector<std::shared_ptr<CommandList>>& lists);
+		void ExecuteComputeCommands(std::vector<std::shared_ptr<CommandList>>& lists);
 
 		/**
 		* @fn
@@ -131,6 +131,8 @@ namespace K3D {
 		void Discard();
 
 	private:
+
+		void Execute(std::vector<std::shared_ptr<CommandList>>& lists, Microsoft::WRL::ComPtr<ID3D12CommandQueue>& queue);
 	};
 }
 

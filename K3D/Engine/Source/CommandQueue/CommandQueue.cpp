@@ -81,12 +81,22 @@ D3D12_COMMAND_QUEUE_DESC& K3D::CommandQueue::GetDesc()
 
 void K3D::CommandQueue::ExecuteCommandLists(std::vector<std::shared_ptr<CommandList>>& lists)
 {
-	std::vector < ID3D12CommandList* > rawLists(lists.size());
-	auto ptr = rawLists.data();
-	for (auto& list : lists) {
-		(*ptr = list->GetCommandList().Get())++;
-	}
-	this->_3DQueue->ExecuteCommandLists(static_cast<unsigned int>(lists.size()), rawLists.data());
+	Execute(lists, _3DQueue);
+	DETAILS_LOG(String("Execute 3DQueue"));
+}
+
+void K3D::CommandQueue::ExecuteCopyCommands(std::vector<std::shared_ptr<CommandList>>& lists)
+{
+	Execute(lists, _copyQueue);
+	DETAILS_LOG(String("Execute CopyQueue"));
+
+}
+
+void K3D::CommandQueue::ExecuteComputeCommands(std::vector<std::shared_ptr<CommandList>>& lists)
+{
+	Execute(lists, _computeQueue);
+	DETAILS_LOG(String("Execute ComputeQueue"));
+
 }
 
 void K3D::CommandQueue::SetName(std::string name)
@@ -100,6 +110,16 @@ void K3D::CommandQueue::Discard()
 		_3DQueue.Reset();
 		DEBUG_LOG(std::string(_name + " is Reset"));
 	}
+}
+
+void K3D::CommandQueue::Execute(std::vector<std::shared_ptr<CommandList>>& lists, Microsoft::WRL::ComPtr<ID3D12CommandQueue>& queue)
+{
+	std::vector < ID3D12CommandList* > rawLists(lists.size());
+	auto ptr = rawLists.data();
+	for (auto& list : lists) {
+		(*ptr = list->GetCommandList().Get())++;
+	}
+	queue->ExecuteCommandLists(static_cast<unsigned int>(lists.size()), rawLists.data());
 }
 
 
