@@ -29,9 +29,9 @@ namespace K3D {
 
 		HRESULT									Initialize(Factory* factory, bool useWarpDevice = false);
 
-		Microsoft::WRL::ComPtr<ID3D12Device3>	GetDevice()const;
+		Microsoft::WRL::ComPtr<ID3D12Device3>&	GetDevice();
 
-		const D3D_FEATURE_LEVEL&				GetFeatureLevel()const;
+		const D3D_FEATURE_LEVEL&				GetFeatureLevel();
 
 		void									Discard();
 

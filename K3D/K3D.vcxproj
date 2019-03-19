@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\Device\D3D11on12Device.cpp" />
     <ClCompile Include="Engine\Source\DescriptorHeap\Descriptor.cpp" />
     <ClCompile Include="Engine\Source\CommandAllocator\CommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\ComponentLocator\ComponentLocator.cpp" />
@@ -111,14 +112,18 @@
     <ClCompile Include="Engine\Source\DescriptorHeap\GameHeap.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.cpp" />
+    <ClCompile Include="Engine\Source\Utility\Singleton.cpp" />
+    <ClCompile Include="Engine\Source\Sprite\Sprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
     <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp" />
+    <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\Device\D3D11on12Device.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\Descriptor.h" />
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\ComponentLocator\ComponentLocator.h" />
@@ -224,9 +229,12 @@
     <ClInclude Include="Engine\Source\DescriptorHeap\GameHeap.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.h" />
+    <ClInclude Include="Engine\Source\Utility\Singleton.h" />
+    <ClInclude Include="Engine\Source\Sprite\Sprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h" />
+    <ClInclude Include="Engine\Source\TextUI\TextUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\includes\ShaderMath.hlsl">
