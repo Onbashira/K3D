@@ -12,13 +12,14 @@ K3D::D3D11on12Device::D3D11on12Device()
 
 K3D::D3D11on12Device::~D3D11on12Device()
 {
+	Discard();
 }
 
-HRESULT K3D::D3D11on12Device::Init(std::shared_ptr<D3D12Device> d3d12Device, std::shared_ptr<CommandQueue> queue)
+HRESULT K3D::D3D11on12Device::Initialize(std::shared_ptr<D3D12Device>& d3d12Device, std::shared_ptr<CommandQueue>& queue)
 {
 	HRESULT ret = S_OK;
 
-	UINT flags = 0;
+	UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 #ifdef _DEBUG
 	flags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
@@ -35,22 +36,57 @@ HRESULT K3D::D3D11on12Device::Init(std::shared_ptr<D3D12Device> d3d12Device, std
 
 	ret = d3d11Device.As(&_d3d11on12Device);
 
-	if (FAILED(ret)) {
-
+	if (FAILED(ret)) 
+	{
 		return ret;
-
 	}
 #ifdef _DEBUG
 
 	Microsoft::WRL::ComPtr<ID3D12InfoQueue> infoQueue;
+	ret = d3d12Device->GetDevice()->QueryInterface(IID_PPV_ARGS(&infoQueue));
+	if (SUCCEEDED(ret)) {
+		D3D12_MESSAGE_SEVERITY severities[] =
+		{
+			D3D12_MESSAGE_SEVERITY::D3D12_MESSAGE_SEVERITY_INFO
+		};
 
+		D3D12_MESSAGE_ID denyIds[] =
+		{
+			D3D12_MESSAGE_ID_INVALID_DESCRIPTOR_HANDLE,
+		};
+
+		D3D12_INFO_QUEUE_FILTER filter = {};
+		filter.DenyList.NumSeverities = _countof(severities);
+		filter.DenyList.pSeverityList = severities;
+		filter.DenyList.NumIDs = _countof(denyIds);
+		filter.DenyList.pIDList = denyIds;
+
+		ret = infoQueue->PushStorageFilter(&filter);
+
+		if (FAILED(ret)) 
+		{
+			return ret;
+		}
+	}
 
 #endif // _DEBUG
 
+	return ret;
 
  }
 
 Microsoft::WRL::ComPtr<ID3D11On12Device>& K3D::D3D11on12Device::GetDevice()
 {
 	return this->_d3d11on12Device;
+}
+
+void K3D::D3D11on12Device::Discard()
+{
+
+	if (_d3d11DeviceContext.Get() != nullptr) {
+		this->_d3d11DeviceContext.Reset();
+	}
+	if (_d3d11on12Device.Get() != nullptr) {
+		this->_d3d11on12Device.Reset();
+	}
 }

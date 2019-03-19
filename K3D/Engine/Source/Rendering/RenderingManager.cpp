@@ -33,6 +33,12 @@ void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, 
 
 }
 
+std::vector<std::shared_ptr<K3D::Resource>> K3D::RenderingManager::GetMasterRenderTargets()
+{
+	return _swapChain.Initialize
+	return std::vector<std::shared_ptr<K3D::Resource>>();
+}
+
 void K3D::RenderingManager::Term()
 {
 	_swapChain.Discard();

@@ -1,25 +1,13 @@
 #pragma once
 namespace K3D {
 	class Factory;
+	class D3D12Device;
+	class D3D11On12Device;
 	class RenderingDevice
 	{
 	public:
 
 	private:
-
-		int _deviceNode;
-
-		D3D_FEATURE_LEVEL _featureLevel;
-
-		DXGI_ADAPTER_DESC1 _adapterDesc;
-
-		bool _useWarpDevice;
-
-		Microsoft::WRL::ComPtr<ID3D12Device3> _device;
-
-		String _deviceName;
-
-		static inline std::vector<String> _usedGPUName;
 
 	public:
 		

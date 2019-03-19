@@ -31,6 +31,8 @@ namespace K3D {
 
 		void CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* src);
 
+		std::vector<std::shared_ptr<K3D::Resource>> GetMasterRenderTargets();
+
 		void Term();
 
 	private:

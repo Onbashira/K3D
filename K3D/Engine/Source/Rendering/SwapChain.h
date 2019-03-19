@@ -14,6 +14,8 @@ namespace K3D {
 	class SwapChain
 	{	
 	
+		friend class RenderingManager;
+
 	public:
 	
 	private:

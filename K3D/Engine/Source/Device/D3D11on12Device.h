@@ -22,9 +22,11 @@ namespace K3D {
 		D3D11on12Device();
 		virtual ~D3D11on12Device();
 
-		HRESULT Init(std::shared_ptr<D3D12Device> d3d12Device, std::shared_ptr<CommandQueue> queue);
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& d3d12Device, std::shared_ptr<CommandQueue>& queue);
 	
 		Microsoft::WRL::ComPtr<ID3D11On12Device>& GetDevice();
+
+		void Discard();
 
 	};
 }
