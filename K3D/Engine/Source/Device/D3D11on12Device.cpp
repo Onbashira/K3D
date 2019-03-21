@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "D3D11on12Device.h"
+#include "D3D11On12Device.h"
 #include "Engine/Source/Device/D3D12Device.h"
 #include "Engine/Source/CommandQueue/CommandQueue.h"
 
 
 
-K3D::D3D11on12Device::D3D11on12Device()
+K3D::D3D11On12Device::D3D11On12Device()
 {
 }
 
 
-K3D::D3D11on12Device::~D3D11on12Device()
+K3D::D3D11On12Device::~D3D11On12Device()
 {
 	Discard();
 }
 
-HRESULT K3D::D3D11on12Device::Initialize(std::shared_ptr<D3D12Device>& d3d12Device, std::shared_ptr<CommandQueue>& queue)
+HRESULT K3D::D3D11On12Device::Initialize(std::shared_ptr<D3D12Device>& d3d12Device, std::shared_ptr<CommandQueue>& queue)
 {
 	HRESULT ret = S_OK;
 
@@ -75,12 +75,17 @@ HRESULT K3D::D3D11on12Device::Initialize(std::shared_ptr<D3D12Device>& d3d12Devi
 
  }
 
-Microsoft::WRL::ComPtr<ID3D11On12Device>& K3D::D3D11on12Device::GetDevice()
+Microsoft::WRL::ComPtr<ID3D11On12Device>& K3D::D3D11On12Device::GetDevice()
 {
 	return this->_d3d11on12Device;
 }
 
-void K3D::D3D11on12Device::Discard()
+Microsoft::WRL::ComPtr<ID3D11DeviceContext> K3D::D3D11On12Device::Get11DeviceContext()
+{
+	return _d3d11DeviceContext;
+}
+
+void K3D::D3D11On12Device::Discard()
 {
 
 	if (_d3d11DeviceContext.Get() != nullptr) {

@@ -9,9 +9,9 @@ K3D::RenderingManager::~RenderingManager()
 	Term();
 }
 
-HRESULT K3D::RenderingManager::Initialize(CommandQueue* commandQueue, Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
+HRESULT K3D::RenderingManager::Initialize(std::shared_ptr<D3D12Device> device, Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
 {
-	CHECK_RESULT(_swapChain.Initialize(*commandQueue, *factory, *window, windowWidth, windowHeight, bufferNum));
+	CHECK_RESULT(_swapChain.Initialize(*this->_masterQueue.get(), *factory, *window, windowWidth, windowHeight, bufferNum));
 	return S_OK;
 }
 
@@ -35,8 +35,7 @@ void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, 
 
 std::vector<std::shared_ptr<K3D::Resource>> K3D::RenderingManager::GetMasterRenderTargets()
 {
-	return _swapChain.Initialize
-	return std::vector<std::shared_ptr<K3D::Resource>>();
+	return _swapChain._rtResource;
 }
 
 void K3D::RenderingManager::Term()

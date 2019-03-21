@@ -9,7 +9,7 @@ namespace K3D {
 			 EMPTY, CBV, SRV, UAV, RTV, DSV, SAMP
 		};
 
-		//ヒープからのオフセット
+		//ヒープ先頭からのオフセット
 		unsigned int offset;
 		//このビューのタイプ
 		Descriptor::ViewType viewType;

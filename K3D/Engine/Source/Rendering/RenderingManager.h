@@ -7,6 +7,7 @@ namespace K3D {
 	class CommandQueue;
 	class Factory;
 	class Window;
+	class RenderContext;
 
 	class RenderingManager : private NonCopyable
 	{
@@ -19,11 +20,13 @@ namespace K3D {
 
 		SwapChain _swapChain;
 
+		std::shared_ptr<CommandQueue> _masterQueue;
+
 	public:
 
 		~RenderingManager();
 
-		HRESULT Initialize(CommandQueue* commandQueue, Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
+		HRESULT Initialize(std::shared_ptr<D3D12Device> device,Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
 
 		void ClearScreen(std::weak_ptr<CommandList> list);
 

@@ -16,6 +16,8 @@
 
 namespace K3D {
 
+	class RenderingDevice;
+
 	class Framework : NonCopyable
 	{
 
@@ -40,10 +42,7 @@ namespace K3D {
 		std::wstring _appClassName;
 
 		//!デバイス
-		std::shared_ptr<D3D12Device> _device;
-
-		//!デフォルトのコマンドリスト
-		std::shared_ptr<CommandList> _defaultCommandList;
+		std::shared_ptr<RenderingDevice> _device;
 
 		//ファクトリ
 		Factory _factory;

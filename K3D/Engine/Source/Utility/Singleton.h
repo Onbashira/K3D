@@ -1,24 +1,26 @@
 #pragma once
 
 
-template<typename T>
-class Singleton
-{
-public:
-
-	static std::unique_ptr<T>& GetInstance()
+namespace K3D {
+	template<typename T>
+	class Singleton
 	{
-		static auto instance = std::make_unique<T>();
-		return instance;
-	}
+	public:
 
-	virtual ~Singleton() {}
+		static std::unique_ptr<T>& GetInstance()
+		{
+			static auto instance = std::make_unique<T>();
+			return instance;
+		}
 
-protected:
-	Singleton() {}
-private:
-	Singleton(const Singleton&) = delete;
-	Singleton& operator=(const Singleton&) = delete;
-	Singleton(Singleton&&) = delete;
-	Singleton& operator=(Singleton&&) = delete;
-};
+		virtual ~Singleton() {}
+
+	protected:
+		Singleton() {}
+	private:
+		Singleton(const Singleton&) = delete;
+		Singleton& operator=(const Singleton&) = delete;
+		Singleton(Singleton&&) = delete;
+		Singleton& operator=(Singleton&&) = delete;
+	};
+}

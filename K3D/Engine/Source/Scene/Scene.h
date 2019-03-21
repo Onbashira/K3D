@@ -2,6 +2,7 @@
 namespace K3D {
 
 	class RenderContext;
+	class RenderingDevice;
 	class RenderingPassHolder;
 	class GameHeap;
 
@@ -17,10 +18,10 @@ namespace K3D {
 		std::shared_ptr<RenderContext> _renderCotext;
 		std::shared_ptr<RenderingPassHolder> _pathHolder;
 		std::shared_ptr<GameHeap> _gameHeap;
-
+		std::shared_ptr<RenderingDevice> _device;
 	public:
 		
-		Scene();
+		Scene(std::shared_ptr<RenderingDevice> renderingDevice);
 		
 		~Scene();
 		virtual void ScreenClear() = 0;

@@ -226,6 +226,12 @@ namespace K3D::Util {
 #endif
 	}
 
+	template<typename T1, typename T2 = WCHAR * >
+	void Comment(const T1& t1, const T2& t2 = L"")
+	{
+		MessageBox(NULL, t1, t2, MB_OK);
+	}
+
 }
 
 

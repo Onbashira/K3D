@@ -3,22 +3,28 @@ namespace K3D {
 
 	class Resource;
 	class RenderContext;
+	class RenderingPassHolder;
 	class RenderingDevice;
 
 	//レンダリングパスベース
 	class RenderingPass
 	{
+	
 	public:
+
+	protected:
+
+		std::vector<std::shared_ptr<Resource>> _prePathRenderTarges;
 
 	private:
 
 		String _pathName;
 
-		std::vector<std::shared_ptr<Resource>> _prePathRenderTarges;
+		std::weak_ptr<RenderingPassHolder> _parentHolder;
 
 	public:
 
-		RenderingPass();
+		RenderingPass(std::shared_ptr<RenderingPassHolder> parentHolder);
 
 		virtual ~RenderingPass();
 

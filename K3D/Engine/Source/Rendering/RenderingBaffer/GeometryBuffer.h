@@ -15,9 +15,6 @@ namespace K3D {
 
 
 	private:
-		DescriptorHeap _geometryBufferHeap;
-
-		DescriptorHeap _rendaerTargetHeap;
 
 		std::unordered_map<String, ShaderResource> _geometryBufferResource;
 
@@ -29,17 +26,8 @@ namespace K3D {
 	
 		~GeometryBuffer();
 	
-		void Initialize(unsigned int windowWidth,unsigned int windowHeight , unsigned int textureNum);
-
-		void Discard();
-
-
 	private:
 
-		void InitializeHeap();
-		
-		void InitializeResource(unsigned int windowWidth, unsigned int windowHeight);
-	
 	};
 
 }

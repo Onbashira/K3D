@@ -8,7 +8,7 @@
 
 namespace K3D {
 
-	class TextUI
+	class TextUI : Singleton< TextUI>
 	{
 	public:
 		
@@ -23,13 +23,7 @@ namespace K3D {
 		};
 	private:
 		//デバイス
-
-
-
 	public:
-
-		TextUI();
-		virtual ~TextUI();
 	};
 
 }

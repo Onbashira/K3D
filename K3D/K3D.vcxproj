@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\Device\D2DDevice.cpp" />
     <ClCompile Include="Engine\Source\Device\D3D11on12Device.cpp" />
     <ClCompile Include="Engine\Source\DescriptorHeap\Descriptor.cpp" />
     <ClCompile Include="Engine\Source\CommandAllocator\CommandAllocator.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\Device\D2DDevice.h" />
     <ClInclude Include="Engine\Source\Device\D3D11on12Device.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\Descriptor.h" />
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h" />

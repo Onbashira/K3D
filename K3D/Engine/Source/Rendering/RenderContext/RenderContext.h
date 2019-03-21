@@ -23,6 +23,10 @@ namespace K3D {
 		int _currentIndex;
 
 		int _node;
+		
+		UINT64 _currentFence;
+		
+		bool _isDiscarded;
 
 		std::vector<std::array<std::shared_ptr<CommandList>, 2>> _cmdLists;
 
@@ -34,7 +38,7 @@ namespace K3D {
 
 		std::shared_ptr<CommandQueue> _queueRef;
 
-		std::vector<std::shared_ptr<CommandList>> _listsVector;
+		std::vector<std::vector<std::shared_ptr<CommandList>>> _listsVector;
 
 	public:
 
@@ -50,7 +54,7 @@ namespace K3D {
 
 		int IncrementCount();
 
-		std::weak_ptr<K3D::CommandList> GetCurrentList(RC_COMMAND_LIST_TYPE& listType);
+		std::weak_ptr<K3D::CommandList> GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE& listType);
 		
 		std::weak_ptr<K3D::CommandAllocator> GetCurrentCmdAllocator();
 
@@ -62,7 +66,7 @@ namespace K3D {
 
 		void ResetAllocators();
 
-		void ResetCurrentCommandList();
+		void ResetCurrentCommandAllocator();
 
 		void ResetCommandList(std::shared_ptr<CommandList>& list);
 

@@ -1,6 +1,6 @@
 #include "Framework.h"
 #include "Engine/Source/GraphicsManager/GraphicsContextManager.h"
-
+#include "Engine/Source/Device/RenderingDevice.h"
 
 K3D::Framework::Framework() :
 	_windowWidth(640), _windowHeight(480), _useWarpDevice(false), _backBufferNum(3)
@@ -31,22 +31,12 @@ void K3D::Framework::Terminate()
 
 std::shared_ptr<K3D::D3D12Device> & K3D::Framework::GetDevice()
 {
-	return _instance->_device;
+	return _instance->_device->GetD3D12Device();
 }
 
 K3D::Factory & K3D::Framework::GetFactory()
 {
 	return _instance->_factory;
-}
-
-K3D::CommandQueue & K3D::Framework::GetCommandQueue()
-{
-	return _instance->_drawQueue;
-}
-
-std::shared_ptr<K3D::CommandList> K3D::Framework::GetCommandList()
-{
-	return _instance->_defaultCommandList;
 }
 
 K3D::Window & K3D::Framework::GetWindow()
@@ -169,8 +159,8 @@ HRESULT K3D::Framework::InitD3D12()
 
 HRESULT K3D::Framework::InitDevice()
 {
-	_device = std::make_shared<D3D12Device>();
-	return _device->Initialize(&_factory, _useWarpDevice);
+	_device = std::make_shared<RenderingDevice>();
+	return _device->Initialize();
 }
 
 HRESULT K3D::Framework::InitFactory()

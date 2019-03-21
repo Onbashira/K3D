@@ -1,31 +1,14 @@
 #include "RenderingDevice.h"
 #include "Engine/Source/Factory/Factory.h"
-
-//対応フィーチャーレベル
-const D3D_FEATURE_LEVEL FeatureLevels[] =
-{
-	D3D_FEATURE_LEVEL_12_1,
-	D3D_FEATURE_LEVEL_12_0,
-	D3D_FEATURE_LEVEL_11_1,
-	D3D_FEATURE_LEVEL_11_0
-};
-const std::wstring GPU_CARD_SPEC_LIST[] = {
-
-	L"NVIDIA GeForce GTX 1080Ti",
-	L"NVIDIA GeForce GTX 1080",
-	L"NVIDIA GeForce GTX 1070Ti",
-	L"NVIDIA GeForce GTX 1070",
-	L"NVIDIA GeForce GTX 1060",
-	L"NVIDIA GeForce GTX 1050Ti",
-	L"NVIDIA GeForce GTX 1050",
-
-	L"Intel HD Graphics"
-
-};
+#include "Engine/Source/Device/D2DDevice.h"
+#include "Engine/Source/Device/D3D11On12Device.h"
+#include "Engine/Source/Device/D3D12Device.h"
+#include "Engine/Source/Factory/Factory.h"
+#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 
 K3D::RenderingDevice::RenderingDevice()
 {
-	
+
 }
 
 
@@ -34,77 +17,62 @@ K3D::RenderingDevice::~RenderingDevice()
 	Discard();
 }
 
-HRESULT K3D::RenderingDevice::Create(Factory * factory, int node, bool useWarpDevice)
+HRESULT K3D::RenderingDevice::InitializeD3D12Device(Factory * factory, bool useWarpDevice)
 {
-	HRESULT result = {};
-	_useWarpDevice = useWarpDevice;
-	if (_useWarpDevice) {
-		Microsoft::WRL::ComPtr<IDXGIAdapter>	warpAdapter;
+	HRESULT ret = {};
 
-		if (FAILED(factory->GetFactory()->EnumWarpAdapter(IID_PPV_ARGS(&warpAdapter)))) {
-			return E_FAIL;
-		}
-		for (auto i : FeatureLevels) {
-			if (SUCCEEDED(D3D12CreateDevice(warpAdapter.Get(), i, IID_PPV_ARGS(&_device)))) {
-				_featureLevel = i;
-				break;
-			}
-		}
-
+	this->_d3d12Device = std::make_shared<D3D12Device>();
+	ret = this->_d3d12Device->Initialize(factory, useWarpDevice);
+	if (FAILED(ret)) {
+		Util::Comment(L"D3D12デバイスの作成失敗");
+		return ret;
 	}
-	else {
-		Microsoft::WRL::ComPtr<IDXGIAdapter1>	hardwareAdapter;
-		Microsoft::WRL::ComPtr<IDXGIAdapter1>	adapter;
-		hardwareAdapter = nullptr;
+	return ret;
 
-		for (UINT i = 0; DXGI_ERROR_NOT_FOUND != factory->GetFactory()->EnumAdapters1(i, &adapter); i++) {
-			//アダプタの取得
-			adapter->GetDesc1(&_adapterDesc);
-			if (_adapterDesc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
-				continue;
-			}
+}
 
-			for (auto i : FeatureLevels) {
-				//アダプタが想定したFeatureLevelに対応しているか、またそのレベルでデバイスが作成できるか
+HRESULT K3D::RenderingDevice::InitialzeSubDevice(std::shared_ptr<CommandQueue>& queue, Factory * factory, bool useWarpDevice)
+{
 
-				if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), i, _uuidof(ID3D12Device3), nullptr))) {
-					_featureLevel = i;
-					hardwareAdapter = adapter;
-					for (auto& spec : GPU_CARD_SPEC_LIST) {
-						if (spec == std::wstring(&_adapterDesc.Description[0])) {
-							result = D3D12CreateDevice(hardwareAdapter.Get(), _featureLevel, IID_PPV_ARGS(&_device));
-							if (FAILED(result)) {
-								continue;
-							}
-						}
-						return result;
-					}
-				}
-			}
-		}
-		adapter.Reset();
+	HRESULT ret = {};
+
+
+
+	this->_d3d11On12Devcie = std::make_shared<D3D11On12Device>();
+	ret = this->_d3d11On12Devcie->Initialize(_d3d12Device, queue);
+	if (FAILED(ret)) {
+		Util::Comment(L"D3D11On12デバイスの作成失敗");
+		return ret;
 	}
-	return result;
+
+	this->_d2dDevice = std::make_shared<D2DDevice>();
+	ret = this->_d2dDevice->Initialize(_d3d11On12Devcie);
+	if (FAILED(ret)) {
+		Util::Comment(L"D3D12デバイスの作成失敗");
+		return ret;
+	}
+
+	return ret;
 }
 
-Microsoft::WRL::ComPtr<ID3D12Device3> K3D::RenderingDevice::GetDevice() const
+std::shared_ptr<K3D::D3D12Device > K3D::RenderingDevice::GetD3D12Device()
 {
-	return _device;
+	return _d3d12Device;
 }
 
-const D3D_FEATURE_LEVEL & K3D::RenderingDevice::GetFeatureLevel() const
+std::shared_ptr<K3D::D3D11On12Device> K3D::RenderingDevice::GetD3D11On12Device()
 {
-	return _featureLevel;
+	return _d3d11On12Devcie;
 }
 
-const K3D::String & K3D::RenderingDevice::GetDeviceName() const
+std::shared_ptr<K3D::D2DDevice> K3D::RenderingDevice::GetD2DDevice()
 {
-	return _deviceName;
+	return _d2dDevice;
 }
 
 void K3D::RenderingDevice::Discard()
 {
-	if (this->_device.Get() != nullptr) {
-		_device.Reset();
-	}
+	_d2dDevice->Discard();
+	_d3d11On12Devcie->Discard();
+	_d3d12Device->Discard();
 }

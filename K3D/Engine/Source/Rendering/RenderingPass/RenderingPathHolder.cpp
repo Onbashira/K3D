@@ -2,11 +2,16 @@
 #include "RenderingPathHolder.h"
 
 
-RenderingPathHolder::RenderingPathHolder()
+K3D::RenderingPathHolder::RenderingPathHolder()
 {
 }
 
 
-RenderingPathHolder::~RenderingPathHolder()
+K3D::RenderingPathHolder::~RenderingPathHolder()
 {
+}
+
+void K3D::RenderingPathHolder::RegistRenderingPass(std::shared_ptr<RenderingPass> pass)
+{
+	this->_rpList.push_back(pass);
 }

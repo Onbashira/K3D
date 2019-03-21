@@ -8,7 +8,7 @@ namespace K3D {
 	class D3D12Device;
 	class CommandQueue;
 
-	class D3D11on12Device
+	class D3D11On12Device
 	{
 	public:
 	private:
@@ -19,12 +19,14 @@ namespace K3D {
 
 
 	public:
-		D3D11on12Device();
-		virtual ~D3D11on12Device();
+		D3D11On12Device();
+		virtual ~D3D11On12Device();
 
 		HRESULT Initialize(std::shared_ptr<D3D12Device>& d3d12Device, std::shared_ptr<CommandQueue>& queue);
 	
 		Microsoft::WRL::ComPtr<ID3D11On12Device>& GetDevice();
+
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> Get11DeviceContext();
 
 		void Discard();
 
