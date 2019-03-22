@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Engine/Source/CommandList/CommandList.h"
+#include "Engine/Source/DescriptorHeap/GameHeap.h"
 
 K3D::GameObject::GameObject() :
 	_transform({}), _isEnable(true)
@@ -31,6 +32,11 @@ bool K3D::GameObject::IsEnable()
 K3D::Transform & K3D::GameObject::Transform()
 {
 	return _transform;
+}
+
+void K3D::GameObject::SetGameHeap(std::shared_ptr<GameHeap>& gameHeap)
+{
+	_gameHeap = gameHeap;
 }
 
 void K3D::GameObject::UpdateTransformBuffer()

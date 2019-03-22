@@ -1,6 +1,7 @@
 #pragma once
+#include "Engine/Source/Component/GameObject/GameObject.h"
 namespace K3D {
-	class PrimitiveObject
+	class PrimitiveObject :public GameObject
 	{
 	public:
 		PrimitiveObject();

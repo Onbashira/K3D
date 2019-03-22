@@ -115,7 +115,6 @@
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.cpp" />
     <ClCompile Include="Engine\Source\Utility\Singleton.cpp" />
     <ClCompile Include="Engine\Source\Sprite\Sprite.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPassBuilder.cpp" />
     <ClCompile Include="Engine\Source\Primitive\Object\PrimitiveObject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -236,7 +235,6 @@
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.h" />
     <ClInclude Include="Engine\Source\Utility\Singleton.h" />
     <ClInclude Include="Engine\Source\Sprite\Sprite.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPassBuilder.h" />
     <ClInclude Include="Engine\Source\Primitive\Object\PrimitiveObject.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />

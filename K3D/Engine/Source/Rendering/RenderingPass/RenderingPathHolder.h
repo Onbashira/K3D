@@ -14,6 +14,7 @@ namespace K3D {
 		std::list<std::shared_ptr<RenderingPass>> _rpList;
 
 
+
 	public:
 
 		RenderingPathHolder();

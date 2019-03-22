@@ -12,6 +12,7 @@
 namespace K3D {
 
 	class CommandList;
+	class GameHeap;
 
 	class GameObject
 	{
@@ -31,6 +32,8 @@ namespace K3D {
 
 		std::unique_ptr<PhysicsComponent> _physicsComponent;
 
+		std::shared_ptr<GameHeap> _gameHeap;
+
 	private:
 
 	public:
@@ -49,6 +52,8 @@ namespace K3D {
 
 		Transform& Transform();
 
+		void SetGameHeap(std::shared_ptr<GameHeap>& gameHeap);
+
 		virtual std::unique_ptr<GraphicsComponent>& GraphicsComponent() = 0;
 
 		virtual std::unique_ptr<InputComponent>& InputComponent() = 0;
@@ -64,5 +69,4 @@ namespace K3D {
 	private:
 
 	};
-
 }

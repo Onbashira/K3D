@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
+#include "Engine/Source/DescriptorHeap/Descriptor.h"
 #include "Engine/Source/Resource/ConstantBuffer.h"
 #include <memory>
 #include <vector>
@@ -20,7 +20,7 @@ namespace K3D {
 	private:
 
 		//!デスクリプタヒープ (変形情報 + マテリアル数 + テクスチャ数)　カメラの情報は別で投げる
-		K3D::DescriptorHeap									_heap;
+		std::vector<std::shared_ptr<K3D::Descriptor>>		_heap;
 		//!変形情報デスクリプタの開始位置 (maybe 0)
 		unsigned int										_transformStartPoint;
 		//!マテリアルデスクリプタの開始位置 (maybe 0+1 ~ x)

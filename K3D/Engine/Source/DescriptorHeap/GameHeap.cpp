@@ -4,32 +4,6 @@
 #include "Engine/Source/Resource/Resource.h"
 #include "Engine/Source/DescriptorHeap/Descriptor.h"
 
-K3D::GameHeap::GameHeap(unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize) :
-	_cpuOffset(0), _rtvOffset(0), _dsvOffset(0), _samplerOffset(0)
-{
-	Discard();
-
-	_heaps[HeapType::CPU] = std::make_shared<DescriptorHeap>();
-	_heaps[HeapType::CPU]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, maxCPUHeapSize);
-
-	_heaps[HeapType::RTV] = std::make_shared<DescriptorHeap>();
-	_heaps[HeapType::RTV]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_RTV, maxRTHeapSize);
-
-	_heaps[HeapType::DSV] = std::make_shared<DescriptorHeap>();
-	_heaps[HeapType::DSV]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_DSV, maxDSHeapSize);
-
-	_heaps[HeapType::SAMP] = std::make_shared<DescriptorHeap>();
-	_heaps[HeapType::SAMP]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER, maxSampHeapSize);
-
-	_allocatedDescMap[HeapType::CPU].resize(maxCPUHeapSize);
-	_allocatedDescMap[HeapType::RTV].resize(maxRTHeapSize);
-	_allocatedDescMap[HeapType::DSV].resize(maxDSHeapSize);
-	_allocatedDescMap[HeapType::SAMP].resize(maxSampHeapSize);
-
-
-	_device = K3D::Framework::GetInstance().GetDevice();
-}
-
 K3D::GameHeap::GameHeap(std::shared_ptr<D3D12Device>& device, unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize) :
 	_device(device), _cpuOffset(0), _rtvOffset(0), _dsvOffset(0), _samplerOffset(0)
 {
@@ -57,6 +31,13 @@ K3D::GameHeap::~GameHeap()
 {
 	Discard();
 	_device.reset();
+}
+
+std::shared_ptr<K3D::GameHeap> K3D::GameHeap::CreateGameHeap(std::shared_ptr<D3D12Device>& device, unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize)
+{
+
+	auto ret = std::make_shared<GameHeap>(device, maxCPUHeapSize, maxRTHeapSize, maxDSHeapSize, maxSampHeapSize);
+	return ret;
 }
 
 HRESULT K3D::GameHeap::ReInitialize(unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize)
