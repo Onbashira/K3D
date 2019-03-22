@@ -21,9 +21,6 @@ namespace K3D {
 
 		//!コンピュートキュー
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue>	_computeQueue;
-
-		//!フェンス
-		K3D::Fence	_fence;
 				
 		//!キューの名前
 		std::string _name;
@@ -71,13 +68,6 @@ namespace K3D {
 		* @return キューへの参照
 		*/
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue>& GetComputeQueue();
-
-		/**
-		* @fn
-		* @brief 待機
-		* @param[in] fence　フェンス　NullPtrで保持フェンスで待機
-		*/
-		void Wait(Fence* fence = nullptr);
 
 		/**
 		* @fn
@@ -133,6 +123,7 @@ namespace K3D {
 	private:
 
 		void Execute(std::vector<std::shared_ptr<CommandList>>& lists, Microsoft::WRL::ComPtr<ID3D12CommandQueue>& queue);
+
 	};
 }
 

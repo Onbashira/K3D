@@ -5,6 +5,7 @@ namespace K3D {
 	class D3D11On12Device;
 	class D2DDevice;
 	class CommandQueue;
+
 	class RenderingDevice
 	{
 	public:
@@ -22,9 +23,7 @@ namespace K3D {
 		
 		~RenderingDevice();
 
-		HRESULT InitializeD3D12Device(Factory* factory, bool useWarpDevice);
-
-		HRESULT InitialzeSubDevice(std::shared_ptr<CommandQueue>& queue,Factory* factory, bool useWarpDevice);
+		HRESULT Initialize(std::shared_ptr<D3D12Device> d3d12Device,std::shared_ptr<CommandQueue>& queue,Factory* factory);
 
 		std::shared_ptr<D3D12Device> GetD3D12Device();
 

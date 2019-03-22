@@ -31,7 +31,7 @@ void K3D::Framework::Terminate()
 
 std::shared_ptr<K3D::D3D12Device> & K3D::Framework::GetDevice()
 {
-	return _instance->_device->GetD3D12Device();
+	return _instance->_device;
 }
 
 K3D::Factory & K3D::Framework::GetFactory()
@@ -143,45 +143,39 @@ HRESULT K3D::Framework::InitD3D12()
 
 	CHECK_RESULT(InitDevice());
 
-	CHECK_RESULT(InitCommandQueue());
-
-	CHECK_RESULT(InitCommandList());
-
 	CHECK_RESULT(InitRenderingManager());
 
 	CHECK_RESULT(InitInputManager());
 
 	CHECK_RESULT(InitAudioManager());
 
-	
+
 	return S_OK;
 }
 
 HRESULT K3D::Framework::InitDevice()
 {
-	_device = std::make_shared<RenderingDevice>();
-	return _device->Initialize();
-}
+	HRESULT ret = {};
+	_device = std::make_shared<D3D12Device>();
+	ret = _device->Initialize(&_factory, _useWarpDevice);
 
+	if (ret) {
+
+		Util::Comment(L"D3D12Device‚Ì‰Šú‰»‚ÉŽ¸”s");
+		return ret;
+	}
+
+	return ret;
+}
 HRESULT K3D::Framework::InitFactory()
 {
 	return _factory.Initialize();
 }
 
-HRESULT K3D::Framework::InitCommandQueue()
-{
-	D3D12_COMMAND_QUEUE_DESC desc = {};
-	desc.NodeMask = 0;
-	desc.Priority = D3D12_COMMAND_QUEUE_PRIORITY::D3D12_COMMAND_QUEUE_PRIORITY_HIGH;
-	desc.Flags = D3D12_COMMAND_QUEUE_FLAGS::D3D12_COMMAND_QUEUE_FLAG_NONE;
-	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
-
-	return _drawQueue.Initialize(desc);
-}
 
 HRESULT K3D::Framework::InitRenderingManager()
 {
-	return _renderingManager.Initialize(&_drawQueue, &_factory, &_window, _windowWidth, _windowHeight, _backBufferNum);
+	return _renderingManager.Initialize(_device, &_factory, &_window, _windowWidth, _windowHeight, _backBufferNum);
 }
 
 HRESULT K3D::Framework::InitInputManager()
@@ -209,7 +203,6 @@ void K3D::Framework::TermWindow()
 void K3D::Framework::TermD3D()
 {
 	_renderingManager.Term();
-	_drawQueue.Discard();
 	this->_timer.Stop();
 	this->_factory.Discard();
 	this->_device.reset();

@@ -3,6 +3,7 @@
 #include "Engine/Source/CommandAllocator/CommandAllocator.h"
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CommandQueue/CommandQueue.h"
+#include "Engine/Source/Device/D3D12Device.h"
 
 K3D::RenderContext::RenderContext() : 
 	_frameNum(0),_currentIndex(0),_node(0),_currentFence(0),
@@ -53,13 +54,16 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 			return hret;
 
 	}
+
 	return hret;
 
 }
 
 HRESULT K3D::RenderContext::CreateCommandList(std::shared_ptr<D3D12Device>& device, D3D12_COMMAND_LIST_TYPE & type, std::shared_ptr<CommandList>& commandList)
 {
-	return E_NOTIMPL;
+	CHECK_RESULT(commandList->Initialize(device, device->GetDevice()->GetNodeCount(), type));
+	_listsVector[_currentIndex].push_back(commandList);
+	return S_OK;
 }
 
 int K3D::RenderContext::GetCurrentIndex()
@@ -73,7 +77,7 @@ int K3D::RenderContext::IncrementCount()
 	return _currentIndex;
 }
 
-std::weak_ptr<K3D::CommandList> K3D::RenderContext::GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE & listType)
+std::weak_ptr<K3D::CommandList> K3D::RenderContext::GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE listType)
 {
 	return _cmdLists[_currentIndex][static_cast<int>(listType)];
 }
@@ -93,20 +97,45 @@ std::weak_ptr<K3D::CommandQueue> K3D::RenderContext::GetCommandQueue()
 	return _queueRef;
 }
 
-void K3D::RenderContext::ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue, bool executeNow = false)
+void K3D::RenderContext::PushFrontCmdList(std::shared_ptr<CommandList> list)
+{
+	this->_listsVector[_currentIndex].insert(_listsVector[_currentIndex].begin(),list);
+}
+
+void K3D::RenderContext::PushBackCmdList(std::shared_ptr<CommandList> list)
+{
+	this->_listsVector[_currentIndex].push_back(list);
+}
+
+void K3D::RenderContext::ExecuteCmdList3DQueue()
+{
+	this->_queueRef->ExecuteCommandLists(_listsVector[_currentIndex]);
+}
+
+void K3D::RenderContext::ExecuteCmdListCopyQueue()
+{
+	this->_queueRef->ExecuteCopyCommands(_listsVector[_currentIndex]);
+}
+
+void K3D::RenderContext::ExecuteCmdListComputeQueue()
+{
+	this->_queueRef->ExecuteComputeCommands(_listsVector[_currentIndex]);
+}
+
+void K3D::RenderContext::WaitForQueue(std::shared_ptr<CommandQueue>& commandQueue, bool waitNow)
 {
 	_currentFence++;
 	commandQueue->GetQueue()->Signal(_fences[_currentIndex].GetFence().Get(), _currentFence);
 
 	INT64 displayFence = _currentFence - _frameNum + 1;
 	int displayIndex = _currentIndex;
-	if (executeNow)
+	if (waitNow)
 	{
 		displayFence = _currentFence;
 	}
 	auto completeValue = _fences[_currentIndex].GetFence()->GetCompletedValue();
 	if ((completeValue < displayFence && _currentFence >= _frameNum)
-		|| executeNow && completeValue < _currentFence)
+		|| waitNow && completeValue < _currentFence)
 	{
 		HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
 
@@ -159,7 +188,7 @@ void K3D::RenderContext::Discard()
 		this->_cmdAllocators[i].reset();
 		this->_fences[i].Discard();
 		for (int j = 2; j < 2; ++j) {
-			this->_cmdLists[i][j]->Discard;
+			this->_cmdLists[i][j]->Discard();
 			this->_cmdLists[i][j].reset();
 		}
 		_listsVector[i].clear();

@@ -10,6 +10,8 @@ namespace K3D {
 	// 各シーン毎のレンダーコンテキスト
 	class RenderContext
 	{
+
+		friend class RenderingManager;
 	public:
 		enum class RC_COMMAND_LIST_TYPE
 		{
@@ -54,7 +56,7 @@ namespace K3D {
 
 		int IncrementCount();
 
-		std::weak_ptr<K3D::CommandList> GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE& listType);
+		std::weak_ptr<K3D::CommandList> GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE listType);
 		
 		std::weak_ptr<K3D::CommandAllocator> GetCurrentCmdAllocator();
 
@@ -62,7 +64,17 @@ namespace K3D {
 
 		std::weak_ptr<CommandQueue> GetCommandQueue();
 
-		void ExecuteCommandLists(std::shared_ptr<CommandQueue>& commandQueue,bool executeNow = false);
+		void PushFrontCmdList(std::shared_ptr<CommandList> list);
+
+		void PushBackCmdList(std::shared_ptr<CommandList> list);
+
+		void ExecuteCmdList3DQueue();
+
+		void ExecuteCmdListCopyQueue();
+
+		void ExecuteCmdListComputeQueue();
+
+		void WaitForQueue(std::shared_ptr<CommandQueue>& commandQueue,bool waitNow = false);
 
 		void ResetAllocators();
 

@@ -182,13 +182,6 @@ void K3D::StructuredBuffer::WriteToBuffer(unsigned int numElements, unsigned int
 	Unmap(0, nullptr);
 }
 
-void K3D::StructuredBuffer::WaitForProcess(K3D::CommandQueue* queue)
-{
-
-	queue->Wait();
-
-}
-
 void K3D::StructuredBuffer::Discard()
 {
 	_heap.Discard();

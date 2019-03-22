@@ -25,8 +25,8 @@ HRESULT K3D::D3D11On12Device::Initialize(std::shared_ptr<D3D12Device>& d3d12Devi
 #endif
 
 	Microsoft::WRL::ComPtr<ID3D11Device> d3d11Device;
-	ID3D12CommandQueue* queues[] = { queue->GetQueue().Get() ,queue->GetCopyQueue,queue->GetComputeQueue().Get() };
-	ret = D3D11On12CreateDevice(d3d12Device->GetDevice().Get, flags, nullptr, 0,
+	ID3D12CommandQueue* queues[] = { queue->GetQueue().Get()};
+	ret = D3D11On12CreateDevice(d3d12Device->GetDevice().Get(), flags, nullptr, 0,
 		reinterpret_cast<IUnknown**>(queues), _countof(queues), 0,&d3d11Device,
 		&_d3d11DeviceContext,nullptr);
 	if (FAILED(ret))

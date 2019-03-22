@@ -55,8 +55,6 @@ namespace K3D {
 		HRESULT CreateView(D3D12_SHADER_RESOURCE_VIEW_DESC* srvDesc, D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle);
 
 		void WriteToBuffer(unsigned int numElements, unsigned int elementSize, void* pBufferData);
-
-		void WaitForProcess(K3D::CommandQueue* queue);
 		
 		D3D12_CPU_DESCRIPTOR_HANDLE GetSRVCPUHandle();
 		

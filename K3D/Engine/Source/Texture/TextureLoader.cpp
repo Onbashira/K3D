@@ -7,6 +7,8 @@
 #include "Engine/Source/CommandQueue/CommandQueue.h"
 #include "Engine/Source/Resource/ShaderResource.h"
 #include "Engine/Source/Texture/TextureObject.h"
+#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
+
 
 
 K3D::TextureLoader::TextureLoader()
@@ -14,45 +16,14 @@ K3D::TextureLoader::TextureLoader()
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 }
 
+
 K3D::TextureLoader::~TextureLoader()
 {
 	CoUninitialize();
 }
 
-std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTextureResource(std::string filePath)
-{
-	DirectX::TexMetadata metaData = {};
-	DirectX::ScratchImage scratchImage = {};
-	auto hr = LoadFile(metaData, scratchImage, filePath);
 
-	if (hr != S_OK) 
-	{
-		std::shared_ptr<K3D::TextureObject>();
-	}
-	D3D12_SUBRESOURCE_DATA subResource = {};
-
-	subResource.pData = scratchImage.GetPixels();
-	subResource.RowPitch = scratchImage.GetImages()->rowPitch;
-	subResource.SlicePitch = scratchImage.GetImages()->slicePitch;
-	
-	TextureObjectDesc desc = {};
-
-	desc.subResource = std::move(subResource);
-	desc.metaData = std::move(metaData);
-	desc.fileName = std::move(filePath);
-	
-	if (IsUseGamma(scratchImage.GetImages()->format)) {
-		//汎用ガンマ
-		desc.gamma = 2.2f;
-	}
-	std::shared_ptr<K3D::TextureObject> object = std::make_shared< K3D::TextureObject>();
-
-	UpdateSubResource(Framework::GetInstance().GetCommandList(), &Framework::GetInstance().GetCommandQueue(), object->GetShaderResource(),desc.subResource,desc.fileName);
-
-	return object;
-}
-
-std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTextureResource(std::shared_ptr<CommandList>& commandList, CommandQueue * queue, std::string filePath)
+std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTextureResource(std::shared_ptr<RenderContext>& renderContex, std::string filePath)
 {
 	DirectX::TexMetadata metaData = {};
 	DirectX::ScratchImage scratchImage = {};
@@ -79,10 +50,60 @@ std::shared_ptr<K3D::TextureObject> K3D::TextureLoader::LoadTextureResource(std:
 		desc.gamma = 2.2f;
 	}
 	std::shared_ptr<K3D::TextureObject> object = std::make_shared< K3D::TextureObject>();
-
-	UpdateSubResource(commandList, queue, object->GetShaderResource(), desc.subResource, desc.fileName);
+	
+	UpdateSubResource(renderContex->GetResourceUpdateCmdList(RenderContext::RC_COMMAND_LIST_TYPE::BEGIN).lock(), renderContex, object->GetShaderResource(), desc.subResource, desc.fileName);
 
 	return object;
+}
+
+HRESULT K3D::TextureLoader::UpdateSubResource(std::shared_ptr<CommandList> list, std::shared_ptr<RenderContext>& renderContext, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA & subResource, std::string path)
+{
+	D3D12_SUBRESOURCE_DATA& subresource = subResource;
+
+	//テクスチャのロード処理
+	D3D12_RESOURCE_DESC uploadDesc = {
+		D3D12_RESOURCE_DIMENSION_BUFFER,
+		0,
+		GetRequiredIntermediateSize(resource.lock()->GetResource().Get(), 0, 1),
+		1,
+		1,
+		1,
+		DXGI_FORMAT_UNKNOWN,
+	{ 1, 0 },
+	D3D12_TEXTURE_LAYOUT_ROW_MAJOR,
+	D3D12_RESOURCE_FLAG_NONE
+	};
+
+	D3D12_HEAP_PROPERTIES props = {
+		D3D12_HEAP_TYPE_UPLOAD,
+		D3D12_CPU_PAGE_PROPERTY_UNKNOWN,
+		D3D12_MEMORY_POOL_UNKNOWN,
+		1,
+		1
+	};
+
+	std::unique_ptr<Resource> uploadHeap = std::make_unique<Resource>(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
+
+	uploadHeap->SetName(path + "_UploadHeap");
+
+	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap->GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
+
+	resource.lock()->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE |
+		D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	resource.lock()->SetName(path);
+	list->CloseCommandList();
+	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
+
+	auto& queue = renderContext->GetCommandQueue().lock();
+
+	queue->GetQueue()->ExecuteCommandLists(1, command_lists);
+
+	renderContext->WaitForQueue(queue, true);
+
+	renderContext->ResetCommandList(list);
+
+	uploadHeap->Discard();
+	return S_OK;
 }
 
 bool K3D::TextureLoader::IsUseGamma(DXGI_FORMAT format)
@@ -94,103 +115,7 @@ bool K3D::TextureLoader::IsUseGamma(DXGI_FORMAT format)
 		 DXGI_FORMAT_BC7_UNORM_SRGB == format);
  }
 
-HRESULT K3D::TextureLoader::UpdateSubResource(std::shared_ptr<CommandList> list, CommandQueue* commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path)
-{
-	D3D12_SUBRESOURCE_DATA& subresource = subResource;
-
-	//テクスチャのロード処理
-	D3D12_RESOURCE_DESC uploadDesc = {
-		D3D12_RESOURCE_DIMENSION_BUFFER,
-		0,
-		GetRequiredIntermediateSize(resource.lock()->GetResource().Get(), 0, 1),
-		1,
-		1,
-		1,
-		DXGI_FORMAT_UNKNOWN,
-	{ 1, 0 },
-	D3D12_TEXTURE_LAYOUT_ROW_MAJOR,
-	D3D12_RESOURCE_FLAG_NONE
-	};
-
-	D3D12_HEAP_PROPERTIES props = {
-		D3D12_HEAP_TYPE_UPLOAD,
-		D3D12_CPU_PAGE_PROPERTY_UNKNOWN,
-		D3D12_MEMORY_POOL_UNKNOWN,
-		1,
-		1
-	};
-
-	std::unique_ptr<Resource> uploadHeap = std::make_unique<Resource>(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
-
-	uploadHeap->SetName(path + "_UploadHeap");
-
-	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap->GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
-
-	resource.lock()->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE |
-		D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-	resource.lock()->SetName(path);
-	list->CloseCommandList();
-	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
-	commandQueue->GetQueue()->ExecuteCommandLists(1, command_lists);
-	commandQueue->Wait();
-
-	list->ResetAllocator();
-	list->ResetCommandList();
-	uploadHeap->Discard();
-	return S_OK;
-}
-
-HRESULT K3D::TextureLoader::UpdateSubResource(std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA & subResource, std::string path)
-{
-	D3D12_SUBRESOURCE_DATA& subresource = subResource;
-
-	auto list = Framework::GetInstance().GetCommandList();
-	auto commandQueue = &Framework::GetInstance().GetCommandQueue();
-
-	//テクスチャのロード処理
-
-	D3D12_RESOURCE_DESC uploadDesc = {
-		D3D12_RESOURCE_DIMENSION_BUFFER,
-		0,
-		GetRequiredIntermediateSize(resource.lock()->GetResource().Get(), 0, 1),
-		1,
-		1,
-		1,
-		DXGI_FORMAT_UNKNOWN,
-	{ 1, 0 },
-	D3D12_TEXTURE_LAYOUT_ROW_MAJOR,
-	D3D12_RESOURCE_FLAG_NONE
-	};
-
-	D3D12_HEAP_PROPERTIES props = {
-		D3D12_HEAP_TYPE_UPLOAD,
-		D3D12_CPU_PAGE_PROPERTY_UNKNOWN,
-		D3D12_MEMORY_POOL_UNKNOWN,
-		1,
-		1
-	};
-	
-	std::unique_ptr<Resource> uploadHeap = std::make_unique<Resource>(props, D3D12_HEAP_FLAG_NONE, uploadDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
-
-	uploadHeap->SetName(path + "_UploadHeap");
-
-	UpdateSubresources(list->GetCommandList().Get(), resource.lock()->GetResource().Get(), uploadHeap->GetResource().Get(), static_cast<UINT>(0), static_cast<UINT>(0), static_cast<UINT>(1), &subresource);
-
-	resource.lock()->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE |
-		D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-	resource.lock()->SetName(path);
-	list->CloseCommandList();
-	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
-	commandQueue->GetQueue()->ExecuteCommandLists(1, command_lists);
-	commandQueue->Wait();
-
-	list->ResetAllocator();
-	list->ResetCommandList();
-	uploadHeap->Discard();
-	return S_OK;
-}
-
-HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list, CommandQueue * commandQueue, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path)
+HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list, std::shared_ptr<RenderContext>& renderContext, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path)
 {
 	D3D12_RESOURCE_DESC desc = *resource.lock()->GetResourceDesc();
 
@@ -222,56 +147,12 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list
 	list->CloseCommandList();
 	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
 
-	// closeしてから呼ぼうね
-	commandQueue->GetQueue()->ExecuteCommandLists(1, command_lists); // 実行するコマンドリストの配列をコマンドキューへ送信
+	auto& queue = renderContext->GetCommandQueue().lock();
 
-	commandQueue->Wait();
-	list->ResetAllocator();
-	list->ResetCommandList();
-	return ret;
-}
+	queue->GetQueue()->ExecuteCommandLists(1, command_lists); // 実行するコマンドリストの配列をコマンドキューへ送信
 
-HRESULT K3D::TextureLoader::WriteToSubResource(std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA & subResource, std::string path)
-{
-	D3D12_RESOURCE_DESC desc = *resource.lock()->GetResourceDesc();
-	auto list = Framework::GetInstance().GetCommandList();
-	auto commandQueue = &Framework::GetInstance().GetCommandQueue();
-
-
-	D3D12_HEAP_PROPERTIES heapProp = {};
-	heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-	heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	heapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	heapProp.CreationNodeMask = 1;
-	heapProp.VisibleNodeMask = 1;
-
-	int count = resource.lock()->GetResource().Reset();
-	std::unique_ptr<Resource> destRes = std::make_unique<Resource>(heapProp, D3D12_HEAP_FLAG_NONE, desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
-
-
-	D3D12_BOX box = {};
-	box.left = 0;
-	box.right = static_cast<UINT>(desc.Width);
-	box.top = 0;
-	box.bottom = desc.Height;
-	box.front = 0;
-	box.back = 1;
-
-	auto ret = destRes->GetResource()->WriteToSubresource(0, &box, subResource.pData, box.right * 4, box.bottom * 4);
-	CHECK_RESULT(ret);
-	destRes->ResourceTransition(list, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-	resource.lock()->Discard();
-	resource.lock()->GetResource() = destRes->GetResource();
-	resource.lock()->SetName(path);
-	list->CloseCommandList();
-	ID3D12CommandList* command_lists[] = { list->GetCommandList().Get() };
-
-	// closeしてから呼ぼうね
-	commandQueue->GetQueue()->ExecuteCommandLists(1, command_lists); // 実行するコマンドリストの配列をコマンドキューへ送信
-
-	commandQueue->Wait();
-	list->ResetAllocator();
-	list->ResetCommandList();
+	renderContext->WaitForQueue(queue,true);
+	renderContext->ResetCommandList(list);
 	return ret;
 }
 

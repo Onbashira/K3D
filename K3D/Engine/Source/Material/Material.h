@@ -1,6 +1,7 @@
 #pragma once
 
 namespace K3D {
+
 	class Material
 	{
 	public:

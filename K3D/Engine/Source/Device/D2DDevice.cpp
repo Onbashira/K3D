@@ -71,7 +71,7 @@ HRESULT K3D::D2DDevice::CreateD2DFactory(std::shared_ptr<D3D11On12Device>& d3d11
 	ret = d3d11On12Device->GetDevice().As(&dxgiDevice);
 	if (FAILED(ret))
 	{
-		Util::Comment(L"DXGIデバイスの取得に失敗", __LINE__);
+		Util::Comment(L"DXGIデバイスの取得に失敗");
 		return ret;
 	}
 
@@ -79,7 +79,7 @@ HRESULT K3D::D2DDevice::CreateD2DFactory(std::shared_ptr<D3D11On12Device>& d3d11
 		&fopt, &_d2dFactory);
 	if (FAILED(ret))
 	{
-		Util::Comment(L"D2D1ファクトリの生成に失敗", __LINE__);
+		Util::Comment(L"D2D1ファクトリの生成に失敗");
 	}
 	return ret;
 }
@@ -92,7 +92,7 @@ HRESULT K3D::D2DDevice::CreateD2DDevice(std::shared_ptr<D3D11On12Device>& d3d11O
 	ret = _d2dFactory->CreateDevice(dxgiDevice.Get(), &_d2dDevice);
 	if (FAILED(ret))
 	{
-		Util::Comment(L"D2Dデバイスの生成に失敗", __LINE__);
+		Util::Comment(L"D2Dデバイスの生成に失敗");
 	}
 
 	return ret;
@@ -109,7 +109,7 @@ HRESULT K3D::D2DDevice::CreateD2DDeviceContext()
 	);
 	if (FAILED(ret))
 	{
-		Util::Comment(L"D2Dデバイスコンテキストの生成に失敗", __LINE__);
+		Util::Comment(L"D2Dデバイスコンテキストの生成に失敗");
 	}
 	_d2dDeviceContext->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE::D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 	
@@ -124,7 +124,7 @@ HRESULT K3D::D2DDevice::CreateDWriteDevice()
 	ret = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory),&_dwriteFacotry);
 	if (FAILED(ret))
 	{
-		Util::Comment(L"DWriteFactoryの生成に失敗", __LINE__);
+		Util::Comment(L"DWriteFactoryの生成に失敗");
 	}
 	return ret;
 }

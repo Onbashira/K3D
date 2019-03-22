@@ -8,6 +8,8 @@ namespace K3D {
 	class Factory;
 	class Window;
 	class RenderContext;
+	class RenderingPassHolder;
+	class RenderingDevice;
 
 	class RenderingManager : private NonCopyable
 	{
@@ -22,11 +24,15 @@ namespace K3D {
 
 		std::shared_ptr<CommandQueue> _masterQueue;
 
+		std::shared_ptr<RenderingDevice> _renderingDevice;
+
+		std::shared_ptr<RenderContext> _renderContext;
+
 	public:
 
 		~RenderingManager();
 
-		HRESULT Initialize(std::shared_ptr<D3D12Device> device,Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,Factory* factory, Window* window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
 
 		void ClearScreen(std::weak_ptr<CommandList> list);
 
@@ -34,7 +40,15 @@ namespace K3D {
 
 		void CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* src);
 
-		std::vector<std::shared_ptr<K3D::Resource>> GetMasterRenderTargets();
+		std::vector<std::shared_ptr<K3D::Resource>> GetDisplayRenderTargets();
+
+		std::shared_ptr<CommandQueue> GetQueue();
+
+		std::shared_ptr<RenderingDevice> GetRenderingDevice();
+	
+		std::shared_ptr<RenderContext> GetRenderContex();
+
+		HRESULT CreateCommandList(D3D12_COMMAND_LIST_TYPE& type, std::shared_ptr<CommandList>& commandList);
 
 		void Term();
 

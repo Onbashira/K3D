@@ -15,6 +15,8 @@ namespace K3D {
 	class D3D12Device;
 	class CommandQueue;
 	class CommandList;
+	class RenderContext;
+	class RenderingDevice;
 
 	class TextureManager
 	{
@@ -37,6 +39,7 @@ namespace K3D {
 		//!î•ñƒLƒƒƒŠƒA
 		UnorderedManagerComponent<TextureObject> _textureResourceMap;
 
+		std::shared_ptr<RenderContext> _renderContext;
 
 	public:
 
@@ -47,9 +50,11 @@ namespace K3D {
 			return instance;
 		};
 
+		void SetRenderContext(std::shared_ptr<RenderContext>& renderContext);
+
 		std::shared_ptr<TextureObject> GetTexture(String filename);
 
-		std::shared_ptr<TextureObject> LoadTexture(String filename,std::shared_ptr<D3D12Device> device = nullptr, std::shared_ptr<CommandList> list = nullptr , CommandQueue* queue = nullptr);
+		std::shared_ptr<TextureObject> LoadTexture(String filename);
 
 		std::shared_ptr<TextureObject> DuplicateTexture(String srcFilename, String dstFilename);
 
@@ -78,8 +83,6 @@ namespace K3D {
 		void CreateBlackTexture();
 
 		void CreateWhiteTexture();
-
-		void CreateNullTexture();
 
 	};
 }

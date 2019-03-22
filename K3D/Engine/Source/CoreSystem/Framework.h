@@ -42,7 +42,7 @@ namespace K3D {
 		std::wstring _appClassName;
 
 		//!デバイス
-		std::shared_ptr<RenderingDevice> _device;
+		std::shared_ptr<D3D12Device> _device;
 
 		//ファクトリ
 		Factory _factory;
@@ -134,20 +134,6 @@ namespace K3D {
 		* @return ファクトリ
 		*/
 		K3D::Factory& GetFactory();
-
-		/**
-		* @fn
-		* @brief コマンドキューフェッチ
-		* @return キュー
-		*/
-		K3D::CommandQueue& GetCommandQueue();
-
-		/**
-		* @fn
-		* @brief コマンドリスト
-		* @return リスト
-		*/
-		std::shared_ptr<CommandList> GetCommandList();
 
 		/**
 		* @fn
@@ -288,20 +274,6 @@ namespace K3D {
 		* @return　リザルト　S_OKで成功
 		*/
 		HRESULT InitFactory();
-
-		/**
-		* @fn
-		* @brief コマンドキューの初期化
-		* @return　リザルト　S_OKで成功
-		*/
-		HRESULT InitCommandQueue();
-
-		/**
-		* @fn
-		* @brief コマンドリストの初期化
-		* @return　リザルト　S_OKで成功
-		*/
-		HRESULT InitCommandList();
 
 		/**
 		* @fn

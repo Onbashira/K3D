@@ -6,6 +6,8 @@
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/Texture/TextureLoader.h"
 #include "Engine/Source/CoreSystem/Framework.h"
+#include "Engine/Source/Device/RenderingDevice.h"
+#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 
 K3D::TextureManager::TextureManager()
 {
@@ -19,14 +21,19 @@ K3D::TextureManager::~TextureManager()
 }
 
 
+void K3D::TextureManager::SetRenderContext(std::shared_ptr<RenderContext>& renderContext)
+{
+	_renderContext = renderContext;
+}
+
 std::shared_ptr<K3D::TextureObject> K3D::TextureManager::GetTexture(String filename)
 {
 	return _textureResourceMap.Get(filename).lock();
 }
 
-std::shared_ptr<K3D::TextureObject> K3D::TextureManager::LoadTexture(String filename, std::shared_ptr<D3D12Device> device, std::shared_ptr<CommandList> list, CommandQueue * queue)
+std::shared_ptr<K3D::TextureObject> K3D::TextureManager::LoadTexture(String filename)
 {
-	auto obj = TextureLoader::GetInstance().LoadTextureResource(filename);
+	auto obj = TextureLoader::GetInstance().LoadTextureResource(_renderContext,filename);
 	if (obj != nullptr)
 	{
 		this->_textureResourceMap.Set(filename, obj);
@@ -81,7 +88,8 @@ std::shared_ptr<K3D::TextureObject> K3D::TextureManager::CreateColorTexture(Stri
 
 	obj->_textureResource = std::make_shared<ShaderResource>();
 	obj->_desc.gamma = 1.0f;
-	TextureLoader::GetInstance().UpdateSubResource(obj->_textureResource, obj->_desc.subResource,texName);
+	TextureLoader::GetInstance().UpdateSubResource(_renderContext->GetResourceUpdateCmdList(K3D::RenderContext::RC_COMMAND_LIST_TYPE::BEGIN).lock(), 
+		_renderContext,obj->_textureResource, obj->_desc.subResource,texName);
 	_textureResourceMap.Set(name, obj);
 	return obj;
 }

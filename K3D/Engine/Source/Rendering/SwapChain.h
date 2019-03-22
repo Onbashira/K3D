@@ -10,6 +10,7 @@ namespace K3D {
 	class CommandQueue;
 	class Factory;
 	class Window;
+	class D3D12Device;
 
 	class SwapChain
 	{	

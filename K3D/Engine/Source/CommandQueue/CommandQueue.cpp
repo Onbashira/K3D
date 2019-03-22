@@ -16,21 +16,18 @@ K3D::CommandQueue::~CommandQueue()
 HRESULT K3D::CommandQueue::Initialize(D3D12_COMMAND_QUEUE_DESC& desc)
 {
 	CHECK_RESULT(K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_3DQueue)));
-	CHECK_RESULT(_fence.Initialize(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE));
 
 	return S_OK;
 }
 
 HRESULT K3D::CommandQueue::Initialize(std::weak_ptr<D3D12Device> device, D3D12_COMMAND_QUEUE_DESC & desc)
 {
+	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
 	CHECK_RESULT(device.lock()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_3DQueue)));
+	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_COPY;
 	CHECK_RESULT(device.lock()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_copyQueue)));
+	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_COMPUTE;
 	CHECK_RESULT(device.lock()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_computeQueue)));
-
-	CHECK_RESULT(device.lock()->GetDevice()->CreateCommandQueue(&desc, IID_PPV_ARGS(&_3DQueue)));
-
-	CHECK_RESULT(_fence.Initialize(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE));
-
 	return S_OK;
 }
 
@@ -41,23 +38,14 @@ Microsoft::WRL::ComPtr<ID3D12CommandQueue>& K3D::CommandQueue::GetQueue()
 
 Microsoft::WRL::ComPtr<ID3D12CommandQueue>& K3D::CommandQueue::GetCopyQueue()
 {
-	// TODO: return ステートメントをここに挿入します
+	return _copyQueue;
 }
 
 Microsoft::WRL::ComPtr<ID3D12CommandQueue>& K3D::CommandQueue::GetComputeQueue()
 {
-	// TODO: return ステートメントをここに挿入します
+	return _computeQueue;
 }
 
-void K3D::CommandQueue::Wait(Fence * fence)
-{
-	if (fence != nullptr) {
-		fence->Wait(this);
-	}
-	else {
-		_fence.Wait(this);
-	}
-}
 
 UINT64 K3D::CommandQueue::GetTimestampFrequency()
 {
@@ -101,13 +89,19 @@ void K3D::CommandQueue::ExecuteComputeCommands(std::vector<std::shared_ptr<Comma
 
 void K3D::CommandQueue::SetName(std::string name)
 {
-	this->_3DQueue->SetName(Util::StringToWString(name).c_str());
+	this->_3DQueue->SetName(Util::StringToWString(name + "_3DQueue").c_str());
+	this->_copyQueue->SetName(Util::StringToWString(name + "_CopyQueue").c_str());
+	this->_computeQueue->SetName(Util::StringToWString(name + "_ComputeQueue").c_str());
+
 }
 
 void K3D::CommandQueue::Discard()
 {
 	if (_3DQueue.Get() != nullptr) {
 		_3DQueue.Reset();
+		_copyQueue.Reset();
+		_computeQueue.Reset();
+
 		DEBUG_LOG(std::string(_name + " is Reset"));
 	}
 }
@@ -121,5 +115,3 @@ void K3D::CommandQueue::Execute(std::vector<std::shared_ptr<CommandList>>& lists
 	}
 	queue->ExecuteCommandLists(static_cast<unsigned int>(lists.size()), rawLists.data());
 }
-
-
