@@ -29,7 +29,7 @@
     <ClCompile Include="Engine\Source\Debug\DebugManager.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\CommandManager.cpp" />
-    <ClCompile Include="Engine\Source\Primitive\Cube.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Geometry\Cube.cpp" />
     <ClCompile Include="Engine\Source\CommandQueue\CommandQueueManager.cpp" />
     <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\Source\Async\Fence.cpp" />
@@ -83,8 +83,8 @@
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp" />
     <ClCompile Include="Engine\Source\Window\Window.cpp" />
     <ClCompile Include="Engine\Source\Window\WindowManager.cpp" />
-    <ClCompile Include="Engine\Source\Primitive\Plane.cpp" />
-    <ClCompile Include="Engine\Source\Primitive\Sphere.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Geometry\Plane.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Geometry\Sphere.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\InternalCommandCreater.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\InternalCommand.cpp" />
     <ClCompile Include="Engine\Source\Command\State\GeometryState.cpp" />
@@ -115,6 +115,8 @@
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.cpp" />
     <ClCompile Include="Engine\Source\Utility\Singleton.cpp" />
     <ClCompile Include="Engine\Source\Sprite\Sprite.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPassBuilder.cpp" />
+    <ClCompile Include="Engine\Source\Primitive\Object\PrimitiveObject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -124,6 +126,7 @@
     <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\Component\ComponentsHeader.h" />
     <ClInclude Include="Engine\Source\Device\D2DDevice.h" />
     <ClInclude Include="Engine\Source\Device\D3D11on12Device.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\Descriptor.h" />
@@ -142,7 +145,7 @@
     <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.h" />
     <ClInclude Include="Engine\K3D.h" />
     <ClInclude Include="Engine\Source\Command\Core\CommandManager.h" />
-    <ClInclude Include="Engine\Source\Primitive\Cube.h" />
+    <ClInclude Include="Engine\Source\Primitive\Geometry\Cube.h" />
     <ClInclude Include="Engine\Source\CommandQueue\CommandQueueManager.h" />
     <ClInclude Include="Engine\Source\Async\Fence.h" />
     <ClInclude Include="Engine\Source\Async\ThreadPool.h" />
@@ -198,8 +201,8 @@
     <ClInclude Include="Engine\Source\Utility\Utility.h" />
     <ClInclude Include="Engine\Source\Window\Window.h" />
     <ClInclude Include="Engine\Source\Window\WindowManager.h" />
-    <ClInclude Include="Engine\Source\Primitive\Plane.h" />
-    <ClInclude Include="Engine\Source\Primitive\Sphere.h" />
+    <ClInclude Include="Engine\Source\Primitive\Geometry\Plane.h" />
+    <ClInclude Include="Engine\Source\Primitive\Geometry\Sphere.h" />
     <ClInclude Include="Engine\Source\Command\Core\InternalCommandCreater.h" />
     <ClInclude Include="Engine\Source\Command\Core\InternalCommand.h" />
     <ClInclude Include="Engine\Source\Command\State\GeometryState.h" />
@@ -233,6 +236,8 @@
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.h" />
     <ClInclude Include="Engine\Source\Utility\Singleton.h" />
     <ClInclude Include="Engine\Source\Sprite\Sprite.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPassBuilder.h" />
+    <ClInclude Include="Engine\Source\Primitive\Object\PrimitiveObject.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h" />

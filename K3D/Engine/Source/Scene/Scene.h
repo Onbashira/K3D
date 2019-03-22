@@ -15,13 +15,14 @@ namespace K3D {
 	public:
 	private:
 
-		std::shared_ptr<RenderContext> _renderCotext;
 		std::shared_ptr<RenderingPassHolder> _pathHolder;
 		std::shared_ptr<GameHeap> _gameHeap;
-		std::shared_ptr<RenderingDevice> _device;
+		std::shared_ptr<RenderingDevice> _renderingDevice;
+		std::shared_ptr<RenderContext> _renderCotext;
+
 	public:
 		
-		Scene(std::shared_ptr<RenderingDevice> renderingDevice);
+		Scene(std::shared_ptr<RenderingDevice> renderingDevice , std::shared_ptr<RenderContext> renderCotext);
 		
 		~Scene();
 		virtual void ScreenClear() = 0;

@@ -63,7 +63,7 @@ std::shared_ptr<K3D::RenderingDevice> K3D::RenderingManager::GetRenderingDevice(
 	return _renderingDevice;
 }
 
-std::shared_ptr<K3D::RenderContext> K3D::RenderingManager::GetRenderContex()
+std::shared_ptr<K3D::RenderContext> K3D::RenderingManager::GetRenderContext()
 {
 	return _renderContext;
 }

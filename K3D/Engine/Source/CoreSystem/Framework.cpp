@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "Engine/Source/GraphicsManager/GraphicsContextManager.h"
 #include "Engine/Source/Device/RenderingDevice.h"
+#include "Engine/Source/Texture/TextureManager.h"
 
 K3D::Framework::Framework() :
 	_windowWidth(640), _windowHeight(480), _useWarpDevice(false), _backBufferNum(3)
@@ -182,14 +183,20 @@ HRESULT K3D::Framework::InitInputManager()
 {
 	_inputManager.GamePadInitialize();
 	_inputManager.SetFocusWindow(_window.GetWindowHandle());
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT K3D::Framework::InitAudioManager()
 {
 	_audioManager.InitializeXAudio2();
 	_audioManager.StartSoundEngine();
-	return E_NOTIMPL;
+	return S_OK;
+}
+
+HRESULT K3D::Framework::InitTextureManager()
+{
+	TextureManager::GetInstance().SetRenderContext(this->_renderingManager.GetRenderContext());
+	return S_OK;
 }
 
 void K3D::Framework::TermWindow()
@@ -197,6 +204,7 @@ void K3D::Framework::TermWindow()
 	_inputManager.Discard();
 	_audioManager.StopSoundEngine();
 	_audioManager.Discard();
+	TextureManager::GetInstance().Discard();
 	_window.Discard();
 }
 

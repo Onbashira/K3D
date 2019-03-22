@@ -41,7 +41,7 @@ namespace K3D {
 
 		virtual void SetRootSignature(std::weak_ptr<K3D::RootSignature> rootSignature) = 0;
 
-		virtual void SetCommandList(std::shared_ptr<K3D::CommandList> masterCommandList) = 0;
+		virtual void SetCommandList(std::shared_ptr<K3D::CommandList> CommandList) = 0;
 
 		virtual void BindingShaderObject() = 0;
 

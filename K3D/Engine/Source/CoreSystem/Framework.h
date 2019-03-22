@@ -295,7 +295,13 @@ namespace K3D {
 		* @return　リザルト　S_OKで成功
 		*/
 		HRESULT InitAudioManager();
-
+		
+		/**
+		* @fn
+		* @brief テクスチャマネージャの初期化
+		* @return　リザルト　S_OKで成功
+		*/
+		HRESULT InitTextureManager();
 		/**
 		* @fn
 		* @brief ウインドウの処理を終了する

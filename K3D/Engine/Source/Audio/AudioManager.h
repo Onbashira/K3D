@@ -36,16 +36,11 @@ namespace K3D {
 
 		~AudioManager();
 
-		static AudioManager& GetInstance() {
-			static AudioManager instance;
-			return instance;
-		}
-
 		/**
 		* @fn
 		* @brief Xaudio2‰Šú‰»
 		*/
-		static void InitializeXAudio2();
+		void InitializeXAudio2();
 
 		/**
 		* @fn

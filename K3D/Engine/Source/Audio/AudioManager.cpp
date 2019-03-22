@@ -6,6 +6,7 @@
 #include "Engine/Source/Utility/Utility.h"
 #include "Engine/Source/Debug/Logger.h"
 
+
 K3D::AudioManager::AudioManager()
 {
 
@@ -18,19 +19,17 @@ K3D::AudioManager::~AudioManager()
 }
 
 
-
 void K3D::AudioManager::InitializeXAudio2()
 {
-	if (FAILED(XAudio2Create(&GetInstance()._xAudio2))) {
+	if (FAILED(XAudio2Create(&_xAudio2))) {
 		ERROR_LOG(std::string("XAudio2‚Ìì¬‚É¸”s‚µ‚Ü‚µ‚½"));
 	};
 	INFO_LOG(std::string("XAudio2‚Ìì¬‚É¬Œ÷‚µ‚Ü‚µ‚½"));
 
-	if (FAILED(GetInstance()._xAudio2->CreateMasteringVoice(&GetInstance()._masterVoice))) {
+	if (FAILED(_xAudio2->CreateMasteringVoice(&_masterVoice))) {
 		ERROR_LOG(std::string("MasteringVoice‚Ìì¬‚É¸”s‚µ‚Ü‚µ‚½"));
 	};
 	INFO_LOG(std::string("MasteringVoice‚Ìì¬‚É¬Œ÷‚µ‚Ü‚µ‚½"));
-
 }
 
 std::unique_ptr<K3D::Audio> K3D::AudioManager::CreateSourceVoice(std::weak_ptr<AudioWaveSource> waveResource, AudioCallBack * callback, const XAUDIO2_VOICE_SENDS * sendList, const XAUDIO2_EFFECT_CHAIN * effectChain)
