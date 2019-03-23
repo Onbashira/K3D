@@ -3,10 +3,11 @@
 #include "Engine/Source/Texture/TextureObject.h"
 
 K3D::MeshHeap::MeshHeap()  :
-	_heap(),
 	_textureStartPoint(0),
 	_materialStartPoint(0)
 {
+	_descriptors.clear();
+	_descriptors.shrink_to_fit();
 }
 
 
@@ -15,23 +16,6 @@ K3D::MeshHeap::~MeshHeap()
 	Discard();
 }
 
-
-void K3D::MeshHeap::BindingDescriptorHeaps(std::weak_ptr<K3D::CommandList> list)
-{
-	if (!list.expired()) {
-		ID3D12DescriptorHeap* heaps[] = { this->_heap.GetPtr() };
-
-		list.lock()->GetCommandList()->SetDescriptorHeaps(1, heaps);
-	}
-}
-
-void K3D::MeshHeap::BindingDescriptorHeaps(K3D::CommandList & lsit)
-{
-	ID3D12DescriptorHeap* heaps[] = { this->_heap.GetPtr() };
-
-	lsit.GetCommandList()->SetDescriptorHeaps(1, heaps);
-
-}
 
 void K3D::MeshHeap::SetTransformDescStartIndex(unsigned int startIndex)
 {
@@ -66,11 +50,6 @@ unsigned int K3D::MeshHeap::GetMaterialDescStartIndex()
 	return _materialStartPoint;
 }
 
-K3D::DescriptorHeap & K3D::MeshHeap::GetHeap()
-{
-	return _heap;
-}
-
 K3D::ConstantBuffer & K3D::MeshHeap::GetMaterialBufffer()
 {
 	return this->_materialBuffer;
@@ -98,7 +77,8 @@ K3D::MeshHeap & K3D::MeshHeap::AddTextureRef(std::weak_ptr<K3D::TextureObject> t
 
 void K3D::MeshHeap::Discard()
 {
-	_heap.Discard();
+	_descriptors.clear();
+	_descriptors.shrink_to_fit();
 	_materialBuffer.Discard();
 	_textureResource.clear();
 	_textureResource.shrink_to_fit();

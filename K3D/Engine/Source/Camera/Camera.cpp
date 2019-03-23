@@ -1,7 +1,8 @@
 #include "Camera.h"
 #include "Engine/Source/Component/Transform/Transform.h"
-
-K3D::Camera::Camera() :
+#include "Engine/Source/Component/DefaultComponents.h"
+K3D::Camera::Camera(std::shared_ptr<GameHeap>& heap) : 
+	GameObject(new DefaultGraphicsComponent() , new DefaultInputComponent() , new DefaultPhysicsComponent(), heap),
 	_mode(CAMERA_MODE::Perspective), _aspectRatio(0.0f)
 {
 }

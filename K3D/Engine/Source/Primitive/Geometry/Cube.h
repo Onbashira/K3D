@@ -4,7 +4,23 @@ namespace K3D {
 	class Cube : public PrimitiveObject
 	{
 	public:
-		Cube();
-		~Cube();
+
+	private:
+		
+	public:
+
+		Cube(std::shared_ptr<GameHeap>& heap);
+
+		virtual ~Cube();
+
+		virtual void Update() override;
+
+		virtual void Draw() override;
+	
+	private:
+
+		void MeshCreate();
+
+		void ComponentInitialize();
 	};
 }

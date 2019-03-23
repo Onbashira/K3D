@@ -1,10 +1,6 @@
 #pragma once
 #include "Engine/Source/Resource/ConstantBuffer.h"
 #include "Engine/Source/Component/Transform/Transform.h"
-#include "Engine/Source/Component/GraphicsComponent/GraphicsComponent.h"
-#include "Engine/Source/Component/InputComponent/InputComponent.h"
-#include "Engine/Source/Component/PhysicsComponent/PhysicsComponent.h"
-
 
 #include <memory>
 
@@ -13,9 +9,13 @@ namespace K3D {
 
 	class CommandList;
 	class GameHeap;
+	class GraphicsComponent;
+	class InputComponent;
+	class PhysicsComponent;
 
 	class GameObject
-	{
+	{	
+
 	public:
 
 	protected:
@@ -26,9 +26,9 @@ namespace K3D {
 
 		ConstantBuffer _transformBuffer;
 
-		std::unique_ptr<InputComponent> _inputComponent;
-
 		std::unique_ptr<GraphicsComponent> _graphicsComponent;
+
+		std::unique_ptr<InputComponent> _inputComponent;
 
 		std::unique_ptr<PhysicsComponent> _physicsComponent;
 
@@ -38,11 +38,17 @@ namespace K3D {
 
 	public:
 
-		GameObject();
+		GameObject(GraphicsComponent* graphicsComponent,
+			InputComponent* inputComponent,
+			PhysicsComponent* physicsComponent,
+			std::shared_ptr<GameHeap>& gameHeap
+		);
 
 		virtual ~GameObject();
 
 		virtual void Update() = 0;
+
+		virtual void Draw() = 0;
 
 		void Enable();
 
@@ -54,11 +60,11 @@ namespace K3D {
 
 		void SetGameHeap(std::shared_ptr<GameHeap>& gameHeap);
 
-		virtual std::unique_ptr<GraphicsComponent>& GraphicsComponent() = 0;
+		virtual std::unique_ptr<GraphicsComponent>& GetGraphicsComponent();
 
-		virtual std::unique_ptr<InputComponent>& InputComponent() = 0;
+		virtual std::unique_ptr<InputComponent>& GetInputComponent();
 
-		virtual std::unique_ptr<PhysicsComponent>& PhysicsComponent() = 0;
+		virtual std::unique_ptr<PhysicsComponent>& GetPhysicsComponent();
 
 	protected:
 

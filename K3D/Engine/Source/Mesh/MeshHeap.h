@@ -20,7 +20,7 @@ namespace K3D {
 	private:
 
 		//!デスクリプタヒープ (変形情報 + マテリアル数 + テクスチャ数)　カメラの情報は別で投げる
-		std::vector<std::shared_ptr<K3D::Descriptor>>		_heap;
+		std::vector<std::shared_ptr<K3D::Descriptor>>		_descriptors;
 		//!変形情報デスクリプタの開始位置 (maybe 0)
 		unsigned int										_transformStartPoint;
 		//!マテリアルデスクリプタの開始位置 (maybe 0+1 ~ x)
@@ -39,10 +39,6 @@ namespace K3D {
 
 		virtual ~MeshHeap();
 
-		void BindingDescriptorHeaps(std::weak_ptr<K3D::CommandList> list);
-
-		void BindingDescriptorHeaps(K3D::CommandList& lsit);
-
 		void SetTransformDescStartIndex(unsigned int startIndex = 0);
 
 		void SetMaterialDescStartIndex(unsigned int startIndex = 1);
@@ -54,8 +50,6 @@ namespace K3D {
 		unsigned int GetTextureDescStartIndex();
 
 		unsigned int GetMaterialDescStartIndex();
-
-		K3D::DescriptorHeap& GetHeap();
 
 		ConstantBuffer& GetMaterialBufffer();
 

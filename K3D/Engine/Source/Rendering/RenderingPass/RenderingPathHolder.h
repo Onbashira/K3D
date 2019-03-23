@@ -4,6 +4,7 @@
 namespace K3D {
 
 	class RenderingPass;
+	class GameHeap;
 
 //レンダリングパスを保持するクラス
 	class RenderingPathHolder
@@ -13,7 +14,7 @@ namespace K3D {
 
 		std::list<std::shared_ptr<RenderingPass>> _rpList;
 
-
+		std::shared_ptr<GameHeap> _gameHeap;
 
 	public:
 
@@ -21,7 +22,7 @@ namespace K3D {
 
 		virtual ~RenderingPathHolder();
 
-		void RegistRenderingPass(std::shared_ptr<RenderingPass> pass);
+		void AddRenderingPass(std::shared_ptr<RenderingPass> pass);
 
 	};
 

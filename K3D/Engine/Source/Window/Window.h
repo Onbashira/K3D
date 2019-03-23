@@ -23,17 +23,12 @@ namespace K3D {
 		
 		std::wstring				_appClassName;
 		
-		static LRESULT __stdcall	WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	
-		LRESULT(_stdcall*_windowProc)(HWND, UINT, WPARAM, LPARAM);
+		LRESULT  (__stdcall *_windowProc)(HWND, UINT, WPARAM, LPARAM);
+
 	
 	public:
 
-	private:
-		
-		void CreateScissorRect(UINT width, UINT height);
-		
-		void CreateViewPort(UINT width, UINT height);
+
 
 	public:
 
@@ -41,7 +36,7 @@ namespace K3D {
 		
 		~Window();
 
-		HRESULT			Create(std::wstring windowName, UINT width, UINT height);
+		HRESULT			Create(std::wstring windowName, UINT width, UINT height, LRESULT(__stdcall *windowProc)(HWND, UINT, WPARAM, LPARAM) = nullptr);
 		
 		HRESULT			CustomCreate(std::wstring windowName, UINT width, UINT height, LRESULT(_stdcall*windowProc)(HWND, UINT, WPARAM, LPARAM));
 
@@ -54,5 +49,13 @@ namespace K3D {
 		D3D12_RECT		GetScissorRect();
 		
 		void			Discard();
+
+	private:
+				
+		static LRESULT __stdcall DefaultWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+			
+		void CreateScissorRect(UINT width, UINT height);
+		
+		void CreateViewPort(UINT width, UINT height);
 	};
 }

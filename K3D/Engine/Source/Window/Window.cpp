@@ -18,7 +18,7 @@ K3D::Window::~Window()
 }
 
 
-LRESULT K3D::Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT K3D::Window::DefaultWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
@@ -62,7 +62,7 @@ void K3D::Window::CreateViewPort(UINT width, UINT height)
 	_viewPort.MaxDepth = 1.0f;
 }
 
-HRESULT K3D::Window::Create(std::wstring windowName, UINT width, UINT height)
+HRESULT K3D::Window::Create(std::wstring windowName, UINT width, UINT height, LRESULT(__stdcall *windowProc)(HWND, UINT, WPARAM, LPARAM))
 {
 
 	this->_appClassName = windowName;
@@ -72,10 +72,14 @@ HRESULT K3D::Window::Create(std::wstring windowName, UINT width, UINT height)
 	{
 		return E_FAIL;
 	}
+	if (windowProc = nullptr) {
+		_windowProc = windowProc;
+	}
+
 	WNDCLASSEX wnd = {};
 	wnd.cbSize = sizeof(WNDCLASSEX);
 	wnd.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
-	wnd.lpfnWndProc = WndProc;
+	wnd.lpfnWndProc = _windowProc;
 	wnd.cbClsExtra = 0;
 	wnd.cbWndExtra = 0;
 	wnd.lpszClassName = _appClassName.c_str();
@@ -131,6 +135,9 @@ HRESULT K3D::Window::CustomCreate(std::wstring windowName, UINT width, UINT heig
 	{
 		return E_FAIL;
 	}
+
+	_windowProc = windowProc;
+
 	WNDCLASSEX wnd = {};
 	wnd.cbSize = sizeof(WNDCLASSEX);
 	wnd.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;

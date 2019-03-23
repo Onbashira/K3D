@@ -32,6 +32,15 @@ namespace K3D {
 
 		};
 
+		struct GameHeapDesc {
+
+			unsigned int maxCPUHeapSize;
+			unsigned int maxRTHeapSize;
+			unsigned int maxDSHeapSize;
+			unsigned int maxSampHeapSize;
+
+		};
+
 
 	private:
 
@@ -65,20 +74,20 @@ namespace K3D {
 
 	public:
 
-		GameHeap(std::shared_ptr<D3D12Device>& device, unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize);
+		GameHeap(std::shared_ptr<D3D12Device>& device, GameHeapDesc* desc);
 
 		~GameHeap();
 
-		static std::shared_ptr<GameHeap> CreateGameHeap(std::shared_ptr<D3D12Device>& device, unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize);
+		static std::shared_ptr<GameHeap> CreateGameHeap(std::shared_ptr<D3D12Device>& device ,GameHeapDesc* desc);
 
-		HRESULT ReInitialize(unsigned int maxCPUHeapSize, unsigned int maxRTHeapSize, unsigned int maxDSHeapSize, unsigned int maxSampHeapSize);
+		HRESULT ReInitialize(GameHeapDesc* desc);
 
 		HRESULT ReCreateHeap(const GameHeap::HeapType& heapType, unsigned int maxHeapSize);
 
 		std::weak_ptr<K3D::Descriptor> GetDescriptorHandle(const K3D::GameHeap::HeapType& heapType, unsigned int handleOffset);
 
 		//動作としては基本的に上書き
-		std::weak_ptr<K3D::Descriptor> CreateView(const K3D::GameHeap::HeapType& heapType, const K3D::Descriptor::ViewType& viewType, void* viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource = nullptr);
+		std::weak_ptr<K3D::Descriptor> CreateView(K3D::GameHeap::HeapType heapType,K3D::Descriptor::ViewType viewType, void* viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource = nullptr);
 
 		//以下の関数は基本的に単一デスクリプタの生成
 		std::weak_ptr<K3D::Descriptor> CreateCBView(D3D12_CONSTANT_BUFFER_VIEW_DESC& desc);
