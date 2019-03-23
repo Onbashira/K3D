@@ -2,28 +2,15 @@
 namespace K3D {
 
 	class GameObject;
-
-	class MaterialBase;
-
-	class DescriptorHeap;
-
-	class TargetState;
-
-	class PipelineState;
-
-	class PipelineResourceTableState;
-
 	class GeometryState;
-
 	class PipelineStateObject;
-
 	class RootSignature;
-
 	class CommandList;
+	class ModelMesh;
 
-	//単一描画をサポートするベースコンポネント
+	//描画ベースコンポネント
 
-	class GraphicsComponent
+	class GraphicsComponent 
 	{
 	public:
 
@@ -35,23 +22,13 @@ namespace K3D {
 
 		virtual ~GraphicsComponent() {};
 
-		virtual void Draw(TargetState* targetState, GeometryState* geometryState, PipelineState* pipelineStae, PipelineResourceTableState* prTbl) = 0;
+		virtual void Draw(std::shared_ptr<CommandList>& cmdList,GameObject* object,GeometryState* geometryState,ModelMesh* mesh) = 0;
 
-		virtual void SetPipelineState(std::weak_ptr<K3D::PipelineStateObject> pipelineState) = 0;
+		virtual void SetPipelineState(std::shared_ptr<CommandList>& cmdList, std::weak_ptr<K3D::PipelineStateObject> pipelineState) = 0;
 
-		virtual void SetRootSignature(std::weak_ptr<K3D::RootSignature> rootSignature) = 0;
-
-		virtual void SetCommandList(std::shared_ptr<K3D::CommandList> CommandList) = 0;
-
-		virtual void BindingShaderObject() = 0;
-
-		virtual void BindingShaderObjectToBundle() = 0;
-
-		virtual void Draw() = 0;
+		virtual void SetRootSignature(std::shared_ptr<CommandList>& cmdList, std::weak_ptr<K3D::RootSignature> rootSignature) = 0;
 
 	private:
-
-		virtual void RegisterToBundle() = 0;
 
 	};
 }

@@ -28,4 +28,5 @@ namespace K3D
 
 	typedef std::basic_string<char> String; ///< String variable
 
+	typedef LRESULT(__stdcall *WindowProcFunc)(HWND, UINT, WPARAM, LPARAM);
 }

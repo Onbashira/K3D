@@ -237,9 +237,6 @@
     <ClCompile Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Component\ComponentLocator\ComponentLocator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\Component\InputComponent\InputComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -247,9 +244,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\Component\Transform\Transform.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Component\DrawableComponent\DrawableComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\CommandAllocator\CommandAllocator.cpp">
@@ -294,9 +288,6 @@
     <ClCompile Include="Engine\Source\Utility\Singleton.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Sprite\Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\TextUI\TextUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -316,6 +307,24 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\Primitive\Object\PrimitiveObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitiveRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitiveInputComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultGraphicsComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultInputComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -581,9 +590,6 @@
     <ClInclude Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Component\ComponentLocator\ComponentLocator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\Component\InputComponent\InputComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -591,9 +597,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Component\Transform\Transform.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Component\DrawableComponent\DrawableComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\CommandAllocator\CommandAllocator.h">
@@ -641,9 +644,6 @@
     <ClInclude Include="Engine\Source\TextUI\TextUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Sprite\Sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\Device\D3D11on12Device.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -663,6 +663,27 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Primitive\Object\PrimitiveObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitiveRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitiveInputComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Component\DefaultComponents\DefaultGraphicsComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Component\DefaultComponents\DefaultInputComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Component\DefaultComponents.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

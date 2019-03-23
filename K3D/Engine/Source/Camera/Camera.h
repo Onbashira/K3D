@@ -71,7 +71,7 @@ namespace K3D {
 
 	public:
 
-		Camera();
+		Camera(std::shared_ptr<GameHeap>& heap);
 
 		~Camera();
 
