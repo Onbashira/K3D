@@ -14,11 +14,13 @@ namespace K3D {
 		
 	public:
 	private:
-
+		//!レンダリングパスを保持する
 		std::shared_ptr<RenderingPassHolder> _pathHolder;
+		//!デスクリプタヒープ
 		std::shared_ptr<GameHeap> _gameHeap;
 		std::shared_ptr<RenderingDevice> _renderingDevice;
 		std::shared_ptr<RenderContext> _renderCotext;
+		String _name;
 	public:
 		
 		Scene(std::shared_ptr<RenderingDevice> renderingDevice , std::shared_ptr<RenderContext> renderCotext);

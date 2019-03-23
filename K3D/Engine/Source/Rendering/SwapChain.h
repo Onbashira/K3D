@@ -11,6 +11,7 @@ namespace K3D {
 	class Factory;
 	class Window;
 	class D3D12Device;
+	class RenderinDevice;
 
 	class SwapChain
 	{	
@@ -36,7 +37,7 @@ namespace K3D {
 
 		~SwapChain();
 
-		HRESULT Initialize(CommandQueue& commandQueue, Factory& factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
+		HRESULT Initialize(CommandQueue& commandQueue, std::shared_ptr<D3D12Device>& device, Factory& factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
 
 		unsigned int GetBufferNum();
 
@@ -64,9 +65,9 @@ namespace K3D {
 
 	private:
 
-		HRESULT CreateSwapChain(CommandQueue& commandQueue, Factory& factory, Window& window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum);
+		HRESULT CreateSwapChain(CommandQueue& commandQueue, std::shared_ptr<D3D12Device>& device, Factory& factory, Window& window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum);
 
-		HRESULT CreateRenderTargets(unsigned int bufferNum = 2);
+		HRESULT CreateRenderTargets(std::shared_ptr<D3D12Device>& device , unsigned int bufferNum = 2);
 
 	};
 

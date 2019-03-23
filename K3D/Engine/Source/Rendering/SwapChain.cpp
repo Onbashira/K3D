@@ -19,7 +19,7 @@ K3D::SwapChain::~SwapChain()
 }
 
 
-HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
+HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
 {
 
 
@@ -46,7 +46,7 @@ HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, Factory & f
 	return S_OK;
 }
 
-HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
+HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device,unsigned int bufferNum)
 {
 	this->_bufferNum = bufferNum;
 	D3D12_DESCRIPTOR_HEAP_DESC desc{};
@@ -68,7 +68,7 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i]->GetResource().GetAddressOf()))))
 				return FALSE;
 			//レンダーターゲットビューの取得
-			Framework::GetInstance().GetDevice()->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
+			device->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
 			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
 			_rtResource[i]->SetName("RenderTargetResource ");
 		}
@@ -76,11 +76,11 @@ HRESULT K3D::SwapChain::CreateRenderTargets(unsigned int bufferNum)
 	return S_OK;
 }
 
-HRESULT K3D::SwapChain::Initialize(CommandQueue & commandQueue, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
+HRESULT K3D::SwapChain::Initialize(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
 {
-	auto hr = CreateSwapChain(commandQueue, factory, window, windowWidth, windowHeight, bufferNum);
+	auto hr = CreateSwapChain(commandQueue, device, factory, window, windowWidth, windowHeight, bufferNum);
 	CHECK_RESULT(hr);
-	hr = CreateRenderTargets(bufferNum);
+	hr = CreateRenderTargets(device,bufferNum);
 	CHECK_RESULT(hr);
 	return hr;
 }

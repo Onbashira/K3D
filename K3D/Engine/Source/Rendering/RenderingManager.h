@@ -10,6 +10,7 @@ namespace K3D {
 	class RenderContext;
 	class RenderingPassHolder;
 	class RenderingDevice;
+	class Scene;
 
 	class RenderingManager : private NonCopyable
 	{

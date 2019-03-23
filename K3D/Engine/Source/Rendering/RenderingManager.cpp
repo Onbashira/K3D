@@ -5,6 +5,7 @@
 #include "Engine/Source/Window/Window.h"
 #include "Engine/Source/Device/RenderingDevice.h"
 #include "Engine/Source/Rendering/RenderContext/RenderContext.h"
+#include "Engine/Source/Scene/Scene.h"
 
 K3D::RenderingManager::~RenderingManager()
 {

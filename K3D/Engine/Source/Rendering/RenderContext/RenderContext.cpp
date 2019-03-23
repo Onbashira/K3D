@@ -4,6 +4,7 @@
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CommandQueue/CommandQueue.h"
 #include "Engine/Source/Device/D3D12Device.h"
+#include "Engine/Source/Resource/Resource.h"
 
 K3D::RenderContext::RenderContext() : 
 	_frameNum(0),_currentIndex(0),_node(0),_currentFence(0),

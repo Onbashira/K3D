@@ -6,6 +6,7 @@ namespace K3D {
 	class Fence;
 	class CommandQueue;
 	class D3D12Device;
+	class Resource;
 
 	// 各シーン毎のレンダーコンテキスト
 	class RenderContext

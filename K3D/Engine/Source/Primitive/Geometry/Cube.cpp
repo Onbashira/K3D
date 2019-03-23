@@ -21,6 +21,7 @@ void K3D::Cube::Update()
 
 void K3D::Cube::Draw()
 {
+	
 }
 
 void K3D::Cube::MeshCreate()

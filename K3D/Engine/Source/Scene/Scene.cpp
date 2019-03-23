@@ -13,3 +13,4 @@ _renderingDevice(renderingDevice), _renderCotext(renderContext)
 K3D::Scene::~Scene()
 {
 }
+
