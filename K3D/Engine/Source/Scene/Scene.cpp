@@ -7,12 +7,14 @@
 #include "Engine/Source/Camera/Camera.h"
 
 
-K3D::Scene::Scene(std::shared_ptr<RenderingDevice> renderingDevice, std::shared_ptr<RenderContext> renderContext) :
-	_renderingDevice(renderingDevice), _renderContext(renderContext),
+K3D::Scene::Scene(std::shared_ptr<RenderingDevice> renderingDevice) :
+	_renderingDevice(renderingDevice),
 	_gameHeap(new GameHeap(renderingDevice->GetD3D12Device(), K3D::GameHeap::GameHeapDesc())),
 	_mainCamera(new Camera(_gameHeap)) ,_name("TEST")
 
 {
+	//RenderingContextCreate
+
 	unsigned int w = 0,h = 0;
 	K3D::Framework::GetInstance().GetWindowSize(w,h);
 	_mainCamera->InitializeCameraFOV(90.0f, w, h,

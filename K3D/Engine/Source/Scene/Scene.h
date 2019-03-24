@@ -26,7 +26,7 @@ namespace K3D {
 	private:
 	public:
 		
-		Scene(std::shared_ptr<RenderingDevice> renderingDevice , std::shared_ptr<RenderContext> renderCotext);
+		Scene(std::shared_ptr<RenderingDevice> renderingDevice);
 		
 		~Scene();
 

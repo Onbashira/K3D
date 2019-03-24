@@ -28,7 +28,6 @@ namespace K3D {
 
 		std::shared_ptr<RenderingDevice> _renderingDevice;
 
-		std::shared_ptr<RenderContext> _renderContext;
 	public:
 
 		~RenderingManager();
@@ -52,10 +51,6 @@ namespace K3D {
 		std::shared_ptr<CommandQueue> GetQueue();
 
 		std::shared_ptr<RenderingDevice> GetRenderingDevice();
-	
-		std::shared_ptr<RenderContext> GetRenderContext();
-
-		HRESULT CreateCommandList(D3D12_COMMAND_LIST_TYPE& type, std::shared_ptr<CommandList>& commandList);
 
 		void Term();
 

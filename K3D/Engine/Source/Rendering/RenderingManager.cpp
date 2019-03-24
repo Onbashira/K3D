@@ -22,13 +22,14 @@ HRESULT K3D::RenderingManager::Initialize(std::shared_ptr<D3D12Device>& device, 
 	desc.Priority = D3D12_COMMAND_QUEUE_PRIORITY::D3D12_COMMAND_QUEUE_PRIORITY_HIGH;
 	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
 	_masterQueue = std::make_shared<CommandQueue>();
+	
 	CHECK_RESULT(this->_masterQueue->Initialize(device,desc));
+
 	CHECK_RESULT(_swapChain.Initialize(*this->_masterQueue.get(),device, *factory, *window, windowWidth, windowHeight, bufferNum));
 
 	_renderingDevice = std::make_shared<RenderingDevice>();
-	_renderContext = std::make_shared<RenderContext>();
 	CHECK_RESULT(_renderingDevice->Initialize(device,_masterQueue,factory));
-	CHECK_RESULT(_renderContext->Initialize(device, bufferNum, 0, _masterQueue));
+
 	return S_OK;
 }
 
@@ -78,17 +79,6 @@ std::shared_ptr<K3D::CommandQueue> K3D::RenderingManager::GetQueue()
 std::shared_ptr<K3D::RenderingDevice> K3D::RenderingManager::GetRenderingDevice()
 {
 	return _renderingDevice;
-}
-
-std::shared_ptr<K3D::RenderContext> K3D::RenderingManager::GetRenderContext()
-{
-	return _renderContext;
-}
-
-HRESULT K3D::RenderingManager::CreateCommandList(D3D12_COMMAND_LIST_TYPE & type, std::shared_ptr<CommandList>& commandList)
-{
-
-	return _renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), type, commandList);
 }
 
 void K3D::RenderingManager::Term()

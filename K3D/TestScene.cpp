@@ -19,12 +19,12 @@
 
 
 TestScene::TestScene() :
-	Scene(K3D::Framework::GetInstance().GetRenderingManagre().GetRenderingDevice(), K3D::Framework::GetInstance().GetRenderingManagre().GetRenderContext())
+	Scene(K3D::Framework::GetInstance().GetRenderingManagre().GetRenderingDevice())
 
 {
-	_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
-	_cube->Initialize();
-	InitializePSO();
+	//_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
+	//_cube->Initialize();
+	//InitializePSO();
 }
 
 
@@ -34,64 +34,21 @@ TestScene::~TestScene()
 
 void TestScene::ScreenClear()
 {
-	auto& listRef = this->_renderContext->GetResourceUpdateCmdList(K3D::RenderContext::RC_COMMAND_LIST_TYPE::BEGIN);
-	auto& renderMgrRef = K3D::Framework::GetInstance().GetRenderingManagre();
-	_renderContext->ResetCurrentCommandAllocator();
-	_renderContext->ResetCommandList(listRef.lock());
-	renderMgrRef.ClearScreen(listRef);
-	listRef.lock()->ClearDepthStencilView(_mainCamera->GetDepthStencil().GetDSVHeapPtr().GetCPUHandle(0),
-		D3D12_CLEAR_FLAGS::D3D12_CLEAR_FLAG_DEPTH
-		, 1, 0,0,nullptr);
-
-	listRef.lock()->CloseCommandList();
-	_renderContext->PushBackCmdList(listRef.lock());
 
 }
 
 void TestScene::Update()
 {
-	_cube->Update();
 }
 
 void TestScene::Rendering()
 {
-	std::shared_ptr<K3D::CommandList> list;
-	auto& renderMgrRef = K3D::Framework::GetInstance().GetRenderingManagre();
 
-	this->_renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, list);
-	_gameHeap->SetGameHeap(list);
-
-	renderMgrRef.SetMainRenderTarget(list, &_mainCamera->GetDepthStencil().GetDSVHeapPtr().GetCPUHandle(0));
-	
-	list->SetGraphicsRootSignature(_rs);
-	list->SetPipelineState(_pso);
-	_cube->Draw(list);
-	list->CloseCommandList();
 }
 
 void TestScene::ScreenFlip()
 {
 
-	auto& listRef = this->_renderContext->GetResourceUpdateCmdList(K3D::RenderContext::RC_COMMAND_LIST_TYPE::END);
-
-	auto& renderMgrRef = K3D::Framework::GetInstance().GetRenderingManagre();
-	_renderContext->ResetCommandList(listRef.lock());
-
-	renderMgrRef.SetStatePresentRT(listRef.lock());
-	listRef.lock()->CloseCommandList();
-	_renderContext->PushBackCmdList(listRef.lock());
-	_renderContext->ExecuteCmdList3DQueue();
-	_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(), true);
-	//Present
-	renderMgrRef.Present(1, 0);
-	_renderContext->IncrementCount();
-	renderMgrRef.FlipScreen();
-	_renderContext->ResetCurrentCommandAllocator();
-
-
-	this->_renderContext->IncrementCount();
-	renderMgrRef.FlipScreen();
-	_renderContext->ResetCurrentCommandAllocator();
 }
 
 void TestScene::BeginRenderPath()
