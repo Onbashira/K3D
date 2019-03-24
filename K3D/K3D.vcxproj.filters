@@ -327,6 +327,9 @@
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Time\Timer.h">
@@ -686,8 +689,12 @@
     <ClInclude Include="Engine\Source\Component\DefaultComponents.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Engine\Shader\includes\ShaderMath.hlsl" />
+    <FxCompile Include="Engine\Shader\Shader\PrimitiveTestShader.hlsl" />
+    <FxCompile Include="Engine\Shader\include\ShaderMath.hlsl" />
   </ItemGroup>
 </Project>

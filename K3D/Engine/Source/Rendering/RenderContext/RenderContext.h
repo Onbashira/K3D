@@ -51,7 +51,7 @@ namespace K3D {
 
 		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,int frameNum, int nodeMask,std::shared_ptr<CommandQueue>& queue);
 
-		HRESULT CreateCommandList(std::shared_ptr<D3D12Device>& device,D3D12_COMMAND_LIST_TYPE& type, std::shared_ptr<CommandList>& commandList);
+		HRESULT CreateCommandList(std::shared_ptr<D3D12Device>& device,D3D12_COMMAND_LIST_TYPE type, std::shared_ptr<CommandList>& commandList);
 
 		int GetCurrentIndex();
 
@@ -82,8 +82,6 @@ namespace K3D {
 		void ResetCurrentCommandAllocator();
 
 		void ResetCommandList(std::shared_ptr<CommandList>& list);
-
-		void Reset();
 
 		void Discard();
 

@@ -6,6 +6,7 @@
 #include "Engine/Source/Device/RenderingDevice.h"
 #include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 #include "Engine/Source/Scene/Scene.h"
+#include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
 
 K3D::RenderingManager::~RenderingManager()
 {
@@ -22,18 +23,23 @@ HRESULT K3D::RenderingManager::Initialize(std::shared_ptr<D3D12Device>& device, 
 	desc.Type = D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT;
 	_masterQueue = std::make_shared<CommandQueue>();
 	CHECK_RESULT(this->_masterQueue->Initialize(device,desc));
-	CHECK_RESULT(_swapChain.Initialize(*this->_masterQueue.get(), *factory, *window, windowWidth, windowHeight, bufferNum));
+	CHECK_RESULT(_swapChain.Initialize(*this->_masterQueue.get(),device, *factory, *window, windowWidth, windowHeight, bufferNum));
 
 	_renderingDevice = std::make_shared<RenderingDevice>();
-
+	_renderContext = std::make_shared<RenderContext>();
 	CHECK_RESULT(_renderingDevice->Initialize(device,_masterQueue,factory));
-
+	CHECK_RESULT(_renderContext->Initialize(device, bufferNum, 0, _masterQueue));
 	return S_OK;
 }
 
 void K3D::RenderingManager::ClearScreen(std::weak_ptr<CommandList> list)
 {
 	_swapChain.ClearScreen(list.lock());
+}
+
+void K3D::RenderingManager::SetMainRenderTarget(std::shared_ptr<CommandList>& list, D3D12_CPU_DESCRIPTOR_HANDLE * depthHandle)
+{
+	this->_swapChain.SetRenderTarget(list, depthHandle);
 }
 
 void K3D::RenderingManager::FlipScreen()
@@ -47,6 +53,16 @@ void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, 
 	this->_swapChain.CopyToRenderTarget(list.lock(), src);
 	src->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
+}
+
+void K3D::RenderingManager::SetStatePresentRT(std::shared_ptr<CommandList> list)
+{
+	_swapChain.SetStatePresent(list);
+}
+
+void K3D::RenderingManager::Present(unsigned int sysncInterval, unsigned int flags)
+{
+	_swapChain.Present(sysncInterval, flags);
 }
 
 std::vector<std::shared_ptr<K3D::Resource>> K3D::RenderingManager::GetDisplayRenderTargets()

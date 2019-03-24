@@ -5,6 +5,7 @@ K3D::Camera::Camera(std::shared_ptr<GameHeap>& heap) :
 	GameObject(new DefaultGraphicsComponent() , new DefaultInputComponent() , new DefaultPhysicsComponent(), heap),
 	_mode(CAMERA_MODE::Perspective), _aspectRatio(0.0f)
 {
+
 }
 
 
@@ -38,12 +39,24 @@ void K3D::Camera::InitializeCameraFOV(const float fov, const float width, const 
 	_near = nearClip;
 	_far = farClip;
 	_aspectRatio = width / height;
+	_windowHeight = height;
+	_windowWidth = width;
 	_info.windowHeight = height;
 	_info.windowWidth = width;
 
 	auto mat = Matrix::ExtractRotationMatrix(Matrix::CreateLookAt(position, target, upWard));
 	this->_transform.SetRotation(Quaternion::CreateFromRotationMatrix(mat));
 	this->_projection = Matrix::CreatePerspectiveFOV(fov, _aspectRatio, nearClip, farClip);
+
+	this->_info.projection = this->_projection;
+	this->_info.view = Matrix::Invert(mat);
+	this->_info.windowHeight = this->_windowHeight;
+	this->_info.windowWidth = this->_windowWidth;
+
+	if (FAILED(CreateBuffer())) {
+		return;
+	}
+	Update();
 }
 
 HRESULT K3D::Camera::InitializeCameraDepthStencill(DXGI_FORMAT depthFormat, unsigned int windowWidth, unsigned int windowHeight)

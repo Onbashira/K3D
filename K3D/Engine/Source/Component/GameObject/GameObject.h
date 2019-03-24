@@ -48,7 +48,7 @@ namespace K3D {
 
 		virtual void Update() = 0;
 
-		virtual void Draw() = 0;
+		virtual void Draw(std::shared_ptr<CommandList>& cmdList) = 0;
 
 		void Enable();
 
@@ -56,7 +56,7 @@ namespace K3D {
 
 		bool IsEnable();
 
-		Transform& Transform();
+		Transform& GetTransform();
 
 		void SetGameHeap(std::shared_ptr<GameHeap>& gameHeap);
 

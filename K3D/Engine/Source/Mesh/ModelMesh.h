@@ -1,4 +1,6 @@
 #pragma once
+#include "Engine/Source/Command/State/GeometryState.h"
+
 namespace K3D {
 	class MeshHeap;
 	class MeshBuffer;
@@ -11,6 +13,10 @@ namespace K3D {
 		std::unique_ptr<MeshBuffer> meshBuffer;
 		//デスクリプタヒープやマテリアルバッファ、テクスチャへの参照をもったもの
 		std::unique_ptr<MeshHeap> meshHeap;
+
+		GeometryState GetGeometryState();
+
+		unsigned int GetIndexListCount();
 
 		ModelMesh();
 

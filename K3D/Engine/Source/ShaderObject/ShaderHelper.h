@@ -20,7 +20,7 @@ namespace K3D {
 	private:
 
 		//!シェーダーマップ
-		std::unordered_map<SHADER_TYPE, D3D12_SHADER_BYTECODE> _shaderMap;
+		std::unordered_map<SHADER_TYPE, Microsoft::WRL::ComPtr<ID3DBlob>> _shaderMap;
 
 		//!シェーダーマクロ
 		std::vector<D3D_SHADER_MACRO> _shaderMacro;
@@ -37,7 +37,14 @@ namespace K3D {
 		* @param[in] type シェーダータイプ
 		* @return バイトコード
 		*/
-		D3D12_SHADER_BYTECODE GetShader(ShaderHelper::SHADER_TYPE type);
+		Microsoft::WRL::ComPtr<ID3DBlob>& GetShader(ShaderHelper::SHADER_TYPE type);
+
+		/**
+		* @fn
+		* @brief シェーダーBLOBの取得
+		* @param[in] type シェーダータイプ
+		* @return バイトコード
+		*/
 
 		/**
 		* @fn

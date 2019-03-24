@@ -66,13 +66,13 @@ HRESULT K3D::Window::Create(std::wstring windowName, UINT width, UINT height, LR
 {
 
 	this->_appClassName = windowName;
-
+	_windowProc = this->DefaultWndProc;
 	HINSTANCE hInst = GetModuleHandle(nullptr);
 	if (!hInst)
 	{
 		return E_FAIL;
 	}
-	if (windowProc = nullptr) {
+	if (windowProc != nullptr) {
 		_windowProc = windowProc;
 	}
 

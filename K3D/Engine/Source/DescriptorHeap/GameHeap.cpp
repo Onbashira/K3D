@@ -5,14 +5,33 @@
 #include "Engine/Source/DescriptorHeap/Descriptor.h"
 
 
+std::shared_ptr<K3D::Descriptor> K3D::GameHeap::InvalidDescriptor = std::make_shared<K3D::Descriptor>();
 
-
-K3D::GameHeap::GameHeap(std::shared_ptr<D3D12Device>& device, GameHeapDesc* desc) :
+K3D::GameHeap::GameHeap(std::shared_ptr<D3D12Device>& device,GameHeapDesc& desc) :
 	_device(device), _cpuOffset(0), _rtvOffset(0), _dsvOffset(0), _samplerOffset(0)
 {
-	
-	ReInitialize(desc);
 
+	_heaps[HeapType::CPU] = std::make_shared<DescriptorHeap>();
+	_heaps[HeapType::CPU]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, desc.maxCPUHeapSize);
+
+	_heaps[HeapType::RTV] = std::make_shared<DescriptorHeap>();
+	_heaps[HeapType::RTV]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_RTV, desc.maxRTHeapSize);
+
+	_heaps[HeapType::DSV] = std::make_shared<DescriptorHeap>();
+	_heaps[HeapType::DSV]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_DSV, desc.maxDSHeapSize);
+
+	_heaps[HeapType::SAMP] = std::make_shared<DescriptorHeap>();
+	_heaps[HeapType::SAMP]->Initialize(D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER, desc.maxSampHeapSize);
+
+	_allocatedDescMap[HeapType::CPU].resize(desc.maxCPUHeapSize);
+	_allocatedDescMap[HeapType::RTV].resize(desc.maxRTHeapSize);
+	_allocatedDescMap[HeapType::DSV].resize(desc.maxDSHeapSize);
+	_allocatedDescMap[HeapType::SAMP].resize(desc.maxSampHeapSize);
+
+	_allocatedViewMap[HeapType::CPU].resize(desc.maxCPUHeapSize);
+	_allocatedViewMap[HeapType::RTV].resize(desc.maxRTHeapSize);
+	_allocatedViewMap[HeapType::DSV].resize(desc.maxDSHeapSize);
+	_allocatedViewMap[HeapType::SAMP].resize(desc.maxSampHeapSize);
 }
 
 K3D::GameHeap::~GameHeap()
@@ -24,7 +43,7 @@ K3D::GameHeap::~GameHeap()
 std::shared_ptr<K3D::GameHeap> K3D::GameHeap::CreateGameHeap(std::shared_ptr<D3D12Device>& device, GameHeapDesc* desc)
 {
 
-	auto ret = std::make_shared<GameHeap>(device, desc);
+	auto ret = std::make_shared<GameHeap>(device, *desc);
 	return ret;
 }
 
@@ -102,9 +121,9 @@ HRESULT K3D::GameHeap::ReCreateHeap(const HeapType & heapType, unsigned int maxH
 std::weak_ptr<K3D::Descriptor> K3D::GameHeap::GetDescriptorHandle(const K3D::GameHeap::HeapType & heapType, unsigned int handleOffset)
 {
 
-	if (_allocatedViewMap[heapType].size() <= handleOffset || 
+	if (_allocatedViewMap[heapType].size() <= handleOffset ||
 		_allocatedViewMap[heapType][handleOffset] == Descriptor::ViewType::EMPTY
-		) 
+		)
 	{
 		return InvalidDescriptor;
 	}
@@ -112,7 +131,7 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::GetDescriptorHandle(const K3D::Gam
 	return this->_allocatedDescMap[heapType][handleOffset];
 }
 
-std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateView(K3D::GameHeap::HeapType heapType,  K3D::Descriptor::ViewType  viewType, void * viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource)
+std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateView(K3D::GameHeap::HeapType heapType, K3D::Descriptor::ViewType  viewType, void * viewDesc, unsigned int handleOffset, Resource* resource, Resource* counterResource)
 {
 
 	if (_allocatedViewMap[heapType].size() <= handleOffset || _allocatedViewMap[heapType][handleOffset] == Descriptor::ViewType::EMPTY) {
@@ -125,7 +144,7 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateView(K3D::GameHeap::HeapType
 	{
 	case K3D::Descriptor::ViewType::CBV:
 
-	{		
+	{
 		_device->GetDevice()->CreateConstantBufferView((D3D12_CONSTANT_BUFFER_VIEW_DESC*)viewDesc, cpuPtr);
 	}
 	break;
@@ -163,14 +182,14 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateView(K3D::GameHeap::HeapType
 	{
 		return InvalidDescriptor;
 	}
-		break;
+	break;
 	}
 
 	_allocatedViewMap[heapType][handleOffset] = viewType;
 	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(
-		handleOffset, 
-		_allocatedViewMap[heapType][handleOffset], 
-		_heaps[heapType]->GetCPUHandle(handleOffset), 
+		handleOffset,
+		_allocatedViewMap[heapType][handleOffset],
+		_heaps[heapType]->GetCPUHandle(handleOffset),
 		_heaps[heapType]->GetGPUHandle(handleOffset)
 		);
 
@@ -264,6 +283,18 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateSampView(D3D12_SAMPLER_DESC 
 	_allocatedDescMap[HeapType::SAMP][_samplerOffset++] = ptr;
 
 	return ptr;
+}
+
+void K3D::GameHeap::SetGameHeap(std::shared_ptr<K3D::CommandList> list)
+{
+
+	ID3D12DescriptorHeap* heaps[] = {
+		this->_heaps[HeapType::CPU]->GetHeap().Get(),
+		this->_heaps[HeapType::SAMP]->GetHeap().Get()
+	};
+	list->GetCommandList()->SetDescriptorHeaps(_countof(heaps), heaps);
+
+
 }
 
 void K3D::GameHeap::Discard()

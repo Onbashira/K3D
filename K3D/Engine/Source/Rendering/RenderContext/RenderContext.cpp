@@ -25,6 +25,7 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 	this->_currentFence = 0LL;
 	this->_node = nodeMask;
 	this->_frameNum = frameNum;
+	_queueRef = queue;
 	HRESULT hret = {};
 
 	this->_cmdAllocators.resize(_frameNum);
@@ -40,14 +41,18 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 
 		_cmdLists[i][0] = std::make_shared<CommandList>();
 		_cmdLists[i][1] = std::make_shared<CommandList>();
+
 		_cmdLists[i][0]->Initialize(device, nodeMask,
 			D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
 		if (FAILED(hret))
 			return hret;
+		_cmdLists[i][0]->CloseCommandList();
+
 		_cmdLists[i][1]->Initialize(device, nodeMask,
 			D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
 		if (FAILED(hret))
 			return hret;
+		_cmdLists[i][1]->CloseCommandList();
 
 
 		_fences[i].Initialize(0, D3D12_FENCE_FLAGS::D3D12_FENCE_FLAG_NONE);
@@ -60,8 +65,12 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 
 }
 
-HRESULT K3D::RenderContext::CreateCommandList(std::shared_ptr<D3D12Device>& device, D3D12_COMMAND_LIST_TYPE & type, std::shared_ptr<CommandList>& commandList)
+HRESULT K3D::RenderContext::CreateCommandList(std::shared_ptr<D3D12Device>& device, D3D12_COMMAND_LIST_TYPE type, std::shared_ptr<CommandList>& commandList)
 {
+
+	if (commandList == nullptr) {
+		commandList = std::make_shared < CommandList>();
+	}
 	CHECK_RESULT(commandList->Initialize(device, device->GetDevice()->GetNodeCount(), type));
 	_listsVector[_currentIndex].push_back(commandList);
 	return S_OK;
@@ -169,14 +178,6 @@ void K3D::RenderContext::ResetCommandList(std::shared_ptr<CommandList>& list)
 	list->ResetCommandList(_cmdAllocators[_currentIndex]);
 }
 
-void K3D::RenderContext::Reset()
-{
-	_cmdAllocators[_currentIndex]->ResetAllocator();
-	for (int i = 0; i < 2;++i) {
-		_cmdLists[_currentIndex][i]->ResetCommandList(_cmdAllocators[_currentIndex],nullptr);
-	}
-
-}
 
 void K3D::RenderContext::Discard()
 {

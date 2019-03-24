@@ -1,12 +1,16 @@
 #pragma once
 namespace K3D {
 
-
+	class CommandList;
 
 	struct Descriptor {
 
 		enum class ViewType {
 			 EMPTY, CBV, SRV, UAV, RTV, DSV, SAMP
+		};
+
+		enum class BindType {
+			Graphics,Compute
 		};
 
 		//ヒープ先頭からのオフセット
@@ -40,6 +44,7 @@ namespace K3D {
 			return *this;
 		};
 
+		void BindShader(unsigned int rootParamater,BindType bindType,std::shared_ptr<K3D::CommandList> list);
 	private:
 
 		Descriptor(const Descriptor& other) {

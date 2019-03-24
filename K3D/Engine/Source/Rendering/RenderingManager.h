@@ -11,6 +11,7 @@ namespace K3D {
 	class RenderingPassHolder;
 	class RenderingDevice;
 	class Scene;
+	class DescriptorHeap;
 
 	class RenderingManager : private NonCopyable
 	{
@@ -28,7 +29,6 @@ namespace K3D {
 		std::shared_ptr<RenderingDevice> _renderingDevice;
 
 		std::shared_ptr<RenderContext> _renderContext;
-
 	public:
 
 		~RenderingManager();
@@ -37,9 +37,15 @@ namespace K3D {
 
 		void ClearScreen(std::weak_ptr<CommandList> list);
 
+		void SetMainRenderTarget(std::shared_ptr<CommandList>& list, D3D12_CPU_DESCRIPTOR_HANDLE* depthHandle = nullptr);
+
 		void FlipScreen();
 
 		void CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* src);
+
+		void SetStatePresentRT(std::shared_ptr<CommandList> list);
+
+		void Present(unsigned int sysncInterval, unsigned int flags);
 
 		std::vector<std::shared_ptr<K3D::Resource>> GetDisplayRenderTargets();
 

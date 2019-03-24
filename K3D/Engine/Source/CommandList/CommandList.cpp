@@ -70,6 +70,7 @@ HRESULT K3D::CommandList::Initialize(std::weak_ptr<D3D12Device> device, unsigned
 	if (commandAllocator->GetAllocator().Get() == nullptr) {
 		return E_ACCESSDENIED;
 	}
+	_listType = listType;
 	result = device.lock()->GetDevice()->CreateCommandList(nodeMask, _listType, commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
 	if (result != S_OK) {
 		return result;

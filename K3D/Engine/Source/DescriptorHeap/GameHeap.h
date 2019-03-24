@@ -39,6 +39,14 @@ namespace K3D {
 			unsigned int maxDSHeapSize;
 			unsigned int maxSampHeapSize;
 
+			GameHeapDesc() : maxCPUHeapSize(4096), maxRTHeapSize(32), maxDSHeapSize(32), maxSampHeapSize(32){};
+			GameHeapDesc(unsigned int maxCPUDescNum,unsigned int maxRTDescNum,
+				unsigned int maxDSDescNum,unsigned int maxSampDescNum) : 
+				maxCPUHeapSize(maxCPUDescNum),maxRTHeapSize(maxRTDescNum), 
+				maxDSHeapSize(maxDSDescNum), maxSampHeapSize(maxSampDescNum) {};
+
+			~GameHeapDesc() {};
+
 		};
 
 
@@ -70,11 +78,11 @@ namespace K3D {
 		std::mutex _dsvMutex;
 		std::mutex _samplerMutex;
 
-		inline static std::shared_ptr<Descriptor> InvalidDescriptor = std::make_shared<Descriptor>();
+		static std::shared_ptr<K3D::Descriptor> InvalidDescriptor;
 
 	public:
 
-		GameHeap(std::shared_ptr<D3D12Device>& device, GameHeapDesc* desc);
+		GameHeap(std::shared_ptr<D3D12Device>& device,GameHeapDesc& desc);
 
 		~GameHeap();
 
@@ -101,6 +109,8 @@ namespace K3D {
 		std::weak_ptr<K3D::Descriptor> CreateDSView(D3D12_DEPTH_STENCIL_VIEW_DESC& desc, Resource* resource);
 
 		std::weak_ptr<K3D::Descriptor> CreateSampView(D3D12_SAMPLER_DESC& desc);
+
+		void SetGameHeap(std::shared_ptr<K3D::CommandList> list);
 
 		void Discard();
 

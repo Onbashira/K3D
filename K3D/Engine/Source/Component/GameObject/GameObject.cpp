@@ -11,6 +11,7 @@ K3D::GameObject::GameObject(K3D::GraphicsComponent* graphicsComponent,
 	std::shared_ptr<GameHeap>& gameHeap):
 	_transform({}), 
 	_isEnable(true),
+	_gameHeap(gameHeap),
 	_graphicsComponent(graphicsComponent),
 	_inputComponent(inputComponent),
 	_physicsComponent(physicsComponent)
@@ -40,7 +41,7 @@ bool K3D::GameObject::IsEnable()
 	return _isEnable;
 }
 
-K3D::Transform & K3D::GameObject::Transform()
+K3D::Transform & K3D::GameObject::GetTransform()
 {
 	return _transform;
 }

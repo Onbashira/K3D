@@ -111,7 +111,8 @@ void K3D::CommandQueue::Execute(std::vector<std::shared_ptr<CommandList>>& lists
 	std::vector < ID3D12CommandList* > rawLists(lists.size());
 	auto ptr = rawLists.data();
 	for (auto& list : lists) {
-		(*ptr = list->GetCommandList().Get())++;
+		*ptr = list->GetCommandList().Get();
+		ptr++;
 	}
 	queue->ExecuteCommandLists(static_cast<unsigned int>(lists.size()), rawLists.data());
 }

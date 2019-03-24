@@ -15,12 +15,17 @@ namespace K3D {
 
 		virtual void Update() override;
 
-		virtual void Draw() override;
-	
-	private:
+		virtual void Draw(std::shared_ptr<CommandList>& cmdList) override;
+		
+		void Initialize();
 
 		void MeshCreate();
 
+		void CreateDescriptors();
+
 		void ComponentInitialize();
+		
+	
+	private:
 	};
 }

@@ -9,6 +9,8 @@ namespace K3D {
 
 		ULONG64 _size;
 
+		UINT64 _elementSize;
+
 	public:
 
 		IndexBuffer();
@@ -20,6 +22,8 @@ namespace K3D {
 		virtual HRESULT Initialize(ULONG64 size, size_t elementSize, const void * pIndices);
 
 		void Discard();
+
+		UINT64 GetElementSize() { return _elementSize; };
 
 		D3D12_INDEX_BUFFER_VIEW GetView()const;
 

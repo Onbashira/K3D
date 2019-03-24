@@ -79,6 +79,12 @@ void K3D::Framework::SetWindowSize(unsigned int width, unsigned int height)
 	_instance->_windowWidth = width;
 }
 
+void K3D::Framework::GetWindowSize(unsigned int & width, unsigned int & height)
+{
+	width = _windowWidth;
+	height = _windowHeight;
+}
+
 void K3D::Framework::SetBackBufferNum(unsigned int backBufferNum)
 {
 	_instance->_backBufferNum = backBufferNum;

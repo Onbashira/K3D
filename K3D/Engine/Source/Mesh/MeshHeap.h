@@ -19,19 +19,22 @@ namespace K3D {
 	protected:
 	private:
 
-		//!デスクリプタヒープ (変形情報 + マテリアル数 + テクスチャ数)　カメラの情報は別で投げる
-		std::vector<std::shared_ptr<K3D::Descriptor>>		_descriptors;
-		//!変形情報デスクリプタの開始位置 (maybe 0)
-		unsigned int										_transformStartPoint;
-		//!マテリアルデスクリプタの開始位置 (maybe 0+1 ~ x)
-		unsigned int										_materialStartPoint;
-		//!テクスチャデスクリプタの開始位置 (maybe x+1 ~ y)
-		unsigned int										_textureStartPoint;
-		//!マテリアル情報のバッファ 　　
-		K3D::ConstantBuffer									_materialBuffer;
-		//!テクスチャへの参照
-		std::vector<std::weak_ptr<K3D::TextureObject>>		_textureResource;
 
+		//!変形情報デスクリプタの開始位置 (maybe 0)
+		unsigned int _transformStartPoint;
+		//!マテリアルデスクリプタの開始位置 (maybe 0+1 ~ x)
+		unsigned int _materialStartPoint;
+		//!テクスチャデスクリプタの開始位置 (maybe x+1 ~ y)
+		unsigned int _textureStartPoint;
+		//!マテリアル情報のバッファ 　　
+		K3D::ConstantBuffer _materialBuffer;
+		//!テクスチャへの参照
+		std::vector<std::weak_ptr<K3D::TextureObject>> _textureResource;
+		//!デスクリプタ (変形情報 + マテリアル数 + テクスチャ数)
+		std::vector<std::weak_ptr<K3D::Descriptor>> _descriptors;
+		
+		//基本レイアウト
+		//1カメラ　2トランスフォーム、3~ｘマテリアル (x+1)~y テクスチャ
 
 	public:
 
@@ -58,6 +61,10 @@ namespace K3D {
 		std::weak_ptr<K3D::TextureObject> GetTexturteRef(unsigned int textureIndex);
 
 		MeshHeap& AddTextureRef(std::weak_ptr<K3D::TextureObject> textureRef);
+
+		std::vector <std::weak_ptr<Descriptor>>& GetDescriptors();
+
+		void AddDescriptor(std::weak_ptr<Descriptor>& descriptor);
 
 		void Discard();
 

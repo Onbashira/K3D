@@ -80,6 +80,7 @@ HRESULT K3D::IndexBuffer::Initialize(ULONG64 size, size_t elementSize, const voi
 		format = DXGI_FORMAT::DXGI_FORMAT_R32_UINT;
 		break;
 	}
+	_elementSize = elementSize;
 	auto hr = Initialize(size, format, pIndices);
 	CHECK_RESULT(hr);
 	return hr;

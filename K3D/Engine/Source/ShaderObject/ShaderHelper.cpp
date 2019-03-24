@@ -17,13 +17,13 @@ K3D::ShaderHelper::~ShaderHelper()
 }
 
 
-D3D12_SHADER_BYTECODE K3D::ShaderHelper::GetShader(ShaderHelper::SHADER_TYPE type)
+Microsoft::WRL::ComPtr<ID3DBlob>& K3D::ShaderHelper::GetShader(ShaderHelper::SHADER_TYPE type)
 {
 	if (_shaderMap.find(type) != _shaderMap.end()) {
 
 		return _shaderMap[type];
 	}
-	return D3D12_SHADER_BYTECODE();
+	return Microsoft::WRL::ComPtr<ID3DBlob>();
 }
 
 void K3D::ShaderHelper::AddShaderMacro(std::string name, std::string definition)
@@ -63,8 +63,8 @@ HRESULT K3D::ShaderHelper::CompileShader(SHADER_TYPE type, std::string shaderPat
 	UINT compileFlag = 0;
 #endif
 
-	ID3DBlob* shader;
-	ID3DBlob* error;
+	Microsoft::WRL::ComPtr<ID3DBlob> shader;
+	Microsoft::WRL::ComPtr<ID3DBlob> error;
 
 	HRESULT hret = {};
 	auto includer = K3D::HLSLIncluder(Util::GetRelativePath(shaderPath));
@@ -85,12 +85,7 @@ HRESULT K3D::ShaderHelper::CompileShader(SHADER_TYPE type, std::string shaderPat
 
 	}
 
-
-	D3D12_SHADER_BYTECODE byteCode;
-	byteCode.BytecodeLength = shader->GetBufferSize();
-	byteCode.pShaderBytecode = shader->GetBufferPointer();
-
-	this->_shaderMap[type] = byteCode;
+	this->_shaderMap[type] = shader;
 
 
 	return S_OK;

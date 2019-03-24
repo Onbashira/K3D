@@ -163,7 +163,13 @@ namespace K3D {
 		* @fn
 		* @brief バッファ及び情報の更新
 		*/
-		void Update();
+		void Update()override;
+
+		/**
+		* @fn
+		* @brief ダミー描画
+		*/
+		void Draw(std::shared_ptr<CommandList>& cmdList)override {};
 
 		/**
 		* @fn

@@ -74,6 +74,15 @@ K3D::MeshHeap & K3D::MeshHeap::AddTextureRef(std::weak_ptr<K3D::TextureObject> t
 	return *this;
 }
 
+std::vector<std::weak_ptr<K3D::Descriptor>>& K3D::MeshHeap::GetDescriptors()
+{
+	return  _descriptors;
+}
+
+void K3D::MeshHeap::AddDescriptor(std::weak_ptr<Descriptor>& descriptor)
+{
+	_descriptors.push_back(descriptor);
+}
 
 void K3D::MeshHeap::Discard()
 {

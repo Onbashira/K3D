@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-
+#include "TestScene.h"
 
 void main() {
 	K3D::Framework::SetUp();
@@ -13,11 +13,16 @@ void main() {
 	K3D::Framework::GetInstance().Initialize();
 	K3D::Framework::GetInstance().TimerStart();
 
-	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
-		//K3D::Framework::GetInstance().ClearScreen();
-		K3D::Framework::GetInstance().Tick();
-		//K3D::Framework::GetInstance().FlipScreen();
+	std::shared_ptr<TestScene> testScene = std::shared_ptr<TestScene>(new TestScene());
 
+	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
+		K3D::Framework::GetInstance().Tick();
+		testScene->ScreenClear();
+		testScene->Update();
+		testScene->BeginRenderPath();
+		testScene->Rendering();
+		testScene->EndRenderPath();
+		testScene->ScreenFlip();
 	}
 	K3D::Framework::GetInstance().TimerStop();
 

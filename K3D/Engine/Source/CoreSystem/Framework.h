@@ -186,6 +186,14 @@ namespace K3D {
 
 		/**
 		* @fn
+		* @brief ウインドウのサイズを設定する
+		* @param[inout] width ウインドウの幅
+		* @param[inout] height ウインドウの高さ
+		*/
+		void GetWindowSize(unsigned int& width ,unsigned int& height);
+
+		/**
+		* @fn
 		* @brief バックバッファの数を設定する
 		* @param[in] backBufferNum バックバッファの数
 		*/

@@ -6,12 +6,19 @@ namespace K3D {
 	class ModelMesh;
 	class GameHeap;
 
+	struct PrimitiveVertex {
+		Vector3 pos;
+		Vector3 normal;
+		Vector2 texcoord;
+	};
+
 	class PrimitiveObject :public GameObject
 	{
 	public:
+	protected:
+		std::unique_ptr<ModelMesh> _modelMesh;
 	private:
 
-		std::unique_ptr<ModelMesh> _modelMesh;
 
 	public:
 

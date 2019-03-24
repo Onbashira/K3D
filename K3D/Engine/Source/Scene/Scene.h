@@ -5,6 +5,7 @@ namespace K3D {
 	class RenderingDevice;
 	class RenderingPassHolder;
 	class GameHeap;
+	class Camera;
 
 	//シーンを構成する基底クラス
 	class Scene
@@ -13,14 +14,16 @@ namespace K3D {
 		friend class RenderingManager;
 		
 	public:
-	private:
+	protected:
 		//!レンダリングパスを保持する
 		std::shared_ptr<RenderingPassHolder> _pathHolder;
 		//!デスクリプタヒープ
 		std::shared_ptr<GameHeap> _gameHeap;
 		std::shared_ptr<RenderingDevice> _renderingDevice;
-		std::shared_ptr<RenderContext> _renderCotext;
+		std::shared_ptr<RenderContext> _renderContext;
+		std::shared_ptr<Camera> _mainCamera;
 		String _name;
+	private:
 	public:
 		
 		Scene(std::shared_ptr<RenderingDevice> renderingDevice , std::shared_ptr<RenderContext> renderCotext);
