@@ -22,7 +22,7 @@ namespace K3D {
 
 	private:
 
-		SwapChain _swapChain;
+		std::shared_ptr<SwapChain> _swapChain;
 
 		std::shared_ptr<CommandQueue> _masterQueue;
 
@@ -51,6 +51,10 @@ namespace K3D {
 		std::shared_ptr<CommandQueue> GetQueue();
 
 		std::shared_ptr<RenderingDevice> GetRenderingDevice();
+
+		std::unique_ptr<K3D::RenderContext> CreateRenderContext();
+
+		unsigned int GetBackBufferNum();
 
 		void Term();
 

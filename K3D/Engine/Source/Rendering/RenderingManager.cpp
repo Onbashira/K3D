@@ -25,7 +25,8 @@ HRESULT K3D::RenderingManager::Initialize(std::shared_ptr<D3D12Device>& device, 
 	
 	CHECK_RESULT(this->_masterQueue->Initialize(device,desc));
 
-	CHECK_RESULT(_swapChain.Initialize(*this->_masterQueue.get(),device, *factory, *window, windowWidth, windowHeight, bufferNum));
+	_swapChain = std::make_shared<SwapChain>();
+	CHECK_RESULT(_swapChain->Initialize(*this->_masterQueue.get(),device, *factory, *window, windowWidth, windowHeight, bufferNum));
 
 	_renderingDevice = std::make_shared<RenderingDevice>();
 	CHECK_RESULT(_renderingDevice->Initialize(device,_masterQueue,factory));
@@ -35,40 +36,40 @@ HRESULT K3D::RenderingManager::Initialize(std::shared_ptr<D3D12Device>& device, 
 
 void K3D::RenderingManager::ClearScreen(std::weak_ptr<CommandList> list)
 {
-	_swapChain.ClearScreen(list.lock());
+	_swapChain->ClearScreen(list.lock());
 }
 
 void K3D::RenderingManager::SetMainRenderTarget(std::shared_ptr<CommandList>& list, D3D12_CPU_DESCRIPTOR_HANDLE * depthHandle)
 {
-	this->_swapChain.SetRenderTarget(list, depthHandle);
+	this->_swapChain->SetRenderTarget(list, depthHandle);
 }
 
 void K3D::RenderingManager::FlipScreen()
 {
-	_swapChain.FlipScreen();
+	_swapChain->FlipScreen();
 }
 
 void K3D::RenderingManager::CopyToRenderTarget(std::weak_ptr<CommandList> list, Resource* src)
 {
 	src->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
-	this->_swapChain.CopyToRenderTarget(list.lock(), src);
+	this->_swapChain->CopyToRenderTarget(list.lock(), src);
 	src->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ);
 
 }
 
 void K3D::RenderingManager::SetStatePresentRT(std::shared_ptr<CommandList> list)
 {
-	_swapChain.SetStatePresent(list);
+	_swapChain->SetStatePresent(list);
 }
 
 void K3D::RenderingManager::Present(unsigned int sysncInterval, unsigned int flags)
 {
-	_swapChain.Present(sysncInterval, flags);
+	_swapChain->Present(sysncInterval, flags);
 }
 
 std::vector<std::shared_ptr<K3D::Resource>> K3D::RenderingManager::GetDisplayRenderTargets()
 {
-	return _swapChain._rtResource;
+	return _swapChain->_rtResource;
 }
 
 std::shared_ptr<K3D::CommandQueue> K3D::RenderingManager::GetQueue()
@@ -81,8 +82,20 @@ std::shared_ptr<K3D::RenderingDevice> K3D::RenderingManager::GetRenderingDevice(
 	return _renderingDevice;
 }
 
+std::unique_ptr<K3D::RenderContext>  K3D::RenderingManager::CreateRenderContext()
+{
+	auto& ret = std::make_unique<RenderContext>();
+	ret->Initialize(this->_renderingDevice->GetD3D12Device(), _swapChain->_bufferNum, 0, _masterQueue);
+	return std::move(ret);
+}
+
+unsigned int K3D::RenderingManager::GetBackBufferNum()
+{
+	return _swapChain->_bufferNum;
+}
+
 void K3D::RenderingManager::Term()
 {
-	_swapChain.Discard();
+	_swapChain->Discard();
 	_masterQueue->Discard();
 }

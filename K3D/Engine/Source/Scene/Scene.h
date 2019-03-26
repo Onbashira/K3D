@@ -19,10 +19,9 @@ namespace K3D {
 		std::shared_ptr<RenderingPassHolder> _pathHolder;
 		//!デスクリプタヒープ
 		std::shared_ptr<GameHeap> _gameHeap;
-		std::shared_ptr<RenderingDevice> _renderingDevice;
+		std::shared_ptr<RenderingDevice>& _renderingDevice;
 		std::shared_ptr<RenderContext> _renderContext;
 		std::shared_ptr<Camera> _mainCamera;
-		String _name;
 	private:
 	public:
 		
@@ -30,17 +29,13 @@ namespace K3D {
 		
 		~Scene();
 
-		virtual void ScreenClear() = 0;
+		virtual void ScreenClear();
 
 		virtual void Update() = 0;
 
 		virtual void Rendering() = 0;
 
-		virtual void ScreenFlip() = 0;
-
-		virtual void BeginRenderPath() = 0;
-
-		virtual void EndRenderPath() = 0;
+		virtual void ScreenFlip();
 
 	private:
 

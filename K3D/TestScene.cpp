@@ -15,7 +15,7 @@
 #include "Engine/Source/ShaderObject/ShaderHelper.h"
 #include "Engine/Source/Signature/RootSignature.h"
 #include "Engine/Source/PipelineState/PipelineStateObject.h"
-#include  "Engine/Source/DescriptorHeap/GameHeap.h"
+#include "Engine/Source/DescriptorHeap/GameHeap.h"
 
 
 TestScene::TestScene() :

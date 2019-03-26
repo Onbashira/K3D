@@ -46,12 +46,14 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 			D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
 		if (FAILED(hret))
 			return hret;
+		//多重レコードの回避のためのClose
 		_cmdLists[i][0]->CloseCommandList();
 
 		_cmdLists[i][1]->Initialize(device, nodeMask,
 			D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT, _cmdAllocators[i]);
 		if (FAILED(hret))
 			return hret;
+		//多重レコードの回避のためのClose
 		_cmdLists[i][1]->CloseCommandList();
 
 
@@ -81,7 +83,7 @@ int K3D::RenderContext::GetCurrentIndex()
 	return _currentIndex;
 }
 
-int K3D::RenderContext::IncrementCount()
+int K3D::RenderContext::Flip()
 {
 	_currentIndex = (_currentIndex + 1) % _frameNum;
 	return _currentIndex;

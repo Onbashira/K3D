@@ -9,6 +9,8 @@ namespace K3D {
 	class Resource;
 
 	// 各シーン毎のレンダーコンテキスト
+	//このクラスはスクリーンクリア用、スクリーンフリップ用、シーンのコマンドリストアロケータ
+	//一時
 	class RenderContext
 	{
 
@@ -45,8 +47,6 @@ namespace K3D {
 
 	public:
 
-		RenderContext();
-
 		virtual ~RenderContext();
 
 		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,int frameNum, int nodeMask,std::shared_ptr<CommandQueue>& queue);
@@ -55,7 +55,7 @@ namespace K3D {
 
 		int GetCurrentIndex();
 
-		int IncrementCount();
+		int Flip();
 
 		std::weak_ptr<K3D::CommandList> GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE listType);
 		
@@ -87,6 +87,7 @@ namespace K3D {
 
 	private:
 
+		RenderContext();
 
 	};
 

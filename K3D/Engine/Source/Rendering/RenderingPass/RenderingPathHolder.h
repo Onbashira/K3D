@@ -18,11 +18,19 @@ namespace K3D {
 
 	public:
 
-		RenderingPathHolder();
+		RenderingPathHolder(std::shared_ptr<GameHeap>& _gameHeap);
 
 		virtual ~RenderingPathHolder();
 
+		void RenderingBegin();
+
+		void RenderingEnd();
+
 		void AddRenderingPass(std::shared_ptr<RenderingPass> pass);
+
+		void ClearRenderingPasses();
+
+		void InsertRenderingPass(int index, std::shared_ptr<RenderingPass> pass);
 
 	};
 
