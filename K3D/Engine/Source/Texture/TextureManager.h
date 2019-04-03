@@ -39,7 +39,7 @@ namespace K3D {
 		//!î•ñƒLƒƒƒŠƒA
 		UnorderedManagerComponent<TextureObject> _textureResourceMap;
 
-		std::shared_ptr<RenderContext> _renderContext;
+		std::shared_ptr<RenderContext> _textureRenderContext;
 
 	public:
 

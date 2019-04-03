@@ -19,9 +19,7 @@ void main() {
 		K3D::Framework::GetInstance().Tick();
 		testScene->ScreenClear();
 		testScene->Update();
-		testScene->BeginRenderPath();
 		testScene->Rendering();
-		testScene->EndRenderPath();
 		testScene->ScreenFlip();
 	}
 	K3D::Framework::GetInstance().TimerStop();

@@ -52,7 +52,7 @@ namespace K3D {
 
 		std::shared_ptr<RenderingDevice> GetRenderingDevice();
 
-		std::unique_ptr<K3D::RenderContext> CreateRenderContext();
+		std::shared_ptr<K3D::RenderContext> CreateRenderContext();
 
 		unsigned int GetBackBufferNum();
 

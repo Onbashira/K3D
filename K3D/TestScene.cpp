@@ -32,32 +32,25 @@ TestScene::~TestScene()
 {
 }
 
-void TestScene::ScreenClear()
-{
-
-}
-
 void TestScene::Update()
 {
 }
 
 void TestScene::Rendering()
 {
+	std::shared_ptr<K3D::CommandList> list;
+	_renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), D3D12_COMMAND_LIST_TYPE_DIRECT, list);
+	
+	list->CloseCommandList();
 
-}
+	_renderContext->GetSwapChain()->SetStatePresent(list);
 
-void TestScene::ScreenFlip()
-{
+	_renderContext->ExecuteCmdList3DQueue();
 
-}
+	_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(),true);
 
-void TestScene::BeginRenderPath()
-{
+	_renderContext->Present(1, 0);
 
-}
-
-void TestScene::EndRenderPath()
-{
 
 }
 

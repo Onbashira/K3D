@@ -7,6 +7,7 @@ namespace K3D {
 	class CommandQueue;
 	class D3D12Device;
 	class Resource;
+	class SwapChain;
 
 	// 各シーン毎のレンダーコンテキスト
 	//このクラスはスクリーンクリア用、スクリーンフリップ用、シーンのコマンドリストアロケータ
@@ -15,6 +16,7 @@ namespace K3D {
 	{
 
 		friend class RenderingManager;
+
 	public:
 		enum class RC_COMMAND_LIST_TYPE
 		{
@@ -34,22 +36,24 @@ namespace K3D {
 		bool _isDiscarded;
 
 		std::vector<std::array<std::shared_ptr<CommandList>, 2>> _cmdLists;
+		
+		std::mutex _allocatorMutex;
 
 		std::vector<std::shared_ptr<CommandAllocator>> _cmdAllocators;
 
-		std::mutex _allocatorMutex;
-
 		std::vector<Fence> _fences;
+
+		std::vector<std::vector<std::shared_ptr<CommandList>>> _listsVector;
 
 		std::shared_ptr<CommandQueue> _queueRef;
 
-		std::vector<std::vector<std::shared_ptr<CommandList>>> _listsVector;
+		std::shared_ptr<SwapChain> _swapChain;
 
 	public:
 
 		virtual ~RenderContext();
 
-		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,int frameNum, int nodeMask,std::shared_ptr<CommandQueue>& queue);
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& device,int frameNum, int nodeMask,std::shared_ptr<CommandQueue>& queue,std::shared_ptr<SwapChain>& swapChain);
 
 		HRESULT CreateCommandList(std::shared_ptr<D3D12Device>& device,D3D12_COMMAND_LIST_TYPE type, std::shared_ptr<CommandList>& commandList);
 
@@ -64,6 +68,8 @@ namespace K3D {
 		K3D::Fence& GetCurrentFence();
 
 		std::weak_ptr<CommandQueue> GetCommandQueue();
+
+		std::shared_ptr<K3D::SwapChain> GetSwapChain();
 
 		void PushFrontCmdList(std::shared_ptr<CommandList> list);
 
@@ -82,6 +88,8 @@ namespace K3D {
 		void ResetCurrentCommandAllocator();
 
 		void ResetCommandList(std::shared_ptr<CommandList>& list);
+
+		void Present(unsigned int syncValue, unsigned int flags = 0);
 
 		void Discard();
 

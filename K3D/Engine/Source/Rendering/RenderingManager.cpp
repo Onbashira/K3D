@@ -82,10 +82,10 @@ std::shared_ptr<K3D::RenderingDevice> K3D::RenderingManager::GetRenderingDevice(
 	return _renderingDevice;
 }
 
-std::unique_ptr<K3D::RenderContext>  K3D::RenderingManager::CreateRenderContext()
+std::shared_ptr<K3D::RenderContext>  K3D::RenderingManager::CreateRenderContext()
 {
-	auto& ret = std::make_unique<RenderContext>();
-	ret->Initialize(this->_renderingDevice->GetD3D12Device(), _swapChain->_bufferNum, 0, _masterQueue);
+	auto& ret = std::make_shared<RenderContext>();
+	ret->Initialize(this->_renderingDevice->GetD3D12Device(), _swapChain->_bufferNum, 0, _masterQueue,_swapChain);
 	return std::move(ret);
 }
 

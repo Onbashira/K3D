@@ -38,6 +38,8 @@ namespace K3D {
 
 		virtual int GetPathIndex() = 0;
 
+		virtual void Discard();
+
 	private:
 
 	};

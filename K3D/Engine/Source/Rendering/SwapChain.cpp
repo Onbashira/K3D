@@ -138,6 +138,7 @@ void K3D::SwapChain::SetRenderTarget(std::shared_ptr<CommandList> list , D3D12_C
 
 void K3D::SwapChain::ClearScreen(std::shared_ptr<CommandList> list)
 {
+	//リソースステートをRTにバリアを張る
 	SetStateRenderTarget(list);
 	list->GetCommandList()->ClearRenderTargetView(this->_rtHeap.GetCPUHandle(_currentIndex), clearColor, 0, nullptr);
 

@@ -33,22 +33,43 @@ K3D::Scene::Scene(std::shared_ptr<RenderingDevice> renderingDevice) :
 
 K3D::Scene::~Scene()
 {
+	Discard();
 }
 
 void K3D::Scene::ScreenClear()
 {
+	//現在のコマンドアロケータに確保したコマンドをリセット
 	_renderContext->ResetCurrentCommandAllocator();
-
+	//リソースアップデート用のコマンドリストのフェッチ
 	auto& list = _renderContext->GetResourceUpdateCmdList(RenderContext::RC_COMMAND_LIST_TYPE::BEGIN);
+	//コマンドリストを現在のアロケータでリセット
 	_renderContext->ResetCommandList(list.lock());
 
-	//レンダーターゲットのクリア
+	//マスターレンダーターゲットのクリア
+	{
+		_renderContext->GetSwapChain()->ClearScreen(list.lock());
+	}
 
-	//カメラデプスのクリア
-
+	//メインカメラデプスのクリア
+	{
+		_mainCamera->GetDepthStencil().ClearDepthStencil(list.lock());
+	}
+	list.lock()->CloseCommandList();
+	_renderContext->PushFrontCmdList(list.lock());
 }
 
 void K3D::Scene::ScreenFlip()
 {
+	//レンダーターゲットフリッピング
+	_renderContext->Flip();
+	
+}
+
+void K3D::Scene::Discard()
+{
+	//!デスクリプタヒープ
+	_gameHeap->Discard();
+	_renderContext->Discard();;
+	_mainCamera->Discard();
 }
 

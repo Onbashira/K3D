@@ -5,6 +5,7 @@
 #include "Engine/Source/CommandQueue/CommandQueue.h"
 #include "Engine/Source/Device/D3D12Device.h"
 #include "Engine/Source/Resource/Resource.h"
+#include "Engine/Source/Rendering/SwapChain.h"
 
 K3D::RenderContext::RenderContext() : 
 	_frameNum(0),_currentIndex(0),_node(0),_currentFence(0),
@@ -19,13 +20,14 @@ K3D::RenderContext::~RenderContext()
 	Discard();
 }
 
-HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int frameNum, int nodeMask, std::shared_ptr<CommandQueue>& queue)
+HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int frameNum, int nodeMask, std::shared_ptr<CommandQueue>& queue, std::shared_ptr<SwapChain>& swapChain)
 {
 	this->_currentIndex = 0;
 	this->_currentFence = 0LL;
 	this->_node = nodeMask;
 	this->_frameNum = frameNum;
 	_queueRef = queue;
+	_swapChain = swapChain;
 	HRESULT hret = {};
 
 	this->_cmdAllocators.resize(_frameNum);
@@ -86,6 +88,7 @@ int K3D::RenderContext::GetCurrentIndex()
 int K3D::RenderContext::Flip()
 {
 	_currentIndex = (_currentIndex + 1) % _frameNum;
+	_swapChain->FlipScreen();
 	return _currentIndex;
 }
 
@@ -107,6 +110,11 @@ K3D::Fence & K3D::RenderContext::GetCurrentFence()
 std::weak_ptr<K3D::CommandQueue> K3D::RenderContext::GetCommandQueue()
 {
 	return _queueRef;
+}
+
+std::shared_ptr<K3D::SwapChain> K3D::RenderContext::GetSwapChain()
+{
+	return _swapChain;
 }
 
 void K3D::RenderContext::PushFrontCmdList(std::shared_ptr<CommandList> list)
@@ -178,6 +186,11 @@ void K3D::RenderContext::ResetCurrentCommandAllocator()
 void K3D::RenderContext::ResetCommandList(std::shared_ptr<CommandList>& list)
 {
 	list->ResetCommandList(_cmdAllocators[_currentIndex]);
+}
+
+void K3D::RenderContext::Present(unsigned int syncValue, unsigned int flags)
+{
+	_swapChain->Present(syncValue, flags);
 }
 
 
