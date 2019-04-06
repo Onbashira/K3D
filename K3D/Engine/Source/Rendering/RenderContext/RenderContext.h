@@ -8,6 +8,7 @@ namespace K3D {
 	class D3D12Device;
 	class Resource;
 	class SwapChain;
+	class RenderingManager;
 
 	// 各シーン毎のレンダーコンテキスト
 	//このクラスはスクリーンクリア用、スクリーンフリップ用、シーンのコマンドリストアロケータ
@@ -15,9 +16,11 @@ namespace K3D {
 	class RenderContext
 	{
 
-		friend class RenderingManager;
 
 	public:
+
+		friend class RenderingManager;
+
 		enum class RC_COMMAND_LIST_TYPE
 		{
 			BEGIN = 0,

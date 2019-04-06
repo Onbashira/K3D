@@ -201,7 +201,7 @@ HRESULT K3D::Framework::InitAudioManager()
 
 HRESULT K3D::Framework::InitTextureManager()
 {
-	TextureManager::GetInstance().SetRenderContext();
+	TextureManager::GetInstance().SetRenderContext(_instance->_renderingManager.CreateRenderContext());
 	return S_OK;
 }
 

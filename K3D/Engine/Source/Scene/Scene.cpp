@@ -7,7 +7,7 @@
 #include "Engine/Source/Camera/Camera.h"
 
 
-K3D::Scene::Scene(std::shared_ptr<RenderingDevice> renderingDevice) :
+K3D::Scene::Scene(std::shared_ptr<RenderingDevice>& renderingDevice) :
 	_renderingDevice(renderingDevice),
 	_renderContext(Framework::GetInstance().GetRenderingManagre().CreateRenderContext()),
 	_gameHeap(new GameHeap(renderingDevice->GetD3D12Device(), K3D::GameHeap::GameHeapDesc())),

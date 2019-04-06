@@ -77,14 +77,14 @@ std::shared_ptr<K3D::CommandQueue> K3D::RenderingManager::GetQueue()
 	return _masterQueue;
 }
 
-std::shared_ptr<K3D::RenderingDevice> K3D::RenderingManager::GetRenderingDevice()
+std::shared_ptr<K3D::RenderingDevice>& K3D::RenderingManager::GetRenderingDevice()
 {
 	return _renderingDevice;
 }
 
 std::shared_ptr<K3D::RenderContext>  K3D::RenderingManager::CreateRenderContext()
 {
-	auto& ret = std::make_shared<RenderContext>();
+	std::shared_ptr<RenderContext> ret(new RenderContext());
 	ret->Initialize(this->_renderingDevice->GetD3D12Device(), _swapChain->_bufferNum, 0, _masterQueue,_swapChain);
 	return std::move(ret);
 }

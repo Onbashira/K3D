@@ -50,7 +50,7 @@ namespace K3D {
 
 		std::shared_ptr<CommandQueue> GetQueue();
 
-		std::shared_ptr<RenderingDevice> GetRenderingDevice();
+		std::shared_ptr<RenderingDevice>& GetRenderingDevice();
 
 		std::shared_ptr<K3D::RenderContext> CreateRenderContext();
 

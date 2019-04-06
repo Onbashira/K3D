@@ -66,11 +66,17 @@ HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device
 			_rtResource[i] = Resource::CreateShared();
 			//ディスプレイバッファの取得
 			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i]->GetResource().GetAddressOf()))))
+			{
+				Util::Comment(L"バックバッファの作成に失敗しました");
+
+
+
 				return FALSE;
+			}
 			//レンダーターゲットビューの取得
 			device->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
 			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
-			_rtResource[i]->SetName("RenderTargetResource ");
+			_rtResource[i]->SetName(std::string("RenderTargetResource " + i));
 		}
 	}
 	return S_OK;

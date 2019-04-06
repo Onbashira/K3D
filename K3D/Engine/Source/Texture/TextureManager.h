@@ -39,7 +39,8 @@ namespace K3D {
 		//!情報キャリア
 		UnorderedManagerComponent<TextureObject> _textureResourceMap;
 
-		std::shared_ptr<RenderContext> _textureRenderContext;
+		//!レンダーコンテキスト（キュー共有）を保持
+		std::shared_ptr<RenderContext> _renderContext;
 
 	public:
 

@@ -21,12 +21,14 @@ namespace K3D {
 		std::shared_ptr<GameHeap> _gameHeap;
 
 		std::shared_ptr<RenderingDevice>& _renderingDevice;
+
 		std::shared_ptr<RenderContext> _renderContext;
+
 		std::shared_ptr<Camera> _mainCamera;
 	private:
 	public:
 		
-		Scene(std::shared_ptr<RenderingDevice> renderingDevice);
+		Scene(std::shared_ptr<RenderingDevice>& renderingDevice);
 		
 		~Scene();
 

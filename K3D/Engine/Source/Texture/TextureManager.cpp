@@ -44,6 +44,7 @@ std::shared_ptr<K3D::TextureObject> K3D::TextureManager::LoadTexture(String file
 
 std::shared_ptr<K3D::TextureObject> K3D::TextureManager::DuplicateTexture(String srcFilename, String dstFilename)
 {
+	//テクスチャの複製
 	return std::shared_ptr<TextureObject>();
 }
 
