@@ -30,11 +30,9 @@ namespace K3D {
 	public:
 
 	private:
+
 		//!グラフィクスコマンドリスト
 		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2> _commandList;
-
-		//!コマンドリスト
-		std::shared_ptr<CommandAllocator> _commandAllocator;
 
 		//!コマンドリストの名前
 		std::string _commandListName;
@@ -42,31 +40,11 @@ namespace K3D {
 		//!リストのタイプ
 		D3D12_COMMAND_LIST_TYPE _listType;
 
-
 	public:
 
 		CommandList();
 
 		~CommandList();
-
-		/**
-		* @fn
-		* @brief コマンドリストの作成
-		* @param[in] nodeMask ノードマスク
-		* @param[in] listType リストのタイプ
-		* @return リザルト　S_OKで成功
-		*/
-		HRESULT Initialize(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
-
-		/**
-		* @fn
-		* @brief コマンドリストの作成
-		* @param[in] device 作成に使うデバイス
-		* @param[in] nodeMask ノードマスク
-		* @param[in] listType リストのタイプ
-		* @return リザルト　S_OKで成功
-		*/
-		HRESULT Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		/**
 		* @fn
@@ -108,39 +86,12 @@ namespace K3D {
 
 		/**
 		* @fn
-		* @brief コマンドアロケーターの取得
-		* @return コマンドアロケーターへの参照
-		*/
-		std::shared_ptr<CommandAllocator>& GetAllocator();
-
-		/**
-		* @fn
-		* @brief リストのリセット
-		* @param[in] pInitialState　パイプラインステート
-		* @return リザルト　S_OKで成功
-		*/
-		HRESULT	ResetCommandList(ID3D12PipelineState* pInitialState = nullptr);
-
-		/**
-		* @fn
 		* @brief リストのリセット
 		* @param[in] allocator　コマンドアロケーター
 		* @param[in] pInitialState　パイプラインステート
 		* @return リザルト　S_OKで成功
 		*/
 		HRESULT	ResetCommandList(std::shared_ptr<CommandAllocator>& allocator, ID3D12PipelineState* pInitialState = nullptr);
-
-		/**
-		* @fn
-		* @brief バインドされたアロケーターのリセット
-		*/
-		void ResetAllocator();
-
-		/**
-		* @fn
-		* @brief リスト、アロケーターのリセット
-		*/
-		void Reset();
 
 		/**
 		* @fn

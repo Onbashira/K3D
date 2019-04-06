@@ -75,7 +75,7 @@ HRESULT K3D::RenderContext::CreateCommandList(std::shared_ptr<D3D12Device>& devi
 	if (commandList == nullptr) {
 		commandList = std::make_shared < CommandList>();
 	}
-	CHECK_RESULT(commandList->Initialize(device, device->GetDevice()->GetNodeCount(), type));
+	CHECK_RESULT(commandList->Initialize(device, device->GetDevice()->GetNodeCount(), type, _cmdAllocators[_currentIndex]));
 	_listsVector[_currentIndex].push_back(commandList);
 	return S_OK;
 }
@@ -89,6 +89,11 @@ int K3D::RenderContext::Flip()
 {
 	_currentIndex = (_currentIndex + 1) % _frameNum;
 	_swapChain->FlipScreen();
+
+	_listsVector[_currentIndex].clear();
+	_listsVector[_currentIndex].resize(0);
+	_cmdAllocators[_currentIndex]->ResetAllocator();
+
 	return _currentIndex;
 }
 
@@ -147,20 +152,21 @@ void K3D::RenderContext::WaitForQueue(std::shared_ptr<CommandQueue>& commandQueu
 	_currentFence++;
 	commandQueue->GetQueue()->Signal(_fences[_currentIndex].GetFence().Get(), _currentFence);
 
-	INT64 displayFence = _currentFence - _frameNum + 1;
-	int displayIndex = _currentIndex;
+	INT64 displayFence = _currentFence - static_cast<INT64>(_frameNum + 1);
 	if (waitNow)
 	{
 		displayFence = _currentFence;
 	}
-	auto completeValue = _fences[_currentIndex].GetFence()->GetCompletedValue();
+	INT64 completeValue = static_cast<INT64>(_fences[_currentIndex].GetFence()->GetCompletedValue());
 	if ((completeValue < displayFence && _currentFence >= _frameNum)
-		|| waitNow && completeValue < _currentFence)
-	{
+		|| waitNow && (completeValue < static_cast<INT64>(_currentFence)))
+	{		
+		
+		INFO_LOG(String("Wait for Execution..."));
+
 		HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
 
 		_fences[_currentIndex].GetFence()->SetEventOnCompletion(displayFence, eventHandle);
-
 		WaitForSingleObject(eventHandle, INFINITE);
 		CloseHandle(eventHandle);
 	}

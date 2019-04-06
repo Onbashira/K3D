@@ -41,27 +41,27 @@ namespace K3D {
 		* @fn
 		* @brief コマンドリストマネージャ内のコマンドリストをすべて閉じる
 		*/
-		void    CloseAllCommandLists();
+		void CloseAllCommandLists();
 
 		/**
 		* @fn
 		* @brief コマンドリスト名から、そのコマンドリストを検索し、閉じる
 		* @param[in] commandListName コマンドリスト名前
 		*/
-		void	CloseCommandList(std::string commandListName);
+		void CloseCommandList(std::string commandListName);
 
 		/**
 		* @fn
 		* @brief コマンドリストマネージャ内のコマンドリストをすべてリセットする
 		*/
-		void	ResetAllCommandList();
+		void ResetAllCommandList();
 
 		/**
 		* @fn
 		* @brief コマンドリスト名から、そのコマンドリストを検索し、閉じる
 		* @param[in] commandListName コマンドリスト名前
 		*/
-		void    ResetCommandList(std::string commandListName);
+		void ResetCommandList(std::string commandListName,std::shared_ptr<RenderContext>& renderContext);
 
 		/**
 		* @fn
@@ -86,11 +86,13 @@ namespace K3D {
 		* @fn
 		* @brief コマンドリストを作成する
 		* @param[in] commandListName コマンドリストの名前
+		* @param[in] device 作成用デバイス
+		* @param[in] renderContext コンテキスト
 		* @param[in] nodeMask ノードマスク
 		* @param[in] listType リストタイプ
 		* @return 成功でS_OK
 		*/
-		HRESULT CreateCommandList(std::string commandListName, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT CreateCommandList(std::string commandListName, std::shared_ptr<RenderingDevice>& device, std::shared_ptr<RenderContext>& renderContext, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		/**
 		* @fn

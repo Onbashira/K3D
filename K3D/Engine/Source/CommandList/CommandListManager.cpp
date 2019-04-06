@@ -1,6 +1,8 @@
 #include "CommandList.h"
 #include "Engine/Source/CommandList/CommandListManager.h"
 #include "Engine/Source/Debug/Logger.h"
+#include "Engine/Source/Device/RenderingDevice.h"
+#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 
 
 K3D::CommandListManager::CommandListManager()
@@ -15,11 +17,11 @@ K3D::CommandListManager::~CommandListManager()
 }
 
 
-HRESULT K3D::CommandListManager::Create(std::string commandListName,unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::CommandListManager::Create(std::string commandListName, std::shared_ptr<RenderingDevice>& device, std::shared_ptr<RenderContext>& renderContext, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
 	if (_library.find(commandListName) == _library.end()) {
 		this->_library[commandListName] = std::make_shared<CommandList>();
-		auto hr = this->_library[commandListName]->Initialize(nodeMask, listType);
+		auto hr = this->_library[commandListName]->Initialize(device->GetD3D12Device(),nodeMask, listType,renderContext->GetCurrentCmdAllocator().lock());
 		this->_library[commandListName]->SetName(commandListName);
 		if (SUCCEEDED(hr)) {
 			DEBUG_LOG(std::string( "CommandListÇ™ê≥èÌÇ…çÏê¨ÅEìoò^Ç≥ÇÍÇ‹ÇµÇΩ : " + commandListName));

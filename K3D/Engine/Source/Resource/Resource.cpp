@@ -204,9 +204,9 @@ const std::tuple<D3D12_HEAP_PROPERTIES, D3D12_HEAP_FLAGS> K3D::Resource::GetHeap
 	return { props, flags };
 }
 
-const D3D12_RESOURCE_DESC* K3D::Resource::GetResourceDesc()
+const D3D12_RESOURCE_DESC K3D::Resource::GetResourceDesc()
 {
-	return &_resource->GetDesc();
+	return _resource->GetDesc();
 }
 
 const D3D12_RESOURCE_STATES & K3D::Resource::GetResourceState()

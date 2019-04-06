@@ -5,7 +5,8 @@
 #include "Engine/Source/Async/Fence.h"
 #include "Engine/Source/Signature/RootSignature.h"
 #include "Engine/Source/PipelineState/PipelineStateObject.h"
-
+#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
+#include "Engine/Source/Device/RenderingDevice.h"
 #include <memory>
 
 
@@ -34,18 +35,9 @@ void K3D::GraphicsContextManager::CloseCommandList(std::string commandListName)
 	_commandListLibrary.Get(commandListName)->CloseCommandList();
 }
 
-void K3D::GraphicsContextManager::ResetAllCommandList()
+void K3D::GraphicsContextManager::ResetCommandList(std::string commandListName,std::shared_ptr<RenderContext>& renderContext)
 {
-	for (auto itr = _commandListLibrary._library.begin(); itr != _commandListLibrary._library.end(); itr++) {
-		itr->second->ResetAllocator();
-		itr->second->ResetCommandList();
-	}
-}
-
-void K3D::GraphicsContextManager::ResetCommandList(std::string commandListName)
-{
-	_commandListLibrary.Get(commandListName)->ResetAllocator();
-	_commandListLibrary.Get(commandListName)->ResetCommandList();
+	_commandListLibrary.Get(commandListName)->ResetCommandList(renderContext->GetCurrentCmdAllocator().lock());
 
 }
 
@@ -79,9 +71,9 @@ HRESULT K3D::GraphicsContextManager::ExecutionAllCommandLists(CommandQueue * que
 	return S_OK;
 }
 
-HRESULT K3D::GraphicsContextManager::CreateCommandList(std::string commandListName, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
+HRESULT K3D::GraphicsContextManager::CreateCommandList(std::string commandListName, std::shared_ptr<RenderingDevice>& device, std::shared_ptr<RenderContext>& renderContext, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
 {
-	return _commandListLibrary.Create(commandListName, nodeMask, listType);
+	return _commandListLibrary.Create(commandListName,device,renderContext, nodeMask, listType);
 }
 
 HRESULT K3D::GraphicsContextManager::CreatePSO(std::string psoName, D3D12_GRAPHICS_PIPELINE_STATE_DESC& gps, ID3DBlob * rootSignature)

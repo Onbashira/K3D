@@ -31,7 +31,7 @@ void K3D::PrimitiveRenderer::Draw(std::shared_ptr<CommandList>& cmdList, GameObj
 	cmdList->IASetVertexBuffers(0,1,&gState.GetVertexBufferView());
 	cmdList->IASetPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	cmdList->DrawIndexedInstanced(mesh->GetIndexListCount(), 1, 0, 0,0);
+	cmdList->DrawIndexedInstanced(static_cast<unsigned int >(mesh->GetIndexListCount()), 1, 0, 0,0);
 
 }
 

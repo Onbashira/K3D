@@ -117,7 +117,7 @@ bool K3D::TextureLoader::IsUseGamma(DXGI_FORMAT format)
 
 HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list, std::shared_ptr<RenderContext>& renderContext, std::weak_ptr<ShaderResource> resource, D3D12_SUBRESOURCE_DATA& subResource, std::string path)
 {
-	D3D12_RESOURCE_DESC desc = *resource.lock()->GetResourceDesc();
+	D3D12_RESOURCE_DESC desc = resource.lock()->GetResourceDesc();
 
 	D3D12_HEAP_PROPERTIES heapProp = {};
 	heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;

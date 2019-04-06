@@ -22,9 +22,11 @@ K3D::SwapChain::~SwapChain()
 HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
 {
 
+	_width = windowWidth;
+	_height = windowHeight;
 
 	DXGI_SWAP_CHAIN_DESC1	swapChainDesc = {};
-	swapChainDesc.BufferCount = 2;
+	swapChainDesc.BufferCount = bufferNum;
 	swapChainDesc.Width = windowWidth;
 	swapChainDesc.Height = windowHeight;
 	swapChainDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -67,13 +69,11 @@ HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device
 			//ディスプレイバッファの取得
 			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i]->GetResource().GetAddressOf()))))
 			{
-				Util::Comment(L"バックバッファの作成に失敗しました");
-
-
+				Util::Comment(L"バックバッファの作成に失敗しました　エラーログを見てね");
 
 				return FALSE;
 			}
-			//レンダーターゲットビューの取得
+			//レンダーターゲットビューの作成
 			device->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
 			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
 			_rtResource[i]->SetName(std::string("RenderTargetResource " + i));
@@ -147,6 +147,52 @@ void K3D::SwapChain::ClearScreen(std::shared_ptr<CommandList> list)
 	//リソースステートをRTにバリアを張る
 	SetStateRenderTarget(list);
 	list->GetCommandList()->ClearRenderTargetView(this->_rtHeap.GetCPUHandle(_currentIndex), clearColor, 0, nullptr);
+
+}
+
+void K3D::SwapChain::ReSizeRenderTarget(std::shared_ptr<D3D12Device>& device, unsigned int width, unsigned int height, unsigned int backBufferNum)
+{
+
+	for (auto& ref : _rtResource) {
+		ref->Discard();
+	}
+
+	if (width > 0 && height > 0) {
+		_width = width;
+		_height = height;
+		_bufferNum = backBufferNum;
+	}
+	else
+	{
+		Util::Comment(L"スクリーンバッファのリサイズに失敗　サイズは0以上である必要があります");
+		assert(0);
+	}
+
+	_swapChain->ResizeBuffers(
+		_bufferNum,
+		_width,
+		_height,
+		DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
+		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
+	);
+
+	//レンダーターゲットの作成
+	{
+		for (UINT i = 0; i < _bufferNum; i++) {
+			//_rtResource[i] = Resource::CreateShared();
+			//ディスプレイバッファの取得
+			if (FAILED(_swapChain->GetBuffer(i, IID_PPV_ARGS(this->_rtResource[i]->GetResource().GetAddressOf()))))
+			{
+				Util::Comment(L"バックバッファの作成に失敗しました　エラーログを見てね");
+				assert(0);
+
+			}
+			//レンダーターゲットビューの作成
+			device->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
+			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
+			_rtResource[i]->SetName(std::string("RenderTargetResource " + i));
+		}
+	}
 
 }
 

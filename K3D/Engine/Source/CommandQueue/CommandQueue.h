@@ -81,7 +81,7 @@ namespace K3D {
 		* @brief キューのデスクリプションの取得
 		* @return デスクリプション
 		*/
-		D3D12_COMMAND_QUEUE_DESC& GetDesc();
+		D3D12_COMMAND_QUEUE_DESC GetDesc();
 
 		/**
 		* @fn

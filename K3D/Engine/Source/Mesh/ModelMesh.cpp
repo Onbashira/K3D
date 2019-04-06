@@ -9,7 +9,7 @@ K3D::GeometryState K3D::ModelMesh::GetGeometryState()
 	return  meshBuffer->_mesh.GetGeometryState();
 }
 
-unsigned int K3D::ModelMesh::GetIndexListCount()
+UINT64 K3D::ModelMesh::GetIndexListCount()
 {
 	return meshBuffer->_mesh.GetIBO()->GetElementSize();
 }

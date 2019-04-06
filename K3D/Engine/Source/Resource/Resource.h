@@ -184,7 +184,7 @@ namespace K3D {
 		* @brief バッファのデスクリプションのフェッチ
 		* @return デスクリプション
 		*/
-		const D3D12_RESOURCE_DESC* GetResourceDesc();
+		const D3D12_RESOURCE_DESC GetResourceDesc();
 
 		/**
 		* @fn

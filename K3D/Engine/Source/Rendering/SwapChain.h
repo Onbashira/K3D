@@ -6,6 +6,7 @@
 #include <vector>
 
 namespace K3D {
+
 	class CommandList;
 	class CommandQueue;
 	class Factory;
@@ -24,6 +25,10 @@ namespace K3D {
 		unsigned int _bufferNum;
 
 		unsigned int _currentIndex;
+
+		unsigned int _width;
+
+		unsigned int _height;
 
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> _swapChain;
 
@@ -56,6 +61,8 @@ namespace K3D {
 		void SetRenderTarget(std::shared_ptr<CommandList> list, D3D12_CPU_DESCRIPTOR_HANDLE* depthHandle = nullptr);
 
 		void ClearScreen(std::shared_ptr<CommandList> list);
+
+		void ReSizeRenderTarget(std::shared_ptr<D3D12Device>& device, unsigned int width ,unsigned int height , unsigned int backBufferNum);
 
 		void FlipScreen();
 

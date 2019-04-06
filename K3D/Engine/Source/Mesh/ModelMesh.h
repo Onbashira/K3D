@@ -16,7 +16,7 @@ namespace K3D {
 
 		GeometryState GetGeometryState();
 
-		unsigned int GetIndexListCount();
+		UINT64 GetIndexListCount();
 
 		ModelMesh();
 

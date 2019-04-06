@@ -13,6 +13,8 @@ namespace K3D {
 	class PipelineStateObject;
 	class GraphicsContextManager;
 	class DepthStencil;
+	class RenderContext;
+	class RenderingDevice;
 
 	class CommandListManager
 	{
@@ -40,7 +42,7 @@ namespace K3D {
 		* @param[in] listType リストのタイプ
 		* @return リザルト　S_OKで成功
 		*/
-		HRESULT Create(std::string commandListName, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
+		HRESULT Create(std::string commandListName, std::shared_ptr<RenderingDevice>& device,std::shared_ptr<RenderContext>& renderContext, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType);
 
 		/**
 		* @fn

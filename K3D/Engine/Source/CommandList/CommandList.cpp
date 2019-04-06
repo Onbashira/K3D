@@ -11,7 +11,7 @@
 #include "Engine/Source/CommandAllocator/CommandAllocator.h"
 
 K3D::CommandList::CommandList() :
-	_commandList(), _commandAllocator(),
+	_commandList(),
 	_commandListName("UnNamed_CommandList")
 {
 
@@ -23,46 +23,6 @@ K3D::CommandList::~CommandList()
 	Discard();
 }
 
-
-HRESULT K3D::CommandList::Initialize(unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
-{
-	_listType = listType;
-	HRESULT result;
-	auto& dev = K3D::Framework::GetInstance().GetDevice();
-
-	this->_commandAllocator = std::make_shared<CommandAllocator>();
-	result = _commandAllocator->Initialize(dev, nodeMask, listType);
-	if (result != S_OK) {
-		return E_FAIL;
-	}
-
-	result = dev->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
-	if (result != S_OK) {
-		return E_FAIL;
-	}
-
-
-	return S_OK;
-}
-
-HRESULT K3D::CommandList::Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType)
-{
-	_listType = listType;
-	HRESULT result;
-	this->_commandAllocator = std::make_shared<CommandAllocator>();
-	result = _commandAllocator->Initialize(device.lock(), nodeMask, listType);
-	if (result != S_OK) {
-		return E_FAIL;
-	}
-
-	result = device.lock()->GetDevice()->CreateCommandList(nodeMask, _listType, _commandAllocator->GetAllocator().Get(), nullptr, IID_PPV_ARGS(&_commandList));
-	if (result != S_OK) {
-		return E_FAIL;
-	}
-
-
-	return S_OK;
-}
 
 HRESULT K3D::CommandList::Initialize(std::weak_ptr<D3D12Device> device, unsigned int nodeMask, D3D12_COMMAND_LIST_TYPE listType, std::shared_ptr<CommandAllocator>& commandAllocator)
 {
@@ -113,32 +73,10 @@ Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList2>& K3D::CommandList::GetCommand
 	return this->_commandList;
 }
 
-std::shared_ptr<K3D::CommandAllocator>& K3D::CommandList::GetAllocator()
-{
-	return this->_commandAllocator;
-}
-
-HRESULT K3D::CommandList::ResetCommandList(ID3D12PipelineState * pInitialState)
-{
-	auto hr = _commandList->Reset(_commandAllocator->GetAllocator().Get(), pInitialState);
-	return hr;
-}
-
 HRESULT K3D::CommandList::ResetCommandList(std::shared_ptr<CommandAllocator>& allocator, ID3D12PipelineState * pInitialState)
 {
 	auto hr = _commandList->Reset(allocator->GetAllocator().Get(), pInitialState);
 	return hr;
-}
-
-void K3D::CommandList::ResetAllocator()
-{
-	_commandAllocator->ResetAllocator();
-}
-
-void K3D::CommandList::Reset()
-{
-	this->ResetAllocator();
-	this->ResetCommandList(nullptr);
 }
 
 HRESULT K3D::CommandList::CloseCommandList()
@@ -151,14 +89,9 @@ void K3D::CommandList::Discard()
 {
 
 	if (_commandList.Get() != nullptr) {
-		if (_commandListName == "UnNamed_CommandList") {
-			assert(true);
 
-		}
-		this->_commandAllocator->ResetAllocator();
 		this->_commandList.Reset();
 		DEBUG_LOG(std::string("CommandList : " + _commandListName + " is Reset"));
-		DEBUG_LOG(std::string("CommandAllocator : " + _commandAllocator->GetName() + " is Reset"));
 
 	}
 

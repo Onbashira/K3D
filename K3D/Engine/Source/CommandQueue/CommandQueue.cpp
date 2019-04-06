@@ -62,7 +62,7 @@ UINT64 K3D::CommandQueue::GetTimestampFrequency()
 	return ret;
 }
 
-D3D12_COMMAND_QUEUE_DESC& K3D::CommandQueue::GetDesc()
+D3D12_COMMAND_QUEUE_DESC K3D::CommandQueue::GetDesc()
 {
 	return _3DQueue->GetDesc();
 }
