@@ -36,7 +36,7 @@ K3D::Scene::~Scene()
 	Discard();
 }
 
-void K3D::Scene::ScreenClear()
+void K3D::Scene::SceneBegin()
 {
 	//リソースアップデート用のコマンドリストのフェッチ
 	auto& list = _renderContext->GetResourceUpdateCmdList(RenderContext::RC_COMMAND_LIST_TYPE::BEGIN);
@@ -54,19 +54,33 @@ void K3D::Scene::ScreenClear()
 	}
 
 	list.lock()->CloseCommandList();
-	_renderContext->PushFrontCmdList(list.lock());
+	_renderContext->PushBackCmdList(list.lock());
 }
 
-void K3D::Scene::ScreenFlip()
+void K3D::Scene::SceneEnd()
 {
+
+
+	//リソースアップデート用のコマンドリストのフェッチ
+	auto& list = _renderContext->GetResourceUpdateCmdList(RenderContext::RC_COMMAND_LIST_TYPE::END);
+	//コマンドリストを現在のアロケータでリセット
+	_renderContext->ResetCommandList(list.lock());
+	_renderContext->GetSwapChain()->SetStatePresent(list.lock());
+	list.lock()->CloseCommandList();
+	_renderContext->PushBackCmdList(list.lock());
+
 	//レンダーターゲットフリッピング
-	_renderContext->Flip();
 	_renderContext->ExecuteCmdList3DQueue();
 
-	_renderContext->Present(1, 0);
+	_renderContext->Present(0, 0);
+
+	_renderContext->Flip();
 
 	_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(), false);
 
+	_renderContext->ClearCmdLists();
+
+	_renderContext->ResetCurrentCommandAllocator();
 	
 }
 

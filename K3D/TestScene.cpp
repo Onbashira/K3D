@@ -34,18 +34,10 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	//_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(), true);
-
 }
 
 void TestScene::Rendering()
 {
-	std::shared_ptr<K3D::CommandList> list;
-	_renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), D3D12_COMMAND_LIST_TYPE_DIRECT, list);
-	
-	_renderContext->GetSwapChain()->SetStatePresent(list);
-
-	list->CloseCommandList();
 
 }
 

@@ -64,6 +64,8 @@ namespace K3D {
 
 		int Flip();
 
+		void ClearCmdLists();
+
 		std::weak_ptr<K3D::CommandList> GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE listType);
 		
 		std::weak_ptr<K3D::CommandAllocator> GetCurrentCmdAllocator();

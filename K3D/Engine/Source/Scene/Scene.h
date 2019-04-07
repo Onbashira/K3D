@@ -32,13 +32,13 @@ namespace K3D {
 		
 		~Scene();
 
-		virtual void ScreenClear();
+		virtual void SceneBegin();
 
 		virtual void Update() = 0;
 
 		virtual void Rendering() = 0;
 
-		virtual void ScreenFlip();
+		virtual void SceneEnd();
 
 		virtual void Discard();
 

@@ -7,7 +7,7 @@
 
 void main() {
 	K3D::Framework::SetUp();
-	K3D::Framework::GetInstance().SetBackBufferNum(3);
+	K3D::Framework::GetInstance().SetBackBufferNum(2);
 	K3D::Framework::GetInstance().SetWindowName(L"test");
 	K3D::Framework::GetInstance().SetWindowSize(1280, 720);
 	K3D::Framework::GetInstance().Initialize();
@@ -17,10 +17,10 @@ void main() {
 
 	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
 		K3D::Framework::GetInstance().Tick();
-		testScene->ScreenClear();
+		testScene->SceneBegin();
 		testScene->Update();
 		testScene->Rendering();
-		testScene->ScreenFlip();
+		testScene->SceneEnd();
 	}
 	K3D::Framework::GetInstance().TimerStop();
 

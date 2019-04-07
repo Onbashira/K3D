@@ -6,7 +6,7 @@
 #include "Engine/Source/Window/Window.h"
 
 
-constexpr float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+constexpr float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 K3D::SwapChain::SwapChain()
 {
@@ -45,6 +45,7 @@ HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared
 		return FALSE;
 
 	_currentIndex = _swapChain->GetCurrentBackBufferIndex();
+
 	return S_OK;
 }
 
@@ -56,6 +57,8 @@ HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAGS::D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE::D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	_rtResource.resize(bufferNum);
+
+
 	//レンダーターゲットビュー用のヒープの作成
 	{
 		if (FAILED(_rtHeap.Initialize(&desc)))
@@ -75,8 +78,10 @@ HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device
 			}
 			//レンダーターゲットビューの作成
 			device->GetDevice()->CreateRenderTargetView(_rtResource[i]->GetResource().Get(), nullptr, _rtHeap.GetCPUHandle(i));
-			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_PRESENT);
-			_rtResource[i]->SetName(std::string("RenderTargetResource " + i));
+			_rtResource[i]->SetResourceState(D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COMMON);
+			std::stringstream ss;
+			ss << "RenderTargetResource " << i;
+			_rtResource[i]->SetName(ss.str());
 		}
 	}
 	return S_OK;
@@ -146,7 +151,14 @@ void K3D::SwapChain::ClearScreen(std::shared_ptr<CommandList> list)
 {
 	//リソースステートをRTにバリアを張る
 	SetStateRenderTarget(list);
-	list->GetCommandList()->ClearRenderTargetView(this->_rtHeap.GetCPUHandle(_currentIndex), clearColor, 0, nullptr);
+
+	static float time = 0.0f;
+	time += 0.001f;
+	//testCode CleacolorChange
+	float tempColor[4] = {0.5f,0.5f,0.6f,1.0f};
+
+	list->GetCommandList()->ClearRenderTargetView(_rtHeap.GetCPUHandle(_currentIndex), tempColor, 0, nullptr);
+
 
 }
 
@@ -205,7 +217,7 @@ HRESULT K3D::SwapChain::Present(unsigned int sysncInterval, unsigned int flags)
 {
 	auto hr = _swapChain->Present(sysncInterval, flags);
 	CHECK_RESULT(hr);
-	FlipScreen();
+	//FlipScreen();
 	return hr;
 }
 

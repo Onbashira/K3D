@@ -89,12 +89,13 @@ int K3D::RenderContext::Flip()
 {
 	_currentIndex = (_currentIndex + 1) % _frameNum;
 	_swapChain->FlipScreen();
+	return _currentIndex;
+}
 
+void K3D::RenderContext::ClearCmdLists()
+{
 	_listsVector[_currentIndex].clear();
 	_listsVector[_currentIndex].resize(0);
-	ResetCurrentCommandAllocator();
-
-	return _currentIndex;
 }
 
 std::weak_ptr<K3D::CommandList> K3D::RenderContext::GetResourceUpdateCmdList(RC_COMMAND_LIST_TYPE listType)
