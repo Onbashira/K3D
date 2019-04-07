@@ -34,6 +34,8 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
+	//_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(), true);
+
 }
 
 void TestScene::Rendering()
@@ -44,13 +46,6 @@ void TestScene::Rendering()
 	_renderContext->GetSwapChain()->SetStatePresent(list);
 
 	list->CloseCommandList();
-
-	_renderContext->ExecuteCmdList3DQueue();
-
-	_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(),false);
-
-	_renderContext->Present(1, 0);
-
 
 }
 

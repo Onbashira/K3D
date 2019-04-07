@@ -15,15 +15,15 @@ K3D::Fence::~Fence()
 
 HRESULT K3D::Fence::Initialize(UINT64 initialFenceValue, D3D12_FENCE_FLAGS flags)
 {
-	auto hresult = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateFence(0,flags,IID_PPV_ARGS(&_fence));
+	auto hresult = K3D::Framework::GetInstance().GetDevice()->GetDevice()->CreateFence(initialFenceValue,flags,IID_PPV_ARGS(&_fence));
 	if (FAILED(hresult)) {
 		return hresult;
 	}
-	_fenceValue = 1;
-	_fenceEvent = CreateEventEx(nullptr, FALSE, FALSE, EVENT_ALL_ACCESS);
-	if (_fenceEvent == nullptr) {
-		return ERROR_INVALID_HANDLE;
-	}
+	_fenceValue = initialFenceValue;
+	//_fenceEvent = CreateEventEx(nullptr, FALSE, FALSE, EVENT_ALL_ACCESS);
+	//if (_fenceEvent == nullptr) {
+	//	return ERROR_INVALID_HANDLE;
+	//}
 	return hresult;
 }
 

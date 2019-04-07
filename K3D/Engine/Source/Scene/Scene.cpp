@@ -38,8 +38,6 @@ K3D::Scene::~Scene()
 
 void K3D::Scene::ScreenClear()
 {
-	//現在のコマンドアロケータに確保したコマンドをリセット
-	_renderContext->ResetCurrentCommandAllocator();
 	//リソースアップデート用のコマンドリストのフェッチ
 	auto& list = _renderContext->GetResourceUpdateCmdList(RenderContext::RC_COMMAND_LIST_TYPE::BEGIN);
 	//コマンドリストを現在のアロケータでリセット
@@ -54,6 +52,7 @@ void K3D::Scene::ScreenClear()
 	{
 		_mainCamera->GetDepthStencil().ClearDepthStencil(list.lock());
 	}
+
 	list.lock()->CloseCommandList();
 	_renderContext->PushFrontCmdList(list.lock());
 }
@@ -62,6 +61,12 @@ void K3D::Scene::ScreenFlip()
 {
 	//レンダーターゲットフリッピング
 	_renderContext->Flip();
+	_renderContext->ExecuteCmdList3DQueue();
+
+	_renderContext->Present(1, 0);
+
+	_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(), false);
+
 	
 }
 

@@ -2,7 +2,9 @@
 #include "CommandAllocator.h"
 #include "Engine/Source/CoreSystem/Framework.h"
 
-K3D::CommandAllocator::CommandAllocator()
+K3D::CommandAllocator::CommandAllocator() :
+	_name("UnNamed_CmdAllocator"),
+	_isDuringExecuting(false)
 {
 }
 
@@ -50,6 +52,7 @@ K3D::String & K3D::CommandAllocator::GetName()
 
 void K3D::CommandAllocator::ResetAllocator()
 {
+
 	this->_allocator->Reset();
 }
 

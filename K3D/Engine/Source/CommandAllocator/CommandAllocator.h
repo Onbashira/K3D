@@ -9,9 +9,12 @@ namespace K3D {
 
 	private:
 
+		bool _isDuringExecuting;
+
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator> _allocator;
 
 		String _name;
+
 
 	public:
 

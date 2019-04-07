@@ -92,7 +92,7 @@ int K3D::RenderContext::Flip()
 
 	_listsVector[_currentIndex].clear();
 	_listsVector[_currentIndex].resize(0);
-	_cmdAllocators[_currentIndex]->ResetAllocator();
+	ResetCurrentCommandAllocator();
 
 	return _currentIndex;
 }
@@ -150,13 +150,16 @@ void K3D::RenderContext::ExecuteCmdListComputeQueue()
 void K3D::RenderContext::WaitForQueue(std::shared_ptr<CommandQueue>& commandQueue, bool waitNow)
 {
 	_currentFence++;
+	//Signal”­s
 	commandQueue->GetQueue()->Signal(_fences[_currentIndex].GetFence().Get(), _currentFence);
 
 	INT64 displayFence = _currentFence - static_cast<INT64>(_frameNum + 1);
+
 	if (waitNow)
 	{
 		displayFence = _currentFence;
 	}
+
 	INT64 completeValue = static_cast<INT64>(_fences[_currentIndex].GetFence()->GetCompletedValue());
 	if ((completeValue < displayFence && _currentFence >= _frameNum)
 		|| waitNow && (completeValue < static_cast<INT64>(_currentFence)))
