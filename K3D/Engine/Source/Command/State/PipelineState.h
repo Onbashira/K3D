@@ -19,8 +19,6 @@ namespace K3D {
 		//!ロートシグネチャ
 		std::shared_ptr<RootSignature> _rs;
 		
-		//GPUステート
-		unsigned int _gpuState;
 
 	public:
 

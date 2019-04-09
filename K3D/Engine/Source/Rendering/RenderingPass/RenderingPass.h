@@ -5,7 +5,8 @@ namespace K3D {
 	class RenderContext;
 	class RenderingPassHolder;
 	class RenderingDevice;
-
+	class PipelineStateObject;
+	class RootSignature;
 	//レンダリングパスベース
 	class RenderingPass
 	{
@@ -21,6 +22,8 @@ namespace K3D {
 		String _pathName;
 
 		std::weak_ptr<RenderingPassHolder> _parentHolder;
+
+		std::shared_ptr<PipelineStateObject> _pipelineStateObject;
 
 	public:
 

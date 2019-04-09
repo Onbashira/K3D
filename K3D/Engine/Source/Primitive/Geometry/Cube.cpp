@@ -8,7 +8,7 @@
 #include "Engine/Source/Mesh/ModelMesh.h"
 #include "Engine/Source/DescriptorHeap/GameHeap.h"
 K3D::Cube::Cube(std::shared_ptr<GameHeap>& heap) :
-	PrimitiveObject(new PrimitiveRenderer(), new PrimitiveInputComponent(), new PrimitivePhysicsComponent() ,heap)
+	PrimitiveObject(new PrimitiveRenderer(), new PrimitiveInputComponent(), new PrimitivePhysicsComponent(), heap)
 {
 	InitalizeTransformBuffer(sizeof(Transform));
 	UpdateTransformBuffer();
@@ -47,12 +47,11 @@ void K3D::Cube::MeshCreate()
 
 	PrimitiveVertex plane[4];
 	for (unsigned int i = 0; i < planeVertex; ++i) {
-		for (unsigned int i = 0; i < planeVertex; ++i) {
-			plane[i].pos = Vector3((2.0f*static_cast<float>((i) % 2) - 1.0f) / 2.0f, -(2.0f * static_cast<float>((i) % 4 / 2) - 1.0f) / 2.0f, -1.0f / 2.0f);
-			plane[i].normal = Vector3::back;
-			plane[i].texcoord = { static_cast<float>(i % 2), static_cast<float>(i / 2) };
-		}
+		plane[i].pos = Vector3((2.0f*static_cast<float>((i) % 2) - 1.0f) / 2.0f, -(2.0f * static_cast<float>((i) % 4 / 2) - 1.0f) / 2.0f, -1.0f / 2.0f);
+		plane[i].normal = Vector3::back;
+		plane[i].texcoord = { static_cast<float>(i % 2), static_cast<float>(i / 2) };
 	}
+
 	unsigned int planeList[] = { 0,1,2,1,3,2 };
 
 	//四方
@@ -89,7 +88,7 @@ void K3D::Cube::MeshCreate()
 
 	//GPUResourceinitialize
 
-	{	
+	{
 		//VBInitialize
 		this->_modelMesh->meshBuffer->InitializeVBO(sizeof(PrimitiveVertex) * vertexes.size(), sizeof(PrimitiveVertex), vertexes.data());
 		this->_modelMesh->meshBuffer->InitializeIBO(indexList);
@@ -100,7 +99,7 @@ void K3D::Cube::CreateDescriptors()
 {
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	//デフォルトカメラデスクリプタの取得(register0
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU,0));
+	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
 	cbvDesc.BufferLocation = this->_transformBuffer.GetResource()->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = Util::ConstantBufferAlign(sizeof(Transform));
 	//register1
