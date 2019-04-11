@@ -11,7 +11,7 @@
 
 
 K3D::GraphicsContextManager::GraphicsContextManager() :
-	_commandListLibrary(), _shaderObjectLibrary(),_queueManager()
+	_commandListLibrary(), _shaderObjectLibrary()
 {
 
 }
@@ -96,10 +96,10 @@ HRESULT K3D::GraphicsContextManager::CreatePSO(std::shared_ptr<D3D12Device>& dev
 	return _shaderObjectLibrary.CreatePSO(device,psoName, cps, rootSignature);
 }
 
-HRESULT K3D::GraphicsContextManager::CreateCommandQueue(std::string queueName, D3D12_COMMAND_QUEUE_DESC& desc)
-{
-	return this->_queueManager.Create(queueName,desc);
-}
+//HRESULT K3D::GraphicsContextManager::CreateCommandQueue(std::string queueName, D3D12_COMMAND_QUEUE_DESC& desc)
+//{
+//	return this->_queueManager.Create(queueName,desc);
+//}
 
 HRESULT K3D::GraphicsContextManager::CreateRootSignature(std::string rsName, ID3DBlob * signature)
 {
@@ -136,10 +136,10 @@ std::shared_ptr<K3D::PipelineStateObject> K3D::GraphicsContextManager::GetPSO(st
 	return _shaderObjectLibrary.GetPSO(psoName).lock();
 }
 
-std::shared_ptr<K3D::CommandQueue> K3D::GraphicsContextManager::GetCommandQueue(std::string queueName)
-{
-	return std::shared_ptr<CommandQueue>();
-}
+//std::shared_ptr<K3D::CommandQueue> K3D::GraphicsContextManager::GetCommandQueue(std::string queueName)
+//{
+//	return std::shared_ptr<CommandQueue>();
+//}
 
 std::shared_ptr<K3D::RootSignature> K3D::GraphicsContextManager::GetRootSignature(std::string rsName)
 {
@@ -161,10 +161,10 @@ void K3D::GraphicsContextManager::EraseRootSignature(std::string rsName)
 	_shaderObjectLibrary.EraseRootSignature(rsName);
 }
 
-void K3D::GraphicsContextManager::EraseCommandQueue(std::string queueName)
-{
-	_queueManager.Erase(queueName);
-}
+//void K3D::GraphicsContextManager::EraseCommandQueue(std::string queueName)
+//{
+//	_queueManager.Erase(queueName);
+//}
 
 void K3D::GraphicsContextManager::Discard()
 {

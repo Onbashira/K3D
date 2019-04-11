@@ -16,7 +16,7 @@ K3D::DebugWindow::~DebugWindow()
 {
 }
 
-void K3D::DebugWindow::Init(D3D12Device * dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle)
+void K3D::DebugWindow::Init(std::shared_ptr<D3D12Device>& dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle)
 {
 	ImGui_ImplDX12_Init(dev->GetDevice().Get(), frame, format, fontSrvCPUDescHandle, fontSrvGPUDescHandle);
 }

@@ -25,8 +25,8 @@ namespace K3D {
 		//!シェーダーオブジェクトマネージャ
 		ShaderObjectManager			_shaderObjectLibrary;
 
-		//!キューマネージャ
-		CommandQueueManager         _queueManager;
+		////!キューマネージャ
+		//CommandQueueManager         _queueManager;
 
 	public:
 	private:
@@ -136,14 +136,14 @@ namespace K3D {
 		*/
 		HRESULT CreatePSO(std::shared_ptr<D3D12Device>& device, std::string psoName, D3D12_COMPUTE_PIPELINE_STATE_DESC& gps, ID3DBlob * rootSignature = nullptr);
 
-		/**
-		* @fn
-		* @brief コマンドキュー作成
-		* @param[in] queueName キューの名前
-		* @param[in] desc キューのデスクリプション
-		* @return 成功でS_OK
-		*/
-		HRESULT CreateCommandQueue(std::string queueName, D3D12_COMMAND_QUEUE_DESC& desc);
+		///**
+		//* @fn
+		//* @brief コマンドキュー作成
+		//* @param[in] queueName キューの名前
+		//* @param[in] desc キューのデスクリプション
+		//* @return 成功でS_OK
+		//*/
+		//HRESULT CreateCommandQueue(std::string queueName, D3D12_COMMAND_QUEUE_DESC& desc);
 
 		/**
 		* @fn
@@ -203,13 +203,13 @@ namespace K3D {
 		*/
 		std::shared_ptr<PipelineStateObject> GetPSO(std::string psoName);
 
-		/**
-		* @fn
-		* @brief キューのセット
-		* @param[in] queueName キュー名
-		* @return キュー参照
-		*/
-		std::shared_ptr<CommandQueue> GetCommandQueue(std::string queueName);
+		///**
+		//* @fn
+		//* @brief キューのセット
+		//* @param[in] queueName キュー名
+		//* @return キュー参照
+		//*/
+		//std::shared_ptr<CommandQueue> GetCommandQueue(std::string queueName);
 
 		/**
 		* @fn
@@ -240,12 +240,12 @@ namespace K3D {
 		*/
 		void EraseRootSignature(std::string psoName);
 
-		/**
-		* @fn
-		* @brief キューの削除
-		* @param[in] queueName キュー名
-		*/
-		void EraseCommandQueue(std::string queueName);
+		///**
+		//* @fn
+		//* @brief キューの削除
+		//* @param[in] queueName キュー名
+		//*/
+		//void EraseCommandQueue(std::string queueName);
 
 		/**
 		* @fn

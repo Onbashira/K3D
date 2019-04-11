@@ -8,7 +8,7 @@
 #include "Engine/Source/Device/RenderingDevice.h"
 #include "Engine/Source/Rendering/RenderingManager.h"
 #include "Engine/Source/Rendering/RenderingPass/RenderingPass.h"
-#include "Engine/Source/Rendering/RenderingPass/RenderingPathHolder.h"
+#include "Engine/Source/Rendering/RenderingPass/RenderingPassHolder.h"
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CoreSystem/Framework.h"
 #include "Engine/Source/ShaderObject/ShaderObjectManager.h"

@@ -7,6 +7,7 @@
 #include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 #include "Engine/Source/Scene/Scene.h"
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
+#include "Engine/Source/Resource/Resource.h"
 
 K3D::RenderingManager::~RenderingManager()
 {

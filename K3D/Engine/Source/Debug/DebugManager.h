@@ -32,7 +32,7 @@ namespace K3D {
 
 		IMGUI_IMPL_API LRESULT ImGuiWndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-		bool Init(HWND hwnd, D3D12Device* dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle);
+		bool Init(HWND hwnd, std::shared_ptr<D3D12Device>& dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle);
 
 		void DebugWindowNewFrame();
 

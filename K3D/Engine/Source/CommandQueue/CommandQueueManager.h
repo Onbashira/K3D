@@ -6,16 +6,16 @@
 
 namespace K3D {
 	class CommandQueue;
-	class CommandQueueManager : private NonCopyable
+	class[[maybe_unuse("this class maybe unuse")]]CommandQueueManager : private NonCopyable
 	{
 		friend class GraphicsContextManager;
 
 	public:
-		
+
 	private:
 		//!ì¬‚³‚ê‚½ƒLƒ…[‚ğ•Û
 		UnorderedManagerComponent<CommandQueue> _queues;
-	
+
 	public:
 
 		CommandQueueManager();

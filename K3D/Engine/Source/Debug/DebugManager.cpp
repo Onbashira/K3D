@@ -93,7 +93,7 @@ IMGUI_IMPL_API LRESULT K3D::DebugManager::ImGuiWndProcHandler(HWND hwnd, UINT ms
 	return 0;
 }
 
-bool K3D::DebugManager::Init(HWND hwnd, D3D12Device * dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle)
+bool K3D::DebugManager::Init(HWND hwnd, std::shared_ptr<D3D12Device>& dev, int frame, DXGI_FORMAT format, D3D12_CPU_DESCRIPTOR_HANDLE fontSrvCPUDescHandle, D3D12_GPU_DESCRIPTOR_HANDLE fontSrvGPUDescHandle)
 {
 
 

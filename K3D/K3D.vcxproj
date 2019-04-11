@@ -113,7 +113,7 @@
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp" />
     <ClCompile Include="Engine\Source\DescriptorHeap\GameHeap.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.cpp" />
     <ClCompile Include="Engine\Source\Utility\Singleton.cpp" />
     <ClCompile Include="Engine\Source\Primitive\Object\PrimitiveObject.cpp" />
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitiveRenderer.cpp" />
@@ -238,7 +238,7 @@
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\GameHeap.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPathHolder.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.h" />
     <ClInclude Include="Engine\Source\Utility\Singleton.h" />
     <ClInclude Include="Engine\Source\Primitive\Object\PrimitiveObject.h" />
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitiveRenderer.h" />
@@ -299,7 +299,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">

@@ -1,7 +1,5 @@
 #pragma once
-#include "Engine/Source/Utility/D3D12Common.h"
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
-#include "Engine/Source/Resource/Resource.h"
 #include <memory>
 #include <vector>
 
@@ -13,14 +11,15 @@ namespace K3D {
 	class Window;
 	class D3D12Device;
 	class RenderinDevice;
+	class Resource;
 
 	class SwapChain
-	{	
-	
+	{
+
 		friend class RenderingManager;
 
 	public:
-	
+
 	private:
 		unsigned int _bufferNum;
 
@@ -42,7 +41,7 @@ namespace K3D {
 
 		~SwapChain();
 
-		HRESULT Initialize(CommandQueue& commandQueue, std::shared_ptr<D3D12Device>& device, Factory& factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 2);
+		HRESULT Initialize(CommandQueue& commandQueue, std::shared_ptr<D3D12Device>& device, Factory& factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum = 3, DXGI_FORMAT targetFormat = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
 
 		unsigned int GetBufferNum();
 
@@ -62,7 +61,7 @@ namespace K3D {
 
 		void ClearScreen(std::shared_ptr<CommandList> list);
 
-		void ReSizeRenderTarget(std::shared_ptr<D3D12Device>& device, unsigned int width ,unsigned int height , unsigned int backBufferNum);
+		void ReSizeRenderTarget(std::shared_ptr<D3D12Device>& device, unsigned int width, unsigned int height, unsigned int backBufferNum);
 
 		void FlipScreen();
 
@@ -72,9 +71,9 @@ namespace K3D {
 
 	private:
 
-		HRESULT CreateSwapChain(CommandQueue& commandQueue, std::shared_ptr<D3D12Device>& device, Factory& factory, Window& window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum);
+		HRESULT CreateSwapChain(CommandQueue& commandQueue, std::shared_ptr<D3D12Device>& device, Factory& factory, Window& window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum, DXGI_FORMAT targetFormat);
 
-		HRESULT CreateRenderTargets(std::shared_ptr<D3D12Device>& device , unsigned int bufferNum = 2);
+		HRESULT CreateRenderTargets(std::shared_ptr<D3D12Device>& device, unsigned int bufferNum);
 
 	};
 

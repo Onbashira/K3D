@@ -4,6 +4,7 @@
 #include "Engine/Source/CommandList/CommandList.h"
 #include "Engine/Source/CommandQueue/CommandQueue.h"
 #include "Engine/Source/Window/Window.h"
+#include "Engine/Source/Resource/Resource.h"
 
 
 constexpr float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -19,7 +20,7 @@ K3D::SwapChain::~SwapChain()
 }
 
 
-HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
+HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum, DXGI_FORMAT targetFormat)
 {
 
 	_width = windowWidth;
@@ -29,7 +30,7 @@ HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared
 	swapChainDesc.BufferCount = bufferNum;
 	swapChainDesc.Width = windowWidth;
 	swapChainDesc.Height = windowHeight;
-	swapChainDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.Format = targetFormat;
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	swapChainDesc.SampleDesc.Count = 1;
@@ -49,7 +50,7 @@ HRESULT K3D::SwapChain::CreateSwapChain(CommandQueue & commandQueue, std::shared
 	return S_OK;
 }
 
-HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device,unsigned int bufferNum)
+HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device, unsigned int bufferNum)
 {
 	this->_bufferNum = bufferNum;
 	D3D12_DESCRIPTOR_HEAP_DESC desc{};
@@ -87,11 +88,11 @@ HRESULT K3D::SwapChain::CreateRenderTargets(std::shared_ptr<D3D12Device>& device
 	return S_OK;
 }
 
-HRESULT K3D::SwapChain::Initialize(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum)
+HRESULT K3D::SwapChain::Initialize(CommandQueue & commandQueue, std::shared_ptr<D3D12Device>& device, Factory & factory, Window & window, UINT windowWidth, UINT windowHeight, unsigned int bufferNum, DXGI_FORMAT targetFormat)
 {
-	auto hr = CreateSwapChain(commandQueue, device, factory, window, windowWidth, windowHeight, bufferNum);
+	auto hr = CreateSwapChain(commandQueue, device, factory, window, windowWidth, windowHeight, bufferNum, targetFormat);
 	CHECK_RESULT(hr);
-	hr = CreateRenderTargets(device,bufferNum);
+	hr = CreateRenderTargets(device, bufferNum);
 	CHECK_RESULT(hr);
 	return hr;
 }
@@ -123,7 +124,7 @@ HRESULT K3D::SwapChain::SetStateRenderTarget(std::shared_ptr<CommandList> list)
 
 HRESULT K3D::SwapChain::SetStateCopyDest(std::shared_ptr<CommandList> list)
 {
-	auto hr =_rtResource[_currentIndex]->ResourceTransition(list,D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
+	auto hr = _rtResource[_currentIndex]->ResourceTransition(list, D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_COPY_DEST);
 	CHECK_RESULT(hr);
 	return hr;
 }
@@ -135,15 +136,15 @@ HRESULT K3D::SwapChain::SetStateGenericRead(std::shared_ptr<CommandList> list)
 	return hr;
 }
 
-HRESULT K3D::SwapChain::CopyToRenderTarget(std::shared_ptr<CommandList> list,Resource* pSrc)
+HRESULT K3D::SwapChain::CopyToRenderTarget(std::shared_ptr<CommandList> list, Resource* pSrc)
 {
-	list->GetCommandList()->CopyResource(this->_rtResource[_currentIndex]->GetResource().Get(),pSrc->GetResource().Get());
+	list->GetCommandList()->CopyResource(this->_rtResource[_currentIndex]->GetResource().Get(), pSrc->GetResource().Get());
 	return S_OK;
 }
 
-void K3D::SwapChain::SetRenderTarget(std::shared_ptr<CommandList> list , D3D12_CPU_DESCRIPTOR_HANDLE* depthHandle)
+void K3D::SwapChain::SetRenderTarget(std::shared_ptr<CommandList> list, D3D12_CPU_DESCRIPTOR_HANDLE* depthHandle)
 {
-	list->GetCommandList()->OMSetRenderTargets(1, &this->_rtHeap.GetCPUHandle(_currentIndex),FALSE, depthHandle);
+	list->GetCommandList()->OMSetRenderTargets(1, &this->_rtHeap.GetCPUHandle(_currentIndex), FALSE, depthHandle);
 
 }
 
@@ -155,7 +156,7 @@ void K3D::SwapChain::ClearScreen(std::shared_ptr<CommandList> list)
 	static float time = 0.0f;
 	time += 0.001f;
 	//testCode CleacolorChange
-	float tempColor[4] = {0.5f,0.5f,0.6f,1.0f};
+	float tempColor[4] = { 0.5f,0.5f,0.6f,1.0f };
 
 	list->GetCommandList()->ClearRenderTargetView(_rtHeap.GetCPUHandle(_currentIndex), tempColor, 0, nullptr);
 

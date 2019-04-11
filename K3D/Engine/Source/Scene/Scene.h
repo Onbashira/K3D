@@ -38,6 +38,8 @@ namespace K3D {
 
 		virtual void Rendering() = 0;
 
+		virtual void ExecutePath();
+
 		virtual void SceneEnd();
 
 		virtual void Discard();

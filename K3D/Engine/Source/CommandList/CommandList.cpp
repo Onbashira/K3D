@@ -9,6 +9,7 @@
 #include "Engine/Source/Signature/CommandSignature.h"
 #include "Engine/Source/Device/D3D12Device.h"
 #include "Engine/Source/CommandAllocator/CommandAllocator.h"
+#include "Engine/Source/Resource/Resource.h"
 
 K3D::CommandList::CommandList() :
 	_commandList(),

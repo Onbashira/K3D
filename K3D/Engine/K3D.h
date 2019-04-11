@@ -28,6 +28,14 @@
 #include "Engine/Source/Resource/UnorderedAccessValue.h"
 #include "Engine/Source/Resource/DepthStencilBuffer.h"
 
+//Rendering
+#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
+#include "Engine/Source/Rendering/RenderingBaffer/DecaleBuffer.h"
+#include "Engine/Source/Rendering/RenderingManager.h"
+#include "Engine/Source/Rendering/RenderingPass/RenderingPass.h"
+#include "Engine/Source/Rendering/RenderingPass/RenderingPathHolder.h"
+#include "Engine/Source/Rendering/SwapChain.h"
+
 //Window
 #include "Engine/Source/Window/Window.h"
 
@@ -57,7 +65,6 @@
 //Graphics
 #include "Engine/Source/GraphicsManager/GraphicsContextManager.h"
 #include "Engine/Source/Rendering/RenderingManager.h"
-#include "Engine/Source/Rendering/RenderingManager.h"
 #include "Engine/Source/Rendering/SwapChain.h"
 #include "Engine/Source/Rendering/RenderingBaffer/GeometryBuffer.h"
 #include "Engine/Source/Rendering/RenderingBaffer/DecaleBuffer.h"
@@ -67,10 +74,8 @@
 //GameObject
 #include "Engine/Source/Component/GameObject/GameObject.h"
 #include "Engine/Source/Component/Transform/Transform.h"
-#include "Engine/Source/Component/DrawableComponent/DrawableComponent.h"
-#include "Engine/Source/Component/GraphicsComponent/GraphicsComponent.h"
-#include "Engine/Source/Component/InputComponent/InputComponent.h"
-#include "Engine/Source/Component/PhysicsComponent/PhysicsComponent.h"
+#include "Engine/Source/Component/DefaultComponents.h"
+#include "Engine/Source/Component/ComponentsHeader.h"
 
 //Mesh
 #include "Engine/Source/Mesh/BasicMesh.h"
@@ -87,12 +92,22 @@
 #include "Engine/Source/Primitive/Geometry/Cube.h"
 #include "Engine/Source/Primitive/Geometry/Plane.h"
 #include "Engine/Source/Primitive/Geometry/Sphere.h"
+#include "Engine/Source/Primitive/DefaultComponent/PrimitiveInputComponent.h"
+#include "Engine/Source/Primitive/DefaultComponent/PrimitivePhysicsComponent.h"
+#include "Engine/Source/Primitive/DefaultComponent/PrimitiveRenderer.h"
+
+//Sprite
+#include "Engine/Source/Sprite/Sprite.h"
 
 //Model
 
 //Utility
-
-#include "Engine/Source/Debug/Logger.h"
 #include "Engine/Source/Utility/NonCopyable.h"
 #include "Engine/Source/Utility/Utility.h"
 #include "Engine/Source/Utility/Singleton.h"
+#include "Engine/Source/Utility/ManagerComponent.h"
+
+//Debug
+#include "Engine/Source/Debug/Logger.h"
+#include "Engine/Source/Debug/DebugWindow.h"
+#include "Engine/Source/Debug/DebugWindow.h"
