@@ -52,7 +52,7 @@ K3D::String & K3D::CommandAllocator::GetName()
 
 void K3D::CommandAllocator::ResetAllocator()
 {
-
+	_isDuringExecuting = false;
 	this->_allocator->Reset();
 }
 

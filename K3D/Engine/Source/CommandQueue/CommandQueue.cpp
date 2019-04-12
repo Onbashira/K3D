@@ -76,14 +76,14 @@ void K3D::CommandQueue::ExecuteCommandLists(std::vector<std::shared_ptr<CommandL
 void K3D::CommandQueue::ExecuteCopyCommands(std::vector<std::shared_ptr<CommandList>>& lists)
 {
 	Execute(lists, _copyQueue);
-	DETAILS_LOG(String("Execute CopyQueue"));
+	//DETAILS_LOG(String("Execute CopyQueue"));
 
 }
 
 void K3D::CommandQueue::ExecuteComputeCommands(std::vector<std::shared_ptr<CommandList>>& lists)
 {
 	Execute(lists, _computeQueue);
-	DETAILS_LOG(String("Execute ComputeQueue"));
+	//DETAILS_LOG(String("Execute ComputeQueue"));
 
 }
 

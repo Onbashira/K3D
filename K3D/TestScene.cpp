@@ -24,6 +24,8 @@ TestScene::TestScene() :
 {
 	//_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
 	//_cube->Initialize();
+	//_cube->GetTransform().SetScale(K3D::Vector3(10.0f, 10.0f, 10.0f));
+	//_cube->Update();
 	//InitializePSO();
 }
 
@@ -38,6 +40,14 @@ void TestScene::Update()
 
 void TestScene::Rendering()
 {
+	//std::shared_ptr<K3D::CommandList> list;
+	//auto hr = _renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), D3D12_COMMAND_LIST_TYPE_DIRECT, list);
+	//_gameHeap->SetGameHeap(list);
+	//list->SetGraphicsRootSignature(_rs);
+	//list->SetPipelineState(_pso);
+	//_cube->Draw(list);
+	//list->CloseCommandList();
+
 
 }
 

@@ -12,6 +12,9 @@ namespace K3D {
 
 	private:
 
+		std::mutex _allocatorMutex;
+
+
 		std::list<InternalCommand> _allocatedMemory;
 
 	public:

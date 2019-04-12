@@ -32,8 +32,12 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 
 	if (_frameNum > 2) {
 		_flushFunc = [&](INT64 displayFence , INT64 completeValue , bool waitNow)->bool {
-			return ((completeValue < displayFence && _currentFence >= _frameNum)
-				|| waitNow && (completeValue < static_cast<INT64>(_currentFence)));
+			if ((completeValue < displayFence && _currentFence >= _frameNum)
+				|| waitNow && (completeValue < static_cast<INT64>(_currentFence)))
+			{
+				return true;
+			}
+			return false;
 		};
 	}
 
@@ -142,6 +146,7 @@ void K3D::RenderContext::PushBackCmdList(std::shared_ptr<CommandList> list)
 
 void K3D::RenderContext::ExecuteCmdList3DQueue()
 {
+	GetCurrentCmdAllocator().lock()->ExecutedAllocator();
 	this->_queueRef->ExecuteCommandLists(_listsVector[_currentIndex]);
 }
 

@@ -21,6 +21,7 @@ K3D::Cube::~Cube()
 
 void K3D::Cube::Update()
 {
+	GameObject::UpdateTransformBuffer();
 }
 
 void K3D::Cube::Draw(std::shared_ptr<CommandList>& cmdList)
@@ -31,12 +32,13 @@ void K3D::Cube::Draw(std::shared_ptr<CommandList>& cmdList)
 
 void K3D::Cube::Initialize()
 {
-	MeshCreate();
+	CreateMesh();
+	CreateIndices();
 	this->CreateDescriptors();
 
 }
 
-void K3D::Cube::MeshCreate()
+void K3D::Cube::CreateMesh()
 {
 
 
@@ -95,6 +97,10 @@ void K3D::Cube::MeshCreate()
 
 	}
 }
+
+void K3D::Cube::CreateIndices()
+{
+}
 void K3D::Cube::CreateDescriptors()
 {
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
@@ -107,7 +113,3 @@ void K3D::Cube::CreateDescriptors()
 
 }
 
-void K3D::Cube::ComponentInitialize()
-{
-
-}

@@ -24,7 +24,7 @@ void K3D::MeshBuffer::AddCustomVBO(ULONG64 size, unsigned int stride, void * cus
 
 void K3D::MeshBuffer::InitializeIBO(std::vector<unsigned int>& indexListDataSrc)
 {
-	this->_mesh.CreateIBO(indexListDataSrc.size(), sizeof(unsigned int), indexListDataSrc.data());
+	this->_mesh.CreateIBO(indexListDataSrc.size() * sizeof(unsigned int), sizeof(unsigned int), indexListDataSrc.data());
 }
 
 std::vector<D3D12_VERTEX_BUFFER_VIEW> K3D::MeshBuffer::GetMeshVBViews()

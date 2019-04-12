@@ -33,10 +33,14 @@ void K3D::Plane::Draw(std::shared_ptr<CommandList>& cmdList)
 
 void K3D::Plane::Initialize()
 {
+	CreateMesh();
+	CreateIndices();
+	CreateDescriptors();
 }
 
-void K3D::Plane::MeshCreate()
+void K3D::Plane::CreateMesh()
 {
+
 	unsigned int surfaceCount = 6;
 	unsigned int planeVertex = 4;
 	std::vector<PrimitiveVertex> vertexes;
@@ -44,9 +48,9 @@ void K3D::Plane::MeshCreate()
 
 	PrimitiveVertex plane[4];
 	for (unsigned int i = 0; i < planeVertex; ++i) {
-			plane[i].pos = Vector3((2.0f*static_cast<float>((i) % 2) - 1.0f) / 2.0f, -(2.0f * static_cast<float>((i) % 4 / 2) - 1.0f) / 2.0f, -1.0f / 2.0f);
-			plane[i].normal = Vector3::back;
-			plane[i].texcoord = { static_cast<float>(i % 2), static_cast<float>(i / 2) };
+		plane[i].pos = Vector3((2.0f*static_cast<float>((i) % 2) - 1.0f) / 2.0f, -(2.0f * static_cast<float>((i) % 4 / 2) - 1.0f) / 2.0f, -1.0f / 2.0f);
+		plane[i].normal = Vector3::back;
+		plane[i].texcoord = { static_cast<float>(i % 2), static_cast<float>(i / 2) };
 	}
 	unsigned int planeList[] = { 0,1,2,1,3,2 };
 	for (unsigned int listIndex = 0; listIndex < surfaceCount; listIndex++) {
@@ -61,6 +65,10 @@ void K3D::Plane::MeshCreate()
 		this->_modelMesh->meshBuffer->InitializeIBO(indexList);
 
 	}
+}
+
+void K3D::Plane::CreateIndices()
+{
 }
 
 void K3D::Plane::CreateDescriptors()

@@ -19,11 +19,11 @@ namespace K3D {
 
 		void Initialize();
 
-		void MeshCreate();
+		void CreateMesh();
+
+		void CreateIndices();
 
 		void CreateDescriptors();
-
-		void ComponentInitialize();
 
 	};
 }

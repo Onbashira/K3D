@@ -48,6 +48,9 @@ namespace K3D {
 		String& GetName();
 
 		void ResetAllocator();
+		void ExecutedAllocator() {
+			_isDuringExecuting = true;
+		};
 
 		void Discard();
 

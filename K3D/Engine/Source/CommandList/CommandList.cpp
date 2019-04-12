@@ -368,9 +368,9 @@ void K3D::CommandList::SetMarker(unsigned int Metadata, const void * pData, unsi
 	this->_commandList->SetMarker(Metadata, pData, Size);
 }
 
-void K3D::CommandList::SetPipelineState(std::shared_ptr<PipelineStateObject> pRootSignature)
+void K3D::CommandList::SetPipelineState(std::shared_ptr<PipelineStateObject> pPso)
 {
-	this->_commandList->SetPipelineState(pRootSignature->GetPSO().Get());
+	this->_commandList->SetPipelineState(pPso->GetPSO().Get());
 
 }
 
