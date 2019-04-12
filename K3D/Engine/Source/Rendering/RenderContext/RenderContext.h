@@ -52,6 +52,8 @@ namespace K3D {
 
 		std::shared_ptr<SwapChain> _swapChain;
 
+		std::function<bool(INT64,INT64,bool)> _flushFunc;
+
 	public:
 
 		virtual ~RenderContext();

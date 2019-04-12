@@ -7,7 +7,7 @@
 
 void main() {
 	K3D::Framework::SetUp();
-	K3D::Framework::GetInstance().SetBackBufferNum(2);
+	K3D::Framework::GetInstance().SetBackBufferNum(3);
 	K3D::Framework::GetInstance().SetWindowName(L"test");
 	K3D::Framework::GetInstance().SetWindowSize(1280, 720);
 	K3D::Framework::GetInstance().Initialize();

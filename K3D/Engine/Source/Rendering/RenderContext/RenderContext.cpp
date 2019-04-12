@@ -9,7 +9,7 @@
 
 K3D::RenderContext::RenderContext() : 
 	_frameNum(0),_currentIndex(0),_node(0),_currentFence(0),
-	_isDiscarded(false)
+	_isDiscarded(false), _flushFunc([&](INT64 displayFence, INT64 completeValue, bool waitNow)-> bool {return (completeValue < displayFence && _currentFence >= _frameNum); })
 {
 
 }
@@ -29,6 +29,13 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 	_queueRef = queue;
 	_swapChain = swapChain;
 	HRESULT hret = {};
+
+	if (_frameNum > 2) {
+		_flushFunc = [&](INT64 displayFence , INT64 completeValue , bool waitNow)->bool {
+			return ((completeValue < displayFence && _currentFence >= _frameNum)
+				|| waitNow && (completeValue < static_cast<INT64>(_currentFence)));
+		};
+	}
 
 	this->_cmdAllocators.resize(_frameNum);
 	this->_cmdLists.resize(_frameNum);
@@ -162,8 +169,7 @@ void K3D::RenderContext::WaitForQueue(std::shared_ptr<CommandQueue>& commandQueu
 	}
 
 	INT64 completeValue = static_cast<INT64>(_fences[_currentIndex].GetFence()->GetCompletedValue());
-	if ((completeValue < displayFence && _currentFence >= _frameNum)
-		|| waitNow && (completeValue < static_cast<INT64>(_currentFence)))
+	if (_flushFunc(displayFence,completeValue,waitNow))
 	{		
 		
 		INFO_LOG(String("Wait for Execution..."));
