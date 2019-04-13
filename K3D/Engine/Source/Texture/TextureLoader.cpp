@@ -98,7 +98,7 @@ HRESULT K3D::TextureLoader::UpdateSubResource(std::shared_ptr<CommandList> list,
 
 	queue->GetQueue()->ExecuteCommandLists(1, command_lists);
 
-	renderContext->WaitForQueue(queue, true);
+	renderContext->WaitForGPU(queue, true);
 
 	renderContext->ResetCommandList(list);
 
@@ -151,7 +151,7 @@ HRESULT K3D::TextureLoader::WriteToSubResource(std::shared_ptr<CommandList> list
 
 	queue->GetQueue()->ExecuteCommandLists(1, command_lists); // 実行するコマンドリストの配列をコマンドキューへ送信
 
-	renderContext->WaitForQueue(queue,true);
+	renderContext->WaitForGPU(queue,true);
 	renderContext->ResetCommandList(list);
 	return ret;
 }

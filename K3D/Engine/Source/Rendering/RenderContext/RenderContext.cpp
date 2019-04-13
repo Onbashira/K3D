@@ -9,7 +9,7 @@
 
 K3D::RenderContext::RenderContext() : 
 	_frameNum(0),_currentIndex(0),_node(0),_currentFence(0),
-	_isDiscarded(false), _flushFunc([&](INT64 displayFence, INT64 completeValue, bool waitNow)-> bool {return (completeValue < displayFence && _currentFence >= _frameNum); })
+	_isDiscarded(false)
 {
 
 }
@@ -40,6 +40,11 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 			return false;
 		};
 	}
+	else {
+		_flushFunc = [&](INT64 displayFence, INT64 completeValue, bool waitNow)-> bool {
+			return (completeValue < displayFence && _currentFence >= _frameNum); 
+		};
+	}
 
 	this->_cmdAllocators.resize(_frameNum);
 	this->_cmdLists.resize(_frameNum);
@@ -51,7 +56,9 @@ HRESULT K3D::RenderContext::Initialize(std::shared_ptr<D3D12Device>& device, int
 		hret = _cmdAllocators[i]->Initialize(device, nodeMask, D3D12_COMMAND_LIST_TYPE::D3D12_COMMAND_LIST_TYPE_DIRECT);
 		if (FAILED(hret))
 			return hret;
-
+		std::stringstream ss;
+		ss << "RenderContext Allocator" << i;
+		_cmdAllocators[i]->SetName(ss.str());
 		_cmdLists[i][0] = std::make_shared<CommandList>();
 		_cmdLists[i][1] = std::make_shared<CommandList>();
 
@@ -160,13 +167,15 @@ void K3D::RenderContext::ExecuteCmdListComputeQueue()
 	this->_queueRef->ExecuteComputeCommands(_listsVector[_currentIndex]);
 }
 
-void K3D::RenderContext::WaitForQueue(std::shared_ptr<CommandQueue>& commandQueue, bool waitNow)
-{
+void K3D::RenderContext::WaitForGPU(std::shared_ptr<CommandQueue>& commandQueue, bool waitNow)
+{	
+	
 	_currentFence++;
+
 	//Signal”­s
 	commandQueue->GetQueue()->Signal(_fences[_currentIndex].GetFence().Get(), _currentFence);
 
-	INT64 displayFence = _currentFence - static_cast<INT64>(_frameNum + 1);
+	INT64 displayFence = _currentFence - static_cast<INT64>(_frameNum )+ 1;
 
 	if (waitNow)
 	{
@@ -177,7 +186,7 @@ void K3D::RenderContext::WaitForQueue(std::shared_ptr<CommandQueue>& commandQueu
 	if (_flushFunc(displayFence,completeValue,waitNow))
 	{		
 		
-		INFO_LOG(String("Wait for Execution..."));
+		SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Details, std::string("Wait for GPU...\n"));
 
 		HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
 

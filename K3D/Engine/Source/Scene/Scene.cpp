@@ -75,14 +75,14 @@ void K3D::Scene::SceneEnd()
 	list.lock()->CloseCommandList();
 	_renderContext->PushBackCmdList(list.lock());
 
-	//レンダーターゲットフリッピング
 	_renderContext->ExecuteCmdList3DQueue();
 
 	_renderContext->Present(1, 0);
-
+	
+	//レンダーターゲットフリッピング
 	_renderContext->Flip();
 
-	_renderContext->WaitForQueue(_renderContext->GetCommandQueue().lock(), false);
+	_renderContext->WaitForGPU(_renderContext->GetCommandQueue().lock(), false);
 
 	_renderContext->ClearCmdLists();
 

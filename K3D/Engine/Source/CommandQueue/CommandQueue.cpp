@@ -70,7 +70,9 @@ D3D12_COMMAND_QUEUE_DESC K3D::CommandQueue::GetDesc()
 void K3D::CommandQueue::ExecuteCommandLists(std::vector<std::shared_ptr<CommandList>>& lists)
 {
 	Execute(lists, _3DQueue);
-	DETAILS_LOG(String("Execute 3DQueue"));
+	SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Details, std::string("Execute 3DQueue\n"));
+
+
 }
 
 void K3D::CommandQueue::ExecuteCopyCommands(std::vector<std::shared_ptr<CommandList>>& lists)

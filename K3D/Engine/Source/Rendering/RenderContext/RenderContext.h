@@ -88,7 +88,7 @@ namespace K3D {
 
 		void ExecuteCmdListComputeQueue();
 
-		void WaitForQueue(std::shared_ptr<CommandQueue>& commandQueue,bool waitNow = false);
+		void WaitForGPU(std::shared_ptr<CommandQueue>& commandQueue,bool waitNow = false);
 
 		void ResetAllocators();
 

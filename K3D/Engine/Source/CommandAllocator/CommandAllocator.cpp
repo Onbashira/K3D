@@ -53,6 +53,7 @@ K3D::String & K3D::CommandAllocator::GetName()
 void K3D::CommandAllocator::ResetAllocator()
 {
 	_isDuringExecuting = false;
+	SystemLogger::GetInstance().Log(K3D::LOG_LEVEL::Details, std::string("ResetAllocator\n"));
 	this->_allocator->Reset();
 }
 
