@@ -28,18 +28,18 @@ HRESULT K3D::RenderingDevice::Initialize(std::shared_ptr<D3D12Device> d3d12Devic
 
 
 	this->_d3d11On12Devcie = std::make_shared<D3D11On12Device>();
-	ret = this->_d3d11On12Devcie->Initialize(_d3d12Device, queue);
-	if (FAILED(ret)) {
-		Util::Comment(L"D3D11On12デバイスの作成失敗");
-		return ret;
-	}
+	//ret = this->_d3d11On12Devcie->Initialize(_d3d12Device, queue);
+	//if (FAILED(ret)) {
+	//	Util::Comment(L"D3D11On12デバイスの作成失敗");
+	//	return ret;
+	//}
 
 	this->_d2dDevice = std::make_shared<D2DDevice>();
-	ret = this->_d2dDevice->Initialize(_d3d11On12Devcie);
-	if (FAILED(ret)) {
-		Util::Comment(L"D3D12デバイスの作成失敗");
-		return ret;
-	}
+	//ret = this->_d2dDevice->Initialize(_d3d11On12Devcie);
+	//if (FAILED(ret)) {
+	//	Util::Comment(L"D3D12デバイスの作成失敗");
+	//	return ret;
+	//}
 
 	return ret;
 }

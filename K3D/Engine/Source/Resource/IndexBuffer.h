@@ -25,6 +25,8 @@ namespace K3D {
 
 		UINT64 GetElementSize() { return _elementSize; };
 
+		size_t GetElementCount() { return (static_cast<size_t>(_size) / static_cast<size_t>(_elementSize)); };
+
 		D3D12_INDEX_BUFFER_VIEW GetView()const;
 
 	private:

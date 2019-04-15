@@ -148,7 +148,7 @@ namespace K3D {
 		/**
 		* @fn
 		* @brief バッファ更新・書き込み
-		* @param[in] pSrc 書き込み先へのポインタ
+		* @param[in] pSrc ソースへのポインタ
 		* @param[in] size サイズ
 		* @param[in] dstOffset オフセット
 		* @param[in] readRange 読み込みレンジ

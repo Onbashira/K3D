@@ -22,11 +22,11 @@ TestScene::TestScene() :
 	Scene(K3D::Framework::GetInstance().GetRenderingManagre().GetRenderingDevice())
 
 {
-	//_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
-	//_cube->Initialize();
-	//_cube->GetTransform().SetScale(K3D::Vector3(10.0f, 10.0f, 10.0f));
-	//_cube->Update();
-	//InitializePSO();
+	_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
+	_cube->Initialize();
+	_cube->GetTransform().SetScale(K3D::Vector3(2.0f, 2.0f, 2.0f));
+	_cube->Update();
+	InitializePSO();
 }
 
 
@@ -36,17 +36,24 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
+	_mainCamera->DebugMove(K3D::Framework::GetInstance().Input());
+	_mainCamera->DebugRotate(K3D::Framework::GetInstance().Input());
+	_mainCamera->Update();
 }
 
 void TestScene::Rendering()
 {
-	//std::shared_ptr<K3D::CommandList> list;
-	//auto hr = _renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), D3D12_COMMAND_LIST_TYPE_DIRECT, list);
-	//_gameHeap->SetGameHeap(list);
-	//list->SetGraphicsRootSignature(_rs);
-	//list->SetPipelineState(_pso);
-	//_cube->Draw(list);
-	//list->CloseCommandList();
+	std::shared_ptr<K3D::CommandList> list;
+	auto hr = _renderContext->CreateCommandList(_renderingDevice->GetD3D12Device(), D3D12_COMMAND_LIST_TYPE_DIRECT, list);
+
+	_gameHeap->SetGameHeap(list);
+	_renderContext->GetSwapChain()->SetRenderTarget(
+		list, &_mainCamera->GetDepthStencil().GetDSVHeapPtr().GetCPUHandle(0)
+	);
+	list->SetGraphicsRootSignature(_rs);
+	list->SetPipelineState(_pso);
+	_cube->Draw(list);
+	list->CloseCommandList();
 
 
 }
@@ -88,7 +95,7 @@ void TestScene::InitializePSO()
 	//ラスタライザステートの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc = {};
 	rasterizerDesc.FillMode = D3D12_FILL_MODE::D3D12_FILL_MODE_SOLID;
-	rasterizerDesc.CullMode = D3D12_CULL_MODE::D3D12_CULL_MODE_NONE;
+	rasterizerDesc.CullMode = D3D12_CULL_MODE::D3D12_CULL_MODE_BACK;
 	rasterizerDesc.FrontCounterClockwise = FALSE;
 	rasterizerDesc.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
 	rasterizerDesc.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
@@ -102,7 +109,7 @@ void TestScene::InitializePSO()
 	//レンダーターゲットのブレンド設定
 	D3D12_RENDER_TARGET_BLEND_DESC descRTBS = {};
 
-	descRTBS.BlendEnable = TRUE;
+	descRTBS.BlendEnable = FALSE;
 	descRTBS.LogicOpEnable = FALSE;
 	descRTBS.SrcBlend = D3D12_BLEND::D3D12_BLEND_DEST_ALPHA;
 	descRTBS.DestBlend = D3D12_BLEND::D3D12_BLEND_INV_SRC_ALPHA;
@@ -150,7 +157,11 @@ void TestScene::InitializePSO()
 	psoDesc.SampleDesc.Quality = 0;
 
 	//デプスステンシルステートの設定
-	psoDesc.DepthStencilState.DepthEnable = FALSE;								//深度テストあり
+	psoDesc.DepthStencilState.DepthEnable = TRUE;								//深度テストあり
+	psoDesc.DepthStencilState.DepthEnable = true;
+	psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	psoDesc.DepthStencilState.StencilEnable = false;
 
 	this->_pso = std::make_shared<K3D::PipelineStateObject>();
 	this->_rs = std::make_shared<K3D::RootSignature>();

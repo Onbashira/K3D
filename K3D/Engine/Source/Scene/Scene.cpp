@@ -21,8 +21,8 @@ K3D::Scene::Scene(std::shared_ptr<RenderingDevice>& renderingDevice) :
 	unsigned int w = 0,h = 0;
 	K3D::Framework::GetInstance().GetWindowSize(w,h);
 	//カメラのイニシャライズ
-	_mainCamera->InitializeCameraFOV(90.0f, static_cast<float>(w),static_cast<float>( h),
-		0.001f, 1000.0f, Vector3(0.0f, 10.0f, -10.0f), Vector3(), Vector3::up);
+	_mainCamera->InitializeCamera(K3D::CAMERA_MODE::Perspective,static_cast<float>(w),static_cast<float>( h),
+		1.0f, 500.0f, Vector3(0.0f, 15.0f, -10.0f), Vector3(0.0f,0.0f,0.0f), Vector3::up);
 	//カメラのデプスステンシルバッファのイニシャライズ
 	_mainCamera->InitializeCameraDepthStencill(DXGI_FORMAT::DXGI_FORMAT_D32_FLOAT, w, h);
 	//カメラCPUビューの作成
@@ -77,7 +77,7 @@ void K3D::Scene::SceneEnd()
 
 	_renderContext->ExecuteCmdList3DQueue();
 
-	_renderContext->Present(1, 0);
+	_renderContext->Present(2, 0);
 	
 	//レンダーターゲットフリッピング
 	_renderContext->Flip();

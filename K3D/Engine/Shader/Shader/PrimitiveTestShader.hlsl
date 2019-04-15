@@ -73,6 +73,17 @@ VS_OUTPUT VSMain(VS_INPUT input)
     output.rawPos = input.pos;
     output.svPos = mul(camera.Proj, mul(camera.View, mul(transform, float4(input.pos, 1.0f))));
 
+
+        //test
+    {
+    
+        output.rawPos = input.pos;
+        output.svPos = mul(camera.Proj, mul(camera.View, float4(input.pos, 1.0f)));
+        output.normal = float4(normalize(input.normal), 0.0f);
+        output.texcoord = input.texcoord;
+        return output;
+    }
+    //
     matrix rotation = transform;
     matrix scaleInv = 0;
     rotation._m03_m13_m23 = 0;
@@ -104,7 +115,7 @@ PS_OUTPUT PSMain(PS_INPUT input)
     
 
     float3 color = float3(bright, bright, bright) + ambient;
-    output.color = float4(color, 1.0f);
+    output.color = input.svPos;
     return output;
 
 }

@@ -41,17 +41,10 @@ void K3D::Camera::InitializeCameraFOV(const float fov, const float width, const 
 	_aspectRatio = width / height;
 	_windowHeight = height;
 	_windowWidth = width;
-	_info.windowHeight = height;
-	_info.windowWidth = width;
 
 	auto mat = Matrix::ExtractRotationMatrix(Matrix::CreateLookAt(position, target, upWard));
 	this->_transform.SetRotation(Quaternion::CreateFromRotationMatrix(mat));
-	this->_projection = Matrix::CreatePerspectiveFOV(fov, _aspectRatio, nearClip, farClip);
-
-	this->_info.projection = this->_projection;
-	this->_info.view = Matrix::Invert(mat);
-	this->_info.windowHeight = this->_windowHeight;
-	this->_info.windowWidth = this->_windowWidth;
+	this->_projection = Matrix::CreatePerspectiveFOV(_fov, _aspectRatio, nearClip, farClip);
 
 	if (FAILED(CreateBuffer())) {
 		return;
@@ -147,8 +140,8 @@ HRESULT K3D::Camera::initializePerspective(const float width, const float height
 	_near = nearClip;
 	_far = farClip;
 	_aspectRatio = width / height;
-	_info.windowHeight = height;
-	_info.windowWidth = width;
+	_windowHeight = height;
+	_windowWidth = width;
 
 	this->_transform.SetScale(Vector3::one);
 	this->_transform.SetPos(position);
@@ -156,7 +149,7 @@ HRESULT K3D::Camera::initializePerspective(const float width, const float height
 	Matrix mat = std::move(Matrix::CreateLookAt(position, target, upWard));
 	this->_transform.SetRotation(Quaternion::CreateFromRotationMatrix(Matrix::ExtractRotationMatrix(mat)));
 
-	this->_info.projection = this->_projection = Matrix::CreatePerspectiveFOV(DegToRad(70), _aspectRatio, nearClip, farClip);;
+	this->_info.projection = this->_projection = Matrix::CreatePerspectiveFOV(DegToRad(70.0f), _aspectRatio, nearClip, farClip);;
 	this->_info.view = Matrix::Invert(mat);
 	this->_info.windowHeight = this->_windowHeight;
 	this->_info.windowWidth = this->_windowWidth;
@@ -231,12 +224,11 @@ void K3D::Camera::Update()
 	this->_info.projection = this->_projection;
 	this->_info.view = this->_transform.GetView();
 	this->_info.invView = Matrix::Invert(this->_info.view);
-	this->_info.invViewProj = Matrix::Invert(this->_projection * this->_transform.GetView());
-
+	this->_info.invViewProj = Matrix::Invert(this->_info.view * this->_projection);
 	this->_info.windowHeight = this->_windowHeight;
 	this->_info.windowWidth = this->_windowWidth;
 
-	_cameraMatrixBuffer.CopyData(0, cameraMat);
+	_cameraMatrixBuffer.CopyData(0, _info);
 }
 
 void K3D::Camera::DebugMove(K3D::InputManager & input)
