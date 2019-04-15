@@ -13,7 +13,7 @@ namespace K3D {
 
 	private:
 		//!ファクトリー
-		Microsoft::WRL::ComPtr<IDXGIFactory5>	_factory;
+		Microsoft::WRL::ComPtr<IDXGIFactory4>	_factory;
 
 	public:
 
@@ -34,7 +34,7 @@ namespace K3D {
 		* @brief ファクトリのフェッチ
 		* @return ファクトリの参照
 		*/
-		Microsoft::WRL::ComPtr<IDXGIFactory5>& GetFactory();
+		Microsoft::WRL::ComPtr<IDXGIFactory4>& GetFactory();
 
 		/**
 		* @fn

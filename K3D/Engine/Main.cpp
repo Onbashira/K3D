@@ -17,6 +17,7 @@ void main() {
 
 	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
 		K3D::Framework::GetInstance().Tick();
+		K3D::Framework::GetInstance().Input().InputUpdate();
 		testScene->SceneBegin();
 		testScene->Update();
 		testScene->Rendering();

@@ -39,6 +39,28 @@ void TestScene::Update()
 	_mainCamera->DebugMove(K3D::Framework::GetInstance().Input());
 	_mainCamera->DebugRotate(K3D::Framework::GetInstance().Input());
 	_mainCamera->Update();
+	//test 
+	static float time = 0.0f;
+	time += 0.01f;
+	_cube->GetTransform().SetPos(K3D::Vector3(0.0f, sinf(time), 0.0f));
+	_cube->Update();
+
+	std::stringstream ss;
+	auto& logger = K3D::SystemLogger::GetInstance();
+
+	ss << "Camera Pos X : " << _mainCamera->GetTransform().GetPos().x << std::endl;
+	ss << "Camera Pos Y : " << _mainCamera->GetTransform().GetPos().y << std::endl;
+	ss << "Camera Pos Z : " << _mainCamera->GetTransform().GetPos().z << std::endl;
+
+	ss << "Camera Target X : " << 0.0f << std::endl;
+	ss << "Camera Target Y : " << 0.0f << std::endl;
+	ss << "Camera Target Z : " << 0.0f << std::endl;
+
+	ss << "Cube Pos X : " << _cube->GetTransform().GetPos().x << std::endl;
+	ss << "Cube Pos Y : " << _cube->GetTransform().GetPos().y << std::endl;
+	ss << "Cube Pos Z : " << _cube->GetTransform().GetPos().z << std::endl;
+
+	logger.Log(K3D::LOG_LEVEL::Debug, ss.str());
 }
 
 void TestScene::Rendering()
@@ -54,8 +76,6 @@ void TestScene::Rendering()
 	list->SetPipelineState(_pso);
 	_cube->Draw(list);
 	list->CloseCommandList();
-
-
 }
 
 void TestScene::InitializePSO()
@@ -157,11 +177,23 @@ void TestScene::InitializePSO()
 	psoDesc.SampleDesc.Quality = 0;
 
 	//デプスステンシルステートの設定
+//デプスステンシルステートの設定
 	psoDesc.DepthStencilState.DepthEnable = TRUE;								//深度テストあり
-	psoDesc.DepthStencilState.DepthEnable = true;
+	psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
-	psoDesc.DepthStencilState.StencilEnable = false;
+	psoDesc.DepthStencilState.StencilEnable = FALSE;							//ステンシルテストなし
+	psoDesc.DepthStencilState.StencilReadMask = D3D12_DEFAULT_STENCIL_READ_MASK;
+	psoDesc.DepthStencilState.StencilWriteMask = D3D12_DEFAULT_STENCIL_WRITE_MASK;
+
+	psoDesc.DepthStencilState.FrontFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	psoDesc.DepthStencilState.FrontFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	psoDesc.DepthStencilState.FrontFace.StencilPassOp = D3D12_STENCIL_OP_KEEP;
+	psoDesc.DepthStencilState.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+
+	psoDesc.DepthStencilState.BackFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	psoDesc.DepthStencilState.BackFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	psoDesc.DepthStencilState.BackFace.StencilPassOp = D3D12_STENCIL_OP_KEEP;
+	psoDesc.DepthStencilState.BackFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
 
 	this->_pso = std::make_shared<K3D::PipelineStateObject>();
 	this->_rs = std::make_shared<K3D::RootSignature>();

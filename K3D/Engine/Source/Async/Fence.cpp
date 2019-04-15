@@ -20,10 +20,10 @@ HRESULT K3D::Fence::Initialize(UINT64 initialFenceValue, D3D12_FENCE_FLAGS flags
 		return hresult;
 	}
 	_fenceValue = initialFenceValue;
-	//_fenceEvent = CreateEventEx(nullptr, FALSE, FALSE, EVENT_ALL_ACCESS);
-	//if (_fenceEvent == nullptr) {
-	//	return ERROR_INVALID_HANDLE;
-	//}
+	_fenceEvent = CreateEventEx(nullptr, FALSE, FALSE, EVENT_ALL_ACCESS);
+	if (_fenceEvent == nullptr) {
+		return ERROR_INVALID_HANDLE;
+	}
 	return hresult;
 }
 

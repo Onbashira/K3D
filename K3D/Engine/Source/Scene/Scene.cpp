@@ -77,7 +77,7 @@ void K3D::Scene::SceneEnd()
 
 	_renderContext->ExecuteCmdList3DQueue();
 
-	_renderContext->Present(2, 0);
+	_renderContext->Present(1, 0);
 	
 	//レンダーターゲットフリッピング
 	_renderContext->Flip();
