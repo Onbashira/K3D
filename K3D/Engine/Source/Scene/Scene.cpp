@@ -82,7 +82,7 @@ void K3D::Scene::SceneEnd()
 	//レンダーターゲットフリッピング
 	_renderContext->Flip();
 
-	_renderContext->WaitForGPU(_renderContext->GetCommandQueue().lock(), false);
+	_renderContext->WaitForGPU(_renderContext->GetCommandQueue().lock(), true);
 
 	_renderContext->ClearCmdLists();
 

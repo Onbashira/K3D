@@ -207,7 +207,7 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateCBView(D3D12_CONSTANT_BUFFER
 	_device->GetDevice()->CreateConstantBufferView(&desc, cpuPtr);
 
 	_allocatedViewMap[HeapType::CPU][_cpuOffset] = Descriptor::ViewType::CBV;
-	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(_cpuOffset, Descriptor::ViewType::CBV, _heaps[HeapType::CPU]->GetCPUHandle(_cpuOffset), _heaps[HeapType::CPU]->GetGPUHandle(_cpuOffset));
+	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(_cpuOffset, Descriptor::ViewType::CBV, cpuPtr, _heaps[HeapType::CPU]->GetGPUHandle(_cpuOffset));
 	_allocatedDescMap[HeapType::CPU][_cpuOffset++] = ptr;
 
 	return ptr;
@@ -221,7 +221,7 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateSRView(D3D12_SHADER_RESOURCE
 	_device->GetDevice()->CreateShaderResourceView(resource->GetResource().Get(), &desc, cpuPtr);
 
 	_allocatedViewMap[HeapType::CPU][_cpuOffset] = Descriptor::ViewType::SRV;
-	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(_cpuOffset, Descriptor::ViewType::SRV, _heaps[HeapType::CPU]->GetCPUHandle(_cpuOffset), _heaps[HeapType::CPU]->GetGPUHandle(_cpuOffset));
+	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(_cpuOffset, Descriptor::ViewType::SRV, cpuPtr, _heaps[HeapType::CPU]->GetGPUHandle(_cpuOffset));
 	_allocatedDescMap[HeapType::CPU][_cpuOffset++] = ptr;
 
 	return ptr;
@@ -235,7 +235,7 @@ std::weak_ptr<K3D::Descriptor> K3D::GameHeap::CreateUAView(D3D12_UNORDERED_ACCES
 	_device->GetDevice()->CreateUnorderedAccessView(resource->GetResource().Get(), counterResource->GetResource().Get(), &desc, cpuPtr);
 
 	_allocatedViewMap[HeapType::CPU][_cpuOffset] = Descriptor::ViewType::UAV;
-	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(_cpuOffset, Descriptor::ViewType::UAV, _heaps[HeapType::CPU]->GetCPUHandle(_cpuOffset), _heaps[HeapType::CPU]->GetGPUHandle(_cpuOffset));
+	std::shared_ptr<Descriptor> ptr = std::make_shared<Descriptor>(_cpuOffset, Descriptor::ViewType::UAV, cpuPtr, _heaps[HeapType::CPU]->GetGPUHandle(_cpuOffset));
 	_allocatedDescMap[HeapType::CPU][_cpuOffset++] = ptr;
 
 	return ptr;
@@ -290,7 +290,7 @@ void K3D::GameHeap::SetGameHeap(std::shared_ptr<K3D::CommandList> list)
 
 	ID3D12DescriptorHeap* heaps[] = {
 		this->_heaps[HeapType::CPU]->GetHeap().Get(),
-		this->_heaps[HeapType::SAMP]->GetHeap().Get()
+		//this->_heaps[HeapType::SAMP]->GetHeap().Get()
 	};
 	list->GetCommandList()->SetDescriptorHeaps(_countof(heaps), heaps);
 

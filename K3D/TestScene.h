@@ -2,7 +2,7 @@
 #include "Engine/Source/Scene/Scene.h"
 
 namespace K3D {
-	class Cube;
+	class Sprite;
 	class PrimitiveObject;
 	class RootSignature;
 	class PipelineStateObject;
@@ -12,7 +12,7 @@ class TestScene : public K3D::Scene
 {
 private:
 
-	std::unique_ptr<K3D::Cube> _cube;
+	std::unique_ptr<K3D::Sprite> _sprite;
 	std::shared_ptr<K3D::RootSignature> _rs;
 	std::shared_ptr<K3D::PipelineStateObject> _pso;
 public:

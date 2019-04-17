@@ -330,6 +330,18 @@
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Source\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Sprite\DefaultComponent\SpriteInputComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Sprite\DefaultComponent\SpritePhysicsComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Sprite\DefaultComponent\SpriteRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Time\Timer.h">
@@ -692,9 +704,22 @@
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Source\Sprite\Sprite.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Sprite\DefaultComponent\SpriteInputComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Sprite\DefaultComponent\SpritePhysicsComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Sprite\DefaultComponent\SpriteRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\Shader\PrimitiveTestShader.hlsl" />
     <FxCompile Include="Engine\Shader\include\ShaderMath.hlsl" />
+    <FxCompile Include="Engine\Shader\Shader\PostEffectTest.hlsl" />
   </ItemGroup>
 </Project>

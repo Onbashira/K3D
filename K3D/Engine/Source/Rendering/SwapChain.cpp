@@ -144,7 +144,7 @@ HRESULT K3D::SwapChain::CopyToRenderTarget(std::shared_ptr<CommandList> list, Re
 
 void K3D::SwapChain::SetRenderTarget(std::shared_ptr<CommandList> list, D3D12_CPU_DESCRIPTOR_HANDLE* depthHandle)
 {
-	list->GetCommandList()->OMSetRenderTargets(1, &this->_rtHeap.GetCPUHandle(_currentIndex), FALSE, depthHandle);
+	list->GetCommandList()->OMSetRenderTargets(1, &this->_rtHeap.GetCPUHandle(_currentIndex), true, depthHandle);
 
 }
 

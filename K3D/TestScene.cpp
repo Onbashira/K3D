@@ -2,7 +2,7 @@
 #include "TestScene.h"
 #include "Engine/Source/Rendering/RenderingManager.h"
 #include "Engine/Source/CoreSystem/Framework.h"
-#include "Engine/Source/Primitive/Geometry/Cube.h"
+#include "Engine/Source/Sprite/Sprite.h"
 #include "Engine/Source/Camera/Camera.h"
 #include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 #include "Engine/Source/Device/RenderingDevice.h"
@@ -22,10 +22,9 @@ TestScene::TestScene() :
 	Scene(K3D::Framework::GetInstance().GetRenderingManagre().GetRenderingDevice())
 
 {
-	_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
-	_cube->Initialize();
-	_cube->GetTransform().SetScale(K3D::Vector3(2.0f, 2.0f, 2.0f));
-	_cube->Update();
+	_sprite = std::unique_ptr<K3D::Sprite>(new K3D::Sprite(_gameHeap));
+	_sprite->Initialize();
+	_sprite->Update();
 	InitializePSO();
 }
 
@@ -36,31 +35,19 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	_mainCamera->DebugMove(K3D::Framework::GetInstance().Input());
-	_mainCamera->DebugRotate(K3D::Framework::GetInstance().Input());
-	_mainCamera->Update();
-	//test 
-	static float time = 0.0f;
-	time += 0.01f;
-	_cube->GetTransform().SetPos(K3D::Vector3(0.0f, sinf(time), 0.0f));
-	_cube->Update();
+	//_mainCamera->DebugMove(K3D::Framework::GetInstance().Input());
+	//_mainCamera->DebugRotate(K3D::Framework::GetInstance().Input());
+	//_mainCamera->Update();
+	////test 
+	//static float time = 0.0f;
+	//time += 0.01f;
+	//_sprite->GetTransform().SetPos(K3D::Vector3(0.0f, sinf(time), 0.0f));
+	//_sprite->Update();
 
-	std::stringstream ss;
-	auto& logger = K3D::SystemLogger::GetInstance();
+	//std::stringstream ss;
+	//auto& logger = K3D::SystemLogger::GetInstance();
 
-	ss << "Camera Pos X : " << _mainCamera->GetTransform().GetPos().x << std::endl;
-	ss << "Camera Pos Y : " << _mainCamera->GetTransform().GetPos().y << std::endl;
-	ss << "Camera Pos Z : " << _mainCamera->GetTransform().GetPos().z << std::endl;
-
-	ss << "Camera Target X : " << 0.0f << std::endl;
-	ss << "Camera Target Y : " << 0.0f << std::endl;
-	ss << "Camera Target Z : " << 0.0f << std::endl;
-
-	ss << "Cube Pos X : " << _cube->GetTransform().GetPos().x << std::endl;
-	ss << "Cube Pos Y : " << _cube->GetTransform().GetPos().y << std::endl;
-	ss << "Cube Pos Z : " << _cube->GetTransform().GetPos().z << std::endl;
-
-	logger.Log(K3D::LOG_LEVEL::Debug, ss.str());
+	//logger.Log(K3D::LOG_LEVEL::Debug, ss.str());
 }
 
 void TestScene::Rendering()
@@ -72,9 +59,12 @@ void TestScene::Rendering()
 	_renderContext->GetSwapChain()->SetRenderTarget(
 		list, &_mainCamera->GetDepthStencil().GetDSVHeapPtr().GetCPUHandle(0)
 	);
+	list->RSSetViewports(1, &_mainCamera->GetViewport());
+	list->RSSetScissorRects(1, &_mainCamera->GetScissorRect());
+
 	list->SetGraphicsRootSignature(_rs);
 	list->SetPipelineState(_pso);
-	_cube->Draw(list);
+	_sprite->Draw(list);
 	list->CloseCommandList();
 }
 
@@ -101,26 +91,25 @@ void TestScene::InitializePSO()
 
 	K3D::ShaderHelper shaderHelper;
 	ret = shaderHelper.CompileShader(K3D::ShaderHelper::SHADER_TYPE::SHADER_TYPE_VERTEX,
-		"./Engine/Shader/Shader/PrimitiveTestShader.hlsl", "VSMain", "vs_5_0");
+		"./Engine/Shader/Shader/PostEffectTest.hlsl", "VSMain", "vs_5_0");
 	ret = shaderHelper.CompileShader(K3D::ShaderHelper::SHADER_TYPE::SHADER_TYPE_PIXEL,
-		"./Engine/Shader/Shader/PrimitiveTestShader.hlsl", "PSMain", "ps_5_0");
+		"./Engine/Shader/Shader/PostEffectTest.hlsl", "PSMain", "ps_5_0");
 
 	//頂点入力レイアウトの定義
 	D3D12_INPUT_ELEMENT_DESC inputElementDesc[] = {
 		{ "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "NORMAL"	,  0, DXGI_FORMAT_R32G32B32_FLOAT,	  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,		  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 	};
 
 	//ラスタライザステートの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc = {};
 	rasterizerDesc.FillMode = D3D12_FILL_MODE::D3D12_FILL_MODE_SOLID;
-	rasterizerDesc.CullMode = D3D12_CULL_MODE::D3D12_CULL_MODE_BACK;
+	rasterizerDesc.CullMode = D3D12_CULL_MODE::D3D12_CULL_MODE_NONE;
 	rasterizerDesc.FrontCounterClockwise = FALSE;
 	rasterizerDesc.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
 	rasterizerDesc.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
 	rasterizerDesc.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
-	rasterizerDesc.DepthClipEnable = TRUE;
+	rasterizerDesc.DepthClipEnable = FALSE;
 	rasterizerDesc.MultisampleEnable = FALSE;
 	rasterizerDesc.AntialiasedLineEnable = FALSE;
 	rasterizerDesc.ForcedSampleCount = 0;
@@ -177,8 +166,8 @@ void TestScene::InitializePSO()
 	psoDesc.SampleDesc.Quality = 0;
 
 	//デプスステンシルステートの設定
-//デプスステンシルステートの設定
-	psoDesc.DepthStencilState.DepthEnable = TRUE;								//深度テストあり
+    //デプスステンシルステートの設定
+	psoDesc.DepthStencilState.DepthEnable = FALSE;								//深度テストあり
 	psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	psoDesc.DepthStencilState.StencilEnable = FALSE;							//ステンシルテストなし
@@ -198,7 +187,7 @@ void TestScene::InitializePSO()
 	this->_pso = std::make_shared<K3D::PipelineStateObject>();
 	this->_rs = std::make_shared<K3D::RootSignature>();
 	_rs->CreateFromShader(vs.Get());
-	this->_pso->Initialize("PrimitiveTestShaderPSO", psoDesc, _rs);
+	this->_pso->Initialize("PostEffectTestPSO", psoDesc, _rs);
 
 }
 

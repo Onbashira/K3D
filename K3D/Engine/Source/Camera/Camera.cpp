@@ -42,6 +42,18 @@ void K3D::Camera::InitializeCameraFOV(const float fov, const float width, const 
 	_windowHeight = height;
 	_windowWidth = width;
 
+	_viewport.Height = _windowHeight;
+	_viewport.Width = _windowWidth;
+	_viewport.MinDepth = 0.0f;
+	_viewport.MaxDepth = 1.0f;
+	_viewport.TopLeftX = 0.0f;
+	_viewport.TopLeftY = 0.0f;
+
+	_scissorRect.left = 0;
+	_scissorRect.right = static_cast<LONG>(_windowWidth);
+	_scissorRect.top = 0;
+	_scissorRect.bottom = static_cast<LONG>(_windowHeight);
+
 	auto mat = Matrix::ExtractRotationMatrix(Matrix::CreateLookAt(position, target, upWard));
 	this->_transform.SetRotation(Quaternion::CreateFromRotationMatrix(mat));
 	this->_projection = Matrix::CreatePerspectiveFOV(_fov, _aspectRatio, nearClip, farClip);
@@ -112,6 +124,18 @@ HRESULT K3D::Camera::InitializeOrthogonal(const float width, const float height,
 	_info.windowHeight = height;
 	_info.windowWidth = width;
 
+	_viewport.Height = _windowHeight;
+	_viewport.Width = _windowWidth;
+	_viewport.MinDepth = 0.0f;
+	_viewport.MaxDepth = 1.0f;
+	_viewport.TopLeftX = 0.0f;
+	_viewport.TopLeftY = 0.0f;
+
+	_scissorRect.left = 0;
+	_scissorRect.right = static_cast<LONG>(_windowWidth);
+	_scissorRect.top = 0;
+	_scissorRect.bottom = static_cast<LONG>(_windowHeight);
+
 	this->_transform.SetScale(Vector3::one);
 	this->_transform.SetPos(position);
 
@@ -142,6 +166,18 @@ HRESULT K3D::Camera::initializePerspective(const float width, const float height
 	_aspectRatio = width / height;
 	_windowHeight = height;
 	_windowWidth = width;
+
+	_viewport.Height = _windowHeight;
+	_viewport.Width = _windowWidth;
+	_viewport.MinDepth = 0.0f;
+	_viewport.MaxDepth = 1.0f;
+	_viewport.TopLeftX = 0.0f;
+	_viewport.TopLeftY = 0.0f;
+
+	_scissorRect.left = 0;
+	_scissorRect.right = static_cast<LONG>(_windowWidth);
+	_scissorRect.top = 0;
+	_scissorRect.bottom = static_cast<LONG>(_windowHeight);
 
 	this->_transform.SetScale(Vector3::one);
 	this->_transform.SetPos(position);

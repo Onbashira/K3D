@@ -1,24 +1,45 @@
 #pragma once
-#include "Engine/Source/Component/GameObject/GameObject.h"
+#include "Engine/Source/Primitive/Object/PrimitiveObject.h"
+
 namespace K3D {
 
-	class Sprite :public GameObject
+	class CommandList;
+	class GameHeap;
+	class ConstantBuffer;
+
+	class Sprite :public PrimitiveObject
 	{
-
+	public:
+		struct SpriteMaterial {
+			Vector4 albedo;
+		};
 	private:
-	
 
+		std::shared_ptr<ConstantBuffer> _materialBuffer;
+
+	
 
 	public:
 
-		Sprite();
+		Sprite(std::shared_ptr<GameHeap>& heap);
 
-		~Sprite();
+		virtual ~Sprite();
 
-		virtual void Update() = 0;
+		virtual void Update() override;
 
-		virtual void Draw(std::shared_ptr<CommandList>& cmdList) = 0;
+		virtual void Draw(std::shared_ptr<CommandList>& cmdList) override;
 
+		void Initialize();
+
+	private:
+
+		void CreateMesh();
+
+		void CreateIndices();
+
+		void CreateDescriptors();
+
+	private:
 
 	};
 
