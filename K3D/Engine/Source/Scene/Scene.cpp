@@ -6,7 +6,6 @@
 #include "Engine/Source/Device/D3D12Device.h"
 #include "Engine/Source/Camera/Camera.h"
 #include "Engine/Source/Rendering/RenderingPass/RenderingPass.h"
-#include "Engine/Source/Rendering/RenderingPass/RenderingPassHolder.h"
 
 
 K3D::Scene::Scene(std::shared_ptr<RenderingDevice>& renderingDevice) :

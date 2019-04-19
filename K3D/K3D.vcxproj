@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultInputComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultGraphicsComponent.cpp" />
@@ -38,8 +39,6 @@
     <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\CommandManager.cpp" />
     <ClCompile Include="Engine\Source\Primitive\Geometry\Cube.cpp" />
-    <ClCompile Include="Engine\Source\CommandQueue\CommandQueueManager.cpp" />
-    <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\Source\Async\Fence.cpp" />
     <ClCompile Include="Engine\Source\Audio\Audio.cpp" />
     <ClCompile Include="Engine\Source\Audio\AudioCallBack.cpp" />
@@ -116,15 +115,15 @@
     <ClCompile Include="Engine\Source\Command\Core\InternalCommandAllocator.cpp" />
     <ClCompile Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Scene\Scene.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp" />
     <ClCompile Include="Engine\Source\DescriptorHeap\GameHeap.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.cpp" />
     <ClCompile Include="Engine\Source\Utility\Singleton.cpp" />
     <ClCompile Include="Engine\Source\Primitive\Object\PrimitiveObject.cpp" />
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitiveRenderer.cpp" />
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitiveInputComponent.cpp" />
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp" />
+    <ClCompile Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -132,7 +131,6 @@
     <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
     <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp" />
     <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
-    <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Component\DefaultComponents.h" />
@@ -161,10 +159,9 @@
     <ClInclude Include="Engine\Source\DynamicHeap\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\LifetimedMemory\LifetimedMemory.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.h" />
-    <ClInclude Include="Engine\K3D.h" />
+    <ClInclude Include="K3D.h" />
     <ClInclude Include="Engine\Source\Command\Core\CommandManager.h" />
     <ClInclude Include="Engine\Source\Primitive\Geometry\Cube.h" />
-    <ClInclude Include="Engine\Source\CommandQueue\CommandQueueManager.h" />
     <ClInclude Include="Engine\Source\Async\Fence.h" />
     <ClInclude Include="Engine\Source\Async\ThreadPool.h" />
     <ClInclude Include="Engine\Source\Audio\Audio.h" />
@@ -247,20 +244,19 @@
     <ClInclude Include="Engine\Source\Command\Core\InternalCommandAllocator.h" />
     <ClInclude Include="Engine\Source\Component\PhysicsComponent\PhysicsComponent.h" />
     <ClInclude Include="Engine\Source\Scene\Scene.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h" />
     <ClInclude Include="Engine\Source\DescriptorHeap\GameHeap.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.h" />
     <ClInclude Include="Engine\Source\Utility\Singleton.h" />
     <ClInclude Include="Engine\Source\Primitive\Object\PrimitiveObject.h" />
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitiveRenderer.h" />
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitiveInputComponent.h" />
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h" />
+    <ClInclude Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h" />
     <ClInclude Include="Engine\Source\TextUI\TextUI.h" />
-    <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\include\ShaderMath.hlsl">
@@ -321,13 +317,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -351,7 +347,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(ProjectName)\lib\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(ProjectName)\lib\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

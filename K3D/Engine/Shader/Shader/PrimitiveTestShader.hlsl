@@ -107,15 +107,15 @@ PS_OUTPUT PSMain(PS_INPUT input)
 {
 
     PS_OUTPUT output = (PS_OUTPUT) 0;
-    float3 directionalLight = float3(-1, 0, 1);
+    float3 directionalLight = float3(0, -1, 0);
     //test lighting
 
-    float bright = dot(input.normal.xyz, directionalLight) / F_PI;
+    float bright = dot(input.normal.xyz, -directionalLight) ;
     float3 ambient = float3(0.2f, 0.2f, 0.2f);
     
 
     float3 color = float3(bright, bright, bright) + ambient;
-    output.color = input.svPos;
+    output.color = float4(color, 1.0f);
     return output;
 
 }

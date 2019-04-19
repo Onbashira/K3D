@@ -1,30 +1,22 @@
-#include "stdafx.h"
 #include "TestScene.h"
-#include "Engine/Source/Rendering/RenderingManager.h"
-#include "Engine/Source/CoreSystem/Framework.h"
-#include "Engine/Source/Sprite/Sprite.h"
 #include "Engine/Source/Camera/Camera.h"
+#include "Engine/Source/CoreSystem/Framework.h"
+#include "Engine/Source/Scene/Scene.h"
+#include "Engine/Source/Primitive/Geometry/Cube.h"
 #include "Engine/Source/Rendering/RenderContext/RenderContext.h"
 #include "Engine/Source/Device/RenderingDevice.h"
-#include "Engine/Source/Rendering/RenderingManager.h"
-#include "Engine/Source/Rendering/RenderingPass/RenderingPass.h"
-#include "Engine/Source/Rendering/RenderingPass/RenderingPassHolder.h"
-#include "Engine/Source/CommandList/CommandList.h"
-#include "Engine/Source/CoreSystem/Framework.h"
-#include "Engine/Source/ShaderObject/ShaderObjectManager.h"
 #include "Engine/Source/ShaderObject/ShaderHelper.h"
-#include "Engine/Source/Signature/RootSignature.h"
-#include "Engine/Source/PipelineState/PipelineStateObject.h"
 #include "Engine/Source/DescriptorHeap/GameHeap.h"
-
+#include "Engine/Source/PipelineState/PipelineStateObject.h"
+#include "Engine/Source/Signature/RootSignature.h"
 
 TestScene::TestScene() :
 	Scene(K3D::Framework::GetInstance().GetRenderingManagre().GetRenderingDevice())
 
 {
-	_sprite = std::unique_ptr<K3D::Sprite>(new K3D::Sprite(_gameHeap));
-	_sprite->Initialize();
-	_sprite->Update();
+	_cube = std::unique_ptr<K3D::Cube>(new K3D::Cube(_gameHeap));
+	_cube->Initialize();
+	_cube->Update();
 	InitializePSO();
 }
 
@@ -35,19 +27,19 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	//_mainCamera->DebugMove(K3D::Framework::GetInstance().Input());
-	//_mainCamera->DebugRotate(K3D::Framework::GetInstance().Input());
-	//_mainCamera->Update();
-	////test 
-	//static float time = 0.0f;
-	//time += 0.01f;
-	//_sprite->GetTransform().SetPos(K3D::Vector3(0.0f, sinf(time), 0.0f));
-	//_sprite->Update();
+	_mainCamera->DebugMove(K3D::Framework::GetInstance().Input());
+	_mainCamera->DebugRotate(K3D::Framework::GetInstance().Input());
+	_mainCamera->Update();
+	//test 
+	static float time = 0.0f;
+	time += 0.01f;
+	_cube->GetTransform().SetPos(K3D::Vector3(0.0f, sinf(time), 0.0f));
+	_cube->Update();
 
-	//std::stringstream ss;
-	//auto& logger = K3D::SystemLogger::GetInstance();
+	std::stringstream ss;
+	auto& logger = K3D::SystemLogger::GetInstance();
 
-	//logger.Log(K3D::LOG_LEVEL::Debug, ss.str());
+	logger.Log(K3D::LOG_LEVEL::Debug, ss.str());
 }
 
 void TestScene::Rendering()
@@ -64,7 +56,7 @@ void TestScene::Rendering()
 
 	list->SetGraphicsRootSignature(_rs);
 	list->SetPipelineState(_pso);
-	_sprite->Draw(list);
+	_cube->Draw(list);
 	list->CloseCommandList();
 }
 
@@ -91,13 +83,14 @@ void TestScene::InitializePSO()
 
 	K3D::ShaderHelper shaderHelper;
 	ret = shaderHelper.CompileShader(K3D::ShaderHelper::SHADER_TYPE::SHADER_TYPE_VERTEX,
-		"./Engine/Shader/Shader/PostEffectTest.hlsl", "VSMain", "vs_5_0");
+		"./Engine/Shader/Shader/PrimitiveTestShader.hlsl", "VSMain", "vs_5_0");
 	ret = shaderHelper.CompileShader(K3D::ShaderHelper::SHADER_TYPE::SHADER_TYPE_PIXEL,
-		"./Engine/Shader/Shader/PostEffectTest.hlsl", "PSMain", "ps_5_0");
+		"./Engine/Shader/Shader/PrimitiveTestShader.hlsl", "PSMain", "ps_5_0");
 
 	//頂点入力レイアウトの定義
 	D3D12_INPUT_ELEMENT_DESC inputElementDesc[] = {
 		{ "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "NORMAL",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,		  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 	};
 
@@ -166,8 +159,8 @@ void TestScene::InitializePSO()
 	psoDesc.SampleDesc.Quality = 0;
 
 	//デプスステンシルステートの設定
-    //デプスステンシルステートの設定
-	psoDesc.DepthStencilState.DepthEnable = FALSE;								//深度テストあり
+	//デプスステンシルステートの設定
+	psoDesc.DepthStencilState.DepthEnable = TRUE;								//深度テストあり
 	psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	psoDesc.DepthStencilState.StencilEnable = FALSE;							//ステンシルテストなし

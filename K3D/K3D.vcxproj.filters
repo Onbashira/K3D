@@ -21,9 +21,6 @@
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\ThirdParty\imgui\imgui.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -97,9 +94,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\CommandQueue\CommandQueue.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\CommandQueue\CommandQueueManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\CoreSystem\Framework.cpp">
@@ -273,9 +267,6 @@
     <ClCompile Include="Engine\Source\Rendering\RenderContext\RenderContext.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -324,12 +315,6 @@
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\Sprite\Sprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -340,6 +325,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\Sprite\DefaultComponent\SpriteRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -357,9 +351,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Utility\Utility.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\K3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ThirdParty\imgui\imconfig.h">
@@ -453,9 +444,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\CommandQueue\CommandQueue.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\CommandQueue\CommandQueueManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\CoreSystem\Framework.h">
@@ -641,9 +629,6 @@
     <ClInclude Include="Engine\Source\Rendering\RenderContext\RenderContext.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -698,12 +683,6 @@
     <ClInclude Include="Engine\Source\Component\DefaultComponents.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPassHolder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\Sprite\Sprite.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -714,6 +693,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\Sprite\DefaultComponent\SpriteRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="K3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

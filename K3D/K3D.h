@@ -1,5 +1,10 @@
 #pragma once
 
+
+
+//FrameWork
+#include "Engine/Source/CoreSystem/Framework.h"
+
 //DirectX
 #include "Engine/Source/Utility/d3dx12.h"
 #include "Engine/Source/Utility/D3D12Common.h"
@@ -33,7 +38,6 @@
 #include "Engine/Source/Rendering/RenderingBaffer/DecaleBuffer.h"
 #include "Engine/Source/Rendering/RenderingManager.h"
 #include "Engine/Source/Rendering/RenderingPass/RenderingPass.h"
-#include "Engine/Source/Rendering/RenderingPass/RenderingPathHolder.h"
 #include "Engine/Source/Rendering/SwapChain.h"
 
 //Window
@@ -96,10 +100,16 @@
 #include "Engine/Source/Primitive/DefaultComponent/PrimitivePhysicsComponent.h"
 #include "Engine/Source/Primitive/DefaultComponent/PrimitiveRenderer.h"
 
+//Scene 
+#include "Engine/Source/Scene/Scene.h"
+
 //Sprite
 #include "Engine/Source/Sprite/Sprite.h"
 
 //Model
+
+//Camera
+#include "Engine/Source/Camera/Camera.h"
 
 //Utility
 #include "Engine/Source/Utility/NonCopyable.h"
@@ -110,4 +120,4 @@
 //Debug
 #include "Engine/Source/Debug/Logger.h"
 #include "Engine/Source/Debug/DebugWindow.h"
-#include "Engine/Source/Debug/DebugWindow.h"
+#include "Engine/Source/Debug/DebugManager.h"

@@ -236,4 +236,6 @@ namespace K3D {
 
 	};
 
+	typedef std::shared_ptr<CommandList> CommandListPtr;
+
 };

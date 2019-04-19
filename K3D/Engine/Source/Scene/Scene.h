@@ -14,9 +14,9 @@ namespace K3D {
 		friend class RenderingManager;
 		
 	public:
+
 	protected:
-		//!レンダリングパスを保持する
-		std::shared_ptr<RenderingPassHolder> _pathHolder;
+
 		//!デスクリプタヒープ
 		std::shared_ptr<GameHeap> _gameHeap;
 

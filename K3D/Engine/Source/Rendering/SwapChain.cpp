@@ -156,7 +156,7 @@ void K3D::SwapChain::ClearScreen(std::shared_ptr<CommandList> list)
 	static float time = 0.0f;
 	time += 0.001f;
 	//testCode CleacolorChange
-	float tempColor[4] = { 0.0f,0.0f,0.0f,1.0f };
+	float tempColor[4] = { 0.5f,0.0f,0.5f,1.0f };
 
 	list->GetCommandList()->ClearRenderTargetView(_rtHeap.GetCPUHandle(_currentIndex), tempColor, 0, nullptr);
 
