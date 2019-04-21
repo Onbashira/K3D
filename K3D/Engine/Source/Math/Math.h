@@ -2,9 +2,6 @@
 #include <comdef.h>
 #include <DirectXMath.h>
 
-#ifdef INCLUDE_VECTOR_MATH_AOS
-#include "vectormath/scalar/cpp/vectormath_aos.h"
-#endif
 namespace {
 	//--------------------------------------------------------------------------------------------------
 	//Constant Variables
@@ -131,53 +128,53 @@ namespace K3D {
 	float		Lerp(float a, float b, float amount);
 	double		Lerp(double a, double b, double amount);
 
-	float pow2(float x) { return x * x; }
+	inline float pow2(float x) { return x * x; }
 
-	double pow2(double x) { return x * x; }
+	inline double pow2(double x) { return x * x; }
 
-	float pow3(float x) { return x * x*x; }
+	inline float pow3(float x) { return x * x*x; }
 
-	double pow3(double x) { return x * x*x; }
+	inline double pow3(double x) { return x * x*x; }
 
-	float pow4(float x) { return x * x*x*x; }
+	inline float pow4(float x) { return x * x*x*x; }
 
-	double pow4(double x) { return x * x*x*x; }
+	inline double pow4(double x) { return x * x*x*x; }
 
-	float pow5(float x) { return x * x*x*x*x; }
+	inline float pow5(float x) { return x * x*x*x*x; }
 
-	double pow5(double x) { return x * x*x*x*x; }
+	inline double pow5(double x) { return x * x*x*x*x; }
 
-	float clamp(float x, float a, float b) { return x < a ? a : x > b ? b : x; }
+	inline float clamp(float x, float a, float b) { return x < a ? a : x > b ? b : x; }
 
-	double clamp(double x, double a, double b) { return x < a ? a : x > b ? b : x; }
+	inline double clamp(double x, double a, double b) { return x < a ? a : x > b ? b : x; }
 
-	float saturate(float x) { return x < 0.f ? 0.f : x > 1.f ? 1.f : x; }
+	inline float saturate(float x) { return x < 0.f ? 0.f : x > 1.f ? 1.f : x; }
 
-	double saturate(double x) { return x < 0.f ? 0.f : x > 1.f ? 1.f : x; }
+	inline double saturate(double x) { return x < 0.f ? 0.f : x > 1.f ? 1.f : x; }
 
-	float recip(float x) { return 1.f / x; }
+	inline float recip(float x) { return 1.f / x; }
 
-	double recip(double x) { return 1.f / x; }
+	inline double recip(double x) { return 1.f / x; }
 
-	float mix(float a, float b, float t) { return a * (1.f - t) + b * t; /* return a + (b-a) * t; */ }
+	inline float mix(float a, float b, float t) { return a * (1.f - t) + b * t; /* return a + (b-a) * t; */ }
 	
-	double mix(double a, double b, double t) { return a * (1.f - t) + b * t; /* return a + (b-a) * t; */ }
+	inline double mix(double a, double b, double t) { return a * (1.f - t) + b * t; /* return a + (b-a) * t; */ }
 
-	float step(float edge, float x) { return (x < edge) ? 0.f : 1.f; }
+	inline float step(float edge, float x) { return (x < edge) ? 0.f : 1.f; }
 
-	double step(double edge, double x) { return (x < edge) ? 0.f : 1.f; }
+	inline double step(double edge, double x) { return (x < edge) ? 0.f : 1.f; }
 
-	float smoothstep(float a, float b, float t) { if (a >= b) return 0.f; float x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
+	inline float smoothstep(float a, float b, float t) { if (a >= b) return 0.f; float x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
 
-	double smoothstep(double a, double b, double t) { if (a >= b) return 0.f; double x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
+	inline double smoothstep(double a, double b, double t) { if (a >= b) return 0.f; double x = saturate((t - a) / (b - a)); return x * x*(3.f - 2.f * t); }
 
-	float radians(float deg) { return (deg / 180.f)*F_PI; }
+	inline float radians(float deg) { return (deg / 180.f)*F_PI; }
 
-	double radians(double deg) { return (deg / 180.f)*F_PI; }
+	inline double radians(double deg) { return (deg / 180.f)*F_PI; }
 
-	float degrees(float rad) { return (rad / F_PI) * 180.f; }
+	inline float degrees(float rad) { return (rad / F_PI) * 180.f; }
 
-	double degrees(double rad) { return (rad / F_PI) * 180.f; }
+	inline double degrees(double rad) { return (rad / F_PI) * 180.f; }
 
 	//--------------------------
 	//Vector2

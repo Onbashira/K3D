@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine/Source/Scene/Scene.h"
 
 namespace K3D {
 	class Sprite;

@@ -1,14 +1,6 @@
 #include "TestScene.h"
-#include "Engine/Source/Camera/Camera.h"
-#include "Engine/Source/CoreSystem/Framework.h"
-#include "Engine/Source/Scene/Scene.h"
-#include "Engine/Source/Primitive/Geometry/Cube.h"
-#include "Engine/Source/Rendering/RenderContext/RenderContext.h"
-#include "Engine/Source/Device/RenderingDevice.h"
-#include "Engine/Source/ShaderObject/ShaderHelper.h"
-#include "Engine/Source/DescriptorHeap/GameHeap.h"
-#include "Engine/Source/PipelineState/PipelineStateObject.h"
-#include "Engine/Source/Signature/RootSignature.h"
+
+
 
 TestScene::TestScene() :
 	Scene(K3D::Framework::GetInstance().GetRenderingManagre().GetRenderingDevice())

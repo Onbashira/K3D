@@ -80,10 +80,8 @@
     <ClCompile Include="Engine\Source\ShaderObject\ShaderObjectManager.cpp" />
     <ClCompile Include="Engine\Source\Signature\CommandSignature.cpp" />
     <ClCompile Include="Engine\Source\Signature\RootSignature.cpp" />
-    <ClCompile Include="Engine\Source\Texture\DDSTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureLoader.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureManager.cpp" />
-    <ClCompile Include="Engine\Source\Texture\WICTextureLoader12.cpp" />
     <ClCompile Include="Engine\Source\Time\Timer.cpp" />
     <ClCompile Include="Engine\Source\Debug\Logger.cpp" />
     <ClCompile Include="Engine\Source\Utility\NonCopyable.cpp" />
@@ -124,13 +122,13 @@
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.cpp" />
+    <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
+    <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp" />
+    <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
-    <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp" />
-    <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\Component\DefaultComponents.h" />
@@ -151,9 +149,7 @@
     <ClInclude Include="Engine\Source\Sprite\Sprite.h">
       <DeploymentContent>true</DeploymentContent>
     </ClInclude>
-    <ClInclude Include="Engine\Source\Texture\DDSTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Texture\TextureLoader.h" />
-    <ClInclude Include="Engine\Source\Texture\WICTextureLoader12.h" />
     <ClInclude Include="Engine\Source\Utility\BasicTypes.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\MemoryAllocator.h" />
@@ -253,10 +249,10 @@
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h" />
     <ClInclude Include="Engine\Source\TextUI\TextUI.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shader\include\ShaderMath.hlsl">

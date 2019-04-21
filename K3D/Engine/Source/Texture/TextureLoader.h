@@ -1,5 +1,4 @@
 #pragma once
-#include "Engine/Source/Utility/D3D12Common.h"
 #include "Engine/Source/DescriptorHeap/DescriptorHeap.h"
 #include <vector>
 #include <string>

@@ -1,4 +1,3 @@
-#include "Engine/Source/CoreSystem/Framework.h"
 #include "TestScene.h"
 
 void main() {
