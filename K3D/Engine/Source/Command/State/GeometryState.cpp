@@ -1,12 +1,8 @@
 #include "GeometryState.h"
 
 K3D::GeometryState::GeometryState() :
-	_vertexBuffer(), _indexBuffer()
+	_vertexBuffers(), _indexBuffer()
 {
-
-	_vertexBuffer.BufferLocation = 0;
-	_vertexBuffer.SizeInBytes = 0;
-	_vertexBuffer.StrideInBytes = 0;
 
 	_indexBuffer.BufferLocation = 0;
 	_indexBuffer.Format = DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
@@ -19,19 +15,25 @@ K3D::GeometryState::~GeometryState()
 
 }
 
-D3D12_VERTEX_BUFFER_VIEW & K3D::GeometryState::GetVertexBufferView()
+const std::vector<D3D12_VERTEX_BUFFER_VIEW>* K3D::GeometryState::GetVertexBufferView()
 {
-	return this->_vertexBuffer;
+	return &_vertexBuffers;
 }
 
-D3D12_INDEX_BUFFER_VIEW & K3D::GeometryState::GetIndexBufferView()
+const D3D12_INDEX_BUFFER_VIEW * K3D::GeometryState::GetIndexBufferView()
 {
-	return this->_indexBuffer;
+	return &_indexBuffer;
 }
 
-void K3D::GeometryState::SetVertexBufferView(D3D12_VERTEX_BUFFER_VIEW & vertexBufferView)
+void K3D::GeometryState::AddVertexBufferView(D3D12_VERTEX_BUFFER_VIEW && vertexBufferView)
 {
-	this->_vertexBuffer = vertexBufferView;
+	this->_vertexBuffers.push_back(std::move(vertexBufferView));
+
+}
+
+void K3D::GeometryState::AddVertexBufferView(const D3D12_VERTEX_BUFFER_VIEW & vertexBufferView)
+{
+	this->_vertexBuffers.push_back(vertexBufferView);
 }
 
 void K3D::GeometryState::SetIndexBufferView(D3D12_INDEX_BUFFER_VIEW & indexBufferView)

@@ -12,9 +12,9 @@ namespace K3D {
 
 		std::shared_ptr<CommandList> _cmdList;
 
+		std::shared_ptr<GameHeap> _gameHeap;
 
 	public:
-
 
 		RenderingPass(std::shared_ptr<CommandList> cmdList,std::shared_ptr<GameHeap>& _gameHeap);
 		

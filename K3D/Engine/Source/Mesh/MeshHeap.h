@@ -58,7 +58,7 @@ namespace K3D {
 
 		std::vector<std::weak_ptr<K3D::TextureObject>>& GetTexturesRef();
 
-		std::weak_ptr<K3D::TextureObject> GetTexturteRef(unsigned int textureIndex);
+		std::weak_ptr<K3D::TextureObject> GetTextureRef(unsigned int textureIndex);
 
 		MeshHeap& AddTextureRef(std::weak_ptr<K3D::TextureObject> textureRef);
 

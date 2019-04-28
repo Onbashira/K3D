@@ -60,7 +60,7 @@ std::vector<std::weak_ptr<K3D::TextureObject>>& K3D::MeshHeap::GetTexturesRef()
 	return this->_textureResource;
 }
 
-std::weak_ptr<K3D::TextureObject> K3D::MeshHeap::GetTexturteRef(unsigned int textureIndex)
+std::weak_ptr<K3D::TextureObject> K3D::MeshHeap::GetTextureRef(unsigned int textureIndex)
 {
 	if (_textureResource.size() == 0 || _textureResource.size() <= textureIndex) {
 		return std::weak_ptr<K3D::TextureObject>();

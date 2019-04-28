@@ -1,5 +1,4 @@
-#include "TestScene.h"
-
+#include "K3D.h"
 void main() {
 	K3D::Framework::SetUp();
 	K3D::Framework::GetInstance().SetBackBufferNum(2);
@@ -8,15 +7,10 @@ void main() {
 	K3D::Framework::GetInstance().Initialize();
 	K3D::Framework::GetInstance().TimerStart();
 
-	std::shared_ptr<TestScene> testScene = std::shared_ptr<TestScene>(new TestScene());
 
 	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
 		K3D::Framework::GetInstance().Tick();
 		K3D::Framework::GetInstance().Input().InputUpdate();
-		testScene->SceneBegin();
-		testScene->Update();
-		testScene->Rendering();
-		testScene->SceneEnd();
 	}
 	K3D::Framework::GetInstance().TimerStop();
 

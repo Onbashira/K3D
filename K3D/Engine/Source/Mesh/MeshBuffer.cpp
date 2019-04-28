@@ -1,74 +1,56 @@
+#include "stdafx.h"
 #include "MeshBuffer.h"
-#include "Engine/Source/Resource/VertexBuffer.h"
-#include "Engine/Source/Resource/IndexBuffer.h"
 
-K3D::MeshBuffer::MeshBuffer()
+K3D::MeshBuffer::MeshBuffer() :
+	_indexBuffer(std::make_unique<IndexBuffer>()),
+	_geometryState(std::make_unique<GeometryState>())
 {
 }
+
 
 K3D::MeshBuffer::~MeshBuffer()
 {
 }
 
-void K3D::MeshBuffer::InitializeVBO(ULONG64 size, unsigned int stride, void * vertexDataSrc)
+void K3D::MeshBuffer::CreateIndexBuffer(size_t elementSize, size_t elementNum, void * pSrc)
 {
-	this->_mesh.CreateVBO(size, stride, vertexDataSrc);
-}
-
-void K3D::MeshBuffer::AddCustomVBO(ULONG64 size, unsigned int stride, void * customVertexDataSrc)
-{
-	std::unique_ptr<VertexBuffer> buffer = std::make_unique<K3D::VertexBuffer>();
-	buffer->Initialize(size, stride, customVertexDataSrc);
-	this->_additionalVBOs.push_back(std::move(buffer));
-}
-
-void K3D::MeshBuffer::InitializeIBO(std::vector<unsigned int>& indexListDataSrc)
-{
-	this->_mesh.CreateIBO(indexListDataSrc.size() * sizeof(unsigned int), sizeof(unsigned int), indexListDataSrc.data());
-}
-
-std::vector<D3D12_VERTEX_BUFFER_VIEW> K3D::MeshBuffer::GetMeshVBViews()
-{
-	std::vector<D3D12_VERTEX_BUFFER_VIEW> views;
-	auto& geometryState = _mesh.GetGeometryState().GetVertexBufferView();
+	auto vRes = std::make_unique<VertexBuffer>();
+	std::make_unique<VertexBuffer>()->Initialize(elementSize * elementNum, elementSize, pSrc);
+	this->_vertexBuffers.push_back(std::move(vRes));
 	
-	if (geometryState.SizeInBytes != 0) {
-		views.push_back(geometryState);
-	}
-	unsigned int cycleNum = static_cast<unsigned int>(this->_additionalVBOs.size());
-	for (unsigned int i = 0;i < cycleNum; ++i) {
-		views.push_back(this->_additionalVBOs[i]->GetView());
-	}
-	return views;
+	D3D12_VERTEX_BUFFER_VIEW view{};
+	view.BufferLocation = _vertexBuffers.back()->GetResource()->GetGPUVirtualAddress();
+	view.SizeInBytes = elementSize * elementNum;
+	view.StrideInBytes = elementSize;
+
+	this->_geometryState->AddVertexBufferView(view);
 }
 
-D3D12_INDEX_BUFFER_VIEW K3D::MeshBuffer::GetMeshIBOView()
+void K3D::MeshBuffer::AddVertexBuffer( size_t elementSize, size_t elementNum, void * pSrc)
 {
-	return _mesh.GetGeometryState().GetIndexBufferView();
+	this->_indexBuffer->Initialize(elementSize * elementNum, elementSize, pSrc);
+	D3D12_INDEX_BUFFER_VIEW view;
+	view.BufferLocation = _indexBuffer->GetResource()->GetGPUVirtualAddress();
+	view.Format = _indexBuffer->GetResourceDesc().Format;
+	view.SizeInBytes = elementSize * elementNum;
+
+	_geometryState->SetIndexBufferView(view);
 }
 
-std::unique_ptr<K3D::VertexBuffer>& K3D::MeshBuffer::GetVBO()
+const std::unique_ptr < K3D::GeometryState > & K3D::MeshBuffer::GetGeometryState()
 {
-	return _mesh.GetVBO();
+	return _geometryState;
 }
 
-std::unique_ptr<K3D::VertexBuffer>& K3D::MeshBuffer::GetCustomVBO(unsigned int index)
+const std::unique_ptr<K3D::IndexBuffer>& K3D::MeshBuffer::GetIndexBuffer()
 {
-	if (this->_additionalVBOs.empty() || this->_additionalVBOs.size() <= index) {
-		//テンポラリオブジェクト
-		return std::unique_ptr<K3D::VertexBuffer>(nullptr);
-	}
-	return this->_additionalVBOs[index];
-}
-
-std::unique_ptr<K3D::IndexBuffer>& K3D::MeshBuffer::GetIBO()
-{
-	return _mesh.GetIBO();
+	return _indexBuffer;
 }
 
 void K3D::MeshBuffer::Discard()
 {
-	this->_mesh.Discard();
-	this->_additionalVBOs.clear();
-	this->_additionalVBOs.shrink_to_fit();
+	_vertexBuffers.clear();
+	_vertexBuffers.shrink_to_fit();
+	_indexBuffer.reset();
+	_geometryState.reset();
 }

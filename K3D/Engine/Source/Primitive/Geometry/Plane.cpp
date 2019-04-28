@@ -43,27 +43,27 @@ void K3D::Plane::CreateMesh()
 
 	unsigned int surfaceCount = 6;
 	unsigned int planeVertex = 4;
-	std::vector<PrimitiveVertex> vertexes;
-	std::vector<unsigned int > indexList;
+	std::vector<PrimitiveVertex> vertices(planeVertex);
+	std::vector<unsigned int > indices;
 
 	PrimitiveVertex plane[4];
 	for (unsigned int i = 0; i < planeVertex; ++i) {
-		plane[i].pos = Vector3((2.0f*static_cast<float>((i) % 2) - 1.0f) / 2.0f, -(2.0f * static_cast<float>((i) % 4 / 2) - 1.0f) / 2.0f, -1.0f / 2.0f);
-		plane[i].normal = Vector3::back;
-		plane[i].texcoord = { static_cast<float>(i % 2), static_cast<float>(i / 2) };
+		vertices[i].pos = Vector3((2.0f*static_cast<float>((i) % 2) - 1.0f) / 2.0f, -(2.0f * static_cast<float>((i) % 4 / 2) - 1.0f) / 2.0f, -1.0f / 2.0f);
+		vertices[i].normal = Vector3::back;
+		vertices[i].texcoord = { static_cast<float>(i % 2), static_cast<float>(i / 2) };
 	}
 	unsigned int planeList[] = { 0,1,2,1,3,2 };
 	for (unsigned int listIndex = 0; listIndex < surfaceCount; listIndex++) {
-		indexList.push_back(planeList[listIndex]);
+		indices.push_back(planeList[listIndex]);
 	}
 
 	//GPUResourceinitialize
 
 	{
-		//VBInitialize
-		this->_modelMesh->meshBuffer->InitializeVBO(sizeof(PrimitiveVertex) * vertexes.size(), sizeof(PrimitiveVertex), vertexes.data());
-		this->_modelMesh->meshBuffer->InitializeIBO(indexList);
 
+		//VBInitialize
+		this->_modelMesh->AddVertexBuffer(sizeof(PrimitiveVertex), vertices.size(), vertices.data());
+		this->_modelMesh->InitializeIndexBuffer(sizeof(unsigned int), indices.size(), indices.data());
 	}
 }
 
@@ -75,9 +75,9 @@ void K3D::Plane::CreateDescriptors()
 {
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	//デフォルトカメラデスクリプタの取得(register0
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
+	this->_modelMesh->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
 	cbvDesc.BufferLocation = this->_transformBuffer.GetResource()->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = Util::ConstantBufferAlign(sizeof(Transform));
 	//register1
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
+	this->_modelMesh->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
 }

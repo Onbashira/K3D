@@ -6,6 +6,7 @@ namespace K3D {
 	class CommandList;
 	class GameHeap;
 	class ConstantBuffer;
+	class TextureObject;
 
 	class Sprite :public PrimitiveObject
 	{
@@ -17,7 +18,7 @@ namespace K3D {
 
 		std::shared_ptr<ConstantBuffer> _materialBuffer;
 
-	
+		std::shared_ptr<TextureObject> _texture;
 
 	public:
 

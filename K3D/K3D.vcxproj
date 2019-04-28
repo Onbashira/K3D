@@ -19,6 +19,55 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\DXR\device\DXRDevice.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\AccelerationStructureBuilderFactory.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\AccelerationStructureValidator.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicSort.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BVHTraversalShaderBuilder.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BVHValidator.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ConstructAABBPass.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ConstructHierarchyPass.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CpuBVH2Builder.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\D3D12RaytracingFallback.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DxbcParser.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DxilShaderPatcher.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FallbackDebug.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FallbackLayer.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\fallbacklayerunittests.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBVH2Builder.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBVH2Copy.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadInstancesPass.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadPrimitivesPass.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\MortonCodesCalculator.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\pch.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\PostBuildInfoQuery.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingProgramFactory.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeElementsPass.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SceneAABBCalculator.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\StateObjectProcessing.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.cpp" />
+    <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\UberShaderRayTracingProgram.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\BC.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\BC4BC5.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\BC6HBC7.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\BCDirectCompute.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexCompress.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexCompressGPU.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexConvert.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexD3D11.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexD3D12.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexDDS.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexFlipRotate.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexHDR.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexImage.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexMipmaps.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexMisc.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexNormalMaps.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexPMAlpha.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexResize.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexTGA.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexUtil.cpp" />
+    <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexWIC.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultInputComponent.cpp" />
@@ -36,7 +85,6 @@
     <ClCompile Include="Engine\Source\Sprite\Sprite.cpp">
       <DeploymentContent>true</DeploymentContent>
     </ClCompile>
-    <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.cpp" />
     <ClCompile Include="Engine\Source\Command\Core\CommandManager.cpp" />
     <ClCompile Include="Engine\Source\Primitive\Geometry\Cube.cpp" />
     <ClCompile Include="Engine\Source\Async\Fence.cpp" />
@@ -62,7 +110,6 @@
     <ClCompile Include="Engine\Source\Input\GamePadManager.cpp" />
     <ClCompile Include="Engine\Source\Input\InputManager.cpp" />
     <ClCompile Include="Engine\Source\Math\Math.cpp" />
-    <ClCompile Include="Engine\Source\Mesh\MeshBuffer.cpp" />
     <ClCompile Include="Engine\Source\Mesh\MeshHeap.cpp" />
     <ClCompile Include="Engine\Source\PipelineState\PipelineStateObject.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingManager.cpp" />
@@ -93,20 +140,17 @@
     <ClCompile Include="Engine\Source\Command\Core\InternalCommand.cpp" />
     <ClCompile Include="Engine\Source\Command\State\GeometryState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\TargetState.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderingBaffer\GeometryBuffer.cpp" />
     <ClCompile Include="Engine\Source\RingBuffer\RingBuffer.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui_demo.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui_impl_dx12.cpp" />
     <ClCompile Include="Engine\ThirdParty\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Engine\Source\Mesh\BasicMesh.cpp" />
     <ClCompile Include="Engine\Source\Resource\Sampler.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineState.cpp" />
     <ClCompile Include="Engine\Source\Command\State\PipelineResourceTable.cpp" />
     <ClCompile Include="Engine\Source\Device\RenderingDevice.cpp" />
-    <ClCompile Include="Engine\Source\Material\Material.cpp" />
-    <ClCompile Include="Engine\Source\Mesh\MeshManager.cpp" />
+    <ClCompile Include="Engine\Source\MaterialSystem\Material.cpp" />
     <ClCompile Include="Engine\Source\Mesh\ModelMesh.cpp" />
     <ClCompile Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\InputComponent\InputComponent.cpp" />
@@ -121,16 +165,19 @@
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitiveInputComponent.cpp" />
     <ClCompile Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Rendering\RenderingPass\RenderingPass.cpp" />
-    <ClCompile Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.cpp" />
     <ClCompile Include="Engine\Source\Texture\TextureObject.cpp" />
     <ClCompile Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.cpp" />
     <ClCompile Include="Engine\Source\TextUI\TextUI.cpp" />
+    <ClCompile Include="Engine\Source\Mesh\MeshBuffer.cpp" />
+    <ClCompile Include="Engine\Source\Sprite\SpriteManager.cpp" />
+    <ClCompile Include="Engine\Source\MaterialSystem\MaterialManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\DXR\device\DXRDevice.h" />
     <ClInclude Include="Engine\Source\Component\DefaultComponents.h" />
     <ClInclude Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.h" />
     <ClInclude Include="Engine\Source\Component\DefaultComponents\DefaultInputComponent.h" />
@@ -154,7 +201,71 @@
     <ClInclude Include="Engine\Source\DynamicHeap\DefaultRawMemoryAllocator.h" />
     <ClInclude Include="Engine\Source\DynamicHeap\MemoryAllocator.h" />
     <ClInclude Include="Engine\Source\LifetimedMemory\LifetimedMemory.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\DecaleBuffer.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\d3d12.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\D3D12RaytracingFallback.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\D3D12RaytracingHelpers.hpp" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\d3d12video.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\d3d12_1.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\d3dx12.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\Include\dxcapi.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\AccelerationStructureBuilder.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\AccelerationStructureBuilderFactory.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\AccelerationStructureValidator.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicSort.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BVHTraversalShaderBuilder.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BVHValidator.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ComObject.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ConstructAABBBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ConstructAABBPass.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ConstructHierarchyBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ConstructHierarchyPass.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DebugLog.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DxbcParser.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DxilShaderPatcher.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ExperimentalRaytracing.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FallbackDebug.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FallbackDxil.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FallbackLayer.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GetBVHCompactedSizeBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBvh2Builder.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBvh2Copy.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBvh2CopyBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\HlslCompat.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\HLSLRayTracingInternalPrototypes.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadInstancesBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadInstancesPass.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadPrimitivesBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadPrimitivesPass.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\MortonCodesCalculator.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\NativeRayTracing.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\pch.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\PostBuildInfoQuery.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RaytracingCompatibilityDebug.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingHlslCompat.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingProgram.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingProgramFactory.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeElementsPass.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeTrianglesBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SceneAABBCalculator.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ShaderPass.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\StateObjectProcessing.hpp" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraversalShaderBuilder.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorderBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\UberShaderBindings.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\UberShaderRayTracingProgram.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\Util.h" />
+    <ClInclude Include="Engine\ThirdParty\D3D12RaytracingFallback\src\WaveDimensions.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\BC.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\BCDirectCompute.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\d3dx12.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\DDS.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\DirectXTex.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\DirectXTexP.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\Filters.h" />
+    <ClInclude Include="Engine\ThirdParty\DirectXTex\include\scoped.h" />
     <ClInclude Include="K3D.h" />
     <ClInclude Include="Engine\Source\Command\Core\CommandManager.h" />
     <ClInclude Include="Engine\Source\Primitive\Geometry\Cube.h" />
@@ -182,7 +293,6 @@
     <ClInclude Include="Engine\Source\Input\GamePadManager.h" />
     <ClInclude Include="Engine\Source\Input\InputManager.h" />
     <ClInclude Include="Engine\Source\Math\Math.h" />
-    <ClInclude Include="Engine\Source\Mesh\MeshBuffer.h" />
     <ClInclude Include="Engine\Source\Mesh\MeshHeap.h" />
     <ClInclude Include="Engine\Source\PipelineState\PipelineStateObject.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingManager.h" />
@@ -217,7 +327,6 @@
     <ClInclude Include="Engine\Source\Command\Core\InternalCommand.h" />
     <ClInclude Include="Engine\Source\Command\State\GeometryState.h" />
     <ClInclude Include="Engine\Source\Command\State\TargetState.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderingBaffer\GeometryBuffer.h" />
     <ClInclude Include="Engine\Source\RingBuffer\RingBuffer.h" />
     <ClInclude Include="Engine\ThirdParty\imgui\imconfig.h" />
     <ClInclude Include="Engine\ThirdParty\imgui\imgui.h" />
@@ -226,14 +335,11 @@
     <ClInclude Include="Engine\ThirdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="Engine\ThirdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="Engine\ThirdParty\imgui\imstb_truetype.h" />
-    <ClInclude Include="Engine\Source\Mesh\BasicMesh.h" />
     <ClInclude Include="Engine\Source\Resource\Sampler.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineState.h" />
     <ClInclude Include="Engine\Source\Command\State\PipelineResourceTable.h" />
     <ClInclude Include="Engine\Source\Device\RenderingDevice.h" />
-    <ClInclude Include="Engine\Source\Material\Material.h" />
-    <ClInclude Include="Engine\Source\Mesh\MeshVertex.h" />
-    <ClInclude Include="Engine\Source\Mesh\MeshManager.h" />
+    <ClInclude Include="Engine\Source\MaterialSystem\Material.h" />
     <ClInclude Include="Engine\Source\Mesh\ModelMesh.h" />
     <ClInclude Include="Engine\Source\Component\GraphicsComponent\GraphicsComponent.h" />
     <ClInclude Include="Engine\Source\Component\InputComponent\InputComponent.h" />
@@ -248,10 +354,12 @@
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitiveInputComponent.h" />
     <ClInclude Include="Engine\Source\Primitive\DefaultComponent\PrimitivePhysicsComponent.h" />
     <ClInclude Include="Engine\Source\Rendering\RenderingPass\RenderingPass.h" />
-    <ClInclude Include="Engine\Source\Rendering\RenderResourceManager\RenderResourceManager.h" />
     <ClInclude Include="Engine\Source\Texture\TextureObject.h" />
     <ClInclude Include="Engine\Source\MemoryAllocator\VariableSizeAllocationManager.h" />
     <ClInclude Include="Engine\Source\TextUI\TextUI.h" />
+    <ClInclude Include="Engine\Source\Mesh\MeshBuffer.h" />
+    <ClInclude Include="Engine\Source\Sprite\SpriteManager.h" />
+    <ClInclude Include="Engine\Source\MaterialSystem\MaterialManager.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +399,59 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicIndirectArgsCS.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicInnerSortCS.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicOuterSortCS.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicPreSortCS.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelBuildBVHSplits.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelComputeAABBs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelPrepareForComputeAABBs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesForAABBs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesForPrimitives.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromAABBs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromBVHs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromPrimitives.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ClearBuffers.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DynamicIndexTest.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FindTreelets.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GetBVHCompactedSize.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBvh2Copy.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadProceduralGeometry.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesFromR16IndexBuffer.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesFromR32IndexBuffer.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesNoIndexBuffer.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\MinimalTraverseShaderLib.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\NullTraverseLib.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeBVHs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeTriangles.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SimpleRaygen.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SimpleRayTracing.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\StateMachineLib.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelBuildBVHSplits.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelComputeAABBs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBsFromArrayOfInstances.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBsFromArrayOfPointers.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelPrepareForComputeAABBs.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShaderLib.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicSortCommon.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelLoadTriangles.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BuildBVHSplits.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodes.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ComputeAABBs.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DebugLog.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\EmulatedPointer.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\EmulatedPointerIntrinsics.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\packages.config" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingHelper.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ShaderUtil.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SharedReadData.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBs.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseFunction.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShader.hlsli" />
+    <None Include="Engine\ThirdParty\DirectXTex\include\DirectXTex.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -361,13 +522,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/include;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -394,14 +555,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty/DirectXTex/include;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

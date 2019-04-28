@@ -73,7 +73,7 @@ void K3D::Sphere::CreateMesh()
 		}
 	}
 
-	this->_modelMesh->meshBuffer->InitializeVBO(sizeof(PrimitiveVertex) * vertices.size(), sizeof(PrimitiveVertex), vertices.data());
+	this->_modelMesh->AddVertexBuffer(sizeof(PrimitiveVertex), vertices.size(), vertices.data());
 
 }
 
@@ -119,7 +119,7 @@ void K3D::Sphere::CreateIndices()
 
 	{
 		//VBInitialize
-		this->_modelMesh->meshBuffer->InitializeIBO(indices);
+		this->_modelMesh->InitializeIndexBuffer(sizeof(unsigned int), indices.size(), indices.data());
 
 	}
 }
@@ -128,9 +128,9 @@ void K3D::Sphere::CreateDescriptors()
 {
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	//デフォルトカメラデスクリプタの取得(register0
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
+	this->_modelMesh->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
 	cbvDesc.BufferLocation = this->_transformBuffer.GetResource()->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = Util::ConstantBufferAlign(sizeof(Transform));
 	//register1
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
+	this->_modelMesh->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
 }

@@ -7,7 +7,7 @@
 #include "Engine/Source/Resource/ShaderResource.h"
 #include "Engine/Source/Texture/TextureObject.h"
 #include "Engine/Source/Rendering/RenderContext/RenderContext.h"
-#include <DirectXTex.h>
+#include "Engine/ThirdParty/DirectXTex/include/DirectXTex.h"
 
 
 K3D::TextureLoader::TextureLoader()

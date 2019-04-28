@@ -1,60 +1,39 @@
 #pragma once
-#include "Engine/Source/Mesh/BasicMesh.h"
-#include "Engine/Source/Resource/IndexBuffer.h"
-#include "Engine/Source/Resource/VertexBuffer.h"
 
-#include <vector>
-#include <memory>
+#include "Engine/Source/Resource/VertexBuffer.h"
+#include "Engine/Source/Resource/IndexBuffer.h"
+#include "Engine/Source/Command/State/GeometryState.h"
 
 namespace K3D {
 
-	class VertexBuffer;
-	class IndexBuffer;
-
-	//Meshバッファを管理(CPUデータと分離する）
 	class MeshBuffer
 	{
 
-		friend class ModelMesh;
-
-	public:
-
-	protected:
-
-		//!メッシュデータ
-		BasicMesh _mesh;
-		//ユーザーカスタム型のVBO Stream1 PerVertex
-		std::vector<std::unique_ptr<VertexBuffer>>	_additionalVBOs;
 
 	private:
+
+		std::vector<std::unique_ptr < VertexBuffer>> _vertexBuffers;
+
+		std::unique_ptr < IndexBuffer > _indexBuffer;
+
+		std::unique_ptr<GeometryState> _geometryState;
 
 	public:
 
 		MeshBuffer();
 
-		virtual ~MeshBuffer();
+		~MeshBuffer();
 
-		virtual void InitializeVBO(ULONG64 size, unsigned int stride, void* vertexDataSrc);
+		void CreateIndexBuffer(size_t elementSize, size_t elementNum, void * pSrc);
 
-		virtual void AddCustomVBO(ULONG64 size, unsigned int stride, void* customVertexDataSrc);
+		void AddVertexBuffer(size_t elementSize, size_t elementNum, void * pSrc);
 
-		virtual void InitializeIBO(std::vector<unsigned int>& indexListDataSrc);
+		const std::unique_ptr<K3D::GeometryState>& GetGeometryState();
 
-		std::vector<D3D12_VERTEX_BUFFER_VIEW> GetMeshVBViews();
+		const std::unique_ptr < K3D::IndexBuffer > & GetIndexBuffer();
 
-		D3D12_INDEX_BUFFER_VIEW GetMeshIBOView();
-
-		std::unique_ptr<VertexBuffer>& GetVBO();
-
-		std::unique_ptr<VertexBuffer>& GetCustomVBO(unsigned int index);
-
-		std::unique_ptr<IndexBuffer>&  GetIBO();
-
-		virtual void Discard();
-
-	protected:
-
-	private:
+		void Discard();
 
 	};
+
 }

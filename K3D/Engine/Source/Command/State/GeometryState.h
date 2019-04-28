@@ -9,7 +9,7 @@ namespace K3D {
 	private:
 
 		//!頂点バッファビュー
-		D3D12_VERTEX_BUFFER_VIEW _vertexBuffer;
+		std::vector<D3D12_VERTEX_BUFFER_VIEW> _vertexBuffers;
 		//!インデックスバッファビュー
 		D3D12_INDEX_BUFFER_VIEW  _indexBuffer;
 
@@ -21,24 +21,31 @@ namespace K3D {
 
 		/**
 		* @fn
-		* @brief 頂点バッファビューの取得
+		* @brief 頂点バッファビュー配列の取得
 		* @return  頂点バッファビューへの参照
 		*/
-		D3D12_VERTEX_BUFFER_VIEW& GetVertexBufferView();
+		const std::vector<D3D12_VERTEX_BUFFER_VIEW>*  GetVertexBufferView();
 
 		/**
 		* @fn
 		* @brief インデックスバッファビューの取得
 		* @return  インデックスバッファビューへの参照
 		*/
-		D3D12_INDEX_BUFFER_VIEW& GetIndexBufferView();
+		const D3D12_INDEX_BUFFER_VIEW* GetIndexBufferView();
 
 		/**
 		* @fn
 		* @brief 頂点バッファビューのセット
 		* @oaram[in] vertexBuffer　VBV
 		*/
-		void SetVertexBufferView(D3D12_VERTEX_BUFFER_VIEW& vertexBufferView);
+		void AddVertexBufferView(D3D12_VERTEX_BUFFER_VIEW&& vertexBufferView);
+
+		/**
+		* @fn
+		* @brief 頂点バッファビューのセット
+		* @oaram[in] vertexBuffer　VBV
+		*/
+		void AddVertexBufferView(const D3D12_VERTEX_BUFFER_VIEW& vertexBufferView);
 
 		/**
 		* @fn

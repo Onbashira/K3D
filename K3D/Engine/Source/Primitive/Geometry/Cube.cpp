@@ -44,8 +44,8 @@ void K3D::Cube::CreateMesh()
 
 	unsigned int sufaceCount = 6;
 	unsigned int planeVertex = 4;
-	std::vector<PrimitiveVertex> vertexes;
-	std::vector<unsigned int > indexList;
+	std::vector<PrimitiveVertex> vertices;
+	std::vector<unsigned int > indices;
 
 	PrimitiveVertex plane[4];
 	for (unsigned int i = 0; i < planeVertex; ++i) {
@@ -65,10 +65,10 @@ void K3D::Cube::CreateMesh()
 			p.pos = Vector3::Rotate(plane[v].pos, q);
 
 			p.texcoord = plane[v].texcoord;
-			vertexes.push_back(p);
+			vertices.push_back(p);
 		}
 		for (unsigned int listIndex = 0; listIndex < sufaceCount; listIndex++) {
-			indexList.push_back(planeList[listIndex] + (4 * i));
+			indices.push_back(planeList[listIndex] + (4 * i));
 		}
 	}
 	//底面上面
@@ -80,11 +80,11 @@ void K3D::Cube::CreateMesh()
 			p.normal = Vector3::Rotate(plane[v].normal, q);
 			p.pos = Vector3::Rotate(plane[v].pos, q);
 			p.texcoord = plane[v].texcoord;
-			vertexes.push_back(p);
+			vertices.push_back(p);
 
 		}
 		for (unsigned int listIndex = 0; listIndex < sufaceCount; listIndex++) {
-			indexList.push_back(planeList[listIndex] + (4 * i));
+			indices.push_back(planeList[listIndex] + (4 * i));
 		}
 	}
 
@@ -92,8 +92,8 @@ void K3D::Cube::CreateMesh()
 
 	{
 		//VBInitialize
-		this->_modelMesh->meshBuffer->InitializeVBO(sizeof(PrimitiveVertex) * vertexes.size(), sizeof(PrimitiveVertex), vertexes.data());
-		this->_modelMesh->meshBuffer->InitializeIBO(indexList);
+		this->_modelMesh->AddVertexBuffer(sizeof(PrimitiveVertex), vertices.size(), vertices.data());
+		this->_modelMesh->InitializeIndexBuffer(sizeof(unsigned int) , indices.size(), indices.data());
 
 	}
 }
@@ -105,11 +105,11 @@ void K3D::Cube::CreateDescriptors()
 {
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	//デフォルトカメラデスクリプタの取得(register0
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
+	this->_modelMesh->AddDescriptor(_gameHeap->GetDescriptorHandle(GameHeap::HeapType::CPU, 0));
 	cbvDesc.BufferLocation = this->_transformBuffer.GetResource()->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = Util::ConstantBufferAlign(sizeof(Transform));
 	//register1
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
+	this->_modelMesh->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
 
 }
 
