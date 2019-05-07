@@ -2,4 +2,3 @@
 DirectXTex
 IMGUI
 FBX SDK
-GITF SDK

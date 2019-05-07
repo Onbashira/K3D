@@ -10,6 +10,16 @@ void main() {
 
 	while (K3D::Framework::GetInstance().LoopMessage() == 0) {
 		K3D::Framework::GetInstance().Tick();
+
+		//描画は現状ユーザまかせ
+		//ヒープ一括化システムは動作確認済み
+		//ライブラリの動作として、レンダリング自体が通ることも確認済み
+		
+		//TODO
+		//・DXRの組み込み確認として、チュートリアルを移植する
+		//・MHWのパーティクルシステムを模倣した（GCCの資料参照）GPUパーティクルレンダラの実装
+		//　・テストのレンダラは実装ずみ
+
 		K3D::Framework::GetInstance().Input().InputUpdate();
 	}
 	K3D::Framework::GetInstance().TimerStop();
