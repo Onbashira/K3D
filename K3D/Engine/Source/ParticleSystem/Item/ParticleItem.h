@@ -16,6 +16,8 @@ namespace K3D {
 		//パーティクル単位のデータの更新はGPUだけど、エミッタ単位のデータの更新はParticleItemが行う
 		virtual void UpdateItem() = 0;
 
+		//GPUにマッピングする際に書き込むサイズの取得
+		virtual size_t GetElementSize() = 0;
 
 		
 	};
