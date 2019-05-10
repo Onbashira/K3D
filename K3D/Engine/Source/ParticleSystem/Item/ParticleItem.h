@@ -17,7 +17,7 @@ namespace K3D {
 		virtual void UpdateItem() = 0;
 
 		//GPUにマッピングする際に書き込むサイズの取得
-		virtual size_t GetElementSize() = 0;
+		virtual unsigned int GetElementSize() = 0;
 
 		
 	};

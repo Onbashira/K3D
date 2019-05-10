@@ -3,9 +3,8 @@
 #include "../Item/ParticleItem.h"
 
 K3D::Emitter::Emitter() : 
-	_header(),
 	_updater([this]() {for (auto& item : this->_items) { item->UpdateItem(); }}),
-	_dataSize(sizeof(EmitterHeader))
+	_dataSize(0)
 {
 
 }
@@ -13,6 +12,7 @@ K3D::Emitter::Emitter() :
 
 K3D::Emitter::~Emitter()
 {
+	Discard();
 }
 
 void K3D::Emitter::UpdateItems()
@@ -25,12 +25,7 @@ void K3D::Emitter::SetCustomUpdater(std::function<void(void)> function)
 	_updater = function;
 }
 
-const K3D::EmitterHeader& K3D::Emitter::GetEmitterHeader()
-{
-	return _header;
-}
-
-const size_t & K3D::Emitter::GetBinSize()
+const unsigned int & K3D::Emitter::GetBinSize()
 {
 	return _dataSize;
 }

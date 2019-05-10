@@ -477,22 +477,13 @@
     <ClCompile Include="Engine\Source\ParticleSystem\Emitter\EmitterBinary.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\ParticleSystem\Emitter\EffectRoot.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Source\ParticleSystem\system\GPUParticleMemoryManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\MeshTypeItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\RotateAnimItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\ScaleAnimItem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\ShaderSettingItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\TransformItem.cpp">
@@ -507,7 +498,19 @@
     <ClCompile Include="Engine\Source\ParticleSystem\Item\ParticleItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GPUParticleSystemManager.cpp">
+    <ClCompile Include="Engine\Source\ParticleSystem\system\GPUParticleSystemManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\ParticleSystem\Particle\ParticleBinary.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1067,22 +1070,13 @@
     <ClInclude Include="Engine\Source\ParticleSystem\Emitter\EmitterBinary.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\ParticleSystem\Emitter\EffectRoot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Source\ParticleSystem\system\GPUParticleMemoryManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\MeshTypeItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\RotateAnimItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\ScaleAnimItem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\ShaderSettingItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\TransformItem.h">
@@ -1097,7 +1091,19 @@
     <ClInclude Include="Engine\Source\ParticleSystem\Item\ParticleItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GPUParticleSystemManager.h">
+    <ClInclude Include="Engine\Source\ParticleSystem\system\GPUParticleSystemManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\ParticleSystem\Particle\ParticleBinary.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,7 @@ namespace K3D {
 	class Resource;
 	class Emitter;
 	class D3D12Device;
-
+	struct EmitterHeader;
 	class EmitterBinary
 	{
 
@@ -17,7 +17,7 @@ namespace K3D {
 
 		std::unique_ptr<K3D::Resource> _emitterTableBin;
 
-		std::map<int, size_t> _binaryEmitterSizeMap;
+		std::map<int, unsigned int> _binaryEmitterSizeMap;
 
 	public:
 
@@ -25,19 +25,22 @@ namespace K3D {
 
 		~EmitterBinary();
 
-		HRESULT Initialize(std::shared_ptr<D3D12Device>& device ,size_t binarySize);
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& device , unsigned int binarySize);
 
-		//Headerおよび各アイテムの情報をバイナリ領域に書き込み
-		void Write(std::shared_ptr<Emitter>& emitter);
+		//Emitterが保持する各アイテムの情報をバイナリ領域に書き込み
+		void Write(const EmitterHeader* header,std::shared_ptr<Emitter>& emitter);
 
 		void DeleteEmitter(int emitterIdx);
 
 		void Discard();
 	private:
 
-		HRESULT EmitterBinInit(std::shared_ptr<D3D12Device>& device, size_t binarySize);
-		HRESULT EmitterHeaderesBinInit(std::shared_ptr<D3D12Device>& device, size_t binarySize);
-		HRESULT EmitterTableBinInit(std::shared_ptr<D3D12Device>& device, size_t binarySize);
+		HRESULT EmitterBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);
+		HRESULT EmitterHeaderesBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);
+		HRESULT EmitterTableBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);
+
+		void WriteEmitterHeader(const EmitterHeader* header);
+
 
 	};
 

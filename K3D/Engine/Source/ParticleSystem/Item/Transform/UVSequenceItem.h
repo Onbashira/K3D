@@ -1,5 +1,7 @@
 #pragma once
-class UVSequenceItem
+#include "../ParticleItem.h"
+
+class UVSequenceItem : public ParticleItem
 {
 public:
 	UVSequenceItem();

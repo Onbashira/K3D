@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Source\ParticleSystem\Emitter\EmitterBinary.cpp" />
-    <ClCompile Include="Engine\Source\ParticleSystem\Emitter\EffectRoot.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Emitter\Emitter.cpp" />
     <ClCompile Include="Engine\Source\DXR\device\DXRDevice.cpp" />
     <ClCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\AccelerationStructureBuilderFactory.cpp" />
@@ -72,7 +71,7 @@
     <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexUtil.cpp" />
     <ClCompile Include="Engine\ThirdParty\DirectXTex\include\DirectXTexWIC.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\system\GPUParticleMemoryManager.cpp" />
-    <ClCompile Include="GPUParticleSystemManager.cpp" />
+    <ClCompile Include="Engine\Source\ParticleSystem\system\GPUParticleSystemManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultPhysicsComponent.cpp" />
     <ClCompile Include="Engine\Source\Component\DefaultComponents\DefaultInputComponent.cpp" />
@@ -178,10 +177,12 @@
     <ClCompile Include="Engine\Source\MaterialSystem\MaterialManager.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\ParticleItem.cpp" />
     <ClCompile Include="Engine\Source\MemoryResourceManager\MemoryResourceManager.cpp" />
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\MeshTypeItem.cpp" />
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\RotateAnimItem.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\ScaleAnimItem.cpp" />
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\ShaderSettingItem.cpp" />
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.cpp" />
+    <ClCompile Include="Engine\Source\ParticleSystem\Particle\ParticleBinary.cpp" />
+    <ClCompile Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -192,7 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Source\ParticleSystem\Emitter\EmitterBinary.h" />
-    <ClInclude Include="Engine\Source\ParticleSystem\Emitter\EffectRoot.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Emitter\Emitter.h" />
     <ClInclude Include="Engine\Source\DXR\device\DXRDevice.h" />
     <ClInclude Include="Engine\Source\Component\DefaultComponents.h" />
@@ -284,7 +284,7 @@
     <ClInclude Include="Engine\ThirdParty\DirectXTex\include\Filters.h" />
     <ClInclude Include="Engine\ThirdParty\DirectXTex\include\scoped.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\system\GPUParticleMemoryManager.h" />
-    <ClInclude Include="GPUParticleSystemManager.h" />
+    <ClInclude Include="Engine\Source\ParticleSystem\system\GPUParticleSystemManager.h" />
     <ClInclude Include="K3D.h" />
     <ClInclude Include="Engine\Source\Command\Core\CommandManager.h" />
     <ClInclude Include="Engine\Source\Primitive\Geometry\Cube.h" />
@@ -381,10 +381,12 @@
     <ClInclude Include="Engine\Source\MaterialSystem\MaterialManager.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\ParticleItem.h" />
     <ClInclude Include="Engine\Source\MemoryResourceManager\MemoryResourceManager.h" />
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\MeshTypeItem.h" />
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\RotateAnimItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\ScaleAnimItem.h" />
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\ShaderSettingItem.h" />
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.h" />
+    <ClInclude Include="Engine\Source\ParticleSystem\Particle\ParticleBinary.h" />
+    <ClInclude Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\TransformItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\UVSequenceItem.h" />

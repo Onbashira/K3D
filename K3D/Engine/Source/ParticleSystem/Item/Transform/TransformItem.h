@@ -1,5 +1,5 @@
 #pragma once
-#include "ParticleItem.h"
+#include "../ParticleItem.h"
 
 namespace K3D {
 	class TransformItem : public ParticleItem

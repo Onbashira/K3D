@@ -15,7 +15,7 @@ K3D::EmitterBinary::~EmitterBinary()
 	Discard();
 }
 
-HRESULT K3D::EmitterBinary::Initialize(std::shared_ptr<D3D12Device>& device, size_t binarySize)
+HRESULT K3D::EmitterBinary::Initialize(std::shared_ptr<D3D12Device>& device, unsigned int binarySize)
 {
 
 	auto hr = EmitterBinInit(device, binarySize);
@@ -28,34 +28,28 @@ HRESULT K3D::EmitterBinary::Initialize(std::shared_ptr<D3D12Device>& device, siz
 	return hr;
 }
 
-void K3D::EmitterBinary::Write(std::shared_ptr<Emitter>& emitter)
+
+//EmitterBinary領域にアイテムを書き込む（EmitterHeader部は別領域に書き込み）
+void K3D::EmitterBinary::Write(const EmitterHeader* header,std::shared_ptr<Emitter>& emitter)
 {
-	size_t offset = emitter->GetEmitterHeader().EmitterBinHead;
+	size_t offset = header->EmitterBinHead;
 	size_t binSize = emitter->GetBinSize();
 	size_t dataSize = 0;
 	unsigned int index = 0;
 	//データ確保
 	char* ptr = new char[emitter->GetBinSize()];
 
-	//ヘッダ情報の書き込み
-	dataSize = sizeof(EmitterHeader);
-	std::memcpy(ptr, &emitter->GetEmitterHeader(), dataSize);
-	ptr += dataSize;
-	binSize += dataSize;
 	//メモリコピー
 	for (auto& item : emitter->GetEmitterItems()) {
 		dataSize = item->GetElementSize();
 		std::memcpy(ptr, item->GetValue(), dataSize);
 		ptr += dataSize;
-		binSize += dataSize;
 	}
 	this->_binaryEmitterSizeMap[index] = binSize;
 
 	//メモリにマッピング
 	_emitterBin->Update(ptr, binSize, offset);
-	_emitterHeadersBin->Update(&emitter->GetEmitterHeader(), sizeof(EmitterHeader), index * sizeof(EmitterHeader));
-	_emitterTableBin->Update(&index, sizeof(size_t), index * sizeof(size_t));
-
+	WriteEmitterHeader(header);
 	delete[] ptr;
 }
 
@@ -72,7 +66,7 @@ void K3D::EmitterBinary::Discard()
 
 }
 
-HRESULT K3D::EmitterBinary::EmitterBinInit(std::shared_ptr<D3D12Device>& device, size_t binarySize)
+HRESULT K3D::EmitterBinary::EmitterBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize)
 {
 	D3D12_HEAP_PROPERTIES prop = {};
 	D3D12_RESOURCE_DESC   desc = {};
@@ -105,7 +99,7 @@ HRESULT K3D::EmitterBinary::EmitterBinInit(std::shared_ptr<D3D12Device>& device,
 	return hr;
 }
 
-HRESULT K3D::EmitterBinary::EmitterHeaderesBinInit(std::shared_ptr<D3D12Device>& device, size_t binarySize)
+HRESULT K3D::EmitterBinary::EmitterHeaderesBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize)
 {
 	D3D12_HEAP_PROPERTIES prop = {};
 	D3D12_RESOURCE_DESC   desc = {};
@@ -138,7 +132,7 @@ HRESULT K3D::EmitterBinary::EmitterHeaderesBinInit(std::shared_ptr<D3D12Device>&
 	return hr;
 }
 
-HRESULT K3D::EmitterBinary::EmitterTableBinInit(std::shared_ptr<D3D12Device>& device, size_t binarySize)
+HRESULT K3D::EmitterBinary::EmitterTableBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize)
 {
 	D3D12_HEAP_PROPERTIES prop = {};
 	D3D12_RESOURCE_DESC   desc = {};
@@ -169,4 +163,11 @@ HRESULT K3D::EmitterBinary::EmitterTableBinInit(std::shared_ptr<D3D12Device>& de
 	_emitterTableBin->Map(0, nullptr);
 
 	return hr;;
+}
+
+void K3D::EmitterBinary::WriteEmitterHeader(const EmitterHeader * header)
+{
+	size_t offset = header->EmitterBinHead;
+	size_t binSize = sizeof(EmitterHeader);
+
 }

@@ -1,8 +1,12 @@
 #pragma once
-class ScaleAnimItem
-{
-public:
-	ScaleAnimItem();
-	~ScaleAnimItem();
-};
+#include "../ParticleItem.h"
 
+namespace K3D {
+	class ScaleAnimItem : public ParticleItem
+	{
+	public:
+		ScaleAnimItem();
+		~ScaleAnimItem();
+	};
+
+}
