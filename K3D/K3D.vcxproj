@@ -466,6 +466,15 @@
     <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Engine\Source\ParticleSystem\shaderInc\GPUparticleInc.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicSortCommon.hlsli" />
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelLoadTriangles.hlsli" />
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BuildBVHSplits.hlsli" />

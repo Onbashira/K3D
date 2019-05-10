@@ -1146,6 +1146,7 @@
     <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelPrepareForComputeAABBs.hlsl" />
     <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShaderLib.hlsl" />
     <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.hlsl" />
+    <FxCompile Include="Engine\Source\ParticleSystem\shaderInc\GPUparticleInc.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\ThirdParty\DirectXTex\include\DirectXTex.inl">

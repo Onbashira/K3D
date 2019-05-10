@@ -30,12 +30,11 @@ HRESULT K3D::EmitterBinary::Initialize(std::shared_ptr<D3D12Device>& device, uns
 
 
 //EmitterBinary領域にアイテムを書き込む（EmitterHeader部は別領域に書き込み）
-void K3D::EmitterBinary::Write(const EmitterHeader* header,std::shared_ptr<Emitter>& emitter)
+void K3D::EmitterBinary::Write(const CPUEmitterHeader* header,std::shared_ptr<Emitter>& emitter)
 {
-	size_t offset = header->EmitterBinHead;
-	size_t binSize = emitter->GetBinSize();
-	size_t dataSize = 0;
-	unsigned int index = 0;
+	unsigned offset = header->EmitterBinHead;
+	unsigned binSize = emitter->GetBinSize();
+	unsigned dataSize = 0;
 	//データ確保
 	char* ptr = new char[emitter->GetBinSize()];
 
@@ -45,8 +44,6 @@ void K3D::EmitterBinary::Write(const EmitterHeader* header,std::shared_ptr<Emitt
 		std::memcpy(ptr, item->GetValue(), dataSize);
 		ptr += dataSize;
 	}
-	this->_binaryEmitterSizeMap[index] = binSize;
-
 	//メモリにマッピング
 	_emitterBin->Update(ptr, binSize, offset);
 	WriteEmitterHeader(header);
@@ -165,9 +162,11 @@ HRESULT K3D::EmitterBinary::EmitterTableBinInit(std::shared_ptr<D3D12Device>& de
 	return hr;;
 }
 
-void K3D::EmitterBinary::WriteEmitterHeader(const EmitterHeader * header)
+void K3D::EmitterBinary::WriteEmitterHeader(const CPUEmitterHeader * header,unsigned int index)
 {
-	size_t offset = header->EmitterBinHead;
-	size_t binSize = sizeof(EmitterHeader);
+	unsigned offset = header->EmitterBinHead;
+	unsigned binSize = sizeof(CPUEmitterHeader);
+
+	_emitterHeadersBin->Update(header, binSize, index*binSize);
 
 }
