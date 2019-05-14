@@ -1,6 +1,12 @@
 #pragma once
 namespace K3D {
 
+	class Resource;
+	class Emitter;
+	class D3D12Device;
+	struct CPUEmitterHeader;
+	struct EmitterParam;
+
 	struct ParticleHeaders { //64bit
 
 		bool Alive : 1;
@@ -10,12 +16,38 @@ namespace K3D {
 		float Depth;
 	};
 
+	struct EmitterRange {
+		unsigned int AliveHead;
+		unsigned int AliveEnd;
+		unsigned int DeadHead;
+		unsigned int DeadEnd;
+
+	};
+
 	//GPU内でのみ読み書きされるパーティクル用メモリを管理
 	class ParticleBinary
 	{
+	private:
+
+		std::unique_ptr<K3D::Resource> _particleBin;
+
+		std::unique_ptr<K3D::Resource> _particleHeadersBin;
+
+		std::unique_ptr<K3D::Resource> _particleIndexListBin;
+
 	public:
 		ParticleBinary();
 		~ParticleBinary();
+
+		HRESULT Initialize(std::shared_ptr<D3D12Device>& device , unsigned int ptBinSize, unsigned int ptHeadersSize, unsigned ptIdxListSize);
+
+	private:
+		HRESULT PtBinInitialize(std::shared_ptr<D3D12Device>& device, unsigned int ptBinSize);
+
+		HRESULT PtHeaderesBinInitialize(std::shared_ptr<D3D12Device>& device, unsigned int ptHeadersSize);
+
+		HRESULT PtIdxListBinInitialize(std::shared_ptr<D3D12Device>& device, unsigned ptIdxListSize);
+
 	};
 
 }

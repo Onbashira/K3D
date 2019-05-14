@@ -17,6 +17,11 @@ namespace K3D {
 		unsigned int ParticleIdxHead = 0;
 		//パーティクルのサイズ
 		unsigned int ParticleSize = 0;
+
+		CPUEmitterHeader() : EmitterBinHead(0), EmmiterBinSize(0),
+			ParticleBinHead(0), ParticleIdxHead(0), ParticleSize(0) {};
+
+		~CPUEmitterHeader() {};
 	};
 
 	struct GPUEmitterHeader {
@@ -28,14 +33,20 @@ namespace K3D {
 		unsigned int ParticleIdxHead = 0;
 		//パーティクルのサイズ
 		unsigned int ParticleSize = 0;
+
+		GPUEmitterHeader() : EmitterBinHead(),
+			ParticleBinHead(), ParticleIdxHead(), ParticleSize() {};
+		GPUEmitterHeader() : EmitterBinHead(),
+			ParticleBinHead(), ParticleIdxHead(), ParticleSize() {};
+		~GPUEmitterHeader() {};
 	};
 
 	//エミッタデータ（GPU内でのみ読み書きされるメモリのフォーマット
-	struct EmitterData {
+	struct EmitterParam {
 		//メモリ位置
 		unsigned int SpawnHead = 0;
-		//メモリ位置から何個分
-		unsigned int SpawnNum = 0;
+		//スポーン最大数
+		unsigned int SpawnMax = 0;
 		//パーティクル数
 		unsigned int ParticleNum = 0;
 	};
@@ -55,6 +66,8 @@ namespace K3D {
 		//エミッタアイテム部のサイズ（Byte)
 		unsigned int _dataSize;
 
+		EmitterParam _emitterData;
+
 	public:
 
 		Emitter();
@@ -66,6 +79,9 @@ namespace K3D {
 
 		//アイテムアップデータの変更
 		void SetCustomUpdater(std::function<void(void)> function);
+
+		//エミッタの情報のセット
+		void SetEmitterParam(const EmitterParam& emitterData);
 
 		//アイテム部サイズの取得
 		const unsigned int& GetBinSize();

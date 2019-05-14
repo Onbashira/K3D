@@ -25,6 +25,11 @@ void K3D::Emitter::SetCustomUpdater(std::function<void(void)> function)
 	_updater = function;
 }
 
+void K3D::Emitter::SetEmitterParam(const EmitterParam & emitterData)
+{
+	_emitterData = emitterData;
+}
+
 const unsigned int & K3D::Emitter::GetBinSize()
 {
 	return _dataSize;

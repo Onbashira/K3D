@@ -1168,4 +1168,7 @@
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseFunction.hlsli" />
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShader.hlsli" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Engine\Source\ParticleSystem\ParticleSystemMemo.txt" />
+  </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "EmitterBinary.h"
-#include "Engine/Source/Resource/Resource.h"
 #include "Emitter.h"
 #include "../Item/ParticleItem.h"
+#include "Engine/Source/Resource/Resource.h"
 
 K3D::EmitterBinary::EmitterBinary()
 {

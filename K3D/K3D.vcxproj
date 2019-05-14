@@ -492,6 +492,9 @@
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShader.hlsli" />
     <None Include="Engine\ThirdParty\DirectXTex\include\DirectXTex.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Engine\Source\ParticleSystem\ParticleSystemMemo.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{11157C5A-E0AB-4D5D-BE59-199EF72C8766}</ProjectGuid>

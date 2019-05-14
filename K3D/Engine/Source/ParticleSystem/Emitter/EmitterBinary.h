@@ -43,7 +43,9 @@ namespace K3D {
 	private:
 
 		HRESULT EmitterBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);
+		
 		HRESULT EmitterHeaderesBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);
+		
 		HRESULT EmitterTableBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);
 
 
