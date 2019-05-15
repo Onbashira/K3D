@@ -36,12 +36,17 @@ namespace K3D {
 		std::unique_ptr<K3D::Resource> _particleIndexListBin;
 
 	public:
+
 		ParticleBinary();
+
 		~ParticleBinary();
 
 		HRESULT Initialize(std::shared_ptr<D3D12Device>& device , unsigned int ptBinSize, unsigned int ptHeadersSize, unsigned ptIdxListSize);
 
+		void Discard();
+
 	private:
+
 		HRESULT PtBinInitialize(std::shared_ptr<D3D12Device>& device, unsigned int ptBinSize);
 
 		HRESULT PtHeaderesBinInitialize(std::shared_ptr<D3D12Device>& device, unsigned int ptHeadersSize);

@@ -2,11 +2,11 @@
 #include "ScaleAnimItem.h"
 
 
-ScaleAnimItem::ScaleAnimItem()
+K3D::ScaleAnimItem::ScaleAnimItem()
 {
 }
 
 
-ScaleAnimItem::~ScaleAnimItem()
+K3D::ScaleAnimItem::~ScaleAnimItem()
 {
 }

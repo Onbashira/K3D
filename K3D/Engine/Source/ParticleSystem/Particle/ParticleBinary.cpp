@@ -25,6 +25,15 @@ HRESULT K3D::ParticleBinary::Initialize(std::shared_ptr<D3D12Device>& device, un
 	return hr;
 }
 
+void K3D::ParticleBinary::Discard()
+{
+
+	this->_particleBin->Discard();
+	this->_particleHeadersBin->Discard();
+	this->_particleIndexListBin->Discard();
+
+}
+
 HRESULT K3D::ParticleBinary::PtBinInitialize(std::shared_ptr<D3D12Device>& device, unsigned int ptBinSize)
 {
 	D3D12_HEAP_PROPERTIES prop = {};

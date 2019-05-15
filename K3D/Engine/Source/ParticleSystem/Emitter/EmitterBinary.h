@@ -4,6 +4,8 @@ namespace K3D {
 	class Emitter;
 	class D3D12Device;
 	struct CPUEmitterHeader;
+	class GameHeap;
+	
 	class EmitterBinary
 	{
 
@@ -40,6 +42,7 @@ namespace K3D {
 		void DeleteEmitter(int emitterIdx);
 
 		void Discard();
+
 	private:
 
 		HRESULT EmitterBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize);

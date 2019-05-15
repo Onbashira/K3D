@@ -507,10 +507,10 @@
     <ClCompile Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.cpp">
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.cpp">
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Attribute\MeshTypeItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1100,10 +1100,10 @@
     <ClInclude Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.h">
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.h">
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Attribute\MeshTypeItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

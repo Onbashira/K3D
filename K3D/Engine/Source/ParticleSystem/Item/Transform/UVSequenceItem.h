@@ -1,10 +1,12 @@
 #pragma once
 #include "../ParticleItem.h"
 
-class UVSequenceItem : public ParticleItem
-{
-public:
-	UVSequenceItem();
-	~UVSequenceItem();
-};
+namespace K3D{
+	class UVSequenceItem : public ParticleItem
+	{
+	public:
+		UVSequenceItem();
+		~UVSequenceItem();
+	};
 
+}

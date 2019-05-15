@@ -2,11 +2,11 @@
 #include "RotateAnimItem.h"
 
 
-RotateAnimItem::RotateAnimItem()
+K3D::RotateAnimItem::RotateAnimItem()
 {
 }
 
 
-RotateAnimItem::~RotateAnimItem()
+K3D::RotateAnimItem::~RotateAnimItem()
 {
 }

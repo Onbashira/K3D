@@ -177,7 +177,7 @@
     <ClCompile Include="Engine\Source\MaterialSystem\MaterialManager.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\ParticleItem.cpp" />
     <ClCompile Include="Engine\Source\MemoryResourceManager\MemoryResourceManager.cpp" />
-    <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.cpp" />
+    <ClCompile Include="Engine\Source\ParticleSystem\Item\Attribute\MeshTypeItem.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\RotateAnimItem.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Transform\ScaleAnimItem.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.cpp" />
@@ -381,7 +381,7 @@
     <ClInclude Include="Engine\Source\MaterialSystem\MaterialManager.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\ParticleItem.h" />
     <ClInclude Include="Engine\Source\MemoryResourceManager\MemoryResourceManager.h" />
-    <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\MeshTypeItem.h" />
+    <ClInclude Include="Engine\Source\ParticleSystem\Item\Attribute\MeshTypeItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\RotateAnimItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\ScaleAnimItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.h" />

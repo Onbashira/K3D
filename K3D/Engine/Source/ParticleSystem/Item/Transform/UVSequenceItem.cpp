@@ -2,11 +2,11 @@
 #include "UVSequenceItem.h"
 
 
-UVSequenceItem::UVSequenceItem()
+K3D::UVSequenceItem::UVSequenceItem()
 {
 }
 
 
-UVSequenceItem::~UVSequenceItem()
+K3D::UVSequenceItem::~UVSequenceItem()
 {
 }

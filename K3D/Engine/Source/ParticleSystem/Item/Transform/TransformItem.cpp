@@ -2,11 +2,11 @@
 #include "TransformItem.h"
 
 
-TransformItem::TransformItem()
+K3D::TransformItem::TransformItem()
 {
 }
 
 
-TransformItem::~TransformItem()
+K3D::TransformItem::~TransformItem()
 {
 }

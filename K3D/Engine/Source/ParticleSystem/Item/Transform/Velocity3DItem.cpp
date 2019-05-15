@@ -2,11 +2,11 @@
 #include "Velocity3DItem.h"
 
 
-Velocity3DItem::Velocity3DItem()
+K3D::Velocity3DItem::Velocity3DItem()
 {
 }
 
 
-Velocity3DItem::~Velocity3DItem()
+K3D::Velocity3DItem::~Velocity3DItem()
 {
 }
