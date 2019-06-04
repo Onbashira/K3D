@@ -36,8 +36,7 @@ namespace K3D {
 
 		GPUEmitterHeader() : EmitterBinHead(),
 			ParticleBinHead(), ParticleIdxHead(), ParticleSize() {};
-		GPUEmitterHeader() : EmitterBinHead(),
-			ParticleBinHead(), ParticleIdxHead(), ParticleSize() {};
+
 		~GPUEmitterHeader() {};
 	};
 
@@ -51,14 +50,53 @@ namespace K3D {
 		unsigned int ParticleNum = 0;
 	};
 
+	enum EmitterState {
+		EMITTER_STATE_START = 0,
+		EMITTER_STATE_UPDATE,
+		EMITTER_STATE_DEAD
+	};
+
+	enum EmitterActiveItem {
+		EMITTER_ACITVE_ITEM_NONE = 0x0000,
+		EMITTER_ACITVE_ITEM_SHAPE_3D = 0x0001,
+		EMITTER_ACITVE_ITEM_PARENT_OPTION = 0x0002,
+		EMITTER_ACITVE_ITEM_TURBULEANCE = 0x0004,
+		EMITTER_ACITVE_ITEM_VELOCITY = 0x0008,
+		EMITTER_ACITVE_ITEM_SCALE_ANIM = 0x0010,
+		EMITTER_ACITVE_ITEM_ROTATE_ANIM = 0x0020,
+		EMITTER_ACITVE_ITEM_NOISE = 0x0040,
+		EMITTER_ACITVE_ITEM_BLINK = 0x0080,
+		EMITTER_ACITVE_ITEM_BILLBORD_3D = 0x0100,
+		EMITTER_ACITVE_ITEM_RIBBON = 0x0200,
+		EMITTER_ACITVE_ITEM_FLOW_MAP = 0x0400,
+		EMITTER_ACITVE_ITEM_UV_SEQUENCE = 0x0800,
+		EMITTER_ACITVE_ITEM_LIFE = 0x1000,
+		EMITTER_ACITVE_ITEM_RGB_FILTER = 0x2000,
+		EMITTER_ACITVE_ITEM_RGB_WATER = 0x4000,
+
+	};
+
+	struct EmitterCommonItem {
+		EmitterState State;
+		EmitterActiveItem ActiveItemState;
+		Vector3 Pos;
+		Vector3 Scale;
+		Quaternion Rotate;
+
+	};
+
 	class Emitter
 	{
+
 	public:
 
-	private:
+	protected:
 
 		//アイテムアップデータ
 		std::function<void()> _updater;
+
+		//共通アイテム
+		EmitterCommonItem _emitterCommonItem;
 
 		//アイテム配列
 		std::vector < std::unique_ptr<ParticleItem> >_items;
@@ -69,8 +107,6 @@ namespace K3D {
 		EmitterParam _emitterData;
 
 	public:
-
-		Emitter();
 
 		~Emitter();
 
@@ -86,6 +122,9 @@ namespace K3D {
 		//アイテム部サイズの取得
 		const unsigned int& GetBinSize();
 
+		//共通アイテムの取得
+		EmitterCommonItem& GetCommonItem();
+		
 		//エミッタアイテム配列の取得
 		std::vector < std::unique_ptr<ParticleItem> >& GetEmitterItems();
 
@@ -98,6 +137,11 @@ namespace K3D {
 		};
 
 		void Discard();
+
+	private:
+			
+		//非公開として、ビルダーに
+		Emitter();
 
 	};
 

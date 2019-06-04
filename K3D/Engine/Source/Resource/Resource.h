@@ -134,7 +134,7 @@ namespace K3D {
 		* @param[in] size サイズ
 		* @param[in] dstOffset オフセット
 		*/
-		virtual void Update(const void* pSrc, ULONG64 size, const UINT dstOffset);
+		virtual void Update(const void* pSrc, ULONG64 size, const size_t dstOffset);
 
 		/**
 		* @fn

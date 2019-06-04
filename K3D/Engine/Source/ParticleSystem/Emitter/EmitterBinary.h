@@ -34,10 +34,14 @@ namespace K3D {
 
 		HRESULT Initialize(std::shared_ptr<D3D12Device>& device , unsigned int binarySize);
 
+		void Update();
+
 		//Emitterが保持する各アイテムの情報をバイナリ領域に書き込み
 		void Write(const CPUEmitterHeader* header,std::shared_ptr<Emitter>& emitter);
 
 		void WriteEmitterHeader(const CPUEmitterHeader* header, unsigned int index);
+
+		void WriteEmitterTable(unsigned int index);
 
 		void DeleteEmitter(int emitterIdx);
 

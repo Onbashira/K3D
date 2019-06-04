@@ -1,6 +1,6 @@
 #pragma once
 #include <d3d12.h>
-#include <DirectXTex.h>
+#include <DirectXTex/include/DirectXTex.h>
 
 namespace K3D {
 

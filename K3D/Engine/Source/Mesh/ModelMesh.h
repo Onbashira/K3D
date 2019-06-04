@@ -4,6 +4,9 @@
 namespace K3D {
 	class MeshHeap;
 	class MeshBuffer;
+	class TextureObject;
+	struct Descriptor;
+	class IndexBuffer;
 
 	class ModelMesh
 	{
@@ -35,9 +38,9 @@ namespace K3D {
 
 		MeshHeap& AddTextureRef(std::weak_ptr<K3D::TextureObject> textureRef);
 
-		std::vector <std::weak_ptr<Descriptor>>& GetDescriptors();
+		std::vector <std::weak_ptr<K3D::Descriptor>>& GetDescriptors();
 
-		void AddDescriptor(std::weak_ptr<Descriptor>& descriptor);
+		void AddDescriptor(std::weak_ptr<K3D::Descriptor> descriptor);
 
 		void Discard();
 

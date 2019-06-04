@@ -39,7 +39,7 @@ const std::unique_ptr<K3D::IndexBuffer>& K3D::ModelMesh::GetIndexBuffer()
 
 std::vector<std::weak_ptr<K3D::TextureObject>>& K3D::ModelMesh::GetTexturesRef()
 {
-	_meshHeap->GetTexturesRef();
+	return _meshHeap->GetTexturesRef();
 }
 
 std::weak_ptr<K3D::TextureObject> K3D::ModelMesh::GetTextureRef(unsigned int textureIndex)
@@ -49,15 +49,15 @@ std::weak_ptr<K3D::TextureObject> K3D::ModelMesh::GetTextureRef(unsigned int tex
 
 K3D::MeshHeap & K3D::ModelMesh::AddTextureRef(std::weak_ptr<K3D::TextureObject> textureRef)
 {
-	_meshHeap->AddTextureRef(textureRef);
+	return _meshHeap->AddTextureRef(textureRef);
 }
 
 std::vector<std::weak_ptr<K3D::Descriptor>>& K3D::ModelMesh::GetDescriptors()
 {
-	_meshHeap->GetDescriptors();
+	return _meshHeap->GetDescriptors();
 }
 
-void K3D::ModelMesh::AddDescriptor(std::weak_ptr<Descriptor>& descriptor)
+void K3D::ModelMesh::AddDescriptor(std::weak_ptr<Descriptor> descriptor)
 {
 	_meshHeap->AddDescriptor(descriptor);
 }

@@ -161,7 +161,7 @@ void K3D::Resource::Discard()
 	}
 }
 
-void K3D::Resource::Update(const void * pSrc, ULONG64 size, const UINT dstOffset)
+void K3D::Resource::Update(const void * pSrc, ULONG64 size, const size_t dstOffset)
 {
 	assert(pSrc != nullptr);
 	assert(size != 0);

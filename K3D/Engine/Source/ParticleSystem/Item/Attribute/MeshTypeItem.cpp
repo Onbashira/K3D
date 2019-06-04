@@ -2,11 +2,11 @@
 #include "MeshTypeItem.h"
 
 
-MeshTypeItem::MeshTypeItem()
+K3D::MeshTypeItem::MeshTypeItem()
 {
 }
 
 
-MeshTypeItem::~MeshTypeItem()
+K3D::MeshTypeItem::~MeshTypeItem()
 {
 }

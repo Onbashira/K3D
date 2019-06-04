@@ -4,7 +4,7 @@
 
 K3D::Emitter::Emitter() : 
 	_updater([this]() {for (auto& item : this->_items) { item->UpdateItem(); }}),
-	_dataSize(0)
+	_dataSize(sizeof(EmitterCommonItem))
 {
 
 }
@@ -33,6 +33,11 @@ void K3D::Emitter::SetEmitterParam(const EmitterParam & emitterData)
 const unsigned int & K3D::Emitter::GetBinSize()
 {
 	return _dataSize;
+}
+
+K3D::EmitterCommonItem & K3D::Emitter::GetCommonItem()
+{
+	return _emitterCommonItem;
 }
 
 std::vector<std::unique_ptr<K3D::ParticleItem>>& K3D::Emitter::GetEmitterItems()

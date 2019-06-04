@@ -18,17 +18,17 @@ K3D::SpriteRenderer::~SpriteRenderer()
 void K3D::SpriteRenderer::Draw(std::shared_ptr<CommandList>& cmdList, GameObject * ojcet, GeometryState * geometryState, ModelMesh * mesh)
 {
 
-	auto& descriptorsItr = mesh->meshHeap->GetDescriptors().begin();
+	auto descriptorsItr = mesh->GetDescriptors().begin();
 	//Material View Set
 	cmdList->SetGraphicsRootDescriptorTable(0, descriptorsItr->lock()->gpuAddress);
 	//IA Stage
-	static GeometryState gState ;
-	gState = mesh->GetGeometryState();
-	cmdList->IASetIndexBuffer(&gState.GetIndexBufferView());
-	cmdList->IASetVertexBuffers(0,1,&gState.GetVertexBufferView());
+	
+	auto& gState = mesh->GetGeometryState();
+	cmdList->IASetIndexBuffer(gState->GetIndexBufferView());
+	cmdList->IASetVertexBuffers(0,1,gState->GetVertexBufferView()->data());
 	cmdList->IASetPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	cmdList->DrawIndexedInstanced(static_cast<unsigned int >(mesh->GetIndexListCount()), 1, 0, 0,0);
+	cmdList->DrawIndexedInstanced(static_cast<unsigned int >(mesh->GetIndexBuffer()->GetElementCount), 1, 0, 0,0);
 
 }
 

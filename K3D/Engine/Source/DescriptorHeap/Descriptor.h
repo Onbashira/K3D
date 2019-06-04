@@ -45,6 +45,7 @@ namespace K3D {
 		};
 
 		void BindShader(unsigned int rootParamater,BindType bindType,std::shared_ptr<K3D::CommandList> list);
+
 	private:
 
 		Descriptor(const Descriptor& other) {

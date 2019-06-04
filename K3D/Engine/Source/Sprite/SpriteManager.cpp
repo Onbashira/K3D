@@ -2,11 +2,11 @@
 #include "SpriteManager.h"
 
 
-SpriteManager::SpriteManager()
+K3D::SpriteManager::SpriteManager()
 {
 }
 
 
-SpriteManager::~SpriteManager()
+K3D::SpriteManager::~SpriteManager()
 {
 }

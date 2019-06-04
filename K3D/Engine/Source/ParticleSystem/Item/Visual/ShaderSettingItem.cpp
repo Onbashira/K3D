@@ -2,11 +2,11 @@
 #include "ShaderSettingItem.h"
 
 
-ShaderSettingItem::ShaderSettingItem()
+K3D::ShaderSettingItem::ShaderSettingItem()
 {
 }
 
 
-ShaderSettingItem::~ShaderSettingItem()
+K3D::ShaderSettingItem::~ShaderSettingItem()
 {
 }

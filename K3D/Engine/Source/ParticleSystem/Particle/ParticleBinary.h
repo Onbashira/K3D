@@ -43,6 +43,8 @@ namespace K3D {
 
 		HRESULT Initialize(std::shared_ptr<D3D12Device>& device , unsigned int ptBinSize, unsigned int ptHeadersSize, unsigned ptIdxListSize);
 
+
+
 		void Discard();
 
 	private:

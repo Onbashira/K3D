@@ -1,0 +1,8 @@
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\audio\audiomanager.cpp, LINE : 27] { XAudio2‚Ìì¬‚É¬Œ÷‚µ‚Ü‚µ‚½ }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\audio\audiomanager.cpp, LINE : 32] { MasteringVoice‚Ìì¬‚É¬Œ÷‚µ‚Ü‚µ‚½ }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\audio\audiomanager.cpp, LINE : 81] { MasteringVoice‚ğíœ‚µ‚Ü‚µ‚½ }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\audio\audiomanager.cpp, LINE : 86] { XAudio2‚ğíœ‚µ‚Ü‚µ‚½ }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\resource\resource.cpp, LINE : 160] { Resource : RenderTargetResource 0 is  Reset }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\resource\resource.cpp, LINE : 160] { Resource : RenderTargetResource 1 is  Reset }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\descriptorheap\descriptorheap.cpp, LINE : 195] { DescriptorHeap : RendertargetsHeap  is Reset }
+[ FILE : d:\users\onbashira\desktop\k3d\k3d\engine\source\commandqueue\commandqueue.cpp, LINE : 107] {  is Reset }

@@ -28,8 +28,11 @@ HRESULT K3D::EmitterBinary::Initialize(std::shared_ptr<D3D12Device>& device, uns
 	return hr;
 }
 
+void K3D::EmitterBinary::Update()
+{
+}
 
-//EmitterBinary領域にアイテムを書き込む（EmitterHeader部は別領域に書き込み）
+//EmitterBinary領域にエミッタ情報を書き込む（EmitterHeader部は別領域に書き込み）
 void K3D::EmitterBinary::Write(const CPUEmitterHeader* header,std::shared_ptr<Emitter>& emitter)
 {
 	unsigned offset = header->EmitterBinHead;
@@ -37,6 +40,13 @@ void K3D::EmitterBinary::Write(const CPUEmitterHeader* header,std::shared_ptr<Em
 	unsigned dataSize = 0;
 	//データ確保
 	char* ptr = new char[emitter->GetBinSize()];
+
+	//共通部書き込み
+	{
+		dataSize = sizeof(EmitterCommonItem);
+		std::memcpy(ptr, &emitter->GetCommonItem(), dataSize);
+		ptr += dataSize;
+	}
 
 	//メモリコピー
 	for (auto& item : emitter->GetEmitterItems()) {
@@ -46,7 +56,13 @@ void K3D::EmitterBinary::Write(const CPUEmitterHeader* header,std::shared_ptr<Em
 	}
 	//メモリにマッピング
 	_emitterBin->Update(ptr, binSize, offset);
-	WriteEmitterHeader(header);
+	
+	WriteEmitterHeader(header,0);
+
+	//エミッタインデクステーブルにPush
+	{
+
+	}
 	delete[] ptr;
 }
 
@@ -61,6 +77,20 @@ void K3D::EmitterBinary::Discard()
 	this->_emitterHeadersBin.reset();
 	this->_emitterTableBin.reset();
 
+}
+
+void K3D::EmitterBinary::WriteEmitterHeader(const CPUEmitterHeader * header,unsigned int index)
+{
+	unsigned offset = header->EmitterBinHead;
+	unsigned binSize = sizeof(CPUEmitterHeader);
+
+	_emitterHeadersBin->Update(header, binSize, index*binSize);
+
+}
+
+void K3D::EmitterBinary::WriteEmitterTable(unsigned int index)
+{
+	_emitterTableBin->Update(&index, sizeof(Uint32), _emtTable.size());
 }
 
 HRESULT K3D::EmitterBinary::EmitterBinInit(std::shared_ptr<D3D12Device>& device, unsigned int binarySize)
@@ -162,11 +192,3 @@ HRESULT K3D::EmitterBinary::EmitterTableBinInit(std::shared_ptr<D3D12Device>& de
 	return hr;;
 }
 
-void K3D::EmitterBinary::WriteEmitterHeader(const CPUEmitterHeader * header,unsigned int index)
-{
-	unsigned offset = header->EmitterBinHead;
-	unsigned binSize = sizeof(CPUEmitterHeader);
-
-	_emitterHeadersBin->Update(header, binSize, index*binSize);
-
-}

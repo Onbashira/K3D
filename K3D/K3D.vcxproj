@@ -183,6 +183,7 @@
     <ClCompile Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\Particle\ParticleBinary.cpp" />
     <ClCompile Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.cpp" />
+    <ClCompile Include="Engine\Source\Resource\MultipleBuffer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -387,6 +388,7 @@
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Visual\ShaderSettingItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Particle\ParticleBinary.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\IndirectArgs\ParticleIndirectArgs.h" />
+    <ClInclude Include="Engine\Source\Resource\MultipleBuffer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\TransformItem.h" />
     <ClInclude Include="Engine\Source\ParticleSystem\Item\Transform\UVSequenceItem.h" />
@@ -429,41 +431,146 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicIndirectArgsCS.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicInnerSortCS.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicOuterSortCS.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicPreSortCS.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelBuildBVHSplits.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelComputeAABBs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelPrepareForComputeAABBs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesForAABBs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesForPrimitives.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromAABBs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromBVHs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromPrimitives.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ClearBuffers.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DynamicIndexTest.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FindTreelets.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GetBVHCompactedSize.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBvh2Copy.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadProceduralGeometry.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesFromR16IndexBuffer.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesFromR32IndexBuffer.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesNoIndexBuffer.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\MinimalTraverseShaderLib.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\NullTraverseLib.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeBVHs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeTriangles.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SimpleRaygen.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SimpleRayTracing.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\StateMachineLib.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelBuildBVHSplits.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelComputeAABBs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBsFromArrayOfInstances.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBsFromArrayOfPointers.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelPrepareForComputeAABBs.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShaderLib.hlsl" />
-    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.hlsl" />
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicIndirectArgsCS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicInnerSortCS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicOuterSortCS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicPreSortCS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelBuildBVHSplits.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelComputeAABBs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelPrepareForComputeAABBs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesForAABBs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodesForPrimitives.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromAABBs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromBVHs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateSceneAABBFromPrimitives.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ClearBuffers.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DynamicIndexTest.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\FindTreelets.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GetBVHCompactedSize.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\GpuBvh2Copy.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadProceduralGeometry.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesFromR16IndexBuffer.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesFromR32IndexBuffer.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\LoadTrianglesNoIndexBuffer.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\MinimalTraverseShaderLib.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\NullTraverseLib.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeBVHs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RearrangeTriangles.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SimpleRaygen.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SimpleRayTracing.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\StateMachineLib.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelBuildBVHSplits.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelComputeAABBs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBsFromArrayOfInstances.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBsFromArrayOfPointers.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelPrepareForComputeAABBs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShaderLib.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TreeletReorder.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Source\ParticleSystem\shaderInc\GPUparticleInc.hlsli">
@@ -475,21 +582,63 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicSortCommon.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelLoadTriangles.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BuildBVHSplits.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodes.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ComputeAABBs.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DebugLog.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\EmulatedPointer.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\EmulatedPointerIntrinsics.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BitonicSortCommon.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BottomLevelLoadTriangles.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\BuildBVHSplits.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\CalculateMortonCodes.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ComputeAABBs.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\DebugLog.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\EmulatedPointer.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\EmulatedPointerIntrinsics.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\packages.config" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingHelper.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ShaderUtil.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SharedReadData.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBs.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseFunction.hlsli" />
-    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShader.hlsli" />
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\RayTracingHelper.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\ShaderUtil.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\SharedReadData.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TopLevelLoadAABBs.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseFunction.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Engine\ThirdParty\D3D12RaytracingFallback\src\TraverseShader.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="Engine\ThirdParty\DirectXTex\include\DirectXTex.inl" />
   </ItemGroup>
   <ItemGroup>
@@ -570,7 +719,7 @@
       <ConformanceMode>false</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -604,7 +753,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalOptions>-std:c++17 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(SolutionDir)K3D/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)K3D/Engine/ThirdParty;$(SolutionDir)K3D/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

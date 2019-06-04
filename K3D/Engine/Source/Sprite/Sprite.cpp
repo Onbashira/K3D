@@ -73,7 +73,7 @@ void K3D::Sprite::CreateMesh()
 		vertexes.push_back(plane[i]);
 	}
 
-	this->_modelMesh->meshBuffer->InitializeVBO(sizeof(SpriteVertex) * vertexes.size(), sizeof(SpriteVertex), vertexes.data());
+	this->_modelMesh->AddVertexBuffer(sizeof(SpriteVertex) * vertexes.size(), sizeof(SpriteVertex), vertexes.data());
 
 }
 
@@ -86,7 +86,7 @@ void K3D::Sprite::CreateIndices()
 	for (unsigned int listIndex = 0; listIndex < count; listIndex++) {
 		indexList.push_back(planeList[listIndex]);
 	}
-	this->_modelMesh->meshBuffer->InitializeIBO(indexList);
+	this->_modelMesh->GetIndexBuffer()->Initialize(static_cast<ULONG64>(indexList.size() * sizeof(unsigned int )),static_cast<size_t>(sizeof(unsigned int)) ,indexList.data());
 
 }
 
@@ -97,6 +97,6 @@ void K3D::Sprite::CreateDescriptors()
 	cbvDesc.BufferLocation = this->_materialBuffer->GetResource()->GetGPUVirtualAddress();
 	cbvDesc.SizeInBytes = Util::ConstantBufferAlign(sizeof(SpriteMaterial));
 	//register1
-	this->_modelMesh->meshHeap->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
+	this->_modelMesh->AddDescriptor(_gameHeap->CreateCBView(cbvDesc));
 
 }
